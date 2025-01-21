@@ -1,0 +1,14 @@
+const Links=[
+    {href:"/profile", text:'Profile'},
+    {href:"/home", text:'Home'},
+];
+
+import React from "react";
+
+const Navbar = () => {
+    return (
+        <div>Navbar</div>
+    )
+}
+
+export default Navbar
