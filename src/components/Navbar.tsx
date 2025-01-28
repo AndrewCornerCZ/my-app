@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 const Links=[
     {href:"/profile", text:'Profile'},
