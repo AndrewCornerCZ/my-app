@@ -20,7 +20,7 @@ const Navbar = () => {
              <li key={link.href}>
                 <a
                      href={link.href}
-                      className={`text-white ${pathname === link.href ? 'text-indigo-500' : ''}`}
+                      className={`${pathname === link.href ? 'text-indigo-500' : 'text-white '}`}
                 >
                     {link.text}
                 </a>   
