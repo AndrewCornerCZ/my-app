@@ -12,7 +12,7 @@ const Links=[
 
 const Navbar = () => {
     const pathname = usePathname();
-
+    console.log(pathname);
     return (
         <><nav className="bg-neutral-900 border-4 border-neutral-900 border-b-indigo-500 p-3">
         <ul className="flex flex-row justify-between">
