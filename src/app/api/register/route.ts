@@ -8,7 +8,7 @@ export async function POST(req: Request) {
     const prisma = new PrismaClient();
   try {
     const { username, email, password } = await req.json();
- 
+  
     if (!username || !email || !password ) {
       return NextResponse.json({ error: "Email, username a heslo jsou povinné!" }, { status: 400 });
     }
