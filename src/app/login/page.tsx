@@ -1,49 +1,33 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 
-export default function RegisterPage() {
-  const [username, setUsername] = useState("");
+export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const router = useRouter();
-
+ 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = await fetch("/api/register", {
+    const res = await fetch("/api/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, email, password }),
+      body: JSON.stringify({ email, password }),
     });
-
+    console.log(res);
     let data;
-    try {
       data = await res.json();
-    } catch (error) {
-      console.error("Chyba při parsování JSON:", error);
-      setError("Chyba při registraci. Zkuste to znovu!");
-      return;
-    }
+        console.log(data);
 
     if (!res.ok) {
-      setError(data.error || "Chyba při registraci. Zkuste to znovu!");
+      setError(data.error || "Chyba při přihlášení. Zkuste to znovu!");
     } else {
-      alert("Uživatel úspěšně vytvořen!");
-      setError(""); // Clear any previous errors
-      router.push("/login"); // Přesměrování na stránku přihlášení
+      alert("User created");
+      setError("");
     }
   };
 
   return (
     <form className="flex flex-col items-center" onSubmit={handleSubmit}>
-      <input
-        className="border border-gray-300 p-2 m-2"
-        type="text"
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
       <input
         className="border border-gray-300 p-2 m-2"
         type="email"
@@ -63,7 +47,7 @@ export default function RegisterPage() {
       </button>
       {error && <p className="text-red-500">{error}</p>}
       <a href="../login" className="text-indigo-500 underline">
-        Already have an account? Login here.
+        Dont have an account? Register
       </a>
     </form>
   );

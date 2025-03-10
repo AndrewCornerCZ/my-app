@@ -6,16 +6,21 @@ import authOptions from "./api/[...nextauth]/route";
 
 
 export default async function HomePage() {
-  const session = await getServerSession(authOptions);
-
-  if (!session) {
-    return <p className="text-xl text-indigo-500 h-screen flex items-center justify-center"><a href="login.tsx">Přihlaste se pro zobrazení této stránky</a>.</p>;
-  }
+//   const session = await getSession();
+// const session = await getServerSession({ req });
+//  if (!session) {
+//    return (
+//    <>
+//      <Navbar />
+//      <p>Nejste přihlášen!</p>
+//    </>
+//  );
+// //}
 
   return (
     <>
       <Navbar />
-      <p>Vítej, {session.user?.email}!</p>
+      <p>Vítej, !</p>
     </>
   );
 }
