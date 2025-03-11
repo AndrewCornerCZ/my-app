@@ -7,7 +7,6 @@ export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -16,24 +15,19 @@ export default function RegisterPage() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, email, password }),
     });
-
+    console.log(res);
     let data;
-    try {
       data = await res.json();
-    } catch (error) {
-      console.error("Chyba při parsování JSON:", error);
-      setError("Chyba při registraci. Zkuste to znovu!");
-      return;
-    }
+        console.log(data);
 
     if (!res.ok) {
       setError(data.error || "Chyba při registraci. Zkuste to znovu!");
     } else {
-      alert("Uživatel úspěšně vytvořen!");
-      setError(""); // Clear any previous errors
-      router.push("/login"); // Přesměrování na stránku přihlášení
+      alert("User created");
+      setError("");
     }
   };
+
 
   return (
     <form className="flex flex-col items-center" onSubmit={handleSubmit}>

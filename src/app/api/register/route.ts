@@ -3,13 +3,13 @@ import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
 
 
- 
+const prisma = new PrismaClient();
+
 export async function POST(req: Request) {
-    const prisma = new PrismaClient();
   try {
     const { username, email, password } = await req.json();
-  
-    if (!username || !email || !password ) {
+
+    if (!email || !password || !username) {
       return NextResponse.json({ error: "Email, username a heslo jsou povinné!" }, { status: 400 });
     }
 
@@ -31,8 +31,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ message: "Uživatel úspěšně vytvořen!", user: newUser }, { status: 201 });
   } catch (error) {
-    console.log("Chyba při registraci:");
-    console.log(JSON.stringify(error));
+    console.log("Chyba při registraci:", error);
     return NextResponse.json({ error: "Interní chyba serveru!" }, { status: 500 });
   }
 }

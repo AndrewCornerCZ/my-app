@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import {redirect} from "next/navigation";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -21,8 +22,9 @@ export default function LoginPage() {
     if (!res.ok) {
       setError(data.error || "Chyba při přihlášení. Zkuste to znovu!");
     } else {
-      alert("User created");
+      alert("User logged in");
       setError("");
+      redirect("/");
     }
   };
 
@@ -43,7 +45,7 @@ export default function LoginPage() {
         onChange={(e) => setPassword(e.target.value)}
       />
       <button className="bg-indigo-500 text-white p-2 m-2" type="submit">
-        Register
+        Login
       </button>
       {error && <p className="text-red-500">{error}</p>}
       <a href="../login" className="text-indigo-500 underline">
