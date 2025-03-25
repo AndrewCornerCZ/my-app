@@ -1,12 +1,15 @@
 "use client";
 import { useState } from "react";
-import {redirect} from "next/navigation";
+import { useRouter } from "next/navigation";
+import { signIn, useSession }  from "next-auth/react";
+import { Session } from "inspector/promises";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
- 
+  const router = useRouter();
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const res = await fetch("/api/login", {
@@ -14,17 +17,29 @@ export default function LoginPage() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
-    console.log(res);
+
     let data;
+    try {
       data = await res.json();
-        console.log(data);
+    } catch (error) {
+      console.error("Chyba při parsování JSON:", error);
+      setError("Chyba při přihlášení. Zkuste to znovu!");
+      return;
+    }
 
     if (!res.ok) {
       setError(data.error || "Chyba při přihlášení. Zkuste to znovu!");
     } else {
-      alert("User logged in");
+      const id = data.user.id;
+      alert("Uživatel úspěšně přihlášen!");
       setError("");
-      redirect("/");
+      await signIn("credentials", {
+        email,
+        id,
+        password,
+        redirect: false,
+      });
+      router.push("/"); 
     }
   };
 
@@ -48,9 +63,6 @@ export default function LoginPage() {
         Login
       </button>
       {error && <p className="text-red-500">{error}</p>}
-      <a href="../login" className="text-indigo-500 underline">
-        Dont have an account? Register
-      </a>
     </form>
   );
 }

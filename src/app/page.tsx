@@ -1,26 +1,22 @@
 import Navbar from "../components/Navbar";
-import { getSession } from "next-auth/react";
 import { getServerSession } from "next-auth";
-import authOptions from "./api/[...nextauth]/route";
+import {redirect} from "next/navigation";
+import { options } from "./api/auth/[...nextauth]/options";
+import AddPostButton from "../components/AddPostButton";
 
 
 
 export default async function HomePage() {
-//   const session = await getSession();
-// const session = await getServerSession({ req });
-//  if (!session) {
-//    return (
-//    <>
-//      <Navbar />
-//      <p>Nejste přihlášen!</p>
-//    </>
-//  );
-// //}
+  const session = await getServerSession(options);
+  console.log(session?.user);
+  if (!session) {
+    redirect ("/login");
+  }
 
   return (
     <>
       <Navbar />
-      <p>Vítej, !</p>
+      <AddPostButton />
     </>
   );
 }
