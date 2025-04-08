@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 const Links=[
     {href:"/profile", text:'Profile'},
     {href:"/", text:'Home'},
+    {href:"/search", text:'Search'},
     {href:"/friends", text:'Friends'},
 ];
 
@@ -13,7 +14,7 @@ const Links=[
 const Navbar = () => { 
     const pathname = usePathname();
     return (
-        <><nav className="bg-neutral-900 border-4 border-neutral-900 border-b-indigo-500 p-3">
+        <><nav className="bg-zinc-900 border-4 border-neutral-900 border-b-indigo-500 p-3">
         <ul className="flex flex-row justify-between">
             {Links.map((link) => (
              <li key={link.href}>

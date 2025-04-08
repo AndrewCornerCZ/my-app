@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import  { getServerSession }  from 'next-auth';
 import  {options}  from '../app/api/auth/[...nextauth]/options';
 import { redirect } from 'next/navigation';
+import { prisma } from '@/lib/db';
 
 const session = await getSession();
 
@@ -16,18 +17,19 @@ export default function AddForm  (){
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        const res = await fetch("../api/posts", { 
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ text, hashtag, authorId: session?.user.id as number }),
-        });
 
-        if (!res.ok) {
-            setError("Failed to add post");
-        } else {
-            setError("");
-            redirect("/");
-        }
+            const res = await fetch("../api/posts", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ text, hashtag, authorId: session?.user.id as number }),
+            });
+
+            if (!res.ok) {
+                setError("Failed to add post");
+            } else {
+                setError("");
+                redirect("/");
+            }
     };
 
     return (

@@ -6,10 +6,12 @@ import { redirect } from "next/navigation";
 import AddLogoutButton from "@/components/AddLogoutButton";
 import { options } from "../api/auth/[...nextauth]/options";
 import Posts from "@/components/Posts";
+import AddPost from "../AddPost/page";
+import AddPostButton from "@/components/AddPostButton";
 
 export default async function Profile() {
   const session = await getServerSession(options);
-  console.log(session?.user);
+  console.log(session?.user.id);
   if (!session) {
     redirect ("/login");
   }
@@ -21,6 +23,7 @@ export default async function Profile() {
       <h2 className="text-white">Your posts:</h2>
       <Posts/>
       <AddLogoutButton />
+      <AddPostButton/>
     </div>
   );
 }
