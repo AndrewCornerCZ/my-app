@@ -5,6 +5,7 @@ import GoogleProvider from "next-auth/providers/google";
 import bcrypt from "bcryptjs";
 import { PrismaClient } from "@prisma/client";
 
+
 const prisma = new PrismaClient();
 
 export const authOptions: NextAuthOptions = {
@@ -45,23 +46,6 @@ export const authOptions: NextAuthOptions = {
             clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",
         }),
     ],
-    callbacks: {
-        async session({ session }: { session: any }) {
-            if (!session.user) {
-                return session;
-            }
-
-            const dbUser = await prisma.user.findUnique({
-                where: { email: session.user.email ?? "" },
-            });
-
-            if (dbUser) {
-                session.user.id = dbUser.id.toString(); // Convert id to string
-            }
-
-            return session;
-        },
-    },
     session: {
         strategy: "jwt",
     },
