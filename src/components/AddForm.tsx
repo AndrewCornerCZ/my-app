@@ -1,11 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { getSession, useSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
-import  { getServerSession }  from 'next-auth';
-import  {options}  from '../app/api/auth/[...nextauth]/options';
 import { redirect } from 'next/navigation';
-import { prisma } from '@/lib/db';
 
 const session = await getSession();
 

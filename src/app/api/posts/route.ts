@@ -1,8 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-import { Console } from "console";
-import { Hash, hash } from "crypto";
-import { create } from "domain";
-import { connect } from "http2";
 import { NextResponse } from "next/server";
 
 const prisma = new PrismaClient();

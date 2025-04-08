@@ -1,12 +1,10 @@
 import React from "react";
 import Navbar from "../../components/Navbar";
-import { signOut } from "next-auth/react";
 import  {getServerSession}  from "next-auth";
 import { redirect } from "next/navigation";
 import AddLogoutButton from "@/components/AddLogoutButton";
 import { options } from "../api/auth/[...nextauth]/options";
 import Posts from "@/components/Posts";
-import AddPost from "../AddPost/page";
 import AddPostButton from "@/components/AddPostButton";
 
 export default async function Profile() {

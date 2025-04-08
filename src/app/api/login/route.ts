@@ -1,8 +1,6 @@
 import bcrypt from "bcryptjs";
 import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
-import { Session } from "inspector/promises";
-import { use } from "react";
 
 const prisma = new PrismaClient();
 export async function POST(req: Request) {
