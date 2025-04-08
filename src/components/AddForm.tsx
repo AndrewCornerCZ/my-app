@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import { getSession, useSession } from 'next-auth/react';
+import { getSession} from 'next-auth/react';
 import { redirect } from 'next/navigation';
 
 const session = await getSession();
