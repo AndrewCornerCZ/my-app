@@ -1,7 +1,5 @@
 import NextAuth from 'next-auth'
-import { NextAuthOptions } from 'next-auth'
 import {options} from './options'
-import { PrismaClient } from "@prisma/client";
 
 
 
