@@ -16,6 +16,7 @@ npx prisma init# See https://help.github.com/articles/ignoring-files/ for more a
 # next.js
 /.next/
 /out/
+/prisma/generated
 
 # production
 /build
