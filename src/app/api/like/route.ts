@@ -38,6 +38,7 @@ export async function POST(req: Request) {
 
     
     if (!existingLike) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       const result = await prisma.$transaction(async (tx) => {
         await tx.userLike.create({
