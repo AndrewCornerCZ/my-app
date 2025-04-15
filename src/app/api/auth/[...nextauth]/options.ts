@@ -1,44 +1,66 @@
 import type { NextAuthOptions } from 'next-auth'
-import GitHubProvider from 'next-auth/providers/github'
 import CredentialsProvider from 'next-auth/providers/credentials'
+import bcrypt from "bcryptjs";
 import {User} from "next-auth"
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient()
 
 export const options: NextAuthOptions = {
     providers: [
-        GitHubProvider({
-            clientId: process.env.GITHUB_ID as string,
-            clientSecret: process.env.GITHUB_SECRET as string,
-        }),
         CredentialsProvider({
             name: "Credentials",
             credentials: {
-                username: {
-                    label: "Username:",
-                    type: "text",
-                    placeholder: "your-cool-username"
-                },
-                password: {
-                    label: "Password:",
-                    type: "password",
-                    placeholder: "your-awesome-password"
+                id: { label: "Id", type: "number" },
+                email: { label: "Email", type: "email" },
+                username: { label: "Username", type: "text" },
+                password: { label: "Password", type: "password" }
+            },
+            async authorize(credentials): Promise<User | null> {
+                
+                if (!credentials) {
+                    throw new Error("Credentials not provided");
+                }
+
+
+                const user = await prisma.user.findUnique({
+                    where: { email: credentials.email },
+                });
+
+                if (!user) {
+                    throw new Error("No user found");
+                }
+
+                const isValid = await bcrypt.compare(credentials.password, user.password);
+                if (isValid) {
+                    return {  id: user.id, email: user.email, name: user.username}; // Convert id to string
+                } else {
+                    throw new Error("Invalid password");
                 }
             },
-            
-            async authorize(credentials): Promise<User | null> {
-                const user = { id: 0, name: "", password: "", email: "" };
-
-                if (credentials?.username === user.name && credentials?.password === user.password) {
-                    return {
-                        id: user.id,
-                        name: user.name,
-                        email: user.email,
-                    }
-                } else {
-                    return null
-                }
-                
-            }
-        })
-        
+        }),
     ],
+    callbacks: {
+        async jwt({ token, user, account }) {
+            if (account && user) {
+                token.id = user.id
+            }
+            return token
+        },
+        async session({ session, token }) {
+            if (session.user) {
+                session.user.id = token.id as number
+            }
+            return session
+        }
+    },
+    pages: {
+        signIn: '/auth/signin',
+        error: '/auth/error',
+    },
+    session: {
+        strategy: 'jwt',
+        maxAge: 30 * 24 * 60 * 60, // 30 days
+    },
+    secret: process.env.NEXTAUTH_SECRET,
 }
