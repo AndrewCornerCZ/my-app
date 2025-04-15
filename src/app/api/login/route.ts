@@ -10,9 +10,9 @@ export async function POST(req: Request) {
     if (!email || !password) {
       return NextResponse.json({ error: "Email a heslo jsou povinné!" }, { status: 400 });
     }
-
+    console.log("Email:", email);
     // Ověření, zda uživatel existuje
-    const existingUser = await prisma.user.findUnique({ where: { email } });
+    const existingUser = await prisma.user.findFirst({ where: { email } });
     if (!existingUser) {
       return NextResponse.json({ error: "Uživatel neexistuje" }, { status: 400 });
     }
