@@ -1,9 +1,10 @@
 
 import React from 'react';
-import { Hashtag, PrismaClient } from '@prisma/client';
+
 import { getServerSession } from 'next-auth/next';
 import { options } from '../app/api/auth/[...nextauth]/options';
 import LikeButton from './LikeButton';
+import { PrismaClient, Hashtag } from '../../prisma/generated/prisma/client';
 
 
 

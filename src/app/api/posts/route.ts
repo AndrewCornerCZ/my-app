@@ -1,5 +1,6 @@
-import { Hashtag, PrismaClient } from "@prisma/client";
+
 import { NextResponse } from "next/server";
+import { PrismaClient, Hashtag } from "../../../../prisma/generated/prisma/client";
 
 const prisma = new PrismaClient();
 
