@@ -38,6 +38,7 @@ export async function POST(req: Request) {
 
     
     if (!existingLike) {
+      // @ts-ignore
       const result = await prisma.$transaction(async (tx) => {
         await tx.userLike.create({
           data: {
