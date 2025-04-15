@@ -1,27 +1,36 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getSession} from 'next-auth/react';
 import { redirect } from 'next/navigation';
 
-const session = await getSession();
 
 export default function AddForm  (){
     const [hashtag, setHashtag] = useState("");
     const [text, setText] = useState("");
     const [error, setError] = useState("");
+    const [session, setSession] = useState<any>(null);
+
+    useEffect(() => {
+        const fetchSession = async () => {
+            const sess = await getSession();
+            setSession(sess);
+        };
+        fetchSession();
+    }, []);
+    console.log(session?.user.email);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-
+            
             const res = await fetch("../api/posts", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ text, hashtag, authorId: session?.user.id as number }),
+                body: JSON.stringify({ text, hashtag, authorEmail: session?.user.email }),
             });
 
             if (!res.ok) {
-                setError("Failed to add post");
+
             } else {
                 setError("");
                 redirect("/");

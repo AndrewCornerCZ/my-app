@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import {redirect} from "next/navigation";
 import { options } from "./api/auth/[...nextauth]/options";
 import AddPostButton from "../components/AddPostButton";
+import Posts from "@/components/Posts";
 
 
 
@@ -17,6 +18,7 @@ export default async function HomePage() {
     <>
       <Navbar />
       <AddPostButton />
+      <Posts />
     </>
   );
 }

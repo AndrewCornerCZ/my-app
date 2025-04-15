@@ -1,37 +1,88 @@
+
 import React from 'react';
-import { PrismaClient } from '@prisma/client';
-import { getSession } from 'next-auth/react';
+import { Hashtag, PrismaClient } from '@prisma/client';
+import { getServerSession } from 'next-auth/next';
+import { options } from '../app/api/auth/[...nextauth]/options';
+import LikeButton from './LikeButton';
 
-const prisma = new PrismaClient();
-const session = await getSession();
 
+
+ const Posts = async () => {
+  const prisma = new PrismaClient();
+  const session = await getServerSession(options)
+  const user = await prisma.user.findUnique({
+    where: {
+      email: session?.user.email as string,
+    },
+  });
 const posts = await prisma.post.findMany({
   where: {
-    authorId: session?.user?.id,
+    authorId: user?.id
   }, 
   orderBy: {
     created_at: 'desc',
   },
 });
+const hashtagsmap = new Map<number, Hashtag[]>();
+for (const post of posts) {
+  const hashtags = await prisma.postHashtag.findMany({
+    where: {
+      postId: post.id,
+    },
+    include: {
+      hashtag: true,
+    },
+  });
+  hashtagsmap.set(post.id, hashtags.map((postHashtag) => postHashtag.hashtag));
+}
+
 const username = session?.user?.name;
-const Posts = () => {
-    return (
-      console.log("Session:", session),
-      console.log("Session user ID:", session?.user.id),
-            <div className="flex flex-col items-left justify-center font-[18px] m-[20px]">
-            {posts.map((post) => (
-                <div key={post.id} className="bg-zinc-900 border border-indigo-500 rounded-lg p-2 m-2">
-                    <h3 className='text-indigo-500'>{username}</h3>
-                    <p className='text-indigo-500'>{post.text}</p>
-                    <p className='text-indigo-100 text-[15px]'>#{}</p>
-                    <p className='text-indigo-100 text-[15px]'> {new Date(post.created_at).toLocaleDateString()}</p>
-                    <p className="text-indigo-100 text-[15px]">
-            {new Date(post.created_at).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})} {/* Zobrazení času */}
+
+  return (
+    <div className="flex flex-col items-center gap-4 p-4">
+      {posts.map((post) => (
+        <div
+          key={post.id}
+          className="w-full max-w-xl bg-zinc-900 border border-zinc-700 rounded-xl p-5 shadow-md"
+        >
+          {/* Username */}
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-white font-semibold">@{username}</span>
+          </div>
+
+          {/* Post text */}
+          <p className="text-white text-lg mb-3 whitespace-pre-line">
+            {post.text}
           </p>
-                </div>
+
+          {/* Hashtags */}
+          <div className="flex flex-wrap gap-2 mb-3">
+            {hashtagsmap.get(post.id)?.map((hashtag) => (
+              <span
+                key={hashtag.id}
+                className="text-indigo-400 hover:underline cursor-pointer"
+              >
+                #{hashtag.text}
+              </span>
             ))}
-            </div>
-    );
+          </div>
+
+          {/* Date and time */}
+          <div className="text-zinc-400 text-sm flex gap-2">
+            <span>{new Date(post.created_at).toLocaleDateString()}</span>
+            <span>•</span>
+            <span>
+              {new Date(post.created_at).toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+            </span>
+          </div>
+          <LikeButton postId={post.id} initialLikes={post.likes}/>
+        </div>
+      ))}
+    </div>
+  );
 };
 
 export default Posts;

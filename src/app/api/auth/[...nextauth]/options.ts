@@ -1,6 +1,7 @@
 import type { NextAuthOptions } from 'next-auth'
 import GitHubProvider from 'next-auth/providers/github'
 import CredentialsProvider from 'next-auth/providers/credentials'
+import {User} from "next-auth"
 
 export const options: NextAuthOptions = {
     providers: [
@@ -23,11 +24,15 @@ export const options: NextAuthOptions = {
                 }
             },
             
-            async authorize(credentials) {
-                const user = { id: "", name: "", password: "" }
+            async authorize(credentials): Promise<User | null> {
+                const user = { id: 0, name: "", password: "", email: "" };
 
                 if (credentials?.username === user.name && credentials?.password === user.password) {
-                    return user
+                    return {
+                        id: user.id,
+                        name: user.name,
+                        email: user.email,
+                    }
                 } else {
                     return null
                 }

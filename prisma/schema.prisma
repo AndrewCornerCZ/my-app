@@ -19,6 +19,7 @@ model User {
   email String  @unique
   username  String @default("User")
   password  String @default("")
+  userLikes    UserLike[]   // Add this line
 }
 
 model Post {
@@ -29,6 +30,7 @@ model Post {
   likes     Int      @default(0)
   comments Comment[] 
   authorId  Int
+  userLikes    UserLike[]   // Add this line
 }
 
 model Hashtag {
@@ -54,4 +56,14 @@ model PostHashtag {
   hashtag   Hashtag @relation(fields: [hashtagId], references: [id])
 
   @@id([postId, hashtagId]) // Composite primary key
+}
+model UserLike {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  postId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  post      Post     @relation(fields: [postId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@unique([userId, postId])
 }
