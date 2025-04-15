@@ -2,13 +2,14 @@
 import React, { useState, useEffect } from 'react';
 import { getSession} from 'next-auth/react';
 import { redirect } from 'next/navigation';
+import { Session } from 'next-auth';
 
 
 export default function AddForm  (){
     const [hashtag, setHashtag] = useState("");
     const [text, setText] = useState("");
     const [error, setError] = useState("");
-    const [session, setSession] = useState<any>(null);
+    const [session, setSession] = useState<Session | null>(null);
 
     useEffect(() => {
         const fetchSession = async () => {

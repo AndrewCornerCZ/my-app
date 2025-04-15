@@ -1,5 +1,4 @@
 import { Hashtag, PrismaClient } from "@prisma/client";
-import { hash } from "crypto";
 import { NextResponse } from "next/server";
 
 const prisma = new PrismaClient();

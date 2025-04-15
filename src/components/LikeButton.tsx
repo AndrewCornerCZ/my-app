@@ -26,7 +26,7 @@ const LikeButton = ({ postId, initialLikes }: LikeButtonProps) => {
       const data = await res.json()
       setLikes(data.likes)
     } catch (error) {
-      console.error()
+      console.error(error)
     } finally {
       setIsLoading(false)
     }
