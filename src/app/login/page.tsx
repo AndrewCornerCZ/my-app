@@ -62,6 +62,10 @@ export default function LoginPage() {
         Login
       </button>
       {error && <p className="text-red-500">{error}</p>}
+            <a href="../register" className="text-indigo-500 underline">
+        Dont have an account? Register here.
+      </a>
     </form>
+    
   );
 }

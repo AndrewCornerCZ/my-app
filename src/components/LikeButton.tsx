@@ -5,26 +5,36 @@ import { useState } from 'react'
 interface LikeButtonProps {
   postId: number
   initialLikes: number
+  liked: boolean
 }
 
-const LikeButton = ({ postId, initialLikes }: LikeButtonProps) => {
+const LikeButton = ({ postId, initialLikes, liked }: LikeButtonProps) => {
   const [likes, setLikes] = useState(initialLikes)
   const [isLoading, setIsLoading] = useState(false)
+  const [isLiked, setIsLiked] = useState(liked)
 
   const handleLike = async () => {
     try {
+      setIsLoading(true)
       const res = await fetch('../api/like', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ postId }),
       })
 
-      if (!res.ok) {
-        throw new Error()
+      if (res.ok) {
+        const data = await res.json()
+        if(data.like == true){
+        setLikes(data.likes)
+        setIsLiked(true)
+        }
+        else{
+          setLikes(data.likes)
+          setIsLiked(false)
+        }
       }
 
-      const data = await res.json()
-      setLikes(data.likes)
+
     } catch (error) {
       console.error(error)
     } finally {
@@ -36,7 +46,9 @@ const LikeButton = ({ postId, initialLikes }: LikeButtonProps) => {
     <button
       onClick={handleLike}
       disabled={isLoading}
-      className="flex items-center gap-2 text-zinc-400 hover:text-pink-500 transition-colors disabled:opacity-50"
+      className={`flex items-center gap-2 ${
+        isLiked ? 'text-pink-500' : 'text-zinc-400 hover:text-pink-500'
+      } transition-colors disabled:opacity-50`}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

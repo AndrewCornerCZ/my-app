@@ -17,8 +17,12 @@ export default async function HomePage() {
   return (
     <>
       <Navbar />
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white">
+    
       <AddPostButton />
       <Posts />
+    
+    </div>
     </>
   );
 }

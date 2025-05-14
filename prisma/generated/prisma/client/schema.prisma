@@ -4,68 +4,79 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
-generator client {
+generator clientt {
   provider = "prisma-client-js"
-  output   = "generated/prisma/client"
+  output   = "./generated/prisma/client"
 }
 
-datasource db {
+datasource dbb {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
 
-model User {
+model Userr {
   id        Int        @id @default(autoincrement())
   email     String     @unique
   username  String     @default("User")
   password  String     @default("")
-  userLikes UserLike[] // Add this line
+  userLikes UserLikee[] // Add this line
+
 }
 
-model Post {
+model Postt {
   id           Int           @id @default(autoincrement())
   created_at   DateTime      @default(now())
   text         String
-  postHashtags PostHashtag[]
+  postHashtags PostHashtagg[]
   likes        Int           @default(0)
-  comments     Comment[]
+  postId       Int?
   authorId     Int
-  userLikes    UserLike[] // Add this line
+  userLikes    UserLikee[] // Add this line
+
+  PostComment PostCommentt[]
 }
 
-model Hashtag {
+model Hashtagg {
   id           Int           @id @default(autoincrement())
   text         String        @unique
-  postHashtags PostHashtag[]
+  postHashtags PostHashtagg[]
 }
 
-model Comment {
-  id         Int      @id @default(autoincrement())
-  created_at DateTime @default(now())
-  text       String
-  likes      Int      @default(0)
-  postId     Int
-  post       Post     @relation(fields: [postId], references: [id])
-  authorId   Int
+model Commentt {
+  id          Int           @id @default(autoincrement())
+  text        String
+  authorId    Int
+  createdAt   DateTime      @default(now())
+  PostComment PostCommentt[]
 }
 
-model PostHashtag {
+model PostCommentt {
+  postId    Int
+  commentId Int
+
+  post    Postt    @relation(fields: [postId], references: [id])
+  comment Commentt @relation(fields: [commentId], references: [id])
+
+  @@id([postId, commentId]) // Composite primary key
+}
+
+model PostHashtagg {
   postId    Int
   hashtagId Int
 
-  post    Post    @relation(fields: [postId], references: [id])
-  hashtag Hashtag @relation(fields: [hashtagId], references: [id])
+  post    Postt    @relation(fields: [postId], references: [id])
+  hashtag Hashtagg @relation(fields: [hashtagId], references: [id])
 
   @@id([postId, hashtagId]) // Composite primary key
 }
 
-model UserLike {
+model UserLikee {
   id        Int      @id @default(autoincrement())
   userId    Int
   postId    Int
-  user      User     @relation(fields: [userId], references: [id])
-  post      Post     @relation(fields: [postId], references: [id])
+  user      Userr     @relation(fields: [userId], references: [id])
+  post      Postt     @relation(fields: [postId], references: [id])
   createdAt DateTime @default(now())
 
   @@unique([userId, postId])

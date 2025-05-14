@@ -129,6 +129,7 @@ exports.Prisma.PostScalarFieldEnum = {
   created_at: 'created_at',
   text: 'text',
   likes: 'likes',
+  postId: 'postId',
   authorId: 'authorId'
 };
 
@@ -139,11 +140,14 @@ exports.Prisma.HashtagScalarFieldEnum = {
 
 exports.Prisma.CommentScalarFieldEnum = {
   id: 'id',
-  created_at: 'created_at',
   text: 'text',
-  likes: 'likes',
+  authorId: 'authorId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.PostCommentScalarFieldEnum = {
   postId: 'postId',
-  authorId: 'authorId'
+  commentId: 'commentId'
 };
 
 exports.Prisma.PostHashtagScalarFieldEnum = {
@@ -168,12 +172,18 @@ exports.Prisma.QueryMode = {
   insensitive: 'insensitive'
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
 
 exports.Prisma.ModelName = {
   User: 'User',
   Post: 'Post',
   Hashtag: 'Hashtag',
   Comment: 'Comment',
+  PostComment: 'PostComment',
   PostHashtag: 'PostHashtag',
   UserLike: 'UserLike'
 };

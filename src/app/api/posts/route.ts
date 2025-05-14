@@ -1,15 +1,13 @@
-
 import { NextResponse } from "next/server";
-import { PrismaClient, Hashtag } from "../../../../prisma/generated/prisma/client";
-
-const prisma = new PrismaClient();
+import { Hashtag } from "../../../../prisma/generated/prisma/client";
+import {prisma} from "@/lib/db";
 
 export async function POST(req: Request) {
   let Hashtag: Hashtag | null = null;
 
-    const { text, hashtag, authorEmail } = await req.json();
-    if (!hashtag || !text || !authorEmail) {
-      return NextResponse.json({ error: "Missing required fields", hashtag, text, authorEmail }, { status: 400 });
+    const { text, hashtag, authorId } = await req.json();
+    if (!hashtag || !text || !authorId) {
+      return NextResponse.json({ error: "Missing required fields", hashtag, text, authorId }, { status: 400 });
     }
     const HashtagsMap = new Map<string, Hashtag>();
     const hashtagsplitted = hashtag.split(" ").map((tag: string) => tag.trim());
@@ -41,21 +39,15 @@ export async function POST(req: Request) {
     }
 
 
-    const authorId = await prisma.user.findUnique({
-      where: {
-        email: authorEmail
-      }
-    });
-
     console.log("Hashtag found:", Hashtag);
-    if (isNaN(authorId?.id as number)) {
-      return NextResponse.json({ error: "Invalid authorId" }, { status: 400 });
+    if (isNaN(authorId as number)) {
+      return NextResponse.json({ error: authorId}, { status: 400 });
     }
     const result = await prisma.$transaction(async (prisma) => {
       const newPost = await prisma.post.create({
         data: {
           text,
-          authorId: authorId?.id as number,
+          authorId: authorId as number,
           postHashtags: {
             create: Array.from(HashtagsMap.values())
               .filter((hashtag): hashtag is Hashtag => hashtag !== null)

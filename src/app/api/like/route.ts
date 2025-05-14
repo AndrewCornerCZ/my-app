@@ -1,9 +1,8 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { options } from "../auth/[...nextauth]/options";
-import { PrismaClient } from "../../../../prisma/generated/prisma/client";
+import {prisma} from "@/lib/db";
 
-const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
   try {
@@ -27,6 +26,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Author not found" }, { status: 404 });
     }
 
+    //zjistí jestli uživatel již dal like
     const existingLike = await prisma.userLike.findFirst({
       where: {
         AND: [
@@ -37,17 +37,17 @@ export async function POST(req: Request) {
     });
 
     
-    if (!existingLike) {
+    if (!existingLike) { //pokud ne
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      const result = await prisma.$transaction(async (tx) => {
+      const result = await prisma.$transaction(async (tx) => { //vytvoří like
         await tx.userLike.create({
           data: {
             userId: authorId.id as number,
             postId: postId
           }
         });
-  
+        //zvýší počet like u postu
         const updatedPost = await tx.post.update({
           where: { id: postId },
           data: { likes: { increment: 1 } }
@@ -56,8 +56,26 @@ export async function POST(req: Request) {
         return updatedPost;
       });
 
-    return NextResponse.json({ likes: result.likes });
+    return NextResponse.json({ likes: result.likes, like:true  });
   }
+  else {
+    //pokud uživatel již dal like, tak se like odstraní
+    const deleteLike = await prisma.$transaction(async (tx) => {
+      await tx.userLike.deleteMany({
+        where: {
+          AND: [
+            { postId: postId },
+            { userId: authorId.id as number }
+          ]
+        }
+      })
+    });
+    const result = await prisma.post.update({
+      where: { id: postId },
+      data: { likes: { decrement: 1 } }
+    });
+      return NextResponse.json({ likes: result.likes, like:false });
+    }
   } catch (error) {
     console.error('Error processing like:', error);
     return NextResponse.json(

@@ -10,6 +10,10 @@ export default async function Friends() {
   return ( 
    <div>
     <Navbar/>
+    <div className="flex flex-col items-center justify-center h-screen">
+      <h1 className="text-2xl font-bold">Friends</h1>
+      <p className="text-gray-500">This is the friends page. But its still not implemented XD</p>
    </div>
+    </div>
   );
 }

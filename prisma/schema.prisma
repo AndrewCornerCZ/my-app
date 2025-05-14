@@ -6,7 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "generated/prisma/client"
+  output   = "./generated/prisma/client"
 }
 
 datasource db {
@@ -18,7 +18,7 @@ datasource db {
 model User {
   id    Int     @id @default(autoincrement())
   email String  @unique
-  username  String @default("User")
+  username  String @unique
   password  String @default("")
   userLikes    UserLike[]   // Add this line
 }
@@ -29,9 +29,11 @@ model Post {
   text      String
   postHashtags PostHashtag[]
   likes     Int      @default(0)
-  comments Comment[] 
+  postId   Int?
   authorId  Int
   userLikes    UserLike[]   // Add this line
+
+  PostComment PostComment[]
 }
 
 model Hashtag {
@@ -39,15 +41,22 @@ model Hashtag {
   text      String @unique
   postHashtags PostHashtag[]
 }
-
-model Comment{
+model Comment {
   id        Int      @id @default(autoincrement())
-  created_at DateTime @default(now())
   text      String
-  likes     Int      @default(0)
-  postId    Int
-  post      Post     @relation(fields: [postId], references: [id])
   authorId  Int
+  createdAt DateTime @default(now())
+  PostComment PostComment[]
+}
+
+model PostComment{
+  postId    Int
+  commentId Int
+
+  post      Post    @relation(fields: [postId], references: [id])
+  comment   Comment @relation(fields: [commentId], references: [id])
+
+  @@id([postId, commentId]) // Composite primary key
 }
 model PostHashtag {
   postId    Int
