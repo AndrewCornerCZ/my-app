@@ -1,8 +1,11 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { options } from "../auth/[...nextauth]/options";
-import {prisma} from "@/lib/db";
+import { prisma } from "@/lib/db";
 
+interface FollowRequest {
+  userId: number;
+}
 
 export async function POST(req: Request) {
   try {
@@ -11,10 +14,9 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { userId } = await req.json();
-    
+    const { userId } = await req.json() as FollowRequest;
     if (!userId) {
-      return NextResponse.json({ error: "Post ID is required" }, { status: 400 });
+      return NextResponse.json({ error: "User ID is required" }, { status: 400 });
     }
 
     const authorId = await prisma.user.findUnique({
