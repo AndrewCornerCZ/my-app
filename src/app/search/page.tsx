@@ -5,7 +5,6 @@ import React from 'react';
 export default function SearchPage() {
     const [searchTerm, setSearchTerm] = React.useState('');
     const [filter, setFilter] = React.useState('users');
-    const [sortBy, setSortBy] = React.useState('date');
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();

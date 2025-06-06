@@ -16,15 +16,16 @@ export async function POST(req: Request) {
                     authorId: authorId,
                 }
             });
-
-            const ids = await tx.postComment.create({
-                data: {
-                    postId: postId as number,
-                    commentId: comment.id,
-                }
-            });
             return comment;
         });
+        const postcomment = await prisma.postComment.create(
+            {
+                data: {
+                    postId: postId,
+                    commentId: result.id,
+                }
+            }
+        )
     
     return NextResponse.json(result, { status: 201 });
     }

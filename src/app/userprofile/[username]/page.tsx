@@ -4,6 +4,9 @@ import AddLogoutButton from "@/components/AddLogoutButton";
 import AddPostButton from "@/components/AddPostButton";
 import PostProfile from "@/components/PostProfile";
 import { prisma } from "@/lib/db";
+import FollowButton from "@/components/FollowButton";
+import { getServerSession } from "next-auth/next";
+import { options } from "@/app/api/auth/[...nextauth]/options";
 
 interface ProfileProps {
   params: {
@@ -12,17 +15,39 @@ interface ProfileProps {
 }
 
 export default async function Profile({ params }: ProfileProps) {
-  const { username } = params;
+  const session = await getServerSession(options);
   
-  const user = await prisma.user.findUnique({
-    where: {
-      username: username,
-    },
-  });
+  // Fetch user and check if they're being followed in parallel
+  const [user, currentUser] = await Promise.all([
+    prisma.user.findUnique({
+      where: {
+        username: params.username,
+      },
+      include: {
+        followers: true,
+        following: true,
+      }
+    }),
+    session?.user?.email ? prisma.user.findUnique({
+      where: {
+        email: session.user.email
+      }
+    }) : null
+  ]);
 
   if (!user) {
     return <div className='text-white'>User not found</div>;
+  }
+
+  // Check if current user is following this profile
+  const isFollowing = currentUser ? await prisma.userFollow.findFirst({
+    where: {
+      AND: [
+        { followerId: currentUser.id },
+        { followingId: user.id }
+      ]
     }
+  }) : null;
 
   return (
     <div className="min-h-screen bg-gray-900">
@@ -38,6 +63,14 @@ export default async function Profile({ params }: ProfileProps) {
             <div>
               <h1 className="text-2xl font-bold text-white mb-1">@{user.username}</h1>
             </div>
+                      <FollowButton 
+              userId={user.id} 
+              initialFollowState={!!isFollowing}
+            />
+          </div>
+          <div className="text-gray-400 display-flex flex-col">
+            <p className="mb-2">Followers: {user.followers.length}</p>
+            <p>Following: {user.following.length}</p>
           </div>
         </div>
 

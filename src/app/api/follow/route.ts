@@ -11,9 +11,9 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { postId } = await req.json();
+    const { userId } = await req.json();
     
-    if (!postId) {
+    if (!userId) {
       return NextResponse.json({ error: "Post ID is required" }, { status: 400 });
     }
 
@@ -26,55 +26,61 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Author not found" }, { status: 404 });
     }
 
-    //zjistí jestli uživatel již dal like
-    const existingLike = await prisma.userLike.findFirst({
+    //zjistí jestli uživatel již dal follow
+    const existingFollow = await prisma.userFollow.findFirst({
       where: {
         AND: [
-          { postId: postId },
-          { userId: authorId.id as number }
+          { followerId: authorId.id as number }, // ID uživatele, který dává follow
+          { followingId: userId as number } // ID uživatele, kterému se dává follow
         ]
       }
     });
 
-    
-    if (!existingLike) { //pokud ne
+    if( !existingFollow && authorId.id !== userId) {//pokud ne
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       const result = await prisma.$transaction(async (tx) => { //vytvoří like
-        await tx.userLike.create({
+        await tx.userFollow.create({
           data: {
-            userId: authorId.id as number,
-            postId: postId
+            followerId: authorId.id as number,
+            followingId: userId as number
           }
         });
         //zvýší počet like u postu
-        const updatedPost = await tx.post.update({
-          where: { id: postId },
-          data: { likes: { increment: 1 } }
+        const updatedUserFollower = await tx.user.update({
+          where: { id: authorId.id as number },
+          data: { followingCount: { increment: 1 } }
         });
-  
-        return updatedPost;
+        const updatedUserFollowing = await tx.user.update({
+          where: { id: userId as number },
+          data: { followersCount: { increment: 1 } }
+        });
+        return updatedUserFollower;
       });
 
-    return NextResponse.json({ likes: result.likes, like:true  });
+    return NextResponse.json({follow:true  });
   }
   else {
     //pokud uživatel již dal like, tak se like odstraní
     await prisma.$transaction(async (tx) => {
-      await tx.userLike.deleteMany({
+      await tx.userFollow.deleteMany({
         where: {
           AND: [
-            { postId: postId },
-            { userId: authorId.id as number }
+            { followerId: authorId.id as number }, // ID uživatele, který dává follow
+            { followingId: userId as number }
           ]
         }
       })
     });
-    const result = await prisma.post.update({
-      where: { id: postId },
+    const updatedUserFollower = await prisma.post.update({
+      where: { id: authorId.id as number},
       data: { likes: { decrement: 1 } }
     });
-      return NextResponse.json({ likes: result.likes, like:false });
+    const updatedUserFollowing = await prisma.user.update({
+      where: { id: userId as number },
+      data: { followersCount: { decrement: 1 } }
+   });
+    return NextResponse.json({ follow:false });
     }
   } catch (error) {
     console.error('Error processing like:', error);

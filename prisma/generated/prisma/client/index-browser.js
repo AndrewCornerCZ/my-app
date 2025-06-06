@@ -121,7 +121,9 @@ exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
   username: 'username',
-  password: 'password'
+  password: 'password',
+  followersCount: 'followersCount',
+  followingCount: 'followingCount'
 };
 
 exports.Prisma.PostScalarFieldEnum = {
@@ -162,6 +164,13 @@ exports.Prisma.UserLikeScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.UserFollowScalarFieldEnum = {
+  id: 'id',
+  followerId: 'followerId',
+  followingId: 'followingId',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -185,7 +194,8 @@ exports.Prisma.ModelName = {
   Comment: 'Comment',
   PostComment: 'PostComment',
   PostHashtag: 'PostHashtag',
-  UserLike: 'UserLike'
+  UserLike: 'UserLike',
+  UserFollow: 'UserFollow'
 };
 
 /**
