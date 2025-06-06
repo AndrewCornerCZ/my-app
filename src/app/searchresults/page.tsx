@@ -1,4 +1,3 @@
-
 import React from "react";
 import { prisma } from '@/lib/db';
 import GeneratePost from "@/components/GeneratePost";
@@ -83,9 +82,11 @@ export default async function SearchResultPage({
                 <h1 className="text-3xl font-bold mb-4">Search Results</h1>
                 <p className="text-lg">Search Term: {searchTerm}</p>
                 <p className="text-lg">Filter: {filter}</p>
-                <ul className="mt-4">
+                <ul className="mt-4 w-full max-w-2xl space-y-4">
                     {post.map((post) => (
-                        <GeneratePost searchpostId={post.id} />
+                        <li key={post.id}>
+                            <GeneratePost searchpostId={post.id} />
+                        </li>
                     ))}
                 </ul>
                     

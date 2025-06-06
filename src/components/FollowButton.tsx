@@ -1,8 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import {prisma} from "@/lib/db";
-
 
 interface FollowProps {
     userId: number

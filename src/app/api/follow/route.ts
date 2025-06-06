@@ -39,7 +39,7 @@ export async function POST(req: Request) {
     if( !existingFollow && authorId.id !== userId) {//pokud ne
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      const result = await prisma.$transaction(async (tx) => { //vytvoří like
+      await prisma.$transaction(async (tx) => { //vytvoří like
         await tx.userFollow.create({
           data: {
             followerId: authorId.id as number,
@@ -51,7 +51,7 @@ export async function POST(req: Request) {
           where: { id: authorId.id as number },
           data: { followingCount: { increment: 1 } }
         });
-        const updatedUserFollowing = await tx.user.update({
+        await tx.user.update({
           where: { id: userId as number },
           data: { followersCount: { increment: 1 } }
         });
@@ -72,11 +72,11 @@ export async function POST(req: Request) {
         }
       })
     });
-    const updatedUserFollower = await prisma.post.update({
+    await prisma.post.update({
       where: { id: authorId.id as number},
       data: { likes: { decrement: 1 } }
     });
-    const updatedUserFollowing = await prisma.user.update({
+    await prisma.user.update({
       where: { id: userId as number },
       data: { followersCount: { decrement: 1 } }
    });

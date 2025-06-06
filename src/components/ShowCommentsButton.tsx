@@ -2,15 +2,13 @@
 
 import { useState } from 'react';
 import ShowComments from './ShowComments';
-import { redirect } from 'next/dist/server/api-utils';
-
 interface ShowCommentsProps {
   postId: number;
   comments: number;
 }
 
 const ShowCommentsButton: React.FC<ShowCommentsProps> = ({ postId, comments }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded] = useState(false);
 
 
 

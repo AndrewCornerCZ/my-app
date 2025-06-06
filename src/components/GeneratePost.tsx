@@ -1,12 +1,11 @@
 import React from 'react';
 
-import {Hashtag } from '../../prisma/generated/prisma/client';
 import {prisma} from "@/lib/db";
 import AddCommentButton from './AddCommentButton';
 import LikeButton from './LikeButton';
 import { getServerSession } from 'next-auth/next';
 import { options } from '../app/api/auth/[...nextauth]/options';
-import { Post, User } from '../../prisma/generated/prisma/client'
+
 
 interface GeneratePostProps {
     searchpostId: number;
