@@ -2,14 +2,6 @@ import { Metadata } from 'next'
 import AddCommentForm from '@/components/AddCommentForm'
 import GeneratePost from '@/components/GeneratePost'
 import { notFound } from 'next/navigation'
-import { JSX } from 'react'
-
-// Remove Promise from props interface and use type instead of interface
-type PageProps = {
-  searchParams: {
-    postId?: string;
-  }
-}
 
 export const metadata: Metadata = {
   title: 'Add Comment',
@@ -18,7 +10,9 @@ export const metadata: Metadata = {
 
 export default async function AddCommentPage({
   searchParams,
-}: PageProps): Promise<JSX.Element> {
+}: {
+  searchParams: { postId?: string }
+}) {
   if (!searchParams?.postId) {
     notFound()
   }
@@ -29,9 +23,16 @@ export default async function AddCommentPage({
   }
 
   return (
-    <div className="container mx-auto p-4">
-      <GeneratePost searchpostId={postId} />
-      <AddCommentForm postId={postId} />
+    <div className="min-h-screen bg-gray-900">
+      <div className="container mx-auto p-4 space-y-6">
+        <h1 className="text-2xl font-bold text-white mb-6">Add Comment</h1>
+        <div className="bg-zinc-800 rounded-lg p-4">
+          <GeneratePost searchpostId={postId} />
+        </div>
+        <div className="bg-zinc-800 rounded-lg p-4">
+          <AddCommentForm postId={postId} />
+        </div>
+      </div>
     </div>
   )
 }
