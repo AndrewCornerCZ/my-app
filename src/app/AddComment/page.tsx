@@ -4,6 +4,7 @@ import GeneratePost from '@/components/GeneratePost'
 import { notFound } from 'next/navigation'
 
 interface AddCommentPageProps {
+  Promise: Promise<void>
   searchParams: {
     postId?: string;
   }
