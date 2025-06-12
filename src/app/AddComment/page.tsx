@@ -2,6 +2,15 @@ import { Metadata } from 'next'
 import AddCommentForm from '@/components/AddCommentForm'
 import GeneratePost from '@/components/GeneratePost'
 import { notFound } from 'next/navigation'
+import { JSX } from 'react'
+
+
+type PageProps = {
+  
+  searchParams: Promise<{
+    postId?: string
+  }>
+}
 
 export const metadata: Metadata = {
   title: 'Add Comment',
@@ -10,14 +19,12 @@ export const metadata: Metadata = {
 
 export default async function AddCommentPage({
   searchParams,
-}: {
-  searchParams: { postId?: string }
-}) {
-  if (!searchParams?.postId) {
+}: PageProps): Promise<JSX.Element> {
+  if (!(await searchParams)?.postId) {
     notFound()
   }
 
-  const postId = Number(searchParams.postId)
+  const postId = Number((await searchParams).postId)
   if (isNaN(postId)) {
     notFound()
   }
