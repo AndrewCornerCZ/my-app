@@ -17,9 +17,7 @@ export const metadata: Metadata = {
   description: 'Add a comment to a post'
 }
 
-export default async function AddCommentPage({
-  searchParams,
-}: PageProps): Promise<JSX.Element> {
+export default async function AddCommentPage({ searchParams }: { searchParams: { postId: string } }){
   if (!(await searchParams)?.postId) {
     notFound()
   }
