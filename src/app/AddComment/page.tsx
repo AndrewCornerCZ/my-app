@@ -1,17 +1,19 @@
 import AddCommentForm from '@/components/AddCommentForm'
 import GeneratePost from '@/components/GeneratePost'
 import { notFound } from 'next/navigation'
+import { PageProps } from '../../../.next/types/app/AddComment/page'
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 interface SearchParams {
   postId: string
 }
 
-export default async function AddCommentPage( {postId} : SearchParams ) {
-  if (!postId) {
+export default async function AddCommentPage( {searchParams} : PageProps ) {
+  const params = await searchParams as SearchParams
+  if (!params.postId) {
     notFound()
   }
+  const postId = (params?.postId) as string
+
 
   return (
     <div className="min-h-screen bg-gray-900">
