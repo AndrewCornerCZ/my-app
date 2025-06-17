@@ -1,28 +1,22 @@
-import { Metadata } from 'next'
 import AddCommentForm from '@/components/AddCommentForm'
 import GeneratePost from '@/components/GeneratePost'
 import { notFound } from 'next/navigation'
-import { JSX } from 'react'
 
 
-type PageProps = {
-  
-  searchParams: Promise<{
-    postId?: string
-  }>
+interface SearchParams {
+  postId?: string
 }
 
-export const metadata: Metadata = {
-  title: 'Add Comment',
-  description: 'Add a comment to a post'
-}
-
-export default async function AddCommentPage({ searchParams }: { searchParams: { postId: string } }){
-  if (!(await searchParams)?.postId) {
+export default async function AddCommentPage({ 
+  searchParams 
+}: { 
+  searchParams: SearchParams 
+}) {
+  if (!searchParams?.postId) {
     notFound()
   }
 
-  const postId = Number((await searchParams).postId)
+  const postId = Number(searchParams.postId)
   if (isNaN(postId)) {
     notFound()
   }
