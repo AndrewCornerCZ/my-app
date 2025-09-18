@@ -4,17 +4,19 @@ import { notFound } from 'next/navigation'
 import './addComment.css'
 
 interface AddCommentPageProps {
-  searchParams: {
+  searchParams: Promise<{
     postId?: string
-  }
+  }>
 }
 
-export default function AddCommentPage( { searchParams }: AddCommentPageProps) {
-  if (!searchParams.postId) {
+export default async function AddCommentPage({ searchParams }: AddCommentPageProps) {
+  const resolvedSearchParams = await searchParams
+  
+  if (!resolvedSearchParams.postId) {
     notFound()
   }
   
-  const postId = Number(searchParams.postId)
+  const postId = Number(resolvedSearchParams.postId)
   if (isNaN(postId)) {
     notFound()
   }
