@@ -3,11 +3,13 @@ import GeneratePost from '@/components/GeneratePost'
 import { notFound } from 'next/navigation'
 import './addComment.css'
 
-interface SearchParams {
-  postId: string
+interface AddCommentPageProps {
+  searchParams: {
+    postId?: string
+  }
 }
 
-export default async function AddCommentPage( {searchParams} : { searchParams: SearchParams } ) {
+export default async function AddCommentPage( { searchParams }: AddCommentPageProps) {
   if (!searchParams.postId) {
     notFound()
   }
