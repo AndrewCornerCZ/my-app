@@ -3,7 +3,12 @@ import { getServerSession } from 'next-auth'
 import { options } from '../../auth/[...nextauth]/options'
 import { prisma } from '@/lib/db'
 import bcrypt from 'bcryptjs'
-import { signOut } from 'next-auth/react'
+
+type UpdateData = {
+  username?: string
+  password?: string
+  bio?: string | null
+}
 
 export async function POST(req: Request) {
   try {
@@ -33,7 +38,7 @@ export async function POST(req: Request) {
     }
 
     // Update user data
-    const updateData: any = {}
+    const updateData: UpdateData = {}
     
     if (username && username !== user.username) {
       // Check if username is already taken
@@ -67,7 +72,11 @@ export async function POST(req: Request) {
     if (Object.keys(updateData).length > 0) {
       await prisma.user.update({
         where: { email: session.user.email },
-        data: updateData
+        data: {
+          ...(username && username !== user.username ? { username } : {}),
+          ...(newPassword ? { password: await bcrypt.hash(newPassword, 10) } : {}),
+          ...(bio !== undefined && bio !== user.bio ? { bio } : {})
+  }
       })
       
       // Return flag to indicate that user should be logged out
