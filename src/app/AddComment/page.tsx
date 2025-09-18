@@ -9,7 +9,7 @@ interface AddCommentPageProps {
   }
 }
 
-export default async function AddCommentPage( { searchParams }: AddCommentPageProps) {
+export default function AddCommentPage( { searchParams }: AddCommentPageProps) {
   if (!searchParams.postId) {
     notFound()
   }
