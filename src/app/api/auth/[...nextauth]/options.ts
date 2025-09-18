@@ -12,7 +12,9 @@ export const options: NextAuthOptions = {
                 id: { label: "Id", type: "number" },
                 email: { label: "Email", type: "email" },
                 username: { label: "Username", type: "text" },
-                password: { label: "Password", type: "password" }
+                password: { label: "Password", type: "password" },
+                bio: { label: "Bio", type: "text" },
+                image: { label: "Image", type: "image" }
             },
             async authorize(credentials): Promise<User | null> {
                 
@@ -31,7 +33,7 @@ export const options: NextAuthOptions = {
 
                 const isValid = await bcrypt.compare(credentials.password, user.password);
                 if (isValid) {
-                    return {  id: user.id, email: user.email, name: user.username}; // Convert id to string
+                    return {  id: user.id, email: user.email, name: user.username, bio: user.bio, username: user.username, password: user.password, image: user.image }; // Include all required properties
                 } else {
                     throw new Error("Invalid password");
                 }

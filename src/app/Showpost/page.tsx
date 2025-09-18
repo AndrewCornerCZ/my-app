@@ -4,11 +4,7 @@ import GeneratePost from "@/components/GeneratePost";
 import ShowComments from "@/components/ShowComments";
 import BackButton from "@/components/BackButton";
 
-export default async function Showpost({
-  searchParams,
-}: {
-  searchParams: { postId: number }
-}) {
+export default async function Showpost({searchParams}: { searchParams: { postId: number }}) {
   if (!searchParams) {
     return <div className="text-white">Post not found</div>;
   }

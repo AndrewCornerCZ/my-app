@@ -20,6 +20,8 @@ model User {
   email String  @unique
   username  String @unique
   password  String @default("")
+  bio       String @default("")
+  image     String @default("")
   userLikes    UserLike[]   // Add this line
   followers UserFollow[] @relation("Following")
   following UserFollow[] @relation("Follower")

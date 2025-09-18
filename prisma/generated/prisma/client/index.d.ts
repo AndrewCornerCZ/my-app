@@ -1694,6 +1694,8 @@ export namespace Prisma {
     email: string | null
     username: string | null
     password: string | null
+    bio: string | null
+    image: string | null
     followersCount: number | null
     followingCount: number | null
   }
@@ -1703,6 +1705,8 @@ export namespace Prisma {
     email: string | null
     username: string | null
     password: string | null
+    bio: string | null
+    image: string | null
     followersCount: number | null
     followingCount: number | null
   }
@@ -1712,6 +1716,8 @@ export namespace Prisma {
     email: number
     username: number
     password: number
+    bio: number
+    image: number
     followersCount: number
     followingCount: number
     _all: number
@@ -1735,6 +1741,8 @@ export namespace Prisma {
     email?: true
     username?: true
     password?: true
+    bio?: true
+    image?: true
     followersCount?: true
     followingCount?: true
   }
@@ -1744,6 +1752,8 @@ export namespace Prisma {
     email?: true
     username?: true
     password?: true
+    bio?: true
+    image?: true
     followersCount?: true
     followingCount?: true
   }
@@ -1753,6 +1763,8 @@ export namespace Prisma {
     email?: true
     username?: true
     password?: true
+    bio?: true
+    image?: true
     followersCount?: true
     followingCount?: true
     _all?: true
@@ -1849,6 +1861,8 @@ export namespace Prisma {
     email: string
     username: string
     password: string
+    bio: string
+    image: string
     followersCount: number
     followingCount: number
     _count: UserCountAggregateOutputType | null
@@ -1877,6 +1891,8 @@ export namespace Prisma {
     email?: boolean
     username?: boolean
     password?: boolean
+    bio?: boolean
+    image?: boolean
     followersCount?: boolean
     followingCount?: boolean
     userLikes?: boolean | User$userLikesArgs<ExtArgs>
@@ -1890,6 +1906,8 @@ export namespace Prisma {
     email?: boolean
     username?: boolean
     password?: boolean
+    bio?: boolean
+    image?: boolean
     followersCount?: boolean
     followingCount?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1899,6 +1917,8 @@ export namespace Prisma {
     email?: boolean
     username?: boolean
     password?: boolean
+    bio?: boolean
+    image?: boolean
     followersCount?: boolean
     followingCount?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1908,11 +1928,13 @@ export namespace Prisma {
     email?: boolean
     username?: boolean
     password?: boolean
+    bio?: boolean
+    image?: boolean
     followersCount?: boolean
     followingCount?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "username" | "password" | "followersCount" | "followingCount", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "username" | "password" | "bio" | "image" | "followersCount" | "followingCount", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     userLikes?: boolean | User$userLikesArgs<ExtArgs>
     followers?: boolean | User$followersArgs<ExtArgs>
@@ -1934,6 +1956,8 @@ export namespace Prisma {
       email: string
       username: string
       password: string
+      bio: string
+      image: string
       followersCount: number
       followingCount: number
     }, ExtArgs["result"]["user"]>
@@ -2366,6 +2390,8 @@ export namespace Prisma {
     readonly email: FieldRef<"User", 'String'>
     readonly username: FieldRef<"User", 'String'>
     readonly password: FieldRef<"User", 'String'>
+    readonly bio: FieldRef<"User", 'String'>
+    readonly image: FieldRef<"User", 'String'>
     readonly followersCount: FieldRef<"User", 'Int'>
     readonly followingCount: FieldRef<"User", 'Int'>
   }
@@ -10530,6 +10556,8 @@ export namespace Prisma {
     email: 'email',
     username: 'username',
     password: 'password',
+    bio: 'bio',
+    image: 'image',
     followersCount: 'followersCount',
     followingCount: 'followingCount'
   };
@@ -10699,6 +10727,8 @@ export namespace Prisma {
     email?: StringFilter<"User"> | string
     username?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
+    bio?: StringFilter<"User"> | string
+    image?: StringFilter<"User"> | string
     followersCount?: IntFilter<"User"> | number
     followingCount?: IntFilter<"User"> | number
     userLikes?: UserLikeListRelationFilter
@@ -10711,6 +10741,8 @@ export namespace Prisma {
     email?: SortOrder
     username?: SortOrder
     password?: SortOrder
+    bio?: SortOrder
+    image?: SortOrder
     followersCount?: SortOrder
     followingCount?: SortOrder
     userLikes?: UserLikeOrderByRelationAggregateInput
@@ -10726,6 +10758,8 @@ export namespace Prisma {
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     password?: StringFilter<"User"> | string
+    bio?: StringFilter<"User"> | string
+    image?: StringFilter<"User"> | string
     followersCount?: IntFilter<"User"> | number
     followingCount?: IntFilter<"User"> | number
     userLikes?: UserLikeListRelationFilter
@@ -10738,6 +10772,8 @@ export namespace Prisma {
     email?: SortOrder
     username?: SortOrder
     password?: SortOrder
+    bio?: SortOrder
+    image?: SortOrder
     followersCount?: SortOrder
     followingCount?: SortOrder
     _count?: UserCountOrderByAggregateInput
@@ -10755,6 +10791,8 @@ export namespace Prisma {
     email?: StringWithAggregatesFilter<"User"> | string
     username?: StringWithAggregatesFilter<"User"> | string
     password?: StringWithAggregatesFilter<"User"> | string
+    bio?: StringWithAggregatesFilter<"User"> | string
+    image?: StringWithAggregatesFilter<"User"> | string
     followersCount?: IntWithAggregatesFilter<"User"> | number
     followingCount?: IntWithAggregatesFilter<"User"> | number
   }
@@ -11129,6 +11167,8 @@ export namespace Prisma {
     email: string
     username: string
     password?: string
+    bio?: string
+    image?: string
     followersCount?: number
     followingCount?: number
     userLikes?: UserLikeCreateNestedManyWithoutUserInput
@@ -11141,6 +11181,8 @@ export namespace Prisma {
     email: string
     username: string
     password?: string
+    bio?: string
+    image?: string
     followersCount?: number
     followingCount?: number
     userLikes?: UserLikeUncheckedCreateNestedManyWithoutUserInput
@@ -11152,6 +11194,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
     followersCount?: IntFieldUpdateOperationsInput | number
     followingCount?: IntFieldUpdateOperationsInput | number
     userLikes?: UserLikeUpdateManyWithoutUserNestedInput
@@ -11164,6 +11208,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
     followersCount?: IntFieldUpdateOperationsInput | number
     followingCount?: IntFieldUpdateOperationsInput | number
     userLikes?: UserLikeUncheckedUpdateManyWithoutUserNestedInput
@@ -11176,6 +11222,8 @@ export namespace Prisma {
     email: string
     username: string
     password?: string
+    bio?: string
+    image?: string
     followersCount?: number
     followingCount?: number
   }
@@ -11184,6 +11232,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
     followersCount?: IntFieldUpdateOperationsInput | number
     followingCount?: IntFieldUpdateOperationsInput | number
   }
@@ -11193,6 +11243,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
     followersCount?: IntFieldUpdateOperationsInput | number
     followingCount?: IntFieldUpdateOperationsInput | number
   }
@@ -11562,6 +11614,8 @@ export namespace Prisma {
     email?: SortOrder
     username?: SortOrder
     password?: SortOrder
+    bio?: SortOrder
+    image?: SortOrder
     followersCount?: SortOrder
     followingCount?: SortOrder
   }
@@ -11577,6 +11631,8 @@ export namespace Prisma {
     email?: SortOrder
     username?: SortOrder
     password?: SortOrder
+    bio?: SortOrder
+    image?: SortOrder
     followersCount?: SortOrder
     followingCount?: SortOrder
   }
@@ -11586,6 +11642,8 @@ export namespace Prisma {
     email?: SortOrder
     username?: SortOrder
     password?: SortOrder
+    bio?: SortOrder
+    image?: SortOrder
     followersCount?: SortOrder
     followingCount?: SortOrder
   }
@@ -13078,6 +13136,8 @@ export namespace Prisma {
     email: string
     username: string
     password?: string
+    bio?: string
+    image?: string
     followersCount?: number
     followingCount?: number
     followers?: UserFollowCreateNestedManyWithoutFollowingInput
@@ -13089,6 +13149,8 @@ export namespace Prisma {
     email: string
     username: string
     password?: string
+    bio?: string
+    image?: string
     followersCount?: number
     followingCount?: number
     followers?: UserFollowUncheckedCreateNestedManyWithoutFollowingInput
@@ -13141,6 +13203,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
     followersCount?: IntFieldUpdateOperationsInput | number
     followingCount?: IntFieldUpdateOperationsInput | number
     followers?: UserFollowUpdateManyWithoutFollowingNestedInput
@@ -13152,6 +13216,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
     followersCount?: IntFieldUpdateOperationsInput | number
     followingCount?: IntFieldUpdateOperationsInput | number
     followers?: UserFollowUncheckedUpdateManyWithoutFollowingNestedInput
@@ -13194,6 +13260,8 @@ export namespace Prisma {
     email: string
     username: string
     password?: string
+    bio?: string
+    image?: string
     followersCount?: number
     followingCount?: number
     userLikes?: UserLikeCreateNestedManyWithoutUserInput
@@ -13205,6 +13273,8 @@ export namespace Prisma {
     email: string
     username: string
     password?: string
+    bio?: string
+    image?: string
     followersCount?: number
     followingCount?: number
     userLikes?: UserLikeUncheckedCreateNestedManyWithoutUserInput
@@ -13220,6 +13290,8 @@ export namespace Prisma {
     email: string
     username: string
     password?: string
+    bio?: string
+    image?: string
     followersCount?: number
     followingCount?: number
     userLikes?: UserLikeCreateNestedManyWithoutUserInput
@@ -13231,6 +13303,8 @@ export namespace Prisma {
     email: string
     username: string
     password?: string
+    bio?: string
+    image?: string
     followersCount?: number
     followingCount?: number
     userLikes?: UserLikeUncheckedCreateNestedManyWithoutUserInput
@@ -13257,6 +13331,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
     followersCount?: IntFieldUpdateOperationsInput | number
     followingCount?: IntFieldUpdateOperationsInput | number
     userLikes?: UserLikeUpdateManyWithoutUserNestedInput
@@ -13268,6 +13344,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
     followersCount?: IntFieldUpdateOperationsInput | number
     followingCount?: IntFieldUpdateOperationsInput | number
     userLikes?: UserLikeUncheckedUpdateManyWithoutUserNestedInput
@@ -13289,6 +13367,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
     followersCount?: IntFieldUpdateOperationsInput | number
     followingCount?: IntFieldUpdateOperationsInput | number
     userLikes?: UserLikeUpdateManyWithoutUserNestedInput
@@ -13300,6 +13380,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
     followersCount?: IntFieldUpdateOperationsInput | number
     followingCount?: IntFieldUpdateOperationsInput | number
     userLikes?: UserLikeUncheckedUpdateManyWithoutUserNestedInput

@@ -74,6 +74,9 @@ export async function POST(req: Request) {
       where: { id: postId },
       data: { likes: { decrement: 1 } }
     });
+    if (result.likes < 0) {
+      return NextResponse.json({ error: "Like count cannot be negative" }, { status: 400 });
+    }
       return NextResponse.json({ likes: result.likes, like:false });
     }
   } catch (error) {
