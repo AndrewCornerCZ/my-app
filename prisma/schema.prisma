@@ -10,69 +10,73 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider  = "postgresql"
   url       = env("DATABASE_URL")
- directUrl = env("DIRECT_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  username  String @unique
-  password  String @default("")
-  bio       String @default("")
-  image     String @default("")
-  userLikes    UserLike[]   // Add this line
-  followers UserFollow[] @relation("Following")
-  following UserFollow[] @relation("Follower")
-  followersCount Int @default(0)
-  followingCount Int @default(0)
+  id             Int          @id @default(autoincrement())
+  email          String       @unique
+  username       String       @unique
+  password       String       @default("")
+  bio            String       @default("")
+  image          String       @default("")
+  userLikes      UserLike[] // Add this line
+  followers      UserFollow[] @relation("Following")
+  following      UserFollow[] @relation("Follower")
+  sports         UserSport[]
+  followersCount Int          @default(0)
+  followingCount Int          @default(0)
 }
 
 model Post {
-  id        Int      @id @default(autoincrement())
-  created_at DateTime @default(now())
-  text      String
+  id           Int           @id @default(autoincrement())
+  created_at   DateTime      @default(now())
+  text         String
   postHashtags PostHashtag[]
-  likes     Int      @default(0)
-  postId   Int?
-  authorId  Int
-  userLikes    UserLike[]   // Add this line
+  likes        Int           @default(0)
+  postId       Int?
+  authorId     Int
+  userLikes    UserLike[] // Add this line
 
   PostComment PostComment[]
 }
 
 model Hashtag {
-  id        Int      @id @default(autoincrement())
-  text      String @unique
+  id           Int           @id @default(autoincrement())
+  text         String        @unique
   postHashtags PostHashtag[]
 }
+
 model Comment {
-  id        Int      @id @default(autoincrement())
-  text      String
-  authorId  Int
-  createdAt DateTime @default(now())
+  id          Int           @id @default(autoincrement())
+  text        String
+  authorId    Int
+  createdAt   DateTime      @default(now())
   PostComment PostComment[]
 }
 
-model PostComment{
+model PostComment {
   postId    Int
   commentId Int
 
-  post      Post    @relation(fields: [postId], references: [id])
-  comment   Comment @relation(fields: [commentId], references: [id])
+  post    Post    @relation(fields: [postId], references: [id])
+  comment Comment @relation(fields: [commentId], references: [id])
 
   @@id([postId, commentId]) // Composite primary key
 }
+
 model PostHashtag {
   postId    Int
   hashtagId Int
 
-  post      Post    @relation(fields: [postId], references: [id])
-  hashtag   Hashtag @relation(fields: [hashtagId], references: [id])
+  post    Post    @relation(fields: [postId], references: [id])
+  hashtag Hashtag @relation(fields: [hashtagId], references: [id])
 
   @@id([postId, hashtagId]) // Composite primary key
 }
+
 model UserLike {
   id        Int      @id @default(autoincrement())
   userId    Int
@@ -83,12 +87,40 @@ model UserLike {
 
   @@unique([userId, postId])
 }
+
 model UserFollow {
-  id        Int      @id @default(autoincrement())
-  followerId Int
+  id          Int      @id @default(autoincrement())
+  followerId  Int
   followingId Int
-  follower  User     @relation("Follower", fields: [followerId], references: [id])
-  following User     @relation("Following", fields: [followingId], references: [id])
-  createdAt DateTime @default(now())
+  follower    User     @relation("Follower", fields: [followerId], references: [id])
+  following   User     @relation("Following", fields: [followingId], references: [id])
+  createdAt   DateTime @default(now())
+
   @@unique([followerId, followingId])
+}
+
+model UserSport {
+  id      Int   @id @default(autoincrement())
+  userId  Int
+  sportId Int
+  sportRankId Int
+  startedAt DateTime    @default(now())
+  user    User  @relation(fields: [userId], references: [id])
+  sport   Sport @relation(fields: [sportId], references: [id])
+  sportrank SportRanks @relation(fields: [sportRankId], references: [id])
+
+  @@unique([userId, sportId])
+}
+
+model Sport {
+  id        Int         @id @default(autoincrement())
+  name      String      @unique
+  users     UserSport[] // sport může mít víc uživatelů
+}
+
+model SportRanks {
+  id          Int     @id @default(autoincrement())
+  name        String  @unique
+  description String
+  users     UserSport[]
 }

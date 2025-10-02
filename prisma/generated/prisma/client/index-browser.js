@@ -173,6 +173,25 @@ exports.Prisma.UserFollowScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.UserSportScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  sportId: 'sportId',
+  sportRankId: 'sportRankId',
+  startedAt: 'startedAt'
+};
+
+exports.Prisma.SportScalarFieldEnum = {
+  id: 'id',
+  name: 'name'
+};
+
+exports.Prisma.SportRanksScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -197,7 +216,10 @@ exports.Prisma.ModelName = {
   PostComment: 'PostComment',
   PostHashtag: 'PostHashtag',
   UserLike: 'UserLike',
-  UserFollow: 'UserFollow'
+  UserFollow: 'UserFollow',
+  UserSport: 'UserSport',
+  Sport: 'Sport',
+  SportRanks: 'SportRanks'
 };
 
 /**

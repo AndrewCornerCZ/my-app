@@ -1,3 +1,5 @@
 {
-    "CodeGPT.apiKey": "Claude Code"
+    "CodeGPT.apiKey": "Claude Code",
+    "chatgpt.gpt3.provider": "OpenAI",
+    "chatgpt.gpt3.apiKey": "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"
 }

@@ -25,6 +25,7 @@ model User {
   userLikes      UserLike[] // Add this line
   followers      UserFollow[] @relation("Following")
   following      UserFollow[] @relation("Follower")
+  sports         UserSport[]
   followersCount Int          @default(0)
   followingCount Int          @default(0)
 }
@@ -96,4 +97,30 @@ model UserFollow {
   createdAt   DateTime @default(now())
 
   @@unique([followerId, followingId])
+}
+
+model UserSport {
+  id          Int         @id @default(autoincrement())
+  userId      Int
+  sportId     Int
+  sportRankId Int
+  startedAt   DateTime    @default(now())
+  user        User        @relation(fields: [userId], references: [id])
+  sport       Sport       @relation(fields: [sportId], references: [id])
+  sportrank   SportRanks? @relation(fields: [sportRankId], references: [id])
+
+  @@unique([userId, sportId])
+}
+
+model Sport {
+  id    Int         @id @default(autoincrement())
+  name  String      @unique
+  users UserSport[] // sport může mít víc uživatelů
+}
+
+model SportRanks {
+  id          Int         @id @default(autoincrement())
+  name        String      @unique
+  description String
+  users       UserSport[]
 }

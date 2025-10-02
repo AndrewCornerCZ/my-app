@@ -53,6 +53,21 @@ export type UserLike = $Result.DefaultSelection<Prisma.$UserLikePayload>
  * 
  */
 export type UserFollow = $Result.DefaultSelection<Prisma.$UserFollowPayload>
+/**
+ * Model UserSport
+ * 
+ */
+export type UserSport = $Result.DefaultSelection<Prisma.$UserSportPayload>
+/**
+ * Model Sport
+ * 
+ */
+export type Sport = $Result.DefaultSelection<Prisma.$SportPayload>
+/**
+ * Model SportRanks
+ * 
+ */
+export type SportRanks = $Result.DefaultSelection<Prisma.$SportRanksPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -258,6 +273,36 @@ export class PrismaClient<
     * ```
     */
   get userFollow(): Prisma.UserFollowDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.userSport`: Exposes CRUD operations for the **UserSport** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UserSports
+    * const userSports = await prisma.userSport.findMany()
+    * ```
+    */
+  get userSport(): Prisma.UserSportDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.sport`: Exposes CRUD operations for the **Sport** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Sports
+    * const sports = await prisma.sport.findMany()
+    * ```
+    */
+  get sport(): Prisma.SportDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.sportRanks`: Exposes CRUD operations for the **SportRanks** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SportRanks
+    * const sportRanks = await prisma.sportRanks.findMany()
+    * ```
+    */
+  get sportRanks(): Prisma.SportRanksDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -705,7 +750,10 @@ export namespace Prisma {
     PostComment: 'PostComment',
     PostHashtag: 'PostHashtag',
     UserLike: 'UserLike',
-    UserFollow: 'UserFollow'
+    UserFollow: 'UserFollow',
+    UserSport: 'UserSport',
+    Sport: 'Sport',
+    SportRanks: 'SportRanks'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -724,7 +772,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "post" | "hashtag" | "comment" | "postComment" | "postHashtag" | "userLike" | "userFollow"
+      modelProps: "user" | "post" | "hashtag" | "comment" | "postComment" | "postHashtag" | "userLike" | "userFollow" | "userSport" | "sport" | "sportRanks"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1320,6 +1368,228 @@ export namespace Prisma {
           }
         }
       }
+      UserSport: {
+        payload: Prisma.$UserSportPayload<ExtArgs>
+        fields: Prisma.UserSportFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UserSportFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserSportPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UserSportFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserSportPayload>
+          }
+          findFirst: {
+            args: Prisma.UserSportFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserSportPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UserSportFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserSportPayload>
+          }
+          findMany: {
+            args: Prisma.UserSportFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserSportPayload>[]
+          }
+          create: {
+            args: Prisma.UserSportCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserSportPayload>
+          }
+          createMany: {
+            args: Prisma.UserSportCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.UserSportCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserSportPayload>[]
+          }
+          delete: {
+            args: Prisma.UserSportDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserSportPayload>
+          }
+          update: {
+            args: Prisma.UserSportUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserSportPayload>
+          }
+          deleteMany: {
+            args: Prisma.UserSportDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UserSportUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.UserSportUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserSportPayload>[]
+          }
+          upsert: {
+            args: Prisma.UserSportUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserSportPayload>
+          }
+          aggregate: {
+            args: Prisma.UserSportAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUserSport>
+          }
+          groupBy: {
+            args: Prisma.UserSportGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserSportGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UserSportCountArgs<ExtArgs>
+            result: $Utils.Optional<UserSportCountAggregateOutputType> | number
+          }
+        }
+      }
+      Sport: {
+        payload: Prisma.$SportPayload<ExtArgs>
+        fields: Prisma.SportFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SportFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SportPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SportFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SportPayload>
+          }
+          findFirst: {
+            args: Prisma.SportFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SportPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SportFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SportPayload>
+          }
+          findMany: {
+            args: Prisma.SportFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SportPayload>[]
+          }
+          create: {
+            args: Prisma.SportCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SportPayload>
+          }
+          createMany: {
+            args: Prisma.SportCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SportCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SportPayload>[]
+          }
+          delete: {
+            args: Prisma.SportDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SportPayload>
+          }
+          update: {
+            args: Prisma.SportUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SportPayload>
+          }
+          deleteMany: {
+            args: Prisma.SportDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SportUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SportUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SportPayload>[]
+          }
+          upsert: {
+            args: Prisma.SportUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SportPayload>
+          }
+          aggregate: {
+            args: Prisma.SportAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSport>
+          }
+          groupBy: {
+            args: Prisma.SportGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SportGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SportCountArgs<ExtArgs>
+            result: $Utils.Optional<SportCountAggregateOutputType> | number
+          }
+        }
+      }
+      SportRanks: {
+        payload: Prisma.$SportRanksPayload<ExtArgs>
+        fields: Prisma.SportRanksFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SportRanksFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SportRanksPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SportRanksFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SportRanksPayload>
+          }
+          findFirst: {
+            args: Prisma.SportRanksFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SportRanksPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SportRanksFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SportRanksPayload>
+          }
+          findMany: {
+            args: Prisma.SportRanksFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SportRanksPayload>[]
+          }
+          create: {
+            args: Prisma.SportRanksCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SportRanksPayload>
+          }
+          createMany: {
+            args: Prisma.SportRanksCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SportRanksCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SportRanksPayload>[]
+          }
+          delete: {
+            args: Prisma.SportRanksDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SportRanksPayload>
+          }
+          update: {
+            args: Prisma.SportRanksUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SportRanksPayload>
+          }
+          deleteMany: {
+            args: Prisma.SportRanksDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SportRanksUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SportRanksUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SportRanksPayload>[]
+          }
+          upsert: {
+            args: Prisma.SportRanksUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SportRanksPayload>
+          }
+          aggregate: {
+            args: Prisma.SportRanksAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSportRanks>
+          }
+          groupBy: {
+            args: Prisma.SportRanksGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SportRanksGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SportRanksCountArgs<ExtArgs>
+            result: $Utils.Optional<SportRanksCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1412,6 +1682,9 @@ export namespace Prisma {
     postHashtag?: PostHashtagOmit
     userLike?: UserLikeOmit
     userFollow?: UserFollowOmit
+    userSport?: UserSportOmit
+    sport?: SportOmit
+    sportRanks?: SportRanksOmit
   }
 
   /* Types for Logging */
@@ -1509,12 +1782,14 @@ export namespace Prisma {
     userLikes: number
     followers: number
     following: number
+    sports: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     userLikes?: boolean | UserCountOutputTypeCountUserLikesArgs
     followers?: boolean | UserCountOutputTypeCountFollowersArgs
     following?: boolean | UserCountOutputTypeCountFollowingArgs
+    sports?: boolean | UserCountOutputTypeCountSportsArgs
   }
 
   // Custom InputTypes
@@ -1547,6 +1822,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountFollowingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UserFollowWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountSportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserSportWhereInput
   }
 
 
@@ -1658,6 +1940,68 @@ export namespace Prisma {
    */
   export type CommentCountOutputTypeCountPostCommentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PostCommentWhereInput
+  }
+
+
+  /**
+   * Count Type SportCountOutputType
+   */
+
+  export type SportCountOutputType = {
+    users: number
+  }
+
+  export type SportCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    users?: boolean | SportCountOutputTypeCountUsersArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * SportCountOutputType without action
+   */
+  export type SportCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SportCountOutputType
+     */
+    select?: SportCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * SportCountOutputType without action
+   */
+  export type SportCountOutputTypeCountUsersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserSportWhereInput
+  }
+
+
+  /**
+   * Count Type SportRanksCountOutputType
+   */
+
+  export type SportRanksCountOutputType = {
+    users: number
+  }
+
+  export type SportRanksCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    users?: boolean | SportRanksCountOutputTypeCountUsersArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * SportRanksCountOutputType without action
+   */
+  export type SportRanksCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SportRanksCountOutputType
+     */
+    select?: SportRanksCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * SportRanksCountOutputType without action
+   */
+  export type SportRanksCountOutputTypeCountUsersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserSportWhereInput
   }
 
 
@@ -1898,6 +2242,7 @@ export namespace Prisma {
     userLikes?: boolean | User$userLikesArgs<ExtArgs>
     followers?: boolean | User$followersArgs<ExtArgs>
     following?: boolean | User$followingArgs<ExtArgs>
+    sports?: boolean | User$sportsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1939,6 +2284,7 @@ export namespace Prisma {
     userLikes?: boolean | User$userLikesArgs<ExtArgs>
     followers?: boolean | User$followersArgs<ExtArgs>
     following?: boolean | User$followingArgs<ExtArgs>
+    sports?: boolean | User$sportsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1950,6 +2296,7 @@ export namespace Prisma {
       userLikes: Prisma.$UserLikePayload<ExtArgs>[]
       followers: Prisma.$UserFollowPayload<ExtArgs>[]
       following: Prisma.$UserFollowPayload<ExtArgs>[]
+      sports: Prisma.$UserSportPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -2357,6 +2704,7 @@ export namespace Prisma {
     userLikes<T extends User$userLikesArgs<ExtArgs> = {}>(args?: Subset<T, User$userLikesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserLikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     followers<T extends User$followersArgs<ExtArgs> = {}>(args?: Subset<T, User$followersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserFollowPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     following<T extends User$followingArgs<ExtArgs> = {}>(args?: Subset<T, User$followingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserFollowPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    sports<T extends User$sportsArgs<ExtArgs> = {}>(args?: Subset<T, User$sportsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserSportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2851,6 +3199,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: UserFollowScalarFieldEnum | UserFollowScalarFieldEnum[]
+  }
+
+  /**
+   * User.sports
+   */
+  export type User$sportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserSport
+     */
+    select?: UserSportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserSport
+     */
+    omit?: UserSportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserSportInclude<ExtArgs> | null
+    where?: UserSportWhereInput
+    orderBy?: UserSportOrderByWithRelationInput | UserSportOrderByWithRelationInput[]
+    cursor?: UserSportWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserSportScalarFieldEnum | UserSportScalarFieldEnum[]
   }
 
   /**
@@ -10538,6 +10910,3269 @@ export namespace Prisma {
 
 
   /**
+   * Model UserSport
+   */
+
+  export type AggregateUserSport = {
+    _count: UserSportCountAggregateOutputType | null
+    _avg: UserSportAvgAggregateOutputType | null
+    _sum: UserSportSumAggregateOutputType | null
+    _min: UserSportMinAggregateOutputType | null
+    _max: UserSportMaxAggregateOutputType | null
+  }
+
+  export type UserSportAvgAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    sportId: number | null
+    sportRankId: number | null
+  }
+
+  export type UserSportSumAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    sportId: number | null
+    sportRankId: number | null
+  }
+
+  export type UserSportMinAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    sportId: number | null
+    sportRankId: number | null
+    startedAt: Date | null
+  }
+
+  export type UserSportMaxAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    sportId: number | null
+    sportRankId: number | null
+    startedAt: Date | null
+  }
+
+  export type UserSportCountAggregateOutputType = {
+    id: number
+    userId: number
+    sportId: number
+    sportRankId: number
+    startedAt: number
+    _all: number
+  }
+
+
+  export type UserSportAvgAggregateInputType = {
+    id?: true
+    userId?: true
+    sportId?: true
+    sportRankId?: true
+  }
+
+  export type UserSportSumAggregateInputType = {
+    id?: true
+    userId?: true
+    sportId?: true
+    sportRankId?: true
+  }
+
+  export type UserSportMinAggregateInputType = {
+    id?: true
+    userId?: true
+    sportId?: true
+    sportRankId?: true
+    startedAt?: true
+  }
+
+  export type UserSportMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    sportId?: true
+    sportRankId?: true
+    startedAt?: true
+  }
+
+  export type UserSportCountAggregateInputType = {
+    id?: true
+    userId?: true
+    sportId?: true
+    sportRankId?: true
+    startedAt?: true
+    _all?: true
+  }
+
+  export type UserSportAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserSport to aggregate.
+     */
+    where?: UserSportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserSports to fetch.
+     */
+    orderBy?: UserSportOrderByWithRelationInput | UserSportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserSportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserSports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserSports.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned UserSports
+    **/
+    _count?: true | UserSportCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: UserSportAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserSportSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserSportMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserSportMaxAggregateInputType
+  }
+
+  export type GetUserSportAggregateType<T extends UserSportAggregateArgs> = {
+        [P in keyof T & keyof AggregateUserSport]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUserSport[P]>
+      : GetScalarType<T[P], AggregateUserSport[P]>
+  }
+
+
+
+
+  export type UserSportGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserSportWhereInput
+    orderBy?: UserSportOrderByWithAggregationInput | UserSportOrderByWithAggregationInput[]
+    by: UserSportScalarFieldEnum[] | UserSportScalarFieldEnum
+    having?: UserSportScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserSportCountAggregateInputType | true
+    _avg?: UserSportAvgAggregateInputType
+    _sum?: UserSportSumAggregateInputType
+    _min?: UserSportMinAggregateInputType
+    _max?: UserSportMaxAggregateInputType
+  }
+
+  export type UserSportGroupByOutputType = {
+    id: number
+    userId: number
+    sportId: number
+    sportRankId: number
+    startedAt: Date
+    _count: UserSportCountAggregateOutputType | null
+    _avg: UserSportAvgAggregateOutputType | null
+    _sum: UserSportSumAggregateOutputType | null
+    _min: UserSportMinAggregateOutputType | null
+    _max: UserSportMaxAggregateOutputType | null
+  }
+
+  type GetUserSportGroupByPayload<T extends UserSportGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UserSportGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserSportGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserSportGroupByOutputType[P]>
+            : GetScalarType<T[P], UserSportGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserSportSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    sportId?: boolean
+    sportRankId?: boolean
+    startedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    sport?: boolean | SportDefaultArgs<ExtArgs>
+    sportrank?: boolean | SportRanksDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userSport"]>
+
+  export type UserSportSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    sportId?: boolean
+    sportRankId?: boolean
+    startedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    sport?: boolean | SportDefaultArgs<ExtArgs>
+    sportrank?: boolean | SportRanksDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userSport"]>
+
+  export type UserSportSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    sportId?: boolean
+    sportRankId?: boolean
+    startedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    sport?: boolean | SportDefaultArgs<ExtArgs>
+    sportrank?: boolean | SportRanksDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userSport"]>
+
+  export type UserSportSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    sportId?: boolean
+    sportRankId?: boolean
+    startedAt?: boolean
+  }
+
+  export type UserSportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "sportId" | "sportRankId" | "startedAt", ExtArgs["result"]["userSport"]>
+  export type UserSportInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    sport?: boolean | SportDefaultArgs<ExtArgs>
+    sportrank?: boolean | SportRanksDefaultArgs<ExtArgs>
+  }
+  export type UserSportIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    sport?: boolean | SportDefaultArgs<ExtArgs>
+    sportrank?: boolean | SportRanksDefaultArgs<ExtArgs>
+  }
+  export type UserSportIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    sport?: boolean | SportDefaultArgs<ExtArgs>
+    sportrank?: boolean | SportRanksDefaultArgs<ExtArgs>
+  }
+
+  export type $UserSportPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "UserSport"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      sport: Prisma.$SportPayload<ExtArgs>
+      sportrank: Prisma.$SportRanksPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      userId: number
+      sportId: number
+      sportRankId: number
+      startedAt: Date
+    }, ExtArgs["result"]["userSport"]>
+    composites: {}
+  }
+
+  type UserSportGetPayload<S extends boolean | null | undefined | UserSportDefaultArgs> = $Result.GetResult<Prisma.$UserSportPayload, S>
+
+  type UserSportCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UserSportFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: UserSportCountAggregateInputType | true
+    }
+
+  export interface UserSportDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['UserSport'], meta: { name: 'UserSport' } }
+    /**
+     * Find zero or one UserSport that matches the filter.
+     * @param {UserSportFindUniqueArgs} args - Arguments to find a UserSport
+     * @example
+     * // Get one UserSport
+     * const userSport = await prisma.userSport.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserSportFindUniqueArgs>(args: SelectSubset<T, UserSportFindUniqueArgs<ExtArgs>>): Prisma__UserSportClient<$Result.GetResult<Prisma.$UserSportPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one UserSport that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UserSportFindUniqueOrThrowArgs} args - Arguments to find a UserSport
+     * @example
+     * // Get one UserSport
+     * const userSport = await prisma.userSport.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserSportFindUniqueOrThrowArgs>(args: SelectSubset<T, UserSportFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserSportClient<$Result.GetResult<Prisma.$UserSportPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserSport that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserSportFindFirstArgs} args - Arguments to find a UserSport
+     * @example
+     * // Get one UserSport
+     * const userSport = await prisma.userSport.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserSportFindFirstArgs>(args?: SelectSubset<T, UserSportFindFirstArgs<ExtArgs>>): Prisma__UserSportClient<$Result.GetResult<Prisma.$UserSportPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserSport that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserSportFindFirstOrThrowArgs} args - Arguments to find a UserSport
+     * @example
+     * // Get one UserSport
+     * const userSport = await prisma.userSport.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserSportFindFirstOrThrowArgs>(args?: SelectSubset<T, UserSportFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserSportClient<$Result.GetResult<Prisma.$UserSportPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more UserSports that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserSportFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UserSports
+     * const userSports = await prisma.userSport.findMany()
+     * 
+     * // Get first 10 UserSports
+     * const userSports = await prisma.userSport.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const userSportWithIdOnly = await prisma.userSport.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UserSportFindManyArgs>(args?: SelectSubset<T, UserSportFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserSportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a UserSport.
+     * @param {UserSportCreateArgs} args - Arguments to create a UserSport.
+     * @example
+     * // Create one UserSport
+     * const UserSport = await prisma.userSport.create({
+     *   data: {
+     *     // ... data to create a UserSport
+     *   }
+     * })
+     * 
+     */
+    create<T extends UserSportCreateArgs>(args: SelectSubset<T, UserSportCreateArgs<ExtArgs>>): Prisma__UserSportClient<$Result.GetResult<Prisma.$UserSportPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many UserSports.
+     * @param {UserSportCreateManyArgs} args - Arguments to create many UserSports.
+     * @example
+     * // Create many UserSports
+     * const userSport = await prisma.userSport.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UserSportCreateManyArgs>(args?: SelectSubset<T, UserSportCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many UserSports and returns the data saved in the database.
+     * @param {UserSportCreateManyAndReturnArgs} args - Arguments to create many UserSports.
+     * @example
+     * // Create many UserSports
+     * const userSport = await prisma.userSport.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many UserSports and only return the `id`
+     * const userSportWithIdOnly = await prisma.userSport.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UserSportCreateManyAndReturnArgs>(args?: SelectSubset<T, UserSportCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserSportPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a UserSport.
+     * @param {UserSportDeleteArgs} args - Arguments to delete one UserSport.
+     * @example
+     * // Delete one UserSport
+     * const UserSport = await prisma.userSport.delete({
+     *   where: {
+     *     // ... filter to delete one UserSport
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UserSportDeleteArgs>(args: SelectSubset<T, UserSportDeleteArgs<ExtArgs>>): Prisma__UserSportClient<$Result.GetResult<Prisma.$UserSportPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one UserSport.
+     * @param {UserSportUpdateArgs} args - Arguments to update one UserSport.
+     * @example
+     * // Update one UserSport
+     * const userSport = await prisma.userSport.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UserSportUpdateArgs>(args: SelectSubset<T, UserSportUpdateArgs<ExtArgs>>): Prisma__UserSportClient<$Result.GetResult<Prisma.$UserSportPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more UserSports.
+     * @param {UserSportDeleteManyArgs} args - Arguments to filter UserSports to delete.
+     * @example
+     * // Delete a few UserSports
+     * const { count } = await prisma.userSport.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UserSportDeleteManyArgs>(args?: SelectSubset<T, UserSportDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserSports.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserSportUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UserSports
+     * const userSport = await prisma.userSport.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UserSportUpdateManyArgs>(args: SelectSubset<T, UserSportUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserSports and returns the data updated in the database.
+     * @param {UserSportUpdateManyAndReturnArgs} args - Arguments to update many UserSports.
+     * @example
+     * // Update many UserSports
+     * const userSport = await prisma.userSport.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more UserSports and only return the `id`
+     * const userSportWithIdOnly = await prisma.userSport.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends UserSportUpdateManyAndReturnArgs>(args: SelectSubset<T, UserSportUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserSportPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one UserSport.
+     * @param {UserSportUpsertArgs} args - Arguments to update or create a UserSport.
+     * @example
+     * // Update or create a UserSport
+     * const userSport = await prisma.userSport.upsert({
+     *   create: {
+     *     // ... data to create a UserSport
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UserSport we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserSportUpsertArgs>(args: SelectSubset<T, UserSportUpsertArgs<ExtArgs>>): Prisma__UserSportClient<$Result.GetResult<Prisma.$UserSportPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of UserSports.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserSportCountArgs} args - Arguments to filter UserSports to count.
+     * @example
+     * // Count the number of UserSports
+     * const count = await prisma.userSport.count({
+     *   where: {
+     *     // ... the filter for the UserSports we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserSportCountArgs>(
+      args?: Subset<T, UserSportCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserSportCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a UserSport.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserSportAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserSportAggregateArgs>(args: Subset<T, UserSportAggregateArgs>): Prisma.PrismaPromise<GetUserSportAggregateType<T>>
+
+    /**
+     * Group by UserSport.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserSportGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserSportGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserSportGroupByArgs['orderBy'] }
+        : { orderBy?: UserSportGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserSportGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserSportGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the UserSport model
+   */
+  readonly fields: UserSportFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for UserSport.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UserSportClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    sport<T extends SportDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SportDefaultArgs<ExtArgs>>): Prisma__SportClient<$Result.GetResult<Prisma.$SportPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    sportrank<T extends SportRanksDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SportRanksDefaultArgs<ExtArgs>>): Prisma__SportRanksClient<$Result.GetResult<Prisma.$SportRanksPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the UserSport model
+   */
+  interface UserSportFieldRefs {
+    readonly id: FieldRef<"UserSport", 'Int'>
+    readonly userId: FieldRef<"UserSport", 'Int'>
+    readonly sportId: FieldRef<"UserSport", 'Int'>
+    readonly sportRankId: FieldRef<"UserSport", 'Int'>
+    readonly startedAt: FieldRef<"UserSport", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * UserSport findUnique
+   */
+  export type UserSportFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserSport
+     */
+    select?: UserSportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserSport
+     */
+    omit?: UserSportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserSportInclude<ExtArgs> | null
+    /**
+     * Filter, which UserSport to fetch.
+     */
+    where: UserSportWhereUniqueInput
+  }
+
+  /**
+   * UserSport findUniqueOrThrow
+   */
+  export type UserSportFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserSport
+     */
+    select?: UserSportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserSport
+     */
+    omit?: UserSportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserSportInclude<ExtArgs> | null
+    /**
+     * Filter, which UserSport to fetch.
+     */
+    where: UserSportWhereUniqueInput
+  }
+
+  /**
+   * UserSport findFirst
+   */
+  export type UserSportFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserSport
+     */
+    select?: UserSportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserSport
+     */
+    omit?: UserSportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserSportInclude<ExtArgs> | null
+    /**
+     * Filter, which UserSport to fetch.
+     */
+    where?: UserSportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserSports to fetch.
+     */
+    orderBy?: UserSportOrderByWithRelationInput | UserSportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserSports.
+     */
+    cursor?: UserSportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserSports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserSports.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserSports.
+     */
+    distinct?: UserSportScalarFieldEnum | UserSportScalarFieldEnum[]
+  }
+
+  /**
+   * UserSport findFirstOrThrow
+   */
+  export type UserSportFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserSport
+     */
+    select?: UserSportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserSport
+     */
+    omit?: UserSportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserSportInclude<ExtArgs> | null
+    /**
+     * Filter, which UserSport to fetch.
+     */
+    where?: UserSportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserSports to fetch.
+     */
+    orderBy?: UserSportOrderByWithRelationInput | UserSportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserSports.
+     */
+    cursor?: UserSportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserSports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserSports.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserSports.
+     */
+    distinct?: UserSportScalarFieldEnum | UserSportScalarFieldEnum[]
+  }
+
+  /**
+   * UserSport findMany
+   */
+  export type UserSportFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserSport
+     */
+    select?: UserSportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserSport
+     */
+    omit?: UserSportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserSportInclude<ExtArgs> | null
+    /**
+     * Filter, which UserSports to fetch.
+     */
+    where?: UserSportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserSports to fetch.
+     */
+    orderBy?: UserSportOrderByWithRelationInput | UserSportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing UserSports.
+     */
+    cursor?: UserSportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserSports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserSports.
+     */
+    skip?: number
+    distinct?: UserSportScalarFieldEnum | UserSportScalarFieldEnum[]
+  }
+
+  /**
+   * UserSport create
+   */
+  export type UserSportCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserSport
+     */
+    select?: UserSportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserSport
+     */
+    omit?: UserSportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserSportInclude<ExtArgs> | null
+    /**
+     * The data needed to create a UserSport.
+     */
+    data: XOR<UserSportCreateInput, UserSportUncheckedCreateInput>
+  }
+
+  /**
+   * UserSport createMany
+   */
+  export type UserSportCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many UserSports.
+     */
+    data: UserSportCreateManyInput | UserSportCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * UserSport createManyAndReturn
+   */
+  export type UserSportCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserSport
+     */
+    select?: UserSportSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserSport
+     */
+    omit?: UserSportOmit<ExtArgs> | null
+    /**
+     * The data used to create many UserSports.
+     */
+    data: UserSportCreateManyInput | UserSportCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserSportIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserSport update
+   */
+  export type UserSportUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserSport
+     */
+    select?: UserSportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserSport
+     */
+    omit?: UserSportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserSportInclude<ExtArgs> | null
+    /**
+     * The data needed to update a UserSport.
+     */
+    data: XOR<UserSportUpdateInput, UserSportUncheckedUpdateInput>
+    /**
+     * Choose, which UserSport to update.
+     */
+    where: UserSportWhereUniqueInput
+  }
+
+  /**
+   * UserSport updateMany
+   */
+  export type UserSportUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update UserSports.
+     */
+    data: XOR<UserSportUpdateManyMutationInput, UserSportUncheckedUpdateManyInput>
+    /**
+     * Filter which UserSports to update
+     */
+    where?: UserSportWhereInput
+    /**
+     * Limit how many UserSports to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserSport updateManyAndReturn
+   */
+  export type UserSportUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserSport
+     */
+    select?: UserSportSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserSport
+     */
+    omit?: UserSportOmit<ExtArgs> | null
+    /**
+     * The data used to update UserSports.
+     */
+    data: XOR<UserSportUpdateManyMutationInput, UserSportUncheckedUpdateManyInput>
+    /**
+     * Filter which UserSports to update
+     */
+    where?: UserSportWhereInput
+    /**
+     * Limit how many UserSports to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserSportIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserSport upsert
+   */
+  export type UserSportUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserSport
+     */
+    select?: UserSportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserSport
+     */
+    omit?: UserSportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserSportInclude<ExtArgs> | null
+    /**
+     * The filter to search for the UserSport to update in case it exists.
+     */
+    where: UserSportWhereUniqueInput
+    /**
+     * In case the UserSport found by the `where` argument doesn't exist, create a new UserSport with this data.
+     */
+    create: XOR<UserSportCreateInput, UserSportUncheckedCreateInput>
+    /**
+     * In case the UserSport was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserSportUpdateInput, UserSportUncheckedUpdateInput>
+  }
+
+  /**
+   * UserSport delete
+   */
+  export type UserSportDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserSport
+     */
+    select?: UserSportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserSport
+     */
+    omit?: UserSportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserSportInclude<ExtArgs> | null
+    /**
+     * Filter which UserSport to delete.
+     */
+    where: UserSportWhereUniqueInput
+  }
+
+  /**
+   * UserSport deleteMany
+   */
+  export type UserSportDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserSports to delete
+     */
+    where?: UserSportWhereInput
+    /**
+     * Limit how many UserSports to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserSport without action
+   */
+  export type UserSportDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserSport
+     */
+    select?: UserSportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserSport
+     */
+    omit?: UserSportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserSportInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Sport
+   */
+
+  export type AggregateSport = {
+    _count: SportCountAggregateOutputType | null
+    _avg: SportAvgAggregateOutputType | null
+    _sum: SportSumAggregateOutputType | null
+    _min: SportMinAggregateOutputType | null
+    _max: SportMaxAggregateOutputType | null
+  }
+
+  export type SportAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type SportSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type SportMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+  }
+
+  export type SportMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+  }
+
+  export type SportCountAggregateOutputType = {
+    id: number
+    name: number
+    _all: number
+  }
+
+
+  export type SportAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type SportSumAggregateInputType = {
+    id?: true
+  }
+
+  export type SportMinAggregateInputType = {
+    id?: true
+    name?: true
+  }
+
+  export type SportMaxAggregateInputType = {
+    id?: true
+    name?: true
+  }
+
+  export type SportCountAggregateInputType = {
+    id?: true
+    name?: true
+    _all?: true
+  }
+
+  export type SportAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Sport to aggregate.
+     */
+    where?: SportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Sports to fetch.
+     */
+    orderBy?: SportOrderByWithRelationInput | SportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Sports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Sports.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Sports
+    **/
+    _count?: true | SportCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SportAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SportSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SportMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SportMaxAggregateInputType
+  }
+
+  export type GetSportAggregateType<T extends SportAggregateArgs> = {
+        [P in keyof T & keyof AggregateSport]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSport[P]>
+      : GetScalarType<T[P], AggregateSport[P]>
+  }
+
+
+
+
+  export type SportGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SportWhereInput
+    orderBy?: SportOrderByWithAggregationInput | SportOrderByWithAggregationInput[]
+    by: SportScalarFieldEnum[] | SportScalarFieldEnum
+    having?: SportScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SportCountAggregateInputType | true
+    _avg?: SportAvgAggregateInputType
+    _sum?: SportSumAggregateInputType
+    _min?: SportMinAggregateInputType
+    _max?: SportMaxAggregateInputType
+  }
+
+  export type SportGroupByOutputType = {
+    id: number
+    name: string
+    _count: SportCountAggregateOutputType | null
+    _avg: SportAvgAggregateOutputType | null
+    _sum: SportSumAggregateOutputType | null
+    _min: SportMinAggregateOutputType | null
+    _max: SportMaxAggregateOutputType | null
+  }
+
+  type GetSportGroupByPayload<T extends SportGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SportGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SportGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SportGroupByOutputType[P]>
+            : GetScalarType<T[P], SportGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SportSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    users?: boolean | Sport$usersArgs<ExtArgs>
+    _count?: boolean | SportCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["sport"]>
+
+  export type SportSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+  }, ExtArgs["result"]["sport"]>
+
+  export type SportSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+  }, ExtArgs["result"]["sport"]>
+
+  export type SportSelectScalar = {
+    id?: boolean
+    name?: boolean
+  }
+
+  export type SportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name", ExtArgs["result"]["sport"]>
+  export type SportInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    users?: boolean | Sport$usersArgs<ExtArgs>
+    _count?: boolean | SportCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type SportIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type SportIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $SportPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Sport"
+    objects: {
+      users: Prisma.$UserSportPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      name: string
+    }, ExtArgs["result"]["sport"]>
+    composites: {}
+  }
+
+  type SportGetPayload<S extends boolean | null | undefined | SportDefaultArgs> = $Result.GetResult<Prisma.$SportPayload, S>
+
+  type SportCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SportFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SportCountAggregateInputType | true
+    }
+
+  export interface SportDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Sport'], meta: { name: 'Sport' } }
+    /**
+     * Find zero or one Sport that matches the filter.
+     * @param {SportFindUniqueArgs} args - Arguments to find a Sport
+     * @example
+     * // Get one Sport
+     * const sport = await prisma.sport.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SportFindUniqueArgs>(args: SelectSubset<T, SportFindUniqueArgs<ExtArgs>>): Prisma__SportClient<$Result.GetResult<Prisma.$SportPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Sport that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SportFindUniqueOrThrowArgs} args - Arguments to find a Sport
+     * @example
+     * // Get one Sport
+     * const sport = await prisma.sport.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SportFindUniqueOrThrowArgs>(args: SelectSubset<T, SportFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SportClient<$Result.GetResult<Prisma.$SportPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Sport that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SportFindFirstArgs} args - Arguments to find a Sport
+     * @example
+     * // Get one Sport
+     * const sport = await prisma.sport.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SportFindFirstArgs>(args?: SelectSubset<T, SportFindFirstArgs<ExtArgs>>): Prisma__SportClient<$Result.GetResult<Prisma.$SportPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Sport that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SportFindFirstOrThrowArgs} args - Arguments to find a Sport
+     * @example
+     * // Get one Sport
+     * const sport = await prisma.sport.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SportFindFirstOrThrowArgs>(args?: SelectSubset<T, SportFindFirstOrThrowArgs<ExtArgs>>): Prisma__SportClient<$Result.GetResult<Prisma.$SportPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Sports that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SportFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Sports
+     * const sports = await prisma.sport.findMany()
+     * 
+     * // Get first 10 Sports
+     * const sports = await prisma.sport.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const sportWithIdOnly = await prisma.sport.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SportFindManyArgs>(args?: SelectSubset<T, SportFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Sport.
+     * @param {SportCreateArgs} args - Arguments to create a Sport.
+     * @example
+     * // Create one Sport
+     * const Sport = await prisma.sport.create({
+     *   data: {
+     *     // ... data to create a Sport
+     *   }
+     * })
+     * 
+     */
+    create<T extends SportCreateArgs>(args: SelectSubset<T, SportCreateArgs<ExtArgs>>): Prisma__SportClient<$Result.GetResult<Prisma.$SportPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Sports.
+     * @param {SportCreateManyArgs} args - Arguments to create many Sports.
+     * @example
+     * // Create many Sports
+     * const sport = await prisma.sport.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SportCreateManyArgs>(args?: SelectSubset<T, SportCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Sports and returns the data saved in the database.
+     * @param {SportCreateManyAndReturnArgs} args - Arguments to create many Sports.
+     * @example
+     * // Create many Sports
+     * const sport = await prisma.sport.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Sports and only return the `id`
+     * const sportWithIdOnly = await prisma.sport.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SportCreateManyAndReturnArgs>(args?: SelectSubset<T, SportCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SportPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Sport.
+     * @param {SportDeleteArgs} args - Arguments to delete one Sport.
+     * @example
+     * // Delete one Sport
+     * const Sport = await prisma.sport.delete({
+     *   where: {
+     *     // ... filter to delete one Sport
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SportDeleteArgs>(args: SelectSubset<T, SportDeleteArgs<ExtArgs>>): Prisma__SportClient<$Result.GetResult<Prisma.$SportPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Sport.
+     * @param {SportUpdateArgs} args - Arguments to update one Sport.
+     * @example
+     * // Update one Sport
+     * const sport = await prisma.sport.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SportUpdateArgs>(args: SelectSubset<T, SportUpdateArgs<ExtArgs>>): Prisma__SportClient<$Result.GetResult<Prisma.$SportPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Sports.
+     * @param {SportDeleteManyArgs} args - Arguments to filter Sports to delete.
+     * @example
+     * // Delete a few Sports
+     * const { count } = await prisma.sport.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SportDeleteManyArgs>(args?: SelectSubset<T, SportDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Sports.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SportUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Sports
+     * const sport = await prisma.sport.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SportUpdateManyArgs>(args: SelectSubset<T, SportUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Sports and returns the data updated in the database.
+     * @param {SportUpdateManyAndReturnArgs} args - Arguments to update many Sports.
+     * @example
+     * // Update many Sports
+     * const sport = await prisma.sport.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Sports and only return the `id`
+     * const sportWithIdOnly = await prisma.sport.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SportUpdateManyAndReturnArgs>(args: SelectSubset<T, SportUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SportPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Sport.
+     * @param {SportUpsertArgs} args - Arguments to update or create a Sport.
+     * @example
+     * // Update or create a Sport
+     * const sport = await prisma.sport.upsert({
+     *   create: {
+     *     // ... data to create a Sport
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Sport we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SportUpsertArgs>(args: SelectSubset<T, SportUpsertArgs<ExtArgs>>): Prisma__SportClient<$Result.GetResult<Prisma.$SportPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Sports.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SportCountArgs} args - Arguments to filter Sports to count.
+     * @example
+     * // Count the number of Sports
+     * const count = await prisma.sport.count({
+     *   where: {
+     *     // ... the filter for the Sports we want to count
+     *   }
+     * })
+    **/
+    count<T extends SportCountArgs>(
+      args?: Subset<T, SportCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SportCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Sport.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SportAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SportAggregateArgs>(args: Subset<T, SportAggregateArgs>): Prisma.PrismaPromise<GetSportAggregateType<T>>
+
+    /**
+     * Group by Sport.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SportGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SportGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SportGroupByArgs['orderBy'] }
+        : { orderBy?: SportGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SportGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSportGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Sport model
+   */
+  readonly fields: SportFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Sport.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SportClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    users<T extends Sport$usersArgs<ExtArgs> = {}>(args?: Subset<T, Sport$usersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserSportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Sport model
+   */
+  interface SportFieldRefs {
+    readonly id: FieldRef<"Sport", 'Int'>
+    readonly name: FieldRef<"Sport", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Sport findUnique
+   */
+  export type SportFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sport
+     */
+    select?: SportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sport
+     */
+    omit?: SportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SportInclude<ExtArgs> | null
+    /**
+     * Filter, which Sport to fetch.
+     */
+    where: SportWhereUniqueInput
+  }
+
+  /**
+   * Sport findUniqueOrThrow
+   */
+  export type SportFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sport
+     */
+    select?: SportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sport
+     */
+    omit?: SportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SportInclude<ExtArgs> | null
+    /**
+     * Filter, which Sport to fetch.
+     */
+    where: SportWhereUniqueInput
+  }
+
+  /**
+   * Sport findFirst
+   */
+  export type SportFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sport
+     */
+    select?: SportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sport
+     */
+    omit?: SportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SportInclude<ExtArgs> | null
+    /**
+     * Filter, which Sport to fetch.
+     */
+    where?: SportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Sports to fetch.
+     */
+    orderBy?: SportOrderByWithRelationInput | SportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Sports.
+     */
+    cursor?: SportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Sports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Sports.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Sports.
+     */
+    distinct?: SportScalarFieldEnum | SportScalarFieldEnum[]
+  }
+
+  /**
+   * Sport findFirstOrThrow
+   */
+  export type SportFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sport
+     */
+    select?: SportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sport
+     */
+    omit?: SportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SportInclude<ExtArgs> | null
+    /**
+     * Filter, which Sport to fetch.
+     */
+    where?: SportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Sports to fetch.
+     */
+    orderBy?: SportOrderByWithRelationInput | SportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Sports.
+     */
+    cursor?: SportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Sports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Sports.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Sports.
+     */
+    distinct?: SportScalarFieldEnum | SportScalarFieldEnum[]
+  }
+
+  /**
+   * Sport findMany
+   */
+  export type SportFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sport
+     */
+    select?: SportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sport
+     */
+    omit?: SportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SportInclude<ExtArgs> | null
+    /**
+     * Filter, which Sports to fetch.
+     */
+    where?: SportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Sports to fetch.
+     */
+    orderBy?: SportOrderByWithRelationInput | SportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Sports.
+     */
+    cursor?: SportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Sports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Sports.
+     */
+    skip?: number
+    distinct?: SportScalarFieldEnum | SportScalarFieldEnum[]
+  }
+
+  /**
+   * Sport create
+   */
+  export type SportCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sport
+     */
+    select?: SportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sport
+     */
+    omit?: SportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SportInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Sport.
+     */
+    data: XOR<SportCreateInput, SportUncheckedCreateInput>
+  }
+
+  /**
+   * Sport createMany
+   */
+  export type SportCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Sports.
+     */
+    data: SportCreateManyInput | SportCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Sport createManyAndReturn
+   */
+  export type SportCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sport
+     */
+    select?: SportSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sport
+     */
+    omit?: SportOmit<ExtArgs> | null
+    /**
+     * The data used to create many Sports.
+     */
+    data: SportCreateManyInput | SportCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Sport update
+   */
+  export type SportUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sport
+     */
+    select?: SportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sport
+     */
+    omit?: SportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SportInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Sport.
+     */
+    data: XOR<SportUpdateInput, SportUncheckedUpdateInput>
+    /**
+     * Choose, which Sport to update.
+     */
+    where: SportWhereUniqueInput
+  }
+
+  /**
+   * Sport updateMany
+   */
+  export type SportUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Sports.
+     */
+    data: XOR<SportUpdateManyMutationInput, SportUncheckedUpdateManyInput>
+    /**
+     * Filter which Sports to update
+     */
+    where?: SportWhereInput
+    /**
+     * Limit how many Sports to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Sport updateManyAndReturn
+   */
+  export type SportUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sport
+     */
+    select?: SportSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sport
+     */
+    omit?: SportOmit<ExtArgs> | null
+    /**
+     * The data used to update Sports.
+     */
+    data: XOR<SportUpdateManyMutationInput, SportUncheckedUpdateManyInput>
+    /**
+     * Filter which Sports to update
+     */
+    where?: SportWhereInput
+    /**
+     * Limit how many Sports to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Sport upsert
+   */
+  export type SportUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sport
+     */
+    select?: SportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sport
+     */
+    omit?: SportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SportInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Sport to update in case it exists.
+     */
+    where: SportWhereUniqueInput
+    /**
+     * In case the Sport found by the `where` argument doesn't exist, create a new Sport with this data.
+     */
+    create: XOR<SportCreateInput, SportUncheckedCreateInput>
+    /**
+     * In case the Sport was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SportUpdateInput, SportUncheckedUpdateInput>
+  }
+
+  /**
+   * Sport delete
+   */
+  export type SportDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sport
+     */
+    select?: SportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sport
+     */
+    omit?: SportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SportInclude<ExtArgs> | null
+    /**
+     * Filter which Sport to delete.
+     */
+    where: SportWhereUniqueInput
+  }
+
+  /**
+   * Sport deleteMany
+   */
+  export type SportDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Sports to delete
+     */
+    where?: SportWhereInput
+    /**
+     * Limit how many Sports to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Sport.users
+   */
+  export type Sport$usersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserSport
+     */
+    select?: UserSportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserSport
+     */
+    omit?: UserSportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserSportInclude<ExtArgs> | null
+    where?: UserSportWhereInput
+    orderBy?: UserSportOrderByWithRelationInput | UserSportOrderByWithRelationInput[]
+    cursor?: UserSportWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserSportScalarFieldEnum | UserSportScalarFieldEnum[]
+  }
+
+  /**
+   * Sport without action
+   */
+  export type SportDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sport
+     */
+    select?: SportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sport
+     */
+    omit?: SportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SportInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model SportRanks
+   */
+
+  export type AggregateSportRanks = {
+    _count: SportRanksCountAggregateOutputType | null
+    _avg: SportRanksAvgAggregateOutputType | null
+    _sum: SportRanksSumAggregateOutputType | null
+    _min: SportRanksMinAggregateOutputType | null
+    _max: SportRanksMaxAggregateOutputType | null
+  }
+
+  export type SportRanksAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type SportRanksSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type SportRanksMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+    description: string | null
+  }
+
+  export type SportRanksMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    description: string | null
+  }
+
+  export type SportRanksCountAggregateOutputType = {
+    id: number
+    name: number
+    description: number
+    _all: number
+  }
+
+
+  export type SportRanksAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type SportRanksSumAggregateInputType = {
+    id?: true
+  }
+
+  export type SportRanksMinAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+  }
+
+  export type SportRanksMaxAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+  }
+
+  export type SportRanksCountAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    _all?: true
+  }
+
+  export type SportRanksAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SportRanks to aggregate.
+     */
+    where?: SportRanksWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SportRanks to fetch.
+     */
+    orderBy?: SportRanksOrderByWithRelationInput | SportRanksOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SportRanksWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SportRanks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SportRanks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SportRanks
+    **/
+    _count?: true | SportRanksCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SportRanksAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SportRanksSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SportRanksMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SportRanksMaxAggregateInputType
+  }
+
+  export type GetSportRanksAggregateType<T extends SportRanksAggregateArgs> = {
+        [P in keyof T & keyof AggregateSportRanks]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSportRanks[P]>
+      : GetScalarType<T[P], AggregateSportRanks[P]>
+  }
+
+
+
+
+  export type SportRanksGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SportRanksWhereInput
+    orderBy?: SportRanksOrderByWithAggregationInput | SportRanksOrderByWithAggregationInput[]
+    by: SportRanksScalarFieldEnum[] | SportRanksScalarFieldEnum
+    having?: SportRanksScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SportRanksCountAggregateInputType | true
+    _avg?: SportRanksAvgAggregateInputType
+    _sum?: SportRanksSumAggregateInputType
+    _min?: SportRanksMinAggregateInputType
+    _max?: SportRanksMaxAggregateInputType
+  }
+
+  export type SportRanksGroupByOutputType = {
+    id: number
+    name: string
+    description: string
+    _count: SportRanksCountAggregateOutputType | null
+    _avg: SportRanksAvgAggregateOutputType | null
+    _sum: SportRanksSumAggregateOutputType | null
+    _min: SportRanksMinAggregateOutputType | null
+    _max: SportRanksMaxAggregateOutputType | null
+  }
+
+  type GetSportRanksGroupByPayload<T extends SportRanksGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SportRanksGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SportRanksGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SportRanksGroupByOutputType[P]>
+            : GetScalarType<T[P], SportRanksGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SportRanksSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    users?: boolean | SportRanks$usersArgs<ExtArgs>
+    _count?: boolean | SportRanksCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["sportRanks"]>
+
+  export type SportRanksSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+  }, ExtArgs["result"]["sportRanks"]>
+
+  export type SportRanksSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+  }, ExtArgs["result"]["sportRanks"]>
+
+  export type SportRanksSelectScalar = {
+    id?: boolean
+    name?: boolean
+    description?: boolean
+  }
+
+  export type SportRanksOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description", ExtArgs["result"]["sportRanks"]>
+  export type SportRanksInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    users?: boolean | SportRanks$usersArgs<ExtArgs>
+    _count?: boolean | SportRanksCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type SportRanksIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type SportRanksIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $SportRanksPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SportRanks"
+    objects: {
+      users: Prisma.$UserSportPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      name: string
+      description: string
+    }, ExtArgs["result"]["sportRanks"]>
+    composites: {}
+  }
+
+  type SportRanksGetPayload<S extends boolean | null | undefined | SportRanksDefaultArgs> = $Result.GetResult<Prisma.$SportRanksPayload, S>
+
+  type SportRanksCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SportRanksFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SportRanksCountAggregateInputType | true
+    }
+
+  export interface SportRanksDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SportRanks'], meta: { name: 'SportRanks' } }
+    /**
+     * Find zero or one SportRanks that matches the filter.
+     * @param {SportRanksFindUniqueArgs} args - Arguments to find a SportRanks
+     * @example
+     * // Get one SportRanks
+     * const sportRanks = await prisma.sportRanks.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SportRanksFindUniqueArgs>(args: SelectSubset<T, SportRanksFindUniqueArgs<ExtArgs>>): Prisma__SportRanksClient<$Result.GetResult<Prisma.$SportRanksPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SportRanks that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SportRanksFindUniqueOrThrowArgs} args - Arguments to find a SportRanks
+     * @example
+     * // Get one SportRanks
+     * const sportRanks = await prisma.sportRanks.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SportRanksFindUniqueOrThrowArgs>(args: SelectSubset<T, SportRanksFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SportRanksClient<$Result.GetResult<Prisma.$SportRanksPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SportRanks that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SportRanksFindFirstArgs} args - Arguments to find a SportRanks
+     * @example
+     * // Get one SportRanks
+     * const sportRanks = await prisma.sportRanks.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SportRanksFindFirstArgs>(args?: SelectSubset<T, SportRanksFindFirstArgs<ExtArgs>>): Prisma__SportRanksClient<$Result.GetResult<Prisma.$SportRanksPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SportRanks that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SportRanksFindFirstOrThrowArgs} args - Arguments to find a SportRanks
+     * @example
+     * // Get one SportRanks
+     * const sportRanks = await prisma.sportRanks.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SportRanksFindFirstOrThrowArgs>(args?: SelectSubset<T, SportRanksFindFirstOrThrowArgs<ExtArgs>>): Prisma__SportRanksClient<$Result.GetResult<Prisma.$SportRanksPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SportRanks that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SportRanksFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SportRanks
+     * const sportRanks = await prisma.sportRanks.findMany()
+     * 
+     * // Get first 10 SportRanks
+     * const sportRanks = await prisma.sportRanks.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const sportRanksWithIdOnly = await prisma.sportRanks.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SportRanksFindManyArgs>(args?: SelectSubset<T, SportRanksFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SportRanksPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SportRanks.
+     * @param {SportRanksCreateArgs} args - Arguments to create a SportRanks.
+     * @example
+     * // Create one SportRanks
+     * const SportRanks = await prisma.sportRanks.create({
+     *   data: {
+     *     // ... data to create a SportRanks
+     *   }
+     * })
+     * 
+     */
+    create<T extends SportRanksCreateArgs>(args: SelectSubset<T, SportRanksCreateArgs<ExtArgs>>): Prisma__SportRanksClient<$Result.GetResult<Prisma.$SportRanksPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SportRanks.
+     * @param {SportRanksCreateManyArgs} args - Arguments to create many SportRanks.
+     * @example
+     * // Create many SportRanks
+     * const sportRanks = await prisma.sportRanks.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SportRanksCreateManyArgs>(args?: SelectSubset<T, SportRanksCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SportRanks and returns the data saved in the database.
+     * @param {SportRanksCreateManyAndReturnArgs} args - Arguments to create many SportRanks.
+     * @example
+     * // Create many SportRanks
+     * const sportRanks = await prisma.sportRanks.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SportRanks and only return the `id`
+     * const sportRanksWithIdOnly = await prisma.sportRanks.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SportRanksCreateManyAndReturnArgs>(args?: SelectSubset<T, SportRanksCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SportRanksPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a SportRanks.
+     * @param {SportRanksDeleteArgs} args - Arguments to delete one SportRanks.
+     * @example
+     * // Delete one SportRanks
+     * const SportRanks = await prisma.sportRanks.delete({
+     *   where: {
+     *     // ... filter to delete one SportRanks
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SportRanksDeleteArgs>(args: SelectSubset<T, SportRanksDeleteArgs<ExtArgs>>): Prisma__SportRanksClient<$Result.GetResult<Prisma.$SportRanksPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SportRanks.
+     * @param {SportRanksUpdateArgs} args - Arguments to update one SportRanks.
+     * @example
+     * // Update one SportRanks
+     * const sportRanks = await prisma.sportRanks.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SportRanksUpdateArgs>(args: SelectSubset<T, SportRanksUpdateArgs<ExtArgs>>): Prisma__SportRanksClient<$Result.GetResult<Prisma.$SportRanksPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SportRanks.
+     * @param {SportRanksDeleteManyArgs} args - Arguments to filter SportRanks to delete.
+     * @example
+     * // Delete a few SportRanks
+     * const { count } = await prisma.sportRanks.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SportRanksDeleteManyArgs>(args?: SelectSubset<T, SportRanksDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SportRanks.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SportRanksUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SportRanks
+     * const sportRanks = await prisma.sportRanks.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SportRanksUpdateManyArgs>(args: SelectSubset<T, SportRanksUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SportRanks and returns the data updated in the database.
+     * @param {SportRanksUpdateManyAndReturnArgs} args - Arguments to update many SportRanks.
+     * @example
+     * // Update many SportRanks
+     * const sportRanks = await prisma.sportRanks.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more SportRanks and only return the `id`
+     * const sportRanksWithIdOnly = await prisma.sportRanks.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SportRanksUpdateManyAndReturnArgs>(args: SelectSubset<T, SportRanksUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SportRanksPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one SportRanks.
+     * @param {SportRanksUpsertArgs} args - Arguments to update or create a SportRanks.
+     * @example
+     * // Update or create a SportRanks
+     * const sportRanks = await prisma.sportRanks.upsert({
+     *   create: {
+     *     // ... data to create a SportRanks
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SportRanks we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SportRanksUpsertArgs>(args: SelectSubset<T, SportRanksUpsertArgs<ExtArgs>>): Prisma__SportRanksClient<$Result.GetResult<Prisma.$SportRanksPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of SportRanks.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SportRanksCountArgs} args - Arguments to filter SportRanks to count.
+     * @example
+     * // Count the number of SportRanks
+     * const count = await prisma.sportRanks.count({
+     *   where: {
+     *     // ... the filter for the SportRanks we want to count
+     *   }
+     * })
+    **/
+    count<T extends SportRanksCountArgs>(
+      args?: Subset<T, SportRanksCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SportRanksCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SportRanks.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SportRanksAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SportRanksAggregateArgs>(args: Subset<T, SportRanksAggregateArgs>): Prisma.PrismaPromise<GetSportRanksAggregateType<T>>
+
+    /**
+     * Group by SportRanks.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SportRanksGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SportRanksGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SportRanksGroupByArgs['orderBy'] }
+        : { orderBy?: SportRanksGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SportRanksGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSportRanksGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SportRanks model
+   */
+  readonly fields: SportRanksFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SportRanks.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SportRanksClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    users<T extends SportRanks$usersArgs<ExtArgs> = {}>(args?: Subset<T, SportRanks$usersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserSportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SportRanks model
+   */
+  interface SportRanksFieldRefs {
+    readonly id: FieldRef<"SportRanks", 'Int'>
+    readonly name: FieldRef<"SportRanks", 'String'>
+    readonly description: FieldRef<"SportRanks", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SportRanks findUnique
+   */
+  export type SportRanksFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SportRanks
+     */
+    select?: SportRanksSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SportRanks
+     */
+    omit?: SportRanksOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SportRanksInclude<ExtArgs> | null
+    /**
+     * Filter, which SportRanks to fetch.
+     */
+    where: SportRanksWhereUniqueInput
+  }
+
+  /**
+   * SportRanks findUniqueOrThrow
+   */
+  export type SportRanksFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SportRanks
+     */
+    select?: SportRanksSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SportRanks
+     */
+    omit?: SportRanksOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SportRanksInclude<ExtArgs> | null
+    /**
+     * Filter, which SportRanks to fetch.
+     */
+    where: SportRanksWhereUniqueInput
+  }
+
+  /**
+   * SportRanks findFirst
+   */
+  export type SportRanksFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SportRanks
+     */
+    select?: SportRanksSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SportRanks
+     */
+    omit?: SportRanksOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SportRanksInclude<ExtArgs> | null
+    /**
+     * Filter, which SportRanks to fetch.
+     */
+    where?: SportRanksWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SportRanks to fetch.
+     */
+    orderBy?: SportRanksOrderByWithRelationInput | SportRanksOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SportRanks.
+     */
+    cursor?: SportRanksWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SportRanks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SportRanks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SportRanks.
+     */
+    distinct?: SportRanksScalarFieldEnum | SportRanksScalarFieldEnum[]
+  }
+
+  /**
+   * SportRanks findFirstOrThrow
+   */
+  export type SportRanksFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SportRanks
+     */
+    select?: SportRanksSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SportRanks
+     */
+    omit?: SportRanksOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SportRanksInclude<ExtArgs> | null
+    /**
+     * Filter, which SportRanks to fetch.
+     */
+    where?: SportRanksWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SportRanks to fetch.
+     */
+    orderBy?: SportRanksOrderByWithRelationInput | SportRanksOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SportRanks.
+     */
+    cursor?: SportRanksWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SportRanks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SportRanks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SportRanks.
+     */
+    distinct?: SportRanksScalarFieldEnum | SportRanksScalarFieldEnum[]
+  }
+
+  /**
+   * SportRanks findMany
+   */
+  export type SportRanksFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SportRanks
+     */
+    select?: SportRanksSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SportRanks
+     */
+    omit?: SportRanksOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SportRanksInclude<ExtArgs> | null
+    /**
+     * Filter, which SportRanks to fetch.
+     */
+    where?: SportRanksWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SportRanks to fetch.
+     */
+    orderBy?: SportRanksOrderByWithRelationInput | SportRanksOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SportRanks.
+     */
+    cursor?: SportRanksWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SportRanks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SportRanks.
+     */
+    skip?: number
+    distinct?: SportRanksScalarFieldEnum | SportRanksScalarFieldEnum[]
+  }
+
+  /**
+   * SportRanks create
+   */
+  export type SportRanksCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SportRanks
+     */
+    select?: SportRanksSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SportRanks
+     */
+    omit?: SportRanksOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SportRanksInclude<ExtArgs> | null
+    /**
+     * The data needed to create a SportRanks.
+     */
+    data: XOR<SportRanksCreateInput, SportRanksUncheckedCreateInput>
+  }
+
+  /**
+   * SportRanks createMany
+   */
+  export type SportRanksCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SportRanks.
+     */
+    data: SportRanksCreateManyInput | SportRanksCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SportRanks createManyAndReturn
+   */
+  export type SportRanksCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SportRanks
+     */
+    select?: SportRanksSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SportRanks
+     */
+    omit?: SportRanksOmit<ExtArgs> | null
+    /**
+     * The data used to create many SportRanks.
+     */
+    data: SportRanksCreateManyInput | SportRanksCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SportRanks update
+   */
+  export type SportRanksUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SportRanks
+     */
+    select?: SportRanksSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SportRanks
+     */
+    omit?: SportRanksOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SportRanksInclude<ExtArgs> | null
+    /**
+     * The data needed to update a SportRanks.
+     */
+    data: XOR<SportRanksUpdateInput, SportRanksUncheckedUpdateInput>
+    /**
+     * Choose, which SportRanks to update.
+     */
+    where: SportRanksWhereUniqueInput
+  }
+
+  /**
+   * SportRanks updateMany
+   */
+  export type SportRanksUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SportRanks.
+     */
+    data: XOR<SportRanksUpdateManyMutationInput, SportRanksUncheckedUpdateManyInput>
+    /**
+     * Filter which SportRanks to update
+     */
+    where?: SportRanksWhereInput
+    /**
+     * Limit how many SportRanks to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SportRanks updateManyAndReturn
+   */
+  export type SportRanksUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SportRanks
+     */
+    select?: SportRanksSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SportRanks
+     */
+    omit?: SportRanksOmit<ExtArgs> | null
+    /**
+     * The data used to update SportRanks.
+     */
+    data: XOR<SportRanksUpdateManyMutationInput, SportRanksUncheckedUpdateManyInput>
+    /**
+     * Filter which SportRanks to update
+     */
+    where?: SportRanksWhereInput
+    /**
+     * Limit how many SportRanks to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SportRanks upsert
+   */
+  export type SportRanksUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SportRanks
+     */
+    select?: SportRanksSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SportRanks
+     */
+    omit?: SportRanksOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SportRanksInclude<ExtArgs> | null
+    /**
+     * The filter to search for the SportRanks to update in case it exists.
+     */
+    where: SportRanksWhereUniqueInput
+    /**
+     * In case the SportRanks found by the `where` argument doesn't exist, create a new SportRanks with this data.
+     */
+    create: XOR<SportRanksCreateInput, SportRanksUncheckedCreateInput>
+    /**
+     * In case the SportRanks was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SportRanksUpdateInput, SportRanksUncheckedUpdateInput>
+  }
+
+  /**
+   * SportRanks delete
+   */
+  export type SportRanksDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SportRanks
+     */
+    select?: SportRanksSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SportRanks
+     */
+    omit?: SportRanksOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SportRanksInclude<ExtArgs> | null
+    /**
+     * Filter which SportRanks to delete.
+     */
+    where: SportRanksWhereUniqueInput
+  }
+
+  /**
+   * SportRanks deleteMany
+   */
+  export type SportRanksDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SportRanks to delete
+     */
+    where?: SportRanksWhereInput
+    /**
+     * Limit how many SportRanks to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * SportRanks.users
+   */
+  export type SportRanks$usersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserSport
+     */
+    select?: UserSportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserSport
+     */
+    omit?: UserSportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserSportInclude<ExtArgs> | null
+    where?: UserSportWhereInput
+    orderBy?: UserSportOrderByWithRelationInput | UserSportOrderByWithRelationInput[]
+    cursor?: UserSportWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserSportScalarFieldEnum | UserSportScalarFieldEnum[]
+  }
+
+  /**
+   * SportRanks without action
+   */
+  export type SportRanksDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SportRanks
+     */
+    select?: SportRanksSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SportRanks
+     */
+    omit?: SportRanksOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SportRanksInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -10629,6 +14264,34 @@ export namespace Prisma {
   };
 
   export type UserFollowScalarFieldEnum = (typeof UserFollowScalarFieldEnum)[keyof typeof UserFollowScalarFieldEnum]
+
+
+  export const UserSportScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    sportId: 'sportId',
+    sportRankId: 'sportRankId',
+    startedAt: 'startedAt'
+  };
+
+  export type UserSportScalarFieldEnum = (typeof UserSportScalarFieldEnum)[keyof typeof UserSportScalarFieldEnum]
+
+
+  export const SportScalarFieldEnum: {
+    id: 'id',
+    name: 'name'
+  };
+
+  export type SportScalarFieldEnum = (typeof SportScalarFieldEnum)[keyof typeof SportScalarFieldEnum]
+
+
+  export const SportRanksScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    description: 'description'
+  };
+
+  export type SportRanksScalarFieldEnum = (typeof SportRanksScalarFieldEnum)[keyof typeof SportRanksScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -10734,6 +14397,7 @@ export namespace Prisma {
     userLikes?: UserLikeListRelationFilter
     followers?: UserFollowListRelationFilter
     following?: UserFollowListRelationFilter
+    sports?: UserSportListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -10748,6 +14412,7 @@ export namespace Prisma {
     userLikes?: UserLikeOrderByRelationAggregateInput
     followers?: UserFollowOrderByRelationAggregateInput
     following?: UserFollowOrderByRelationAggregateInput
+    sports?: UserSportOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -10765,6 +14430,7 @@ export namespace Prisma {
     userLikes?: UserLikeListRelationFilter
     followers?: UserFollowListRelationFilter
     following?: UserFollowListRelationFilter
+    sports?: UserSportListRelationFilter
   }, "id" | "email" | "username">
 
   export type UserOrderByWithAggregationInput = {
@@ -11163,6 +14829,159 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"UserFollow"> | Date | string
   }
 
+  export type UserSportWhereInput = {
+    AND?: UserSportWhereInput | UserSportWhereInput[]
+    OR?: UserSportWhereInput[]
+    NOT?: UserSportWhereInput | UserSportWhereInput[]
+    id?: IntFilter<"UserSport"> | number
+    userId?: IntFilter<"UserSport"> | number
+    sportId?: IntFilter<"UserSport"> | number
+    sportRankId?: IntFilter<"UserSport"> | number
+    startedAt?: DateTimeFilter<"UserSport"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    sport?: XOR<SportScalarRelationFilter, SportWhereInput>
+    sportrank?: XOR<SportRanksScalarRelationFilter, SportRanksWhereInput>
+  }
+
+  export type UserSportOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    sportId?: SortOrder
+    sportRankId?: SortOrder
+    startedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+    sport?: SportOrderByWithRelationInput
+    sportrank?: SportRanksOrderByWithRelationInput
+  }
+
+  export type UserSportWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    userId_sportId?: UserSportUserIdSportIdCompoundUniqueInput
+    AND?: UserSportWhereInput | UserSportWhereInput[]
+    OR?: UserSportWhereInput[]
+    NOT?: UserSportWhereInput | UserSportWhereInput[]
+    userId?: IntFilter<"UserSport"> | number
+    sportId?: IntFilter<"UserSport"> | number
+    sportRankId?: IntFilter<"UserSport"> | number
+    startedAt?: DateTimeFilter<"UserSport"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    sport?: XOR<SportScalarRelationFilter, SportWhereInput>
+    sportrank?: XOR<SportRanksScalarRelationFilter, SportRanksWhereInput>
+  }, "id" | "userId_sportId">
+
+  export type UserSportOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    sportId?: SortOrder
+    sportRankId?: SortOrder
+    startedAt?: SortOrder
+    _count?: UserSportCountOrderByAggregateInput
+    _avg?: UserSportAvgOrderByAggregateInput
+    _max?: UserSportMaxOrderByAggregateInput
+    _min?: UserSportMinOrderByAggregateInput
+    _sum?: UserSportSumOrderByAggregateInput
+  }
+
+  export type UserSportScalarWhereWithAggregatesInput = {
+    AND?: UserSportScalarWhereWithAggregatesInput | UserSportScalarWhereWithAggregatesInput[]
+    OR?: UserSportScalarWhereWithAggregatesInput[]
+    NOT?: UserSportScalarWhereWithAggregatesInput | UserSportScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"UserSport"> | number
+    userId?: IntWithAggregatesFilter<"UserSport"> | number
+    sportId?: IntWithAggregatesFilter<"UserSport"> | number
+    sportRankId?: IntWithAggregatesFilter<"UserSport"> | number
+    startedAt?: DateTimeWithAggregatesFilter<"UserSport"> | Date | string
+  }
+
+  export type SportWhereInput = {
+    AND?: SportWhereInput | SportWhereInput[]
+    OR?: SportWhereInput[]
+    NOT?: SportWhereInput | SportWhereInput[]
+    id?: IntFilter<"Sport"> | number
+    name?: StringFilter<"Sport"> | string
+    users?: UserSportListRelationFilter
+  }
+
+  export type SportOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    users?: UserSportOrderByRelationAggregateInput
+  }
+
+  export type SportWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    name?: string
+    AND?: SportWhereInput | SportWhereInput[]
+    OR?: SportWhereInput[]
+    NOT?: SportWhereInput | SportWhereInput[]
+    users?: UserSportListRelationFilter
+  }, "id" | "name">
+
+  export type SportOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    _count?: SportCountOrderByAggregateInput
+    _avg?: SportAvgOrderByAggregateInput
+    _max?: SportMaxOrderByAggregateInput
+    _min?: SportMinOrderByAggregateInput
+    _sum?: SportSumOrderByAggregateInput
+  }
+
+  export type SportScalarWhereWithAggregatesInput = {
+    AND?: SportScalarWhereWithAggregatesInput | SportScalarWhereWithAggregatesInput[]
+    OR?: SportScalarWhereWithAggregatesInput[]
+    NOT?: SportScalarWhereWithAggregatesInput | SportScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Sport"> | number
+    name?: StringWithAggregatesFilter<"Sport"> | string
+  }
+
+  export type SportRanksWhereInput = {
+    AND?: SportRanksWhereInput | SportRanksWhereInput[]
+    OR?: SportRanksWhereInput[]
+    NOT?: SportRanksWhereInput | SportRanksWhereInput[]
+    id?: IntFilter<"SportRanks"> | number
+    name?: StringFilter<"SportRanks"> | string
+    description?: StringFilter<"SportRanks"> | string
+    users?: UserSportListRelationFilter
+  }
+
+  export type SportRanksOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    users?: UserSportOrderByRelationAggregateInput
+  }
+
+  export type SportRanksWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    name?: string
+    AND?: SportRanksWhereInput | SportRanksWhereInput[]
+    OR?: SportRanksWhereInput[]
+    NOT?: SportRanksWhereInput | SportRanksWhereInput[]
+    description?: StringFilter<"SportRanks"> | string
+    users?: UserSportListRelationFilter
+  }, "id" | "name">
+
+  export type SportRanksOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    _count?: SportRanksCountOrderByAggregateInput
+    _avg?: SportRanksAvgOrderByAggregateInput
+    _max?: SportRanksMaxOrderByAggregateInput
+    _min?: SportRanksMinOrderByAggregateInput
+    _sum?: SportRanksSumOrderByAggregateInput
+  }
+
+  export type SportRanksScalarWhereWithAggregatesInput = {
+    AND?: SportRanksScalarWhereWithAggregatesInput | SportRanksScalarWhereWithAggregatesInput[]
+    OR?: SportRanksScalarWhereWithAggregatesInput[]
+    NOT?: SportRanksScalarWhereWithAggregatesInput | SportRanksScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"SportRanks"> | number
+    name?: StringWithAggregatesFilter<"SportRanks"> | string
+    description?: StringWithAggregatesFilter<"SportRanks"> | string
+  }
+
   export type UserCreateInput = {
     email: string
     username: string
@@ -11174,6 +14993,7 @@ export namespace Prisma {
     userLikes?: UserLikeCreateNestedManyWithoutUserInput
     followers?: UserFollowCreateNestedManyWithoutFollowingInput
     following?: UserFollowCreateNestedManyWithoutFollowerInput
+    sports?: UserSportCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -11188,6 +15008,7 @@ export namespace Prisma {
     userLikes?: UserLikeUncheckedCreateNestedManyWithoutUserInput
     followers?: UserFollowUncheckedCreateNestedManyWithoutFollowingInput
     following?: UserFollowUncheckedCreateNestedManyWithoutFollowerInput
+    sports?: UserSportUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -11201,6 +15022,7 @@ export namespace Prisma {
     userLikes?: UserLikeUpdateManyWithoutUserNestedInput
     followers?: UserFollowUpdateManyWithoutFollowingNestedInput
     following?: UserFollowUpdateManyWithoutFollowerNestedInput
+    sports?: UserSportUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -11215,6 +15037,7 @@ export namespace Prisma {
     userLikes?: UserLikeUncheckedUpdateManyWithoutUserNestedInput
     followers?: UserFollowUncheckedUpdateManyWithoutFollowingNestedInput
     following?: UserFollowUncheckedUpdateManyWithoutFollowerNestedInput
+    sports?: UserSportUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -11563,6 +15386,135 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type UserSportCreateInput = {
+    startedAt?: Date | string
+    user: UserCreateNestedOneWithoutSportsInput
+    sport: SportCreateNestedOneWithoutUsersInput
+    sportrank: SportRanksCreateNestedOneWithoutUsersInput
+  }
+
+  export type UserSportUncheckedCreateInput = {
+    id?: number
+    userId: number
+    sportId: number
+    sportRankId: number
+    startedAt?: Date | string
+  }
+
+  export type UserSportUpdateInput = {
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutSportsNestedInput
+    sport?: SportUpdateOneRequiredWithoutUsersNestedInput
+    sportrank?: SportRanksUpdateOneRequiredWithoutUsersNestedInput
+  }
+
+  export type UserSportUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    sportId?: IntFieldUpdateOperationsInput | number
+    sportRankId?: IntFieldUpdateOperationsInput | number
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserSportCreateManyInput = {
+    id?: number
+    userId: number
+    sportId: number
+    sportRankId: number
+    startedAt?: Date | string
+  }
+
+  export type UserSportUpdateManyMutationInput = {
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserSportUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    sportId?: IntFieldUpdateOperationsInput | number
+    sportRankId?: IntFieldUpdateOperationsInput | number
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SportCreateInput = {
+    name: string
+    users?: UserSportCreateNestedManyWithoutSportInput
+  }
+
+  export type SportUncheckedCreateInput = {
+    id?: number
+    name: string
+    users?: UserSportUncheckedCreateNestedManyWithoutSportInput
+  }
+
+  export type SportUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    users?: UserSportUpdateManyWithoutSportNestedInput
+  }
+
+  export type SportUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    users?: UserSportUncheckedUpdateManyWithoutSportNestedInput
+  }
+
+  export type SportCreateManyInput = {
+    id?: number
+    name: string
+  }
+
+  export type SportUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SportUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SportRanksCreateInput = {
+    name: string
+    description: string
+    users?: UserSportCreateNestedManyWithoutSportrankInput
+  }
+
+  export type SportRanksUncheckedCreateInput = {
+    id?: number
+    name: string
+    description: string
+    users?: UserSportUncheckedCreateNestedManyWithoutSportrankInput
+  }
+
+  export type SportRanksUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    users?: UserSportUpdateManyWithoutSportrankNestedInput
+  }
+
+  export type SportRanksUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    users?: UserSportUncheckedUpdateManyWithoutSportrankNestedInput
+  }
+
+  export type SportRanksCreateManyInput = {
+    id?: number
+    name: string
+    description: string
+  }
+
+  export type SportRanksUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SportRanksUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -11601,11 +15553,21 @@ export namespace Prisma {
     none?: UserFollowWhereInput
   }
 
+  export type UserSportListRelationFilter = {
+    every?: UserSportWhereInput
+    some?: UserSportWhereInput
+    none?: UserSportWhereInput
+  }
+
   export type UserLikeOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type UserFollowOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UserSportOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -12016,6 +15978,108 @@ export namespace Prisma {
     followingId?: SortOrder
   }
 
+  export type SportScalarRelationFilter = {
+    is?: SportWhereInput
+    isNot?: SportWhereInput
+  }
+
+  export type SportRanksScalarRelationFilter = {
+    is?: SportRanksWhereInput
+    isNot?: SportRanksWhereInput
+  }
+
+  export type UserSportUserIdSportIdCompoundUniqueInput = {
+    userId: number
+    sportId: number
+  }
+
+  export type UserSportCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    sportId?: SortOrder
+    sportRankId?: SortOrder
+    startedAt?: SortOrder
+  }
+
+  export type UserSportAvgOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    sportId?: SortOrder
+    sportRankId?: SortOrder
+  }
+
+  export type UserSportMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    sportId?: SortOrder
+    sportRankId?: SortOrder
+    startedAt?: SortOrder
+  }
+
+  export type UserSportMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    sportId?: SortOrder
+    sportRankId?: SortOrder
+    startedAt?: SortOrder
+  }
+
+  export type UserSportSumOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    sportId?: SortOrder
+    sportRankId?: SortOrder
+  }
+
+  export type SportCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+  }
+
+  export type SportAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type SportMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+  }
+
+  export type SportMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+  }
+
+  export type SportSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type SportRanksCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+  }
+
+  export type SportRanksAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type SportRanksMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+  }
+
+  export type SportRanksMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+  }
+
+  export type SportRanksSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
   export type UserLikeCreateNestedManyWithoutUserInput = {
     create?: XOR<UserLikeCreateWithoutUserInput, UserLikeUncheckedCreateWithoutUserInput> | UserLikeCreateWithoutUserInput[] | UserLikeUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserLikeCreateOrConnectWithoutUserInput | UserLikeCreateOrConnectWithoutUserInput[]
@@ -12037,6 +16101,13 @@ export namespace Prisma {
     connect?: UserFollowWhereUniqueInput | UserFollowWhereUniqueInput[]
   }
 
+  export type UserSportCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserSportCreateWithoutUserInput, UserSportUncheckedCreateWithoutUserInput> | UserSportCreateWithoutUserInput[] | UserSportUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserSportCreateOrConnectWithoutUserInput | UserSportCreateOrConnectWithoutUserInput[]
+    createMany?: UserSportCreateManyUserInputEnvelope
+    connect?: UserSportWhereUniqueInput | UserSportWhereUniqueInput[]
+  }
+
   export type UserLikeUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<UserLikeCreateWithoutUserInput, UserLikeUncheckedCreateWithoutUserInput> | UserLikeCreateWithoutUserInput[] | UserLikeUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserLikeCreateOrConnectWithoutUserInput | UserLikeCreateOrConnectWithoutUserInput[]
@@ -12056,6 +16127,13 @@ export namespace Prisma {
     connectOrCreate?: UserFollowCreateOrConnectWithoutFollowerInput | UserFollowCreateOrConnectWithoutFollowerInput[]
     createMany?: UserFollowCreateManyFollowerInputEnvelope
     connect?: UserFollowWhereUniqueInput | UserFollowWhereUniqueInput[]
+  }
+
+  export type UserSportUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserSportCreateWithoutUserInput, UserSportUncheckedCreateWithoutUserInput> | UserSportCreateWithoutUserInput[] | UserSportUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserSportCreateOrConnectWithoutUserInput | UserSportCreateOrConnectWithoutUserInput[]
+    createMany?: UserSportCreateManyUserInputEnvelope
+    connect?: UserSportWhereUniqueInput | UserSportWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -12112,6 +16190,20 @@ export namespace Prisma {
     deleteMany?: UserFollowScalarWhereInput | UserFollowScalarWhereInput[]
   }
 
+  export type UserSportUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserSportCreateWithoutUserInput, UserSportUncheckedCreateWithoutUserInput> | UserSportCreateWithoutUserInput[] | UserSportUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserSportCreateOrConnectWithoutUserInput | UserSportCreateOrConnectWithoutUserInput[]
+    upsert?: UserSportUpsertWithWhereUniqueWithoutUserInput | UserSportUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserSportCreateManyUserInputEnvelope
+    set?: UserSportWhereUniqueInput | UserSportWhereUniqueInput[]
+    disconnect?: UserSportWhereUniqueInput | UserSportWhereUniqueInput[]
+    delete?: UserSportWhereUniqueInput | UserSportWhereUniqueInput[]
+    connect?: UserSportWhereUniqueInput | UserSportWhereUniqueInput[]
+    update?: UserSportUpdateWithWhereUniqueWithoutUserInput | UserSportUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserSportUpdateManyWithWhereWithoutUserInput | UserSportUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserSportScalarWhereInput | UserSportScalarWhereInput[]
+  }
+
   export type UserLikeUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<UserLikeCreateWithoutUserInput, UserLikeUncheckedCreateWithoutUserInput> | UserLikeCreateWithoutUserInput[] | UserLikeUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserLikeCreateOrConnectWithoutUserInput | UserLikeCreateOrConnectWithoutUserInput[]
@@ -12152,6 +16244,20 @@ export namespace Prisma {
     update?: UserFollowUpdateWithWhereUniqueWithoutFollowerInput | UserFollowUpdateWithWhereUniqueWithoutFollowerInput[]
     updateMany?: UserFollowUpdateManyWithWhereWithoutFollowerInput | UserFollowUpdateManyWithWhereWithoutFollowerInput[]
     deleteMany?: UserFollowScalarWhereInput | UserFollowScalarWhereInput[]
+  }
+
+  export type UserSportUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserSportCreateWithoutUserInput, UserSportUncheckedCreateWithoutUserInput> | UserSportCreateWithoutUserInput[] | UserSportUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserSportCreateOrConnectWithoutUserInput | UserSportCreateOrConnectWithoutUserInput[]
+    upsert?: UserSportUpsertWithWhereUniqueWithoutUserInput | UserSportUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserSportCreateManyUserInputEnvelope
+    set?: UserSportWhereUniqueInput | UserSportWhereUniqueInput[]
+    disconnect?: UserSportWhereUniqueInput | UserSportWhereUniqueInput[]
+    delete?: UserSportWhereUniqueInput | UserSportWhereUniqueInput[]
+    connect?: UserSportWhereUniqueInput | UserSportWhereUniqueInput[]
+    update?: UserSportUpdateWithWhereUniqueWithoutUserInput | UserSportUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserSportUpdateManyWithWhereWithoutUserInput | UserSportUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserSportScalarWhereInput | UserSportScalarWhereInput[]
   }
 
   export type PostHashtagCreateNestedManyWithoutPostInput = {
@@ -12488,6 +16594,132 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutFollowersInput, UserUpdateWithoutFollowersInput>, UserUncheckedUpdateWithoutFollowersInput>
   }
 
+  export type UserCreateNestedOneWithoutSportsInput = {
+    create?: XOR<UserCreateWithoutSportsInput, UserUncheckedCreateWithoutSportsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSportsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type SportCreateNestedOneWithoutUsersInput = {
+    create?: XOR<SportCreateWithoutUsersInput, SportUncheckedCreateWithoutUsersInput>
+    connectOrCreate?: SportCreateOrConnectWithoutUsersInput
+    connect?: SportWhereUniqueInput
+  }
+
+  export type SportRanksCreateNestedOneWithoutUsersInput = {
+    create?: XOR<SportRanksCreateWithoutUsersInput, SportRanksUncheckedCreateWithoutUsersInput>
+    connectOrCreate?: SportRanksCreateOrConnectWithoutUsersInput
+    connect?: SportRanksWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutSportsNestedInput = {
+    create?: XOR<UserCreateWithoutSportsInput, UserUncheckedCreateWithoutSportsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSportsInput
+    upsert?: UserUpsertWithoutSportsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSportsInput, UserUpdateWithoutSportsInput>, UserUncheckedUpdateWithoutSportsInput>
+  }
+
+  export type SportUpdateOneRequiredWithoutUsersNestedInput = {
+    create?: XOR<SportCreateWithoutUsersInput, SportUncheckedCreateWithoutUsersInput>
+    connectOrCreate?: SportCreateOrConnectWithoutUsersInput
+    upsert?: SportUpsertWithoutUsersInput
+    connect?: SportWhereUniqueInput
+    update?: XOR<XOR<SportUpdateToOneWithWhereWithoutUsersInput, SportUpdateWithoutUsersInput>, SportUncheckedUpdateWithoutUsersInput>
+  }
+
+  export type SportRanksUpdateOneRequiredWithoutUsersNestedInput = {
+    create?: XOR<SportRanksCreateWithoutUsersInput, SportRanksUncheckedCreateWithoutUsersInput>
+    connectOrCreate?: SportRanksCreateOrConnectWithoutUsersInput
+    upsert?: SportRanksUpsertWithoutUsersInput
+    connect?: SportRanksWhereUniqueInput
+    update?: XOR<XOR<SportRanksUpdateToOneWithWhereWithoutUsersInput, SportRanksUpdateWithoutUsersInput>, SportRanksUncheckedUpdateWithoutUsersInput>
+  }
+
+  export type UserSportCreateNestedManyWithoutSportInput = {
+    create?: XOR<UserSportCreateWithoutSportInput, UserSportUncheckedCreateWithoutSportInput> | UserSportCreateWithoutSportInput[] | UserSportUncheckedCreateWithoutSportInput[]
+    connectOrCreate?: UserSportCreateOrConnectWithoutSportInput | UserSportCreateOrConnectWithoutSportInput[]
+    createMany?: UserSportCreateManySportInputEnvelope
+    connect?: UserSportWhereUniqueInput | UserSportWhereUniqueInput[]
+  }
+
+  export type UserSportUncheckedCreateNestedManyWithoutSportInput = {
+    create?: XOR<UserSportCreateWithoutSportInput, UserSportUncheckedCreateWithoutSportInput> | UserSportCreateWithoutSportInput[] | UserSportUncheckedCreateWithoutSportInput[]
+    connectOrCreate?: UserSportCreateOrConnectWithoutSportInput | UserSportCreateOrConnectWithoutSportInput[]
+    createMany?: UserSportCreateManySportInputEnvelope
+    connect?: UserSportWhereUniqueInput | UserSportWhereUniqueInput[]
+  }
+
+  export type UserSportUpdateManyWithoutSportNestedInput = {
+    create?: XOR<UserSportCreateWithoutSportInput, UserSportUncheckedCreateWithoutSportInput> | UserSportCreateWithoutSportInput[] | UserSportUncheckedCreateWithoutSportInput[]
+    connectOrCreate?: UserSportCreateOrConnectWithoutSportInput | UserSportCreateOrConnectWithoutSportInput[]
+    upsert?: UserSportUpsertWithWhereUniqueWithoutSportInput | UserSportUpsertWithWhereUniqueWithoutSportInput[]
+    createMany?: UserSportCreateManySportInputEnvelope
+    set?: UserSportWhereUniqueInput | UserSportWhereUniqueInput[]
+    disconnect?: UserSportWhereUniqueInput | UserSportWhereUniqueInput[]
+    delete?: UserSportWhereUniqueInput | UserSportWhereUniqueInput[]
+    connect?: UserSportWhereUniqueInput | UserSportWhereUniqueInput[]
+    update?: UserSportUpdateWithWhereUniqueWithoutSportInput | UserSportUpdateWithWhereUniqueWithoutSportInput[]
+    updateMany?: UserSportUpdateManyWithWhereWithoutSportInput | UserSportUpdateManyWithWhereWithoutSportInput[]
+    deleteMany?: UserSportScalarWhereInput | UserSportScalarWhereInput[]
+  }
+
+  export type UserSportUncheckedUpdateManyWithoutSportNestedInput = {
+    create?: XOR<UserSportCreateWithoutSportInput, UserSportUncheckedCreateWithoutSportInput> | UserSportCreateWithoutSportInput[] | UserSportUncheckedCreateWithoutSportInput[]
+    connectOrCreate?: UserSportCreateOrConnectWithoutSportInput | UserSportCreateOrConnectWithoutSportInput[]
+    upsert?: UserSportUpsertWithWhereUniqueWithoutSportInput | UserSportUpsertWithWhereUniqueWithoutSportInput[]
+    createMany?: UserSportCreateManySportInputEnvelope
+    set?: UserSportWhereUniqueInput | UserSportWhereUniqueInput[]
+    disconnect?: UserSportWhereUniqueInput | UserSportWhereUniqueInput[]
+    delete?: UserSportWhereUniqueInput | UserSportWhereUniqueInput[]
+    connect?: UserSportWhereUniqueInput | UserSportWhereUniqueInput[]
+    update?: UserSportUpdateWithWhereUniqueWithoutSportInput | UserSportUpdateWithWhereUniqueWithoutSportInput[]
+    updateMany?: UserSportUpdateManyWithWhereWithoutSportInput | UserSportUpdateManyWithWhereWithoutSportInput[]
+    deleteMany?: UserSportScalarWhereInput | UserSportScalarWhereInput[]
+  }
+
+  export type UserSportCreateNestedManyWithoutSportrankInput = {
+    create?: XOR<UserSportCreateWithoutSportrankInput, UserSportUncheckedCreateWithoutSportrankInput> | UserSportCreateWithoutSportrankInput[] | UserSportUncheckedCreateWithoutSportrankInput[]
+    connectOrCreate?: UserSportCreateOrConnectWithoutSportrankInput | UserSportCreateOrConnectWithoutSportrankInput[]
+    createMany?: UserSportCreateManySportrankInputEnvelope
+    connect?: UserSportWhereUniqueInput | UserSportWhereUniqueInput[]
+  }
+
+  export type UserSportUncheckedCreateNestedManyWithoutSportrankInput = {
+    create?: XOR<UserSportCreateWithoutSportrankInput, UserSportUncheckedCreateWithoutSportrankInput> | UserSportCreateWithoutSportrankInput[] | UserSportUncheckedCreateWithoutSportrankInput[]
+    connectOrCreate?: UserSportCreateOrConnectWithoutSportrankInput | UserSportCreateOrConnectWithoutSportrankInput[]
+    createMany?: UserSportCreateManySportrankInputEnvelope
+    connect?: UserSportWhereUniqueInput | UserSportWhereUniqueInput[]
+  }
+
+  export type UserSportUpdateManyWithoutSportrankNestedInput = {
+    create?: XOR<UserSportCreateWithoutSportrankInput, UserSportUncheckedCreateWithoutSportrankInput> | UserSportCreateWithoutSportrankInput[] | UserSportUncheckedCreateWithoutSportrankInput[]
+    connectOrCreate?: UserSportCreateOrConnectWithoutSportrankInput | UserSportCreateOrConnectWithoutSportrankInput[]
+    upsert?: UserSportUpsertWithWhereUniqueWithoutSportrankInput | UserSportUpsertWithWhereUniqueWithoutSportrankInput[]
+    createMany?: UserSportCreateManySportrankInputEnvelope
+    set?: UserSportWhereUniqueInput | UserSportWhereUniqueInput[]
+    disconnect?: UserSportWhereUniqueInput | UserSportWhereUniqueInput[]
+    delete?: UserSportWhereUniqueInput | UserSportWhereUniqueInput[]
+    connect?: UserSportWhereUniqueInput | UserSportWhereUniqueInput[]
+    update?: UserSportUpdateWithWhereUniqueWithoutSportrankInput | UserSportUpdateWithWhereUniqueWithoutSportrankInput[]
+    updateMany?: UserSportUpdateManyWithWhereWithoutSportrankInput | UserSportUpdateManyWithWhereWithoutSportrankInput[]
+    deleteMany?: UserSportScalarWhereInput | UserSportScalarWhereInput[]
+  }
+
+  export type UserSportUncheckedUpdateManyWithoutSportrankNestedInput = {
+    create?: XOR<UserSportCreateWithoutSportrankInput, UserSportUncheckedCreateWithoutSportrankInput> | UserSportCreateWithoutSportrankInput[] | UserSportUncheckedCreateWithoutSportrankInput[]
+    connectOrCreate?: UserSportCreateOrConnectWithoutSportrankInput | UserSportCreateOrConnectWithoutSportrankInput[]
+    upsert?: UserSportUpsertWithWhereUniqueWithoutSportrankInput | UserSportUpsertWithWhereUniqueWithoutSportrankInput[]
+    createMany?: UserSportCreateManySportrankInputEnvelope
+    set?: UserSportWhereUniqueInput | UserSportWhereUniqueInput[]
+    disconnect?: UserSportWhereUniqueInput | UserSportWhereUniqueInput[]
+    delete?: UserSportWhereUniqueInput | UserSportWhereUniqueInput[]
+    connect?: UserSportWhereUniqueInput | UserSportWhereUniqueInput[]
+    update?: UserSportUpdateWithWhereUniqueWithoutSportrankInput | UserSportUpdateWithWhereUniqueWithoutSportrankInput[]
+    updateMany?: UserSportUpdateManyWithWhereWithoutSportrankInput | UserSportUpdateManyWithWhereWithoutSportrankInput[]
+    deleteMany?: UserSportScalarWhereInput | UserSportScalarWhereInput[]
+  }
+
   export type NestedIntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -12683,6 +16915,29 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type UserSportCreateWithoutUserInput = {
+    startedAt?: Date | string
+    sport: SportCreateNestedOneWithoutUsersInput
+    sportrank: SportRanksCreateNestedOneWithoutUsersInput
+  }
+
+  export type UserSportUncheckedCreateWithoutUserInput = {
+    id?: number
+    sportId: number
+    sportRankId: number
+    startedAt?: Date | string
+  }
+
+  export type UserSportCreateOrConnectWithoutUserInput = {
+    where: UserSportWhereUniqueInput
+    create: XOR<UserSportCreateWithoutUserInput, UserSportUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserSportCreateManyUserInputEnvelope = {
+    data: UserSportCreateManyUserInput | UserSportCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserLikeUpsertWithWhereUniqueWithoutUserInput = {
     where: UserLikeWhereUniqueInput
     update: XOR<UserLikeUpdateWithoutUserInput, UserLikeUncheckedUpdateWithoutUserInput>
@@ -12749,6 +17004,33 @@ export namespace Prisma {
   export type UserFollowUpdateManyWithWhereWithoutFollowerInput = {
     where: UserFollowScalarWhereInput
     data: XOR<UserFollowUpdateManyMutationInput, UserFollowUncheckedUpdateManyWithoutFollowerInput>
+  }
+
+  export type UserSportUpsertWithWhereUniqueWithoutUserInput = {
+    where: UserSportWhereUniqueInput
+    update: XOR<UserSportUpdateWithoutUserInput, UserSportUncheckedUpdateWithoutUserInput>
+    create: XOR<UserSportCreateWithoutUserInput, UserSportUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserSportUpdateWithWhereUniqueWithoutUserInput = {
+    where: UserSportWhereUniqueInput
+    data: XOR<UserSportUpdateWithoutUserInput, UserSportUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UserSportUpdateManyWithWhereWithoutUserInput = {
+    where: UserSportScalarWhereInput
+    data: XOR<UserSportUpdateManyMutationInput, UserSportUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type UserSportScalarWhereInput = {
+    AND?: UserSportScalarWhereInput | UserSportScalarWhereInput[]
+    OR?: UserSportScalarWhereInput[]
+    NOT?: UserSportScalarWhereInput | UserSportScalarWhereInput[]
+    id?: IntFilter<"UserSport"> | number
+    userId?: IntFilter<"UserSport"> | number
+    sportId?: IntFilter<"UserSport"> | number
+    sportRankId?: IntFilter<"UserSport"> | number
+    startedAt?: DateTimeFilter<"UserSport"> | Date | string
   }
 
   export type PostHashtagCreateWithoutPostInput = {
@@ -13142,6 +17424,7 @@ export namespace Prisma {
     followingCount?: number
     followers?: UserFollowCreateNestedManyWithoutFollowingInput
     following?: UserFollowCreateNestedManyWithoutFollowerInput
+    sports?: UserSportCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUserLikesInput = {
@@ -13155,6 +17438,7 @@ export namespace Prisma {
     followingCount?: number
     followers?: UserFollowUncheckedCreateNestedManyWithoutFollowingInput
     following?: UserFollowUncheckedCreateNestedManyWithoutFollowerInput
+    sports?: UserSportUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUserLikesInput = {
@@ -13209,6 +17493,7 @@ export namespace Prisma {
     followingCount?: IntFieldUpdateOperationsInput | number
     followers?: UserFollowUpdateManyWithoutFollowingNestedInput
     following?: UserFollowUpdateManyWithoutFollowerNestedInput
+    sports?: UserSportUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUserLikesInput = {
@@ -13222,6 +17507,7 @@ export namespace Prisma {
     followingCount?: IntFieldUpdateOperationsInput | number
     followers?: UserFollowUncheckedUpdateManyWithoutFollowingNestedInput
     following?: UserFollowUncheckedUpdateManyWithoutFollowerNestedInput
+    sports?: UserSportUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type PostUpsertWithoutUserLikesInput = {
@@ -13266,6 +17552,7 @@ export namespace Prisma {
     followingCount?: number
     userLikes?: UserLikeCreateNestedManyWithoutUserInput
     followers?: UserFollowCreateNestedManyWithoutFollowingInput
+    sports?: UserSportCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutFollowingInput = {
@@ -13279,6 +17566,7 @@ export namespace Prisma {
     followingCount?: number
     userLikes?: UserLikeUncheckedCreateNestedManyWithoutUserInput
     followers?: UserFollowUncheckedCreateNestedManyWithoutFollowingInput
+    sports?: UserSportUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutFollowingInput = {
@@ -13296,6 +17584,7 @@ export namespace Prisma {
     followingCount?: number
     userLikes?: UserLikeCreateNestedManyWithoutUserInput
     following?: UserFollowCreateNestedManyWithoutFollowerInput
+    sports?: UserSportCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutFollowersInput = {
@@ -13309,6 +17598,7 @@ export namespace Prisma {
     followingCount?: number
     userLikes?: UserLikeUncheckedCreateNestedManyWithoutUserInput
     following?: UserFollowUncheckedCreateNestedManyWithoutFollowerInput
+    sports?: UserSportUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutFollowersInput = {
@@ -13337,6 +17627,7 @@ export namespace Prisma {
     followingCount?: IntFieldUpdateOperationsInput | number
     userLikes?: UserLikeUpdateManyWithoutUserNestedInput
     followers?: UserFollowUpdateManyWithoutFollowingNestedInput
+    sports?: UserSportUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutFollowingInput = {
@@ -13350,6 +17641,7 @@ export namespace Prisma {
     followingCount?: IntFieldUpdateOperationsInput | number
     userLikes?: UserLikeUncheckedUpdateManyWithoutUserNestedInput
     followers?: UserFollowUncheckedUpdateManyWithoutFollowingNestedInput
+    sports?: UserSportUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutFollowersInput = {
@@ -13373,6 +17665,7 @@ export namespace Prisma {
     followingCount?: IntFieldUpdateOperationsInput | number
     userLikes?: UserLikeUpdateManyWithoutUserNestedInput
     following?: UserFollowUpdateManyWithoutFollowerNestedInput
+    sports?: UserSportUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutFollowersInput = {
@@ -13386,6 +17679,227 @@ export namespace Prisma {
     followingCount?: IntFieldUpdateOperationsInput | number
     userLikes?: UserLikeUncheckedUpdateManyWithoutUserNestedInput
     following?: UserFollowUncheckedUpdateManyWithoutFollowerNestedInput
+    sports?: UserSportUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutSportsInput = {
+    email: string
+    username: string
+    password?: string
+    bio?: string
+    image?: string
+    followersCount?: number
+    followingCount?: number
+    userLikes?: UserLikeCreateNestedManyWithoutUserInput
+    followers?: UserFollowCreateNestedManyWithoutFollowingInput
+    following?: UserFollowCreateNestedManyWithoutFollowerInput
+  }
+
+  export type UserUncheckedCreateWithoutSportsInput = {
+    id?: number
+    email: string
+    username: string
+    password?: string
+    bio?: string
+    image?: string
+    followersCount?: number
+    followingCount?: number
+    userLikes?: UserLikeUncheckedCreateNestedManyWithoutUserInput
+    followers?: UserFollowUncheckedCreateNestedManyWithoutFollowingInput
+    following?: UserFollowUncheckedCreateNestedManyWithoutFollowerInput
+  }
+
+  export type UserCreateOrConnectWithoutSportsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutSportsInput, UserUncheckedCreateWithoutSportsInput>
+  }
+
+  export type SportCreateWithoutUsersInput = {
+    name: string
+  }
+
+  export type SportUncheckedCreateWithoutUsersInput = {
+    id?: number
+    name: string
+  }
+
+  export type SportCreateOrConnectWithoutUsersInput = {
+    where: SportWhereUniqueInput
+    create: XOR<SportCreateWithoutUsersInput, SportUncheckedCreateWithoutUsersInput>
+  }
+
+  export type SportRanksCreateWithoutUsersInput = {
+    name: string
+    description: string
+  }
+
+  export type SportRanksUncheckedCreateWithoutUsersInput = {
+    id?: number
+    name: string
+    description: string
+  }
+
+  export type SportRanksCreateOrConnectWithoutUsersInput = {
+    where: SportRanksWhereUniqueInput
+    create: XOR<SportRanksCreateWithoutUsersInput, SportRanksUncheckedCreateWithoutUsersInput>
+  }
+
+  export type UserUpsertWithoutSportsInput = {
+    update: XOR<UserUpdateWithoutSportsInput, UserUncheckedUpdateWithoutSportsInput>
+    create: XOR<UserCreateWithoutSportsInput, UserUncheckedCreateWithoutSportsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutSportsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutSportsInput, UserUncheckedUpdateWithoutSportsInput>
+  }
+
+  export type UserUpdateWithoutSportsInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
+    followersCount?: IntFieldUpdateOperationsInput | number
+    followingCount?: IntFieldUpdateOperationsInput | number
+    userLikes?: UserLikeUpdateManyWithoutUserNestedInput
+    followers?: UserFollowUpdateManyWithoutFollowingNestedInput
+    following?: UserFollowUpdateManyWithoutFollowerNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutSportsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
+    followersCount?: IntFieldUpdateOperationsInput | number
+    followingCount?: IntFieldUpdateOperationsInput | number
+    userLikes?: UserLikeUncheckedUpdateManyWithoutUserNestedInput
+    followers?: UserFollowUncheckedUpdateManyWithoutFollowingNestedInput
+    following?: UserFollowUncheckedUpdateManyWithoutFollowerNestedInput
+  }
+
+  export type SportUpsertWithoutUsersInput = {
+    update: XOR<SportUpdateWithoutUsersInput, SportUncheckedUpdateWithoutUsersInput>
+    create: XOR<SportCreateWithoutUsersInput, SportUncheckedCreateWithoutUsersInput>
+    where?: SportWhereInput
+  }
+
+  export type SportUpdateToOneWithWhereWithoutUsersInput = {
+    where?: SportWhereInput
+    data: XOR<SportUpdateWithoutUsersInput, SportUncheckedUpdateWithoutUsersInput>
+  }
+
+  export type SportUpdateWithoutUsersInput = {
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SportUncheckedUpdateWithoutUsersInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SportRanksUpsertWithoutUsersInput = {
+    update: XOR<SportRanksUpdateWithoutUsersInput, SportRanksUncheckedUpdateWithoutUsersInput>
+    create: XOR<SportRanksCreateWithoutUsersInput, SportRanksUncheckedCreateWithoutUsersInput>
+    where?: SportRanksWhereInput
+  }
+
+  export type SportRanksUpdateToOneWithWhereWithoutUsersInput = {
+    where?: SportRanksWhereInput
+    data: XOR<SportRanksUpdateWithoutUsersInput, SportRanksUncheckedUpdateWithoutUsersInput>
+  }
+
+  export type SportRanksUpdateWithoutUsersInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SportRanksUncheckedUpdateWithoutUsersInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserSportCreateWithoutSportInput = {
+    startedAt?: Date | string
+    user: UserCreateNestedOneWithoutSportsInput
+    sportrank: SportRanksCreateNestedOneWithoutUsersInput
+  }
+
+  export type UserSportUncheckedCreateWithoutSportInput = {
+    id?: number
+    userId: number
+    sportRankId: number
+    startedAt?: Date | string
+  }
+
+  export type UserSportCreateOrConnectWithoutSportInput = {
+    where: UserSportWhereUniqueInput
+    create: XOR<UserSportCreateWithoutSportInput, UserSportUncheckedCreateWithoutSportInput>
+  }
+
+  export type UserSportCreateManySportInputEnvelope = {
+    data: UserSportCreateManySportInput | UserSportCreateManySportInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserSportUpsertWithWhereUniqueWithoutSportInput = {
+    where: UserSportWhereUniqueInput
+    update: XOR<UserSportUpdateWithoutSportInput, UserSportUncheckedUpdateWithoutSportInput>
+    create: XOR<UserSportCreateWithoutSportInput, UserSportUncheckedCreateWithoutSportInput>
+  }
+
+  export type UserSportUpdateWithWhereUniqueWithoutSportInput = {
+    where: UserSportWhereUniqueInput
+    data: XOR<UserSportUpdateWithoutSportInput, UserSportUncheckedUpdateWithoutSportInput>
+  }
+
+  export type UserSportUpdateManyWithWhereWithoutSportInput = {
+    where: UserSportScalarWhereInput
+    data: XOR<UserSportUpdateManyMutationInput, UserSportUncheckedUpdateManyWithoutSportInput>
+  }
+
+  export type UserSportCreateWithoutSportrankInput = {
+    startedAt?: Date | string
+    user: UserCreateNestedOneWithoutSportsInput
+    sport: SportCreateNestedOneWithoutUsersInput
+  }
+
+  export type UserSportUncheckedCreateWithoutSportrankInput = {
+    id?: number
+    userId: number
+    sportId: number
+    startedAt?: Date | string
+  }
+
+  export type UserSportCreateOrConnectWithoutSportrankInput = {
+    where: UserSportWhereUniqueInput
+    create: XOR<UserSportCreateWithoutSportrankInput, UserSportUncheckedCreateWithoutSportrankInput>
+  }
+
+  export type UserSportCreateManySportrankInputEnvelope = {
+    data: UserSportCreateManySportrankInput | UserSportCreateManySportrankInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserSportUpsertWithWhereUniqueWithoutSportrankInput = {
+    where: UserSportWhereUniqueInput
+    update: XOR<UserSportUpdateWithoutSportrankInput, UserSportUncheckedUpdateWithoutSportrankInput>
+    create: XOR<UserSportCreateWithoutSportrankInput, UserSportUncheckedCreateWithoutSportrankInput>
+  }
+
+  export type UserSportUpdateWithWhereUniqueWithoutSportrankInput = {
+    where: UserSportWhereUniqueInput
+    data: XOR<UserSportUpdateWithoutSportrankInput, UserSportUncheckedUpdateWithoutSportrankInput>
+  }
+
+  export type UserSportUpdateManyWithWhereWithoutSportrankInput = {
+    where: UserSportScalarWhereInput
+    data: XOR<UserSportUpdateManyMutationInput, UserSportUncheckedUpdateManyWithoutSportrankInput>
   }
 
   export type UserLikeCreateManyUserInput = {
@@ -13404,6 +17918,13 @@ export namespace Prisma {
     id?: number
     followingId: number
     createdAt?: Date | string
+  }
+
+  export type UserSportCreateManyUserInput = {
+    id?: number
+    sportId: number
+    sportRankId: number
+    startedAt?: Date | string
   }
 
   export type UserLikeUpdateWithoutUserInput = {
@@ -13455,6 +17976,26 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     followingId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserSportUpdateWithoutUserInput = {
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sport?: SportUpdateOneRequiredWithoutUsersNestedInput
+    sportrank?: SportRanksUpdateOneRequiredWithoutUsersNestedInput
+  }
+
+  export type UserSportUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    sportId?: IntFieldUpdateOperationsInput | number
+    sportRankId?: IntFieldUpdateOperationsInput | number
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserSportUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    sportId?: IntFieldUpdateOperationsInput | number
+    sportRankId?: IntFieldUpdateOperationsInput | number
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PostHashtagCreateManyPostInput = {
@@ -13542,6 +18083,60 @@ export namespace Prisma {
 
   export type PostCommentUncheckedUpdateManyWithoutCommentInput = {
     postId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type UserSportCreateManySportInput = {
+    id?: number
+    userId: number
+    sportRankId: number
+    startedAt?: Date | string
+  }
+
+  export type UserSportUpdateWithoutSportInput = {
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutSportsNestedInput
+    sportrank?: SportRanksUpdateOneRequiredWithoutUsersNestedInput
+  }
+
+  export type UserSportUncheckedUpdateWithoutSportInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    sportRankId?: IntFieldUpdateOperationsInput | number
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserSportUncheckedUpdateManyWithoutSportInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    sportRankId?: IntFieldUpdateOperationsInput | number
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserSportCreateManySportrankInput = {
+    id?: number
+    userId: number
+    sportId: number
+    startedAt?: Date | string
+  }
+
+  export type UserSportUpdateWithoutSportrankInput = {
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutSportsNestedInput
+    sport?: SportUpdateOneRequiredWithoutUsersNestedInput
+  }
+
+  export type UserSportUncheckedUpdateWithoutSportrankInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    sportId?: IntFieldUpdateOperationsInput | number
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserSportUncheckedUpdateManyWithoutSportrankInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    sportId?: IntFieldUpdateOperationsInput | number
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 
