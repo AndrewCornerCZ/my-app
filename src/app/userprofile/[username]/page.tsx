@@ -80,7 +80,7 @@ export default async function Profile({ params }: {params: Promise<{ username: s
       <div className="container mx-auto px-4 py-8">
         <div className="bg-zinc-800 rounded-lg p-6 mb-8 shadow-xl relative">
           {/* Přidáme settings do pravého rohu */}
-          {session?.user?.name === username && ( //ale jenom pokud je to jeho profil
+          {session?.user?.name === decodedUsername && ( //ale jenom pokud je to jeho profil
             <div className="absolute top-4 right-4">
               <SettingsButton />
             </div>
@@ -108,7 +108,7 @@ export default async function Profile({ params }: {params: Promise<{ username: s
             </div>
             <div className="flex items-center gap-4">
               <h1 className="text-2xl font-bold text-white mb-1">@{user.username}</h1>
-              {session?.user?.name !== username && ( //pokud to není jeho profil, zobrazíme follow button
+              {session?.user?.name !== decodedUsername && ( //pokud to není jeho profil, zobrazíme follow button
                 <FollowButton 
                   userId={user.id} 
                   initialFollowState={!!isFollowing} //zjistíme jestli ho už náhodou nesleduje
