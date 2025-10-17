@@ -7,16 +7,14 @@ import Link from 'next/link';
 export default async function SearchResultPage({
   searchParams,
 }: {
-  searchParams: { searchTerm: string; filter: string }
+  searchParams: Promise<{ searchTerm: string; filter: string }>;
 }) {
-  const { searchTerm, filter } = searchParams;
+  const { searchTerm, filter } = await searchParams;
 
   try {
     if (filter === 'users') {
       const users = await prisma.user.findMany({
-        where: {
-          username: { contains: searchTerm, mode: 'insensitive' }
-        }
+        where: { username: { contains: searchTerm, mode: 'insensitive' } },
       });
 
       if (users.length === 0) {
@@ -54,9 +52,9 @@ export default async function SearchResultPage({
         where: {
           postHashtags: {
             some: {
-              hashtag: { text: { contains: searchTerm, mode: 'insensitive' } }
-            }
-          }
+              hashtag: { text: { contains: searchTerm, mode: 'insensitive' } },
+            },
+          },
         },
         orderBy: { created_at: 'desc' },
       });
@@ -90,7 +88,6 @@ export default async function SearchResultPage({
         </div>
       );
     }
-
   } catch (error) {
     console.error("Error fetching data:", error);
     return <div>Error fetching data.</div>;
