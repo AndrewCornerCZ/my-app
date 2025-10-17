@@ -1,8 +1,8 @@
 
 import React from "react";
-import GeneratePost from "@/components/GeneratePost";
-import ShowComments from "@/components/ShowComments";
-import BackButton from "@/components/BackButton";
+import GeneratePost from "@/components/postsComponents/GeneratePost";
+import ShowComments from "@/components/postsComponents/ShowComments";
+import BackButton from "@/components/postsComponents/BackButton";
 
 export default async function Showpost({searchParams}: { searchParams: { postId: number }}) {
   if (!searchParams) {

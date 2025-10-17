@@ -16,18 +16,19 @@ datasource db {
 }
 
 model User {
-  id             Int          @id @default(autoincrement())
-  email          String       @unique
-  username       String       @unique
-  password       String       @default("")
-  bio            String       @default("")
-  image          String       @default("")
+  id             Int             @id @default(autoincrement())
+  email          String          @unique
+  username       String          @unique
+  password       String          @default("")
+  bio            String          @default("")
+  image          String          @default("")
   userLikes      UserLike[] // Add this line
-  followers      UserFollow[] @relation("Following")
-  following      UserFollow[] @relation("Follower")
+  followers      UserFollow[]    @relation("Following")
+  following      UserFollow[]    @relation("Follower")
   sports         UserSport[]
-  followersCount Int          @default(0)
-  followingCount Int          @default(0)
+  activities     SportActivity[]
+  followersCount Int             @default(0)
+  followingCount Int             @default(0)
 }
 
 model Post {
@@ -100,22 +101,24 @@ model UserFollow {
 }
 
 model UserSport {
-  id          Int         @id @default(autoincrement())
+  id          Int        @id @default(autoincrement())
   userId      Int
   sportId     Int
   sportRankId Int
-  startedAt   DateTime    @default(now())
-  user        User        @relation(fields: [userId], references: [id])
-  sport       Sport       @relation(fields: [sportId], references: [id])
-  sportrank   SportRanks? @relation(fields: [sportRankId], references: [id])
+  startedAt   DateTime   @default(now())
+  color       String?    @default("blue")
+  user        User       @relation(fields: [userId], references: [id])
+  sport       Sport      @relation(fields: [sportId], references: [id])
+  sportrank   SportRanks @relation(fields: [sportRankId], references: [id])
 
   @@unique([userId, sportId])
 }
 
 model Sport {
-  id    Int         @id @default(autoincrement())
-  name  String      @unique
-  users UserSport[] // sport může mít víc uživatelů
+  id         Int             @id @default(autoincrement())
+  name       String          @unique
+  users      UserSport[] // sport může mít víc uživatelů
+  activities SportActivity[]
 }
 
 model SportRanks {
@@ -123,4 +126,17 @@ model SportRanks {
   name        String      @unique
   description String
   users       UserSport[]
+}
+
+model SportActivity {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  sportId     Int
+  duration    Int // duration in minutes
+  description String
+  date        DateTime @default(now())
+  latitude    Float?
+  longitude   Float?
+  user        User     @relation(fields: [userId], references: [id])
+  sport       Sport    @relation(fields: [sportId], references: [id])
 }

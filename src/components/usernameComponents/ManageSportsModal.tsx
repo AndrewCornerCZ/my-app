@@ -16,6 +16,7 @@ interface UserSport {
   sport: { name: string };
   sportRankId: number;
   startedAt: Date;
+  color?: string | null; // Přidáno
 }
 
 interface ManageSportsModalProps {
@@ -31,6 +32,7 @@ export default function ManageSportsModal({ userSports }: ManageSportsModalProps
   const [sportRanks, setSportRanks] = useState<SportRank[]>([]);
   const [selectedRankId, setSelectedRankId] = useState('');
   const [startedAt, setStartedAt] = useState('');
+  const [color, setColor] = useState('#3b82f6'); // Nový stav pro barvu, výchozí je modrá
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const router = useRouter();
@@ -40,6 +42,7 @@ export default function ManageSportsModal({ userSports }: ManageSportsModalProps
     setSelectedSport(sport);
     setSelectedRankId(String(sport.sportRankId));
     setStartedAt(new Date(sport.startedAt).toISOString().split('T')[0]);
+    setColor(sport.color || '#3b82f6'); // Nastavíme existující barvu nebo výchozí
     setView('edit');
   };
 
@@ -74,6 +77,7 @@ export default function ManageSportsModal({ userSports }: ManageSportsModalProps
           sportId: selectedSport.sportId,
           sportRankId: Number(selectedRankId),
           startedAt: new Date(startedAt),
+          color: color, // Přidáme barvu do odesílaných dat
         }),
       });
       if (!res.ok) throw new Error('Failed to update sport.');
@@ -154,6 +158,18 @@ export default function ManageSportsModal({ userSports }: ManageSportsModalProps
                 <label className="block text-sm font-medium text-gray-300 mb-1">Started At</label>
                 <input type="date" value={startedAt} onChange={(e) => setStartedAt(e.target.value)} className="w-full p-2 rounded bg-zinc-700 text-white border border-zinc-600" />
               </div>
+              
+              {/* Nový input pro výběr barvy */}
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-1">Color</label>
+                <input
+                  type="color"
+                  value={color}
+                  onChange={(e) => setColor(e.target.value)}
+                  className="w-full p-1 h-10 rounded bg-zinc-700 border border-zinc-600 cursor-pointer"
+                />
+              </div>
+
               {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
               <div className="flex justify-between items-center pt-4">
                 <button onClick={handleDelete} disabled={loading} className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:bg-red-400">

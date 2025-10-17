@@ -178,7 +178,8 @@ exports.Prisma.UserSportScalarFieldEnum = {
   userId: 'userId',
   sportId: 'sportId',
   sportRankId: 'sportRankId',
-  startedAt: 'startedAt'
+  startedAt: 'startedAt',
+  color: 'color'
 };
 
 exports.Prisma.SportScalarFieldEnum = {
@@ -190,6 +191,17 @@ exports.Prisma.SportRanksScalarFieldEnum = {
   id: 'id',
   name: 'name',
   description: 'description'
+};
+
+exports.Prisma.SportActivityScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  sportId: 'sportId',
+  duration: 'duration',
+  description: 'description',
+  date: 'date',
+  latitude: 'latitude',
+  longitude: 'longitude'
 };
 
 exports.Prisma.SortOrder = {
@@ -219,7 +231,8 @@ exports.Prisma.ModelName = {
   UserFollow: 'UserFollow',
   UserSport: 'UserSport',
   Sport: 'Sport',
-  SportRanks: 'SportRanks'
+  SportRanks: 'SportRanks',
+  SportActivity: 'SportActivity'
 };
 
 /**

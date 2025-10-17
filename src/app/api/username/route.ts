@@ -3,6 +3,8 @@ import cloudinary from "@/lib/cloudinary";
 import { prisma } from "@/lib/db";
 import { getServerSession } from "next-auth/next";
 import { options } from "@/app/api/auth/[...nextauth]/options";
+import type { UploadApiResponse } from "cloudinary";
+
 
 export async function POST(req: Request) {
   const session = await getServerSession(options);
@@ -19,16 +21,20 @@ export async function POST(req: Request) {
 
   const buffer = Buffer.from(await file.arrayBuffer());
 
-  const uploadResult: any = await new Promise((resolve, reject) => {
-    const stream = cloudinary.uploader.upload_stream(
-      { folder: "profile_pics" },
-      (error, result) => {
-        if (error) reject(error);
-        else resolve(result);
+const uploadResult: UploadApiResponse = await new Promise((resolve, reject) => {
+  const stream = cloudinary.uploader.upload_stream(
+    { folder: "profile_pics" },
+    (error, result) => {
+      if (error || !result) {
+        reject(error ?? new Error("Unknown Cloudinary error"));
+        return;
       }
-    );
-    stream.end(buffer);
-  });
+      resolve(result);
+    }
+  );
+  stream.end(buffer);
+});
+
 
   // uložit URL do DB
   await prisma.user.update({

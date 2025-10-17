@@ -4,7 +4,7 @@ import {prisma} from "@/lib/db";
 import AddCommentButton from './AddCommentButton';
 import LikeButton from './LikeButton';
 import { getServerSession } from 'next-auth/next';
-import { options } from '../app/api/auth/[...nextauth]/options';
+import { options } from '../../app/api/auth/[...nextauth]/options';
 
 
 interface GeneratePostProps {

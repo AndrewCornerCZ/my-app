@@ -18,7 +18,6 @@ export default function ProfileImageUploader({ userId }: Props) {
     });
 
     if (res.ok) {
-      const data = await res.json();
       window.location.reload();
     }
   };

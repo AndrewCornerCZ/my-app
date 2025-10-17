@@ -1,5 +1,5 @@
-import AddCommentForm from '@/components/AddCommentForm'
-import GeneratePost from '@/components/GeneratePost'
+import AddCommentForm from '@/components/postsComponents/AddCommentForm'
+import GeneratePost from '@/components/postsComponents//GeneratePost'
 import { notFound } from 'next/navigation'
 import './addComment.css'
 

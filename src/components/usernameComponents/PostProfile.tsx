@@ -1,26 +1,37 @@
+
 import React from 'react';
 
-import { getServerSession } from 'next-auth/next';
-import { options } from '../app/api/auth/[...nextauth]/options';
-import LikeButton from './LikeButton';
-import {Hashtag } from '../../prisma/generated/prisma/client';
+import LikeButton from '../postsComponents/LikeButton';
+import {Hashtag } from '../../../prisma/generated/prisma/client';
 import {prisma} from "@/lib/db";
-import AddCommentButton from './AddCommentButton';
-import ShowComments from './ShowCommentsButton';
+import AddCommentButton from '../postsComponents/AddCommentButton';
+import ShowComments from '../postsComponents/ShowCommentsButton';
 
- const Posts = async () => {
-  const session = await getServerSession(options)
+interface PostProfileProps {
+  id: number;
+}
+
+ const PostProfile = async (id: PostProfileProps) => {
+  const commentsmap = new Map<number, number>();
+  const user = await prisma.user.findFirst({
+    where: {
+      id: Number(id.id),
+    },
+  });
+  
+  if (!user) {
+    return <div className='text-white'>User not found</div>;
+  }
 
 const posts = await prisma.post.findMany({
+  where: {
+    authorId: user.id
+  }, 
   orderBy: {
     created_at: 'desc',
-  }
+  },
 });
-
 const hashtagsmap = new Map<number, Hashtag[]>();
-const usernamesmap = new Map<number, string[]>();
-const commentsmap = new Map<number, number>();
-
 for (const post of posts) {
   const hashtags = await prisma.postHashtag.findMany({
     where: {
@@ -28,20 +39,13 @@ for (const post of posts) {
     },
     include: {
       hashtag: true,
-    }
+    },
   });
   hashtagsmap.set(post.id, hashtags.map((postHashtag) => postHashtag.hashtag));
-
-  const usernames = await prisma.user.findMany({
-    where: {
-      id: post.authorId 
-    }
-  });
-    usernamesmap.set(post.id, usernames.map((user) => user.username));
 }
 const likedPosts = await prisma.userLike.findMany({
   where: {
-    userId: session?.user.id,
+    userId: user.id,
   },
 });
 const likedPostsBoolean = new Map<number, boolean>();
@@ -53,7 +57,6 @@ for (const likedPost of likedPosts) {
     likedPostsBoolean.set(post.id, false);
   }
 }
-
 for (const post of posts) {
   const comments = await prisma.postComment.findMany({
     where: {
@@ -63,17 +66,20 @@ for (const post of posts) {
   commentsmap.set(post.id, comments.length);
 }
 
+
+
+const username = user?.username;
+
   return (
     <div className="flex flex-col items-center gap-4 p-4">
       {posts.map((post) => (
-        
         <div
           key={post.id}
           className="w-full max-w-xl bg-zinc-900 border border-zinc-700 rounded-xl p-5 shadow-md"
         >
           {/* Username */}
           <div className="flex items-center gap-2 mb-2">
-            <a href={`/userprofile/${usernamesmap.get(post.id)}`} className="text-white font-semibold">@{usernamesmap.get(post.id)}</a>
+            <a href={`/userprofile/${username}`} className="text-white font-semibold">@{username}</a>
           </div>
 
           {/* Post text */}
@@ -104,27 +110,17 @@ for (const post of posts) {
               })}
             </span>
           </div>
-          <div className="flex items-center gap-4 mt-3">
-            <LikeButton 
-              postId={post.id} 
-              initialLikes={post.likes} 
-              liked={likedPosts.some(likedPost => likedPost.postId === post.id)}
-            />
+            <LikeButton postId={post.id} initialLikes={post.likes} liked={likedPosts.some(likedPost => likedPost.postId === post.id)}/>
             <ShowComments 
               postId={post.id}
               comments={commentsmap.get(post.id) || 0} // Get the count from the Map or default to 0
             />
-            <AddCommentButton postId={post.id } />
-          </div>
-
+            <AddCommentButton postId={post.id} />
         </div>
-
-        
-      )
-      )}
+      ))}
     </div>
   );
 };
  }
 
-export default Posts;
+export default PostProfile;

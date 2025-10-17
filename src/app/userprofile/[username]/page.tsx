@@ -1,41 +1,48 @@
 import React from "react";
 import Navbar from "../../../components/Navbar";
-import AddLogoutButton from "@/components/AddLogoutButton";
-import AddPostButton from "@/components/AddPostButton";
-import SettingsButton from "@/components/SettingsButton";
-import PostProfile from "@/components/PostProfile";
+import AddLogoutButton from "@/components/usernameComponents/AddLogoutButton";
+import AddPostButton from "@/components/postsComponents/AddPostButton";
+import SettingsButton from "@/components/usernameComponents/SettingsButton";
+import PostProfile from "@/components/usernameComponents/PostProfile";
 import { prisma } from "@/lib/db";
-import FollowButton from "@/components/FollowButton";
+import FollowButton from "@/components/usernameComponents/FollowButton";
 import { getServerSession } from "next-auth/next";
 import { options } from "@/app/api/auth/[...nextauth]/options";
 import Image from 'next/image'
-import ManageSportsModal from '@/components/ManageSportsModal'; // Nahraďte EditSportModal
-import ProfileImageUploader from "@/components/ProfileImageUploader";
-import AddSportModal from '@/components/AddSportModal'; // Přidejte tento import
+import ManageSportsModal from '@/components/usernameComponents/ManageSportsModal'; // Nahraďte EditSportModal
+import ProfileImageUploader from "@/components/usernameComponents/ProfileImageUploader";
+import AddSportModal from '@/components/usernameComponents/AddSportModal'; // Přidejte tento import
+import AddActivityModal from "@/components/usernameComponents/AddActivityModal";
+import ActivityCalendar from '@/components/usernameComponents/ActivityCalendar';
 
-interface ProfileProps {
-  params: {
-    username: string;
+
+
+export default async function Profile({ params }: {params: Promise<{ username: string }>;}) {
+    const { username } = await params; 
+  const session = await getServerSession(options);
+  
+  const decodedUsername = decodeURIComponent(username);
+  if (!decodedUsername) {
+    return <div className='text-white'>Invalid username</div>;
   }
-}
-
-export default async function Profile({ params }: ProfileProps) {
-  const session = await getServerSession(options); //Získáme session
-  const username = decodeURIComponent(params.username); //decodenem si to pro případ že by v username byl nějaký speciální znak nebo mezera
   if (!username) { //Pokud username nemáme, tak vypíšeme error
     return <div className='text-white'>Invalid username</div>;
   }
-  
  
   // Načtem si uživatele z db
   const [user, currentUser] = await Promise.all([
     prisma.user.findUnique({ //najdem si ho podle unique username
       where: {
-        username: username,
+        username: decodedUsername,
       },
       include: { //Zahrneme i jeho posty a followery a followings
         followers: true,
         following: true,
+        activities: {
+          include: {
+            sport: true, // This attaches the related Sport object to each activity
+        }
+      },
         sports: { //taktéž sporty navázané na jeho profil
         include: {
           sport: true,
@@ -43,6 +50,7 @@ export default async function Profile({ params }: ProfileProps) {
         },
       },
       }
+
     }),
     session?.user?.email ? prisma.user.findUnique({ //najdem si i current usera pokud je přihlášený, bude to potřeba pro práva na profilu
       where: {
@@ -130,22 +138,32 @@ export default async function Profile({ params }: ProfileProps) {
       return (
         <span
           key={us.sportId}
-          className="px-3 py-1 bg-indigo-600 text-white rounded-full text-sm"
+          className="px-3 py-1 text-white rounded-full text-sm"
           // 3. Vypíšeme rank, streak a od kdy to dělá v tooltipu
           title={`Rank: ${us.sportrank.name} / Streak: ${diffDays} days / Since: ${us.startedAt.toDateString()}`}
+          style={{ backgroundColor: us.color || '#3b82f6' }}
         >
           {us.sport.name}
         </span>
       );
     })}
   </div>
-
+        <div className="bg-zinc-800 rounded-lg p-6 mb-8 shadow-xl w-1/2 mx-auto">
+        {/* Předáme data kalendáři, včetně informací o sportech uživatele */}
+        <ActivityCalendar 
+          initialActivities={user.activities}
+          userSports={user.sports} 
+        />
+      </div>
   {/*Komponenty pro přidání a úpravu sportů na profilu */}
         {session?.user?.name === user.username && (
-          <div className="flex gap-4 mt-4">
+          <div className="flex gap-4 mt-4 ite">
             <AddSportModal userId={user.id} userSports={user.sports} />
             {user.sports.length > 0 && (
+              <>
               <ManageSportsModal userSports={user.sports} />
+              <AddActivityModal userSports={user.sports} />
+              </>
             )}
           </div>
         )}

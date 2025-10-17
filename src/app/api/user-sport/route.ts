@@ -11,19 +11,32 @@ export async function PATCH(req: Request) {
   }
 
   try {
-    const { userId, sportId, sportRankId, startedAt } = await req.json();
+    // Přidáme 'color' do destrukturace
+    const { userId, sportId, sportRankId, startedAt, color } = await req.json();
     const currentUser = await prisma.user.findUnique({ where: { email: session.user.email } });
     if (currentUser?.id !== userId) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
-
+    console.log({ userId, sportId, sportRankId, startedAt, color }); // Pro ladění
     const updatedUserSport = await prisma.userSport.update({
       where: { userId_sportId: { userId, sportId } },
-      data: { sportRankId, startedAt: new Date(startedAt) },
+      // Změňte tento 'data' objekt
+      data: { 
+        sportrank: {         // Použijte název vztahu (relation field)
+          connect: {
+            id: sportRankId  // Připojte se k ranku pomocí jeho ID
+          }
+        },
+        startedAt: new Date(startedAt),
+        color: color,
+      },
     });
 
     return NextResponse.json(updatedUserSport);
   } catch (error) {
+    // PŘIDÁNO: Logování konkrétní chyby do konzole serveru
+    console.error("Error updating user sport:", error); 
+    console.log(error); 
     return NextResponse.json({ error: 'Failed to update sport' }, { status: 500 });
   }
 }
@@ -47,7 +60,7 @@ export async function DELETE(req: Request) {
     });
 
     return NextResponse.json({ message: 'Sport deleted successfully' }, { status: 200 });
-  } catch (error) {
+  } catch  {
     return NextResponse.json({ error: 'Failed to delete sport' }, { status: 500 });
   }
 }
