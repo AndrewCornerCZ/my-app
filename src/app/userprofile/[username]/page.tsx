@@ -60,21 +60,30 @@ export default async function Profile({ params }: {params: Promise<{ username: s
   ]);
 
   if (!user) {
-    return <div className='text-white'>User not found</div>; //Pokud uživatele s tím username nenajdeme, vypíšeme error
+    return <div className='text-white'>User not found</div>;
   }
 
-  // Zkontrolujeme, jestli current user sleduje zobrazovaného uživatele
-  const isFollowing = currentUser ? await prisma.userFollow.findFirst({
-    where: {
-      AND: [
-        { followerId: currentUser.id },
-        { followingId: user.id }
-      ]
-    }
-  }) : null;
+  // Normalize activities so shape matches ActivityWithSport (add 'longitude' expected by client)
+  const serializedActivities = user.activities.map(a => ({
+    ...a,
+    // ensure date is serializable (ActivityCalendar accepts string|Date)
+    date: a.date instanceof Date ? a.date.toISOString() : String(a.date),
+    // keep original latitude and add the misspelled field 'longitude' the client type expects
+    latitude: a.latitude ?? null,
+    longitude: a.longitude ?? null,
+  }))
+   // Zkontrolujeme, jestli current user sleduje zobrazovaného uživatele
+   const isFollowing = currentUser ? await prisma.userFollow.findFirst({
+     where: {
+       AND: [
+         { followerId: currentUser.id },
+         { followingId: user.id }
+       ]
+     }
+   }) : null;
 
 
-  return (
+   return (
     <div className="min-h-screen bg-gray-900">
       <Navbar />
       <div className="container mx-auto px-4 py-8">
@@ -149,9 +158,9 @@ export default async function Profile({ params }: {params: Promise<{ username: s
     })}
   </div>
         <div className="bg-zinc-800 rounded-lg p-6 mb-8 shadow-xl w-1/2 mx-auto">
-        {/* Předáme data kalendáři, včetně informací o sportech uživatele */}
+        {/* Předáme data kalendáři (normalized) */}
         <ActivityCalendar 
-          initialActivities={user.activities}
+          initialActivities={serializedActivities}
           userSports={user.sports} 
         />
       </div>

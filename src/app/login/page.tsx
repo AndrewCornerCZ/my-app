@@ -45,14 +45,14 @@ export default function LoginPage() {
   return (
     <form className="flex flex-col items-center" onSubmit={handleSubmit}>
       <input
-        className="border border-gray-300 p-2 m-2"
+        className="border text-black border-gray-300 p-2 m-2"
         type="email"
         placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
       <input
-        className="border border-gray-300 p-2 m-2"
+        className="border text-black border-gray-300 p-2 m-2"
         type="password"
         placeholder="Password"
         value={password}

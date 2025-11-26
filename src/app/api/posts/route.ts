@@ -11,7 +11,6 @@ export async function POST(req: Request) {
     }
     const HashtagsMap = new Map<string, Hashtag>();
     const hashtagsplitted = hashtag.split(" ").map((tag: string) => tag.trim());
-    console.log("Hashtags splitted:", hashtagsplitted);
     for (const hashtagparts of hashtagsplitted) {
       try {
         Hashtag = await prisma.hashtag.findFirst({
@@ -24,7 +23,6 @@ export async function POST(req: Request) {
       }
   
       if (Hashtag == null) {
-        console.log("Hashtag not found, creating new one:", hashtag);
         Hashtag = await prisma.hashtag.create({
           data: {
             text: hashtagparts,
@@ -39,7 +37,6 @@ export async function POST(req: Request) {
     }
 
 
-    console.log("Hashtag found:", Hashtag);
     if (isNaN(authorId as number)) {
       return NextResponse.json({ error: authorId}, { status: 400 });
     }

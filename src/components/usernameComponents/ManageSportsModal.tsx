@@ -16,7 +16,7 @@ interface UserSport {
   sport: { name: string };
   sportRankId: number;
   startedAt: Date;
-  color?: string | null; // Přidáno
+  color?: string | null;
 }
 
 interface ManageSportsModalProps {

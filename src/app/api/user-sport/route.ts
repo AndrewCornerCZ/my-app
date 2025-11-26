@@ -17,7 +17,6 @@ export async function PATCH(req: Request) {
     if (currentUser?.id !== userId) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
-    console.log({ userId, sportId, sportRankId, startedAt, color }); // Pro ladění
     const updatedUserSport = await prisma.userSport.update({
       where: { userId_sportId: { userId, sportId } },
       // Změňte tento 'data' objekt
@@ -36,7 +35,6 @@ export async function PATCH(req: Request) {
   } catch (error) {
     // PŘIDÁNO: Logování konkrétní chyby do konzole serveru
     console.error("Error updating user sport:", error); 
-    console.log(error); 
     return NextResponse.json({ error: 'Failed to update sport' }, { status: 500 });
   }
 }

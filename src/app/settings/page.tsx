@@ -25,7 +25,7 @@ export default function SettingsPage() {
     currentPassword: '',
     newPassword: '',
     confirmPassword: '',
-    bio: '' // Add this line
+    bio: ''
   })
   const [showPasswords, setShowPasswords] = useState({
     current: false,
@@ -44,7 +44,6 @@ export default function SettingsPage() {
       }))
     }
   }, [session])
-
   // Redirect to login if unauthenticated
   useEffect(() => {
     if (status === 'unauthenticated') {
@@ -56,17 +55,14 @@ export default function SettingsPage() {
   if (status === 'loading') {
     return <div className="settings-page">Loading...</div>
   }
-  console.log(session)
   // Don't render the form if not authenticated
   if (!session) {
     return null
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    })
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    setFormData(prev => ({ ...prev, [name]: value } as FormData))
   }
   const togglePasswordVisibility = (field: 'current' | 'new' | 'confirm') => {
     setShowPasswords(prev => ({
@@ -87,7 +83,7 @@ export default function SettingsPage() {
           username: formData.username || undefined,
           currentPassword: formData.currentPassword,
           newPassword: formData.newPassword || undefined,
-          bio: formData.bio // Add this line
+          bio: formData.bio || undefined // Add this line
         })
       })
 
@@ -110,7 +106,6 @@ export default function SettingsPage() {
       setLoading(false)
     }
   }
-
   return (
     <div className="settings-page">
       <div className="settings-container">
@@ -138,7 +133,7 @@ export default function SettingsPage() {
               id="bio"
               name="bio"
               value={formData.bio}
-              onChange={(e) => setFormData(prev => ({ ...prev, bio: e.target.value }))}
+              onChange={handleChange}
               className="form-textarea"
               maxLength={160}
             />

@@ -50,6 +50,16 @@ export const options: NextAuthOptions = {
         async session({ session, token }) {
             if (session.user) {
                 session.user.id = token.id as number
+                // načteme aktuální bio (a případně další pole) z DB podle id
+                const dbUser = await prisma.user.findUnique({
+                  where: { id: Number(token.id) },
+                  select: { bio: true, username: true, image: true, email: true },
+                })
+                session.user.bio = dbUser?.bio ?? null
+                // volitelné: synchronizovat jméno/obrázek pokud chcete
+                session.user.name = dbUser?.username ?? session.user.name
+                session.user.email = dbUser?.email ?? session.user.email
+                session.user.image = dbUser?.image ?? session.user.image
             }
             return session
         }

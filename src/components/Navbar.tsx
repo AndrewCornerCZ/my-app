@@ -23,6 +23,7 @@ const Navbar = () => {
     { href: "/", text: "Home" },
     { href: "/search", text: "Search" },
     { href: "/friends", text: "Friends" },
+    { href: "/Map", text: "Map" },
   ];
 
   return (

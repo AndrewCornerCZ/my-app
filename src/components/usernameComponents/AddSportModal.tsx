@@ -93,7 +93,7 @@ export default function AddSportModal({ userId, userSports }: AddSportModalProps
       setLoading(false);
     }
   };
-
+  
   if (!isOpen) {
     return (
       <button
@@ -133,8 +133,8 @@ export default function AddSportModal({ userId, userSports }: AddSportModalProps
                 onChange={(e) => setSelectedRankId(e.target.value)}
                 className="w-full p-2 rounded bg-zinc-700 text-white border border-zinc-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
               >
-                {sportRanks.map((rank) => (
-                  <option key={rank.id} value={rank.id}>
+                {sportRanks.map((rank) => ( 
+                  <option key={rank.id} value={rank.id} title={/* safer access */ (rank as any).description ?? ''}>
                     {rank.name}
                   </option>
                 ))}

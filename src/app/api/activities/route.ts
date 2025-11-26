@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 import { getServerSession } from 'next-auth';
 import { options } from '../auth/[...nextauth]/options';
+import { start } from 'repl';
 
 // GET - Načtení aktivit pro konkrétního uživatele
 export async function GET(req: Request) {
@@ -14,18 +15,29 @@ export async function GET(req: Request) {
 
   try {
     const activities = await prisma.sportActivity.findMany({
-      where: {
-        userId: Number(userId),
-      },
-      include: {
-        sport: true, // Přidáme informace o sportu
-      },
-      orderBy: {
-        date: 'desc', // Seřadíme od nejnovějších
-      },
+      where: { userId: Number(userId) },
+      include: { sport: true },
+      orderBy: { date: 'desc' },
     });
-    return NextResponse.json(activities);
-  } catch  {
+
+    // normalize shape expected by ActivityWithSport
+    const serialized = activities.map((a) => ({
+      id: a.id,
+      userId: a.userId,
+      sportId: a.sportId,
+      starttime: a.starttime,
+      endtime: a.endtime,
+      description: a.description,
+      // convert Date -> string (if client expects string)
+      date: a.date instanceof Date ? a.date.toISOString() : String(a.date),
+      // remap latitude/longitude -> lat/lng
+      lat: a.latitude ?? null,
+      lng: a.longitude ?? null,
+      sport: a.sport,
+    }));
+
+    return NextResponse.json(serialized);
+  } catch {
     return NextResponse.json({ error: 'Failed to fetch activities' }, { status: 500 });
   }
 }
@@ -38,24 +50,32 @@ export async function POST(req: Request) {
   }
 
   try {
-    const { sportId, duration, description, date, latitude, longitude } = await req.json();
-
+    const { sportId, starttime, endtime, description, date, latitude, longitude, publicity } = await req.json();
     const currentUser = await prisma.user.findUnique({ where: { email: session.user.email } });
     if (currentUser?.id !== session?.user?.id) {
-        console.log("Unauthorized access attempt by user:");
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
-    console.log({description});
     const newActivity = await prisma.sportActivity.create({
       data: {
         userId: currentUser!.id,
         sportId,
         date: new Date(date),
-        duration,
+        starttime,
+        endtime,
         description,
         latitude,
         longitude,
+        publicity
       },
+    });
+    
+
+    const activityOwner = await prisma.sportActivityParticipant.create({
+      data: {
+        activityId: newActivity.id,
+        userId: currentUser!.id,
+        role: 'owner'
+      }
     });
 
     return NextResponse.json(newActivity, { status: 201 });

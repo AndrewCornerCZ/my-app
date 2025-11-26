@@ -27,6 +27,8 @@ model User {
   following      UserFollow[] @relation("Follower")
   sports         UserSport[]
   activities     SportActivity[]
+  // Přidáno: opačná relation na SportActivityParticipant
+  activityParticipations SportActivityParticipant[]
   followersCount Int          @default(0)
   followingCount Int          @default(0)
 }
@@ -132,11 +134,26 @@ model SportActivity {
   id        Int      @id @default(autoincrement())
   userId    Int
   sportId   Int
-  duration  Int      // duration in minutes
+  starttime String
+  endtime   String
   description String
   date      DateTime @default(now())
   latitude  Float?
   longitude Float?
+  publicity String  @default("private") // 'public', 'friends-only', 'private'
   user      User     @relation(fields: [userId], references: [id])
   sport     Sport    @relation(fields: [sportId], references: [id])
+
+  // Přidáno: opačná relation na SportActivityPrivacy
+  participants SportActivityParticipant[]
+}
+
+
+model SportActivityParticipant {
+  id          Int      @id @default(autoincrement())
+  activityId  Int
+  userId      Int
+  role        String   // e.g., "participant", "organizer"
+  activity    SportActivity @relation(fields: [activityId], references: [id])
+  user        User         @relation(fields: [userId], references: [id])
 }

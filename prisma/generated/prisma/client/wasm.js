@@ -197,11 +197,20 @@ exports.Prisma.SportActivityScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   sportId: 'sportId',
-  duration: 'duration',
+  starttime: 'starttime',
+  endtime: 'endtime',
   description: 'description',
   date: 'date',
   latitude: 'latitude',
-  longitude: 'longitude'
+  longitude: 'longitude',
+  publicity: 'publicity'
+};
+
+exports.Prisma.SportActivityParticipantScalarFieldEnum = {
+  id: 'id',
+  activityId: 'activityId',
+  userId: 'userId',
+  role: 'role'
 };
 
 exports.Prisma.SortOrder = {
@@ -232,7 +241,8 @@ exports.Prisma.ModelName = {
   UserSport: 'UserSport',
   Sport: 'Sport',
   SportRanks: 'SportRanks',
-  SportActivity: 'SportActivity'
+  SportActivity: 'SportActivity',
+  SportActivityParticipant: 'SportActivityParticipant'
 };
 
 /**

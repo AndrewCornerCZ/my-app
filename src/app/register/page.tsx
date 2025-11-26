@@ -14,9 +14,7 @@ export default function RegisterPage() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, email, password }),
     });
-    console.log(res);
     const data = await res.json();
-        console.log(data);
 
     if (!res.ok) {
       setError(data.error || "Chyba při registraci. Zkuste to znovu!");
@@ -30,21 +28,21 @@ export default function RegisterPage() {
   return (
     <form className="flex flex-col items-center" onSubmit={handleSubmit}>
       <input
-        className="border border-gray-300 p-2 m-2"
+        className="border text-black border-gray-300 p-2 m-2"
         type="text"
         placeholder="Username"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
       />
       <input
-        className="border border-gray-300 p-2 m-2"
+        className="border text-black border-gray-300 p-2 m-2"
         type="email"
         placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
       <input
-        className="border border-gray-300 p-2 m-2"
+        className="border text-black border-gray-300 p-2 m-2"
         type="password"
         placeholder="Password"
         value={password}

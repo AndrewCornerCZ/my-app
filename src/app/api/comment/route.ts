@@ -4,7 +4,6 @@ import { prisma } from "@/lib/db";
 export async function POST(req: Request) {
     try {
     const {text, authorId, postId} = await req.json();
-    console.log("Received data:", {text, authorId, postId});
     if (!text || !authorId) {
         return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }

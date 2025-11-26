@@ -12,7 +12,6 @@ export default function AddCommentForm  (postId: AddCommentFormProps){
     const [text, setText] = useState("");
     const [error, setError] = useState("");
     const [session, setSession] = useState<Session | null>(null);
-    console.log(postId.postId);
 
     useEffect(() => {
         const fetchSession = async () => {
@@ -31,7 +30,6 @@ export default function AddCommentForm  (postId: AddCommentFormProps){
                 body: JSON.stringify({text, authorId: session?.user.id, postId: Number(postId.postId) }),
             });
             if (!res.ok) {
-                console.log("Error adding comment:", res.statusText);
             } else {
                 setError("");
                 redirect("/");

@@ -9,7 +9,6 @@ export async function POST(req: Request) {
     if (!email || !password) {
       return NextResponse.json({ error: "Email a heslo jsou povinné!" }, { status: 400 });
     }
-    console.log("Email:", email);
     // Ověření, zda uživatel existuje
     const existingUser = await prisma.user.findFirst({ where: { email } });
     if (!existingUser) {
@@ -25,7 +24,6 @@ export async function POST(req: Request) {
     // Přihlášení úspěšné
     return NextResponse.json({ message: "Uživatel úspěšně přihlášen!", user: existingUser }, { status: 200 });
   } catch (error) {
-    console.log("Chyba při přihlášení:", error);
     return NextResponse.json({ error: "Interní chyba serveru!" }, { status: 500 });
   }
 }

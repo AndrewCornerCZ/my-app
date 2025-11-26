@@ -1,160 +1,428 @@
 'use client'
 
-import { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic'
+import { useState, useEffect } from 'react'
+import 'leaflet/dist/leaflet.css'
+import { useSession } from 'next-auth/react'
+import ActivityParticipantsModal from './ActivityParticipantsModal'
 
+const MapContainer = dynamic(
+  () => import('react-leaflet').then(mod => mod.MapContainer),
+  { ssr: false }
+)
+const TileLayer = dynamic(
+  () => import('react-leaflet').then(mod => mod.TileLayer),
+  { ssr: false }
+)
+const Marker = dynamic(
+  () => import('react-leaflet').then(mod => mod.Marker),
+  { ssr: false }
+)
+const Popup = dynamic(
+  () => import('react-leaflet').then(mod => mod.Popup),
+  { ssr: false }
+)
 
 interface UserSport {
-  sportId: number;
-  color?: string | null;
+  sportId: number
+  color?: string | null
 }
 
-interface ActivityWithSport { // nový typ pro aktivitu s informacemi o sportu
-  id: number;
-  date: string | Date;
-  duration: number;
-  description: string | null;
-  sportId: number;
+interface ActivityWithSport {
+  id: number
+  date: string | Date
+  starttime: string
+  endtime: string
+  description: string | null
+  sportId: number
+  userId: number
+  latitude: number | null
+  longitude: number | null
+  publicity: string
   sport: {
-    name: string;
-  };
+    name: string
+  }
 }
 
-interface ActivityCalendarProps { //interface pro props komponenty ke kalendáři
-  initialActivities: ActivityWithSport[];
-  userSports: UserSport[];
+interface ActivityCalendarProps {
+  initialActivities: ActivityWithSport[]
+  userSports: UserSport[]
 }
 
-// Nový typ pro buňku v kalendáři
 interface CalendarDay {
-  date: Date;
-  activityColor: string | null;
-  isCurrentMonth: boolean;
+  date: Date
+  activityColor: string | null
+  isCurrentMonth: boolean
+  activities: ActivityWithSport[]
 }
 
-export default function ActivityCalendar({ initialActivities, userSports }: ActivityCalendarProps) {
-  // Stav pro aktivity uživatele
-  const [activities] = useState(initialActivities);
-  // Nový stav pro sledování aktuálně zobrazeného měsíce
-  const [currentDate, setCurrentDate] = useState(new Date());
-  // Stav pro dny v kalendáři
-  const [days, setDays] = useState<CalendarDay[]>([]);
-  // Stav pro vybranou aktivitu (pro modální okno)
-  const [selectedActivity, setSelectedActivity] = useState<ActivityWithSport | null>(null);
+export default function ActivityCalendar({
+  initialActivities,
+  userSports,
+}: ActivityCalendarProps) {
+  const [activities] = useState(initialActivities)
+  const [currentDate, setCurrentDate] = useState(new Date())
+  const [days, setDays] = useState<CalendarDay[]>([])
+  const [selectedActivities, setSelectedActivities] =
+    useState<ActivityWithSport[] | null>(null)
+  const [selectedActivity, setSelectedActivity] =
+    useState<ActivityWithSport | null>(null)
+  const [markerIcon, setMarkerIcon] = useState<any>(null)
+  const [canJoinMap, setCanJoinMap] = useState<
+    Record<number, { allowed: boolean; reason?: string; checked: boolean }>
+  >({})
+  const [joiningMap, setJoiningMap] = useState<Record<number, boolean>>({})
+  const [participantsModalOpen, setParticipantsModalOpen] = useState(false)
+  const { data: session } = useSession()
 
-  // Tento useEffect se spustí při změně měsíce nebo aktivit
   useEffect(() => {
-    // Funkce pro generování mřížky kalendáře
+    import('leaflet').then(L => {
+      const icon = new L.Icon({
+        iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+      })
+      setMarkerIcon(icon)
+    })
+  }, [])
+
+  useEffect(() => {
     const generateCalendarGrid = () => {
-      //získáme data pro aktuální měsíc a rok
-      const year = currentDate.getFullYear();
-      const month = currentDate.getMonth();
-      //získá data pro první den v měsíci
-      const firstDayOfMonth = new Date(year, month, 1);
+      const year = currentDate.getFullYear()
+      const month = currentDate.getMonth()
+      const firstDayOfMonth = new Date(year, month, 1)
+      const startDate = new Date(firstDayOfMonth)
+      startDate.setDate(startDate.getDate() - firstDayOfMonth.getDay())
 
-       // Začátek mřížky (může být v předchozím měsíci)
-      const startDate = new Date(firstDayOfMonth);
-      // Posuneme zpět na neděli (nebo zůstaneme, pokud už je to neděli)
-      startDate.setDate(startDate.getDate() - firstDayOfMonth.getDay());
+      const dayArray: CalendarDay[] = []
+      for (let i = 0; i < 42; i++) {
+        const date = new Date(startDate)
+        date.setDate(startDate.getDate() + i)
 
-      // Vytvoříme pole pro dny v kalendáři
-      const dayArray: CalendarDay[] = [];
+        const activitiesForDay = activities.filter(act => {
+          const actDate = new Date(act.date)
+          return (
+            actDate.getFullYear() === date.getFullYear() &&
+            actDate.getMonth() === date.getMonth() &&
+            actDate.getDate() === date.getDate()
+          )
+        })
 
-      for (let i = 0; i < 42; i++) { // 6 řádků po 7 dnech
-        //vytvoříme si kopii abych se nehrabal v původním datu
-        const date = new Date(startDate);
-        //přičtem i dní
-        date.setDate(startDate.getDate() + i);
-
-        // Najdeme aktivitu pro tento den (pokud existuje)
-        const activityForDay = activities.find(act => {
-        const actDate = new Date(act.date);
-        return (
-          actDate.getFullYear() === date.getFullYear() &&
-          actDate.getMonth() === date.getMonth() &&
-          actDate.getDate() === date.getDate()
-        );
-});
-
-        // Získáme barvu sportu, pokud je aktivita nalezena
-        let color = null;
-        if (activityForDay) {
-          const sportInfo = userSports.find(us => us.sportId === activityForDay.sportId);
-          color = sportInfo?.color || '#3b82f6';
+        let color = null
+        if (activitiesForDay.length > 0) {
+          const sportInfo = userSports.find(
+            us => us.sportId === activitiesForDay[0].sportId
+          )
+          color = sportInfo?.color || '#3b82f6'
         }
 
         dayArray.push({
           date,
           activityColor: color,
           isCurrentMonth: date.getMonth() === month,
-        });
+          activities: activitiesForDay,
+        })
       }
-      setDays(dayArray);
-    };
 
-    generateCalendarGrid();
-  }, [currentDate, activities, userSports]);
+      setDays(dayArray)
+    }
 
-  // Funkce pro přepínání měsíců
+    generateCalendarGrid()
+  }, [currentDate, activities, userSports])
+
   const handlePrevMonth = () => {
-    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1));
-  };
+    setCurrentDate(
+      new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1)
+    )
+  }
 
   const handleNextMonth = () => {
-    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
-  };
+    setCurrentDate(
+      new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1)
+    )
+  }
 
   const handleDayClick = (date: Date) => {
-    const activityForDay = activities.find(
-      (act) => new Date(act.date).toDateString() === date.toDateString()
-      
-    );
-    setSelectedActivity(activityForDay || null);
-  };
+    const activitiesForDay = activities.filter(
+      act => new Date(act.date).toDateString() === date.toDateString()
+    )
+    setSelectedActivities(activitiesForDay.length ? activitiesForDay : null)
+    setSelectedActivity(
+      activitiesForDay.length === 1 ? activitiesForDay[0] : null
+    )
+    setParticipantsModalOpen(false) // Reset participants modal
+  }
+
+  const checkCanJoin = async (activityId: number) => {
+    if (canJoinMap[activityId]?.checked) return
+    try {
+      const res = await fetch(`/api/activities/${activityId}/can-join`)
+      if (res.ok) {
+        setCanJoinMap(prev => ({
+          ...prev,
+          [activityId]: { allowed: true, checked: true },
+        }))
+      } else {
+        const json = await res.json().catch(() => ({}))
+        setCanJoinMap(prev => ({
+          ...prev,
+          [activityId]: {
+            allowed: false,
+            reason: json?.message,
+            checked: true,
+          },
+        }))
+      }
+    } catch (e) {
+      setCanJoinMap(prev => ({
+        ...prev,
+        [activityId]: {
+          allowed: false,
+          reason: 'Network error',
+          checked: true,
+        },
+      }))
+    }
+  }
+
+  const handleJoin = async (activityId: number) => {
+    setJoiningMap(prev => ({ ...prev, [activityId]: true }))
+    try {
+      const res = await fetch(`/api/activities/${activityId}/join`, {
+        method: 'POST',
+      })
+      if (res.ok) {
+        setCanJoinMap(prev => ({
+          ...prev,
+          [activityId]: { allowed: false, reason: 'Joined', checked: true },
+        }))
+      } else {
+        const json = await res.json().catch(() => ({}))
+        setCanJoinMap(prev => ({
+          ...prev,
+          [activityId]: {
+            allowed: false,
+            reason: json?.message ?? 'Failed to join',
+            checked: true,
+          },
+        }))
+      }
+    } catch (e) {
+      setCanJoinMap(prev => ({
+        ...prev,
+        [activityId]: {
+          allowed: false,
+          reason: 'Network error',
+          checked: true,
+        },
+      }))
+    } finally {
+      setJoiningMap(prev => ({ ...prev, [activityId]: false }))
+    }
+  }
+
+  useEffect(() => {
+    if (!selectedActivities) return
+    selectedActivities.forEach(act => checkCanJoin(act.id))
+  }, [selectedActivities])
+
   return (
-    <div>
-      {/* Hlavička s přepínáním měsíců */}
-      <div className="flex justify-between items-center mb-4">
-        <button onClick={handlePrevMonth} className="px-3 py-1 bg-zinc-700 rounded hover:bg-zinc-600">&lt;</button>
-        <h3 className="text-xl font-semibold text-white">
-          {currentDate.toLocaleString('default', { month: 'long', year: 'numeric' })}
-        </h3>
-        <button onClick={handleNextMonth} className="px-3 py-1 bg-zinc-700 rounded hover:bg-zinc-600">&gt;</button>
-      </div>
-
-      {/* Dny v týdnu */}
-      <div className="grid grid-cols-7 gap-2 text-center text-xs text-gray-400 mb-2">
-        {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => <div key={day}>{day}</div>)}
-      </div>
-
-      {/* Mřížka kalendáře */}
-      <div className="grid grid-cols-7 gap-2">
-        
-        {days.map(({ date, activityColor, isCurrentMonth }, index) => (
-          <div
-            key={index}
-            onClick={() => handleDayClick(date)}
-            className={`w-full aspect-square rounded-md cursor-pointer flex items-center justify-center transition-colors ${!isCurrentMonth ? 'text-gray-600' : 'text-white'}`}
-            style={{ 
-              backgroundColor: activityColor ? activityColor : (isCurrentMonth ? '#4a4a52' : '#3a3a40')
-            }}
-            title={date.toLocaleDateString()}
+    <>
+      <div>
+        <div className="flex justify-between items-center mb-4">
+          <button
+            onClick={handlePrevMonth}
+            className="px-3 py-1 bg-zinc-700 rounded hover:bg-zinc-600"
           >
-            <span className="text-xs">{date.getDate()}</span>
-          </div>
-        ))}
-      </div>
-
-      {/* Modální okno pro detail aktivity (zůstává stejné) */}
-      {selectedActivity && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50" onClick={() => setSelectedActivity(null)}>
-          <div className="bg-zinc-800 p-6 rounded-lg shadow-xl" onClick={(e) => e.stopPropagation()}>
-            <h4 className="font-bold text-white">{new Date(selectedActivity.date).toLocaleDateString()}</h4>
-            <p className="text-gray-300">Sport: {selectedActivity.sport.name}</p>
-            <p className="text-gray-300">Duration: {selectedActivity.duration} minutes</p>
-            {selectedActivity.description && <p className="text-gray-400 mt-2">Notes: {selectedActivity.description}</p>}
-          </div>
+            &lt;
+          </button>
+          <h3 className="text-xl font-semibold text-white">
+            {currentDate.toLocaleString('default', {
+              month: 'long',
+              year: 'numeric',
+            })}
+          </h3>
+          <button
+            onClick={handleNextMonth}
+            className="px-3 py-1 bg-zinc-700 rounded hover:bg-zinc-600"
+          >
+            &gt;
+          </button>
         </div>
+
+        <div className="grid grid-cols-7 gap-2 text-center text-xs text-gray-400 mb-2">
+          {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
+            <div key={day}>{day}</div>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-7 gap-2">
+          {days.map(({ date, activityColor, isCurrentMonth }, index) => (
+            <div
+              key={index}
+              onClick={() => handleDayClick(date)}
+              className={`w-full aspect-square rounded-md cursor-pointer flex items-center justify-center transition-colors ${
+                !isCurrentMonth ? 'text-gray-600' : 'text-white'
+              }`}
+              style={{
+                backgroundColor: isCurrentMonth ? '#4a4a52' : '#3a3a40',
+              }}
+              title={date.toLocaleDateString()}
+            >
+              <div className="flex flex-col items-center">
+                <span className="text-xs">{date.getDate()}</span>
+                <div className="flex space-x-1 mt-1">
+                  {days[index].activities?.slice(0, 4).map((act, i) => {
+                    const sportInfo = userSports.find(
+                      us => us.sportId === act.sportId
+                    )
+                    const dotColor = sportInfo?.color || '#3b82f6'
+                    return (
+                      <span
+                        key={i}
+                        className="w-2 h-2 rounded-full"
+                        style={{ backgroundColor: dotColor }}
+                      />
+                    )
+                  })}
+                  {days[index].activities &&
+                    days[index].activities.length > 4 && (
+                      <span className="text-[10px] text-gray-200">
+                        +{days[index].activities.length - 4}
+                      </span>
+                    )}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {selectedActivities && (
+          <div
+            className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 p-4 overflow-auto"
+            onClick={() => {
+              setSelectedActivities(null)
+              setSelectedActivity(null)
+            }}
+          >
+            <div
+              className="bg-zinc-800 p-6 rounded-lg shadow-xl w-full max-w-3xl mx-4"
+              onClick={e => e.stopPropagation()}
+            >
+              <h4 className="font-bold text-white mb-3">
+                {new Date(selectedActivities[0].date).toLocaleDateString()} —{' '}
+                {selectedActivities.length}{' '}
+                {selectedActivities.length === 1 ? 'activity' : 'activities'}
+              </h4>
+              <div className="space-y-4 max-h-[70vh] overflow-auto pr-2">
+                {selectedActivities.map(act => (
+                  <div key={act.id} className="bg-zinc-900 p-3 rounded">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <p className="text-sm text-gray-300 font-semibold">
+                          {act.sport.name}
+                        </p>
+                        <p className="text-xs text-gray-400">
+                          From: {String(act.starttime)} — To:{' '}
+                          {String(act.endtime)}
+                        </p>
+                        {act.description && (
+                          <p className="text-xs text-gray-400 mt-1">
+                            Notes: {act.description}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+
+                    {act.latitude != null &&
+                      act.longitude != null &&
+                      markerIcon && (
+                        <div className="mt-3 h-48 rounded overflow-hidden">
+                          <MapContainer
+                            key={`map-${act.id}-${act.latitude}-${act.longitude}`}
+                            center={[Number(act.latitude), Number(act.longitude)]}
+                            zoom={13}
+                            style={{ height: '100%', width: '100%' }}
+                          >
+                            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                            <Marker
+                              position={[
+                                Number(act.latitude),
+                                Number(act.longitude),
+                              ]}
+                              icon={markerIcon}
+                            >
+                              <Popup>Activity Location</Popup>
+                            </Marker>
+                          </MapContainer>
+                        </div>
+                      )}
+
+                    <div className="mt-3 flex items-center gap-3 flex-wrap">
+                      <p className="text-xs text-gray-400">
+                        Privacy: {act.publicity}
+                      </p>
+
+                      {/* Show participants button if user is owner */}
+                        {session?.user?.id &&
+                          Number(session.user.id) === act.userId  &&
+                          act.publicity !== 'private' && (
+                            <button
+                        onClick={() => {
+                        setSelectedActivity(act)
+                        setParticipantsModalOpen(true)
+                        }}
+                              className="px-3 py-1 bg-blue-600 hover:bg-blue-700 rounded text-xs text-white"
+                        >
+                            👥 Manage Participants
+                            </button>
+                          )}
+                      {/* Join controls for non-owners */}
+                      {session?.user?.id &&
+                      Number(session.user.id) !== act.userId ? (
+                        canJoinMap[act.id]?.checked ? (
+                          canJoinMap[act.id].allowed ? (
+                            <button
+                              className="px-3 py-1 bg-emerald-600 rounded text-xs text-white"
+                              disabled={joiningMap[act.id]}
+                              onClick={() => handleJoin(act.id)}
+                            >
+                              {joiningMap[act.id] ? 'Joining...' : 'Join'}
+                            </button>
+                          ) : (
+                            <div className="text-xs text-gray-400">
+                              {canJoinMap[act.id].reason}
+                            </div>
+                          )
+                        ) : (
+                          <button
+                            className="px-3 py-1 bg-zinc-700 rounded text-xs text-white"
+                            onClick={() => checkCanJoin(act.id)}
+                          >
+                            Check join
+                          </button>
+                        )
+                      ) : null}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+      {console.log(selectedActivity)}
+        {selectedActivity && selectedActivity?.publicity !== 'private' && (
+        <ActivityParticipantsModal
+          activityId={selectedActivity.id}
+          ownerId={selectedActivity.userId}
+          isOpen={participantsModalOpen}
+          onClose={() => {
+          setParticipantsModalOpen(false)
+          setSelectedActivity(null) // při zavření modal také zrušíme selectedActivity
+        }}
+        />
       )}
-    </div>
-  );
+    </>
+  )
 }

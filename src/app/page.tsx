@@ -9,7 +9,6 @@ import Posts from "../components/postsComponents/Posts";
 
 export default async function HomePage() {
   const session = await getServerSession(options);
-  console.log(session?.user);
   if (!session) {
     redirect ("/login");
   }

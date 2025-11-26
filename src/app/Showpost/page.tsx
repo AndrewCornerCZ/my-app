@@ -15,7 +15,6 @@ export default async function Showpost({
     return <div className="text-white">Post not found</div>;
   }
 
-  console.log("postID", postId);
 
   return (
     <>
