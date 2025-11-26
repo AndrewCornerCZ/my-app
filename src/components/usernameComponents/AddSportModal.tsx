@@ -12,6 +12,7 @@ interface Sport {
 interface SportRank {
   id: number;
   name: string;
+  description?: string; // přidáno, aby ESLint/TS věděly, že může být description
 }
 
 interface AddSportModalProps {
@@ -134,7 +135,7 @@ export default function AddSportModal({ userId, userSports }: AddSportModalProps
                 className="w-full p-2 rounded bg-zinc-700 text-white border border-zinc-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
               >
                 {sportRanks.map((rank) => ( 
-                  <option key={rank.id} value={rank.id} title={/* safer access */ (rank as any).description ?? ''}>
+                  <option key={rank.id} value={rank.id} title={rank.description ?? ''}>
                     {rank.name}
                   </option>
                 ))}

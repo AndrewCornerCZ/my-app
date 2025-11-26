@@ -1,4 +1,3 @@
-// src/components/ActivityParticipantsModal.tsx
 'use client'
 
 import { useState, useEffect } from 'react'
@@ -34,7 +33,7 @@ export default function ActivityParticipantsModal({
   const [loading, setLoading] = useState(false)
   const [actionLoading, setActionLoading] = useState<Record<number, string>>({})
 
-    const isOwner = Number(session?.user?.id) === ownerId
+  const isOwner = Number(session?.user?.id) === ownerId
 
   useEffect(() => {
     if (!isOpen) return
@@ -55,7 +54,6 @@ export default function ActivityParticipantsModal({
       setLoading(false)
     }
   }
-      console.log(participants);
 
   const handlePromote = async (participantId: number) => {
     setActionLoading(prev => ({ ...prev, [participantId]: 'promote' }))
@@ -70,6 +68,10 @@ export default function ActivityParticipantsModal({
             p.id === participantId ? { ...p, role: 'co-owner' } : p
           )
         )
+      } else {
+        // optional: show error toast / message
+        const json = await res.json().catch(() => ({}))
+        console.error('Promote failed:', json?.message)
       }
     } catch (error) {
       console.error('Error promoting participant:', error)
@@ -130,7 +132,6 @@ export default function ActivityParticipantsModal({
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-xl font-bold text-white">
             Participants ({participants.length})
-
           </h3>
           <button
             onClick={onClose}
@@ -180,6 +181,18 @@ export default function ActivityParticipantsModal({
                 {/* Only show actions if current user is owner */}
                 {isOwner && (
                   <div className="flex gap-2 ml-4">
+                    {/* Promote button (only shown when not already co-owner/owner) */}
+                    {participant.role !== 'co-owner' && participant.role !== 'owner' && (
+                      <button
+                        onClick={() => handlePromote(participant.id)}
+                        disabled={actionLoading[participant.id] === 'promote'}
+                        className="px-3 py-1 bg-amber-600 hover:bg-amber-700 text-white text-sm rounded disabled:opacity-50"
+                        title="Promote to co-owner"
+                      >
+                        {actionLoading[participant.id] === 'promote' ? '...' : '👑'}
+                      </button>
+                    )}
+
                     <button
                       onClick={() => handleRemove(participant.id)}
                       disabled={actionLoading[participant.id] === 'remove'}
@@ -194,9 +207,7 @@ export default function ActivityParticipantsModal({
                       className="px-3 py-1 bg-red-900 hover:bg-red-950 text-white text-sm rounded disabled:opacity-50"
                       title="Block user"
                     >
-                      {actionLoading[participant.id] === 'block'
-                        ? '...'
-                        : '⛔'}
+                      {actionLoading[participant.id] === 'block' ? '...' : '⛔'}
                     </button>
                   </div>
                 )}

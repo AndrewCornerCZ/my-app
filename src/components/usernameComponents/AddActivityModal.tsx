@@ -75,6 +75,7 @@ export default function AddActivityModal({ userSports }: AddActivityModalProps) 
       }
     } catch {
         setError('Failed to add activity. Please try again.');
+        
     } finally {
         setLoading(false);
     }
@@ -89,10 +90,11 @@ export default function AddActivityModal({ userSports }: AddActivityModalProps) 
   }
 
   return (
+    
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 p-4">
       <div className="bg-zinc-800 p-4 rounded-lg shadow-xl w-full max-w-lg md:max-w-2xl max-h-[80vh] overflow-auto">
         <h3 className="text-lg font-bold text-white mb-2">Log a New Activity</h3>
-
+        {error && <p className="text-red-500 mb-2">{error}</p>}
         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label className="block text-sm text-gray-300 mb-1">Sport</label>

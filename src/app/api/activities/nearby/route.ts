@@ -76,21 +76,17 @@ export async function GET(req: Request) {
 
     // Sort by distance
     const sortedActivities = nearbyActivities
-      .map(activity => ({
+        .map(activity => ({
         ...activity,
-        distance: calculateDistance(
-          lat,
-          lng,
-          activity.latitude!,
-          activity.longitude!
-        ),
-      }))
-      .sort((a, b) => a.distance - b.distance)
-      .map(({ distance, ...activity }) => activity)
+        distance: calculateDistance(lat, lng, activity.latitude!, activity.longitude!)
+        }))
+        .sort((a, b) => a.distance - b.distance)
+      .map(({distance, ...activity }) => activity) // eslint-disable-line @typescript-eslint/no-unused-vars
 
     return NextResponse.json({
       activities: sortedActivities,
       count: sortedActivities.length,
+      
     })
   } catch (error) {
     console.error('Error fetching nearby activities:', error)

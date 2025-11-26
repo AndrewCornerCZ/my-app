@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 import { getServerSession } from 'next-auth';
 import { options } from '../auth/[...nextauth]/options';
-import { start } from 'repl';
 
 // GET - Načtení aktivit pro konkrétního uživatele
 export async function GET(req: Request) {
@@ -78,7 +77,7 @@ export async function POST(req: Request) {
       }
     });
 
-    return NextResponse.json(newActivity, { status: 201 });
+    return NextResponse.json({ newActivity, activityOwner }, { status: 201 });
   } catch (error) {
     console.error('Failed to create activity:', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });

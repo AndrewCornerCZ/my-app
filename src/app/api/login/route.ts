@@ -24,6 +24,6 @@ export async function POST(req: Request) {
     // Přihlášení úspěšné
     return NextResponse.json({ message: "Uživatel úspěšně přihlášen!", user: existingUser }, { status: 200 });
   } catch (error) {
-    return NextResponse.json({ error: "Interní chyba serveru!" }, { status: 500 });
+    return NextResponse.json({ errormesage: "Interní chyba serveru!", error }, { status: 500 });
   }
 }

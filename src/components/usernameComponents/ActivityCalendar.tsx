@@ -5,6 +5,8 @@ import { useState, useEffect } from 'react'
 import 'leaflet/dist/leaflet.css'
 import { useSession } from 'next-auth/react'
 import ActivityParticipantsModal from './ActivityParticipantsModal'
+import type { Icon, IconOptions } from 'leaflet'
+
 
 const MapContainer = dynamic(
   () => import('react-leaflet').then(mod => mod.MapContainer),
@@ -51,7 +53,6 @@ interface ActivityCalendarProps {
 
 interface CalendarDay {
   date: Date
-  activityColor: string | null
   isCurrentMonth: boolean
   activities: ActivityWithSport[]
 }
@@ -67,7 +68,7 @@ export default function ActivityCalendar({
     useState<ActivityWithSport[] | null>(null)
   const [selectedActivity, setSelectedActivity] =
     useState<ActivityWithSport | null>(null)
-  const [markerIcon, setMarkerIcon] = useState<any>(null)
+  const [markerIcon, setMarkerIcon] = useState<Icon<IconOptions> | undefined>(undefined)
   const [canJoinMap, setCanJoinMap] = useState<
     Record<number, { allowed: boolean; reason?: string; checked: boolean }>
   >({})
@@ -108,17 +109,10 @@ export default function ActivityCalendar({
           )
         })
 
-        let color = null
-        if (activitiesForDay.length > 0) {
-          const sportInfo = userSports.find(
-            us => us.sportId === activitiesForDay[0].sportId
-          )
-          color = sportInfo?.color || '#3b82f6'
-        }
+
 
         dayArray.push({
           date,
-          activityColor: color,
           isCurrentMonth: date.getMonth() === month,
           activities: activitiesForDay,
         })
@@ -174,6 +168,7 @@ export default function ActivityCalendar({
         }))
       }
     } catch (e) {
+      console.error('checkCanJoin error', e)
       setCanJoinMap(prev => ({
         ...prev,
         [activityId]: {
@@ -208,6 +203,7 @@ export default function ActivityCalendar({
         }))
       }
     } catch (e) {
+      console.error('checkCanJoin error', e)
       setCanJoinMap(prev => ({
         ...prev,
         [activityId]: {
@@ -257,7 +253,7 @@ export default function ActivityCalendar({
         </div>
 
         <div className="grid grid-cols-7 gap-2">
-          {days.map(({ date, activityColor, isCurrentMonth }, index) => (
+          {days.map(({ date, isCurrentMonth }, index) => (
             <div
               key={index}
               onClick={() => handleDayClick(date)}

@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
 import 'leaflet/dist/leaflet.css'
-import { useSession } from 'next-auth/react'
+import type { Icon, IconOptions } from 'leaflet'
 
 const MapContainer = dynamic(
   () => import('react-leaflet').then(mod => mod.MapContainer),
@@ -55,20 +55,19 @@ export default function ActivitiesMapPage() {
     lng: number
   } | null>(null)
   const [activities, setActivities] = useState<ActivityMarker[]>([])
-  const [userIcon, setUserIcon] = useState<any>(null)
+  const [userIcon, setUserIcon] = useState<Icon<IconOptions> | undefined>(undefined)
   const [allActivities, setAllActivities] = useState<ActivityMarker[]>([])
   const [loading, setLoading] = useState(true)
-  const [markerIcon, setMarkerIcon] = useState<any>(null)
+  const [markerIcon, setMarkerIcon] = useState<Icon<IconOptions> | undefined>(undefined)
   const [radius, setRadius] = useState(10)
   const [selectedSports, setSelectedSports] = useState<number[]>([])
   const [availableSports, setAvailableSports] = useState<Sport[]>([])
   const [showFilters, setShowFilters] = useState(false)
-  const [dateFilter, setDateFilter] = useState<string | null>(() => {
+  const [dateFilter] = useState<string | null>(() => {
   // výchozí: dnešní datum ve formátu yyyy-mm-dd -> znamená "od dneška"
   const today = new Date();
   return today.toISOString().split('T')[0];
 });
-  const { data: session } = useSession()
 
   // Load marker icon
 // Load marker icons
