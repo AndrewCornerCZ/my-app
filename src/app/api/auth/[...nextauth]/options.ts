@@ -33,7 +33,7 @@ export const options: NextAuthOptions = {
 
                 const isValid = await bcrypt.compare(credentials.password, user.password);
                 if (isValid) {
-                    return {  id: user.id, email: user.email, name: user.username, bio: user.bio, username: user.username, password: user.password, image: user.image }; // Include all required properties
+                    return {  id: user.id, email: user.email, name: user.username, bio: user.bio, image: user.image }; // Include all required properties
                 } else {
                     throw new Error("Invalid password");
                 }
