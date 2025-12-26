@@ -213,6 +213,47 @@ exports.Prisma.SportActivityParticipantScalarFieldEnum = {
   role: 'role'
 };
 
+exports.Prisma.GroupScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  ownerId: 'ownerId',
+  isPublic: 'isPublic',
+  createdAt: 'createdAt',
+  sportId: 'sportId'
+};
+
+exports.Prisma.GroupMemberScalarFieldEnum = {
+  id: 'id',
+  groupId: 'groupId',
+  userId: 'userId',
+  joinedAt: 'joinedAt'
+};
+
+exports.Prisma.GroupActivityScalarFieldEnum = {
+  id: 'id',
+  groupId: 'groupId',
+  activityId: 'activityId'
+};
+
+exports.Prisma.GroupInvitationScalarFieldEnum = {
+  id: 'id',
+  groupId: 'groupId',
+  userId: 'userId',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ActivityAttendanceScalarFieldEnum = {
+  id: 'id',
+  activityId: 'activityId',
+  userId: 'userId',
+  attending: 'attending',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -242,7 +283,12 @@ exports.Prisma.ModelName = {
   Sport: 'Sport',
   SportRanks: 'SportRanks',
   SportActivity: 'SportActivity',
-  SportActivityParticipant: 'SportActivityParticipant'
+  SportActivityParticipant: 'SportActivityParticipant',
+  Group: 'Group',
+  GroupMember: 'GroupMember',
+  GroupActivity: 'GroupActivity',
+  GroupInvitation: 'GroupInvitation',
+  ActivityAttendance: 'ActivityAttendance'
 };
 
 /**

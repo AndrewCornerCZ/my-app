@@ -78,6 +78,31 @@ export type SportActivity = $Result.DefaultSelection<Prisma.$SportActivityPayloa
  * 
  */
 export type SportActivityParticipant = $Result.DefaultSelection<Prisma.$SportActivityParticipantPayload>
+/**
+ * Model Group
+ * 
+ */
+export type Group = $Result.DefaultSelection<Prisma.$GroupPayload>
+/**
+ * Model GroupMember
+ * 
+ */
+export type GroupMember = $Result.DefaultSelection<Prisma.$GroupMemberPayload>
+/**
+ * Model GroupActivity
+ * 
+ */
+export type GroupActivity = $Result.DefaultSelection<Prisma.$GroupActivityPayload>
+/**
+ * Model GroupInvitation
+ * 
+ */
+export type GroupInvitation = $Result.DefaultSelection<Prisma.$GroupInvitationPayload>
+/**
+ * Model ActivityAttendance
+ * 
+ */
+export type ActivityAttendance = $Result.DefaultSelection<Prisma.$ActivityAttendancePayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -333,6 +358,56 @@ export class PrismaClient<
     * ```
     */
   get sportActivityParticipant(): Prisma.SportActivityParticipantDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.group`: Exposes CRUD operations for the **Group** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Groups
+    * const groups = await prisma.group.findMany()
+    * ```
+    */
+  get group(): Prisma.GroupDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.groupMember`: Exposes CRUD operations for the **GroupMember** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more GroupMembers
+    * const groupMembers = await prisma.groupMember.findMany()
+    * ```
+    */
+  get groupMember(): Prisma.GroupMemberDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.groupActivity`: Exposes CRUD operations for the **GroupActivity** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more GroupActivities
+    * const groupActivities = await prisma.groupActivity.findMany()
+    * ```
+    */
+  get groupActivity(): Prisma.GroupActivityDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.groupInvitation`: Exposes CRUD operations for the **GroupInvitation** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more GroupInvitations
+    * const groupInvitations = await prisma.groupInvitation.findMany()
+    * ```
+    */
+  get groupInvitation(): Prisma.GroupInvitationDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.activityAttendance`: Exposes CRUD operations for the **ActivityAttendance** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ActivityAttendances
+    * const activityAttendances = await prisma.activityAttendance.findMany()
+    * ```
+    */
+  get activityAttendance(): Prisma.ActivityAttendanceDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -785,7 +860,12 @@ export namespace Prisma {
     Sport: 'Sport',
     SportRanks: 'SportRanks',
     SportActivity: 'SportActivity',
-    SportActivityParticipant: 'SportActivityParticipant'
+    SportActivityParticipant: 'SportActivityParticipant',
+    Group: 'Group',
+    GroupMember: 'GroupMember',
+    GroupActivity: 'GroupActivity',
+    GroupInvitation: 'GroupInvitation',
+    ActivityAttendance: 'ActivityAttendance'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -804,7 +884,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "post" | "hashtag" | "comment" | "postComment" | "postHashtag" | "userLike" | "userFollow" | "userSport" | "sport" | "sportRanks" | "sportActivity" | "sportActivityParticipant"
+      modelProps: "user" | "post" | "hashtag" | "comment" | "postComment" | "postHashtag" | "userLike" | "userFollow" | "userSport" | "sport" | "sportRanks" | "sportActivity" | "sportActivityParticipant" | "group" | "groupMember" | "groupActivity" | "groupInvitation" | "activityAttendance"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1770,6 +1850,376 @@ export namespace Prisma {
           }
         }
       }
+      Group: {
+        payload: Prisma.$GroupPayload<ExtArgs>
+        fields: Prisma.GroupFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.GroupFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.GroupFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupPayload>
+          }
+          findFirst: {
+            args: Prisma.GroupFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.GroupFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupPayload>
+          }
+          findMany: {
+            args: Prisma.GroupFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupPayload>[]
+          }
+          create: {
+            args: Prisma.GroupCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupPayload>
+          }
+          createMany: {
+            args: Prisma.GroupCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.GroupCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupPayload>[]
+          }
+          delete: {
+            args: Prisma.GroupDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupPayload>
+          }
+          update: {
+            args: Prisma.GroupUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupPayload>
+          }
+          deleteMany: {
+            args: Prisma.GroupDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.GroupUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.GroupUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupPayload>[]
+          }
+          upsert: {
+            args: Prisma.GroupUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupPayload>
+          }
+          aggregate: {
+            args: Prisma.GroupAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateGroup>
+          }
+          groupBy: {
+            args: Prisma.GroupGroupByArgs<ExtArgs>
+            result: $Utils.Optional<GroupGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.GroupCountArgs<ExtArgs>
+            result: $Utils.Optional<GroupCountAggregateOutputType> | number
+          }
+        }
+      }
+      GroupMember: {
+        payload: Prisma.$GroupMemberPayload<ExtArgs>
+        fields: Prisma.GroupMemberFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.GroupMemberFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupMemberPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.GroupMemberFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupMemberPayload>
+          }
+          findFirst: {
+            args: Prisma.GroupMemberFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupMemberPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.GroupMemberFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupMemberPayload>
+          }
+          findMany: {
+            args: Prisma.GroupMemberFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupMemberPayload>[]
+          }
+          create: {
+            args: Prisma.GroupMemberCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupMemberPayload>
+          }
+          createMany: {
+            args: Prisma.GroupMemberCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.GroupMemberCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupMemberPayload>[]
+          }
+          delete: {
+            args: Prisma.GroupMemberDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupMemberPayload>
+          }
+          update: {
+            args: Prisma.GroupMemberUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupMemberPayload>
+          }
+          deleteMany: {
+            args: Prisma.GroupMemberDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.GroupMemberUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.GroupMemberUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupMemberPayload>[]
+          }
+          upsert: {
+            args: Prisma.GroupMemberUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupMemberPayload>
+          }
+          aggregate: {
+            args: Prisma.GroupMemberAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateGroupMember>
+          }
+          groupBy: {
+            args: Prisma.GroupMemberGroupByArgs<ExtArgs>
+            result: $Utils.Optional<GroupMemberGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.GroupMemberCountArgs<ExtArgs>
+            result: $Utils.Optional<GroupMemberCountAggregateOutputType> | number
+          }
+        }
+      }
+      GroupActivity: {
+        payload: Prisma.$GroupActivityPayload<ExtArgs>
+        fields: Prisma.GroupActivityFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.GroupActivityFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupActivityPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.GroupActivityFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupActivityPayload>
+          }
+          findFirst: {
+            args: Prisma.GroupActivityFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupActivityPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.GroupActivityFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupActivityPayload>
+          }
+          findMany: {
+            args: Prisma.GroupActivityFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupActivityPayload>[]
+          }
+          create: {
+            args: Prisma.GroupActivityCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupActivityPayload>
+          }
+          createMany: {
+            args: Prisma.GroupActivityCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.GroupActivityCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupActivityPayload>[]
+          }
+          delete: {
+            args: Prisma.GroupActivityDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupActivityPayload>
+          }
+          update: {
+            args: Prisma.GroupActivityUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupActivityPayload>
+          }
+          deleteMany: {
+            args: Prisma.GroupActivityDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.GroupActivityUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.GroupActivityUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupActivityPayload>[]
+          }
+          upsert: {
+            args: Prisma.GroupActivityUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupActivityPayload>
+          }
+          aggregate: {
+            args: Prisma.GroupActivityAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateGroupActivity>
+          }
+          groupBy: {
+            args: Prisma.GroupActivityGroupByArgs<ExtArgs>
+            result: $Utils.Optional<GroupActivityGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.GroupActivityCountArgs<ExtArgs>
+            result: $Utils.Optional<GroupActivityCountAggregateOutputType> | number
+          }
+        }
+      }
+      GroupInvitation: {
+        payload: Prisma.$GroupInvitationPayload<ExtArgs>
+        fields: Prisma.GroupInvitationFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.GroupInvitationFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupInvitationPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.GroupInvitationFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupInvitationPayload>
+          }
+          findFirst: {
+            args: Prisma.GroupInvitationFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupInvitationPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.GroupInvitationFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupInvitationPayload>
+          }
+          findMany: {
+            args: Prisma.GroupInvitationFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupInvitationPayload>[]
+          }
+          create: {
+            args: Prisma.GroupInvitationCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupInvitationPayload>
+          }
+          createMany: {
+            args: Prisma.GroupInvitationCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.GroupInvitationCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupInvitationPayload>[]
+          }
+          delete: {
+            args: Prisma.GroupInvitationDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupInvitationPayload>
+          }
+          update: {
+            args: Prisma.GroupInvitationUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupInvitationPayload>
+          }
+          deleteMany: {
+            args: Prisma.GroupInvitationDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.GroupInvitationUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.GroupInvitationUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupInvitationPayload>[]
+          }
+          upsert: {
+            args: Prisma.GroupInvitationUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GroupInvitationPayload>
+          }
+          aggregate: {
+            args: Prisma.GroupInvitationAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateGroupInvitation>
+          }
+          groupBy: {
+            args: Prisma.GroupInvitationGroupByArgs<ExtArgs>
+            result: $Utils.Optional<GroupInvitationGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.GroupInvitationCountArgs<ExtArgs>
+            result: $Utils.Optional<GroupInvitationCountAggregateOutputType> | number
+          }
+        }
+      }
+      ActivityAttendance: {
+        payload: Prisma.$ActivityAttendancePayload<ExtArgs>
+        fields: Prisma.ActivityAttendanceFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ActivityAttendanceFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivityAttendancePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ActivityAttendanceFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivityAttendancePayload>
+          }
+          findFirst: {
+            args: Prisma.ActivityAttendanceFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivityAttendancePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ActivityAttendanceFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivityAttendancePayload>
+          }
+          findMany: {
+            args: Prisma.ActivityAttendanceFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivityAttendancePayload>[]
+          }
+          create: {
+            args: Prisma.ActivityAttendanceCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivityAttendancePayload>
+          }
+          createMany: {
+            args: Prisma.ActivityAttendanceCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ActivityAttendanceCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivityAttendancePayload>[]
+          }
+          delete: {
+            args: Prisma.ActivityAttendanceDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivityAttendancePayload>
+          }
+          update: {
+            args: Prisma.ActivityAttendanceUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivityAttendancePayload>
+          }
+          deleteMany: {
+            args: Prisma.ActivityAttendanceDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ActivityAttendanceUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ActivityAttendanceUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivityAttendancePayload>[]
+          }
+          upsert: {
+            args: Prisma.ActivityAttendanceUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivityAttendancePayload>
+          }
+          aggregate: {
+            args: Prisma.ActivityAttendanceAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateActivityAttendance>
+          }
+          groupBy: {
+            args: Prisma.ActivityAttendanceGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ActivityAttendanceGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ActivityAttendanceCountArgs<ExtArgs>
+            result: $Utils.Optional<ActivityAttendanceCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1867,6 +2317,11 @@ export namespace Prisma {
     sportRanks?: SportRanksOmit
     sportActivity?: SportActivityOmit
     sportActivityParticipant?: SportActivityParticipantOmit
+    group?: GroupOmit
+    groupMember?: GroupMemberOmit
+    groupActivity?: GroupActivityOmit
+    groupInvitation?: GroupInvitationOmit
+    activityAttendance?: ActivityAttendanceOmit
   }
 
   /* Types for Logging */
@@ -1967,6 +2422,10 @@ export namespace Prisma {
     sports: number
     activities: number
     activityParticipations: number
+    ownedGroups: number
+    groupMemberships: number
+    groupInvitations: number
+    activityAttendances: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1976,6 +2435,10 @@ export namespace Prisma {
     sports?: boolean | UserCountOutputTypeCountSportsArgs
     activities?: boolean | UserCountOutputTypeCountActivitiesArgs
     activityParticipations?: boolean | UserCountOutputTypeCountActivityParticipationsArgs
+    ownedGroups?: boolean | UserCountOutputTypeCountOwnedGroupsArgs
+    groupMemberships?: boolean | UserCountOutputTypeCountGroupMembershipsArgs
+    groupInvitations?: boolean | UserCountOutputTypeCountGroupInvitationsArgs
+    activityAttendances?: boolean | UserCountOutputTypeCountActivityAttendancesArgs
   }
 
   // Custom InputTypes
@@ -2029,6 +2492,34 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountActivityParticipationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: SportActivityParticipantWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountOwnedGroupsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GroupWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountGroupMembershipsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GroupMemberWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountGroupInvitationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GroupInvitationWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountActivityAttendancesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ActivityAttendanceWhereInput
   }
 
 
@@ -2150,11 +2641,13 @@ export namespace Prisma {
   export type SportCountOutputType = {
     users: number
     activities: number
+    groups: number
   }
 
   export type SportCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     users?: boolean | SportCountOutputTypeCountUsersArgs
     activities?: boolean | SportCountOutputTypeCountActivitiesArgs
+    groups?: boolean | SportCountOutputTypeCountGroupsArgs
   }
 
   // Custom InputTypes
@@ -2180,6 +2673,13 @@ export namespace Prisma {
    */
   export type SportCountOutputTypeCountActivitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: SportActivityWhereInput
+  }
+
+  /**
+   * SportCountOutputType without action
+   */
+  export type SportCountOutputTypeCountGroupsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GroupWhereInput
   }
 
 
@@ -2220,10 +2720,14 @@ export namespace Prisma {
 
   export type SportActivityCountOutputType = {
     participants: number
+    groupActivities: number
+    attendances: number
   }
 
   export type SportActivityCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     participants?: boolean | SportActivityCountOutputTypeCountParticipantsArgs
+    groupActivities?: boolean | SportActivityCountOutputTypeCountGroupActivitiesArgs
+    attendances?: boolean | SportActivityCountOutputTypeCountAttendancesArgs
   }
 
   // Custom InputTypes
@@ -2242,6 +2746,69 @@ export namespace Prisma {
    */
   export type SportActivityCountOutputTypeCountParticipantsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: SportActivityParticipantWhereInput
+  }
+
+  /**
+   * SportActivityCountOutputType without action
+   */
+  export type SportActivityCountOutputTypeCountGroupActivitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GroupActivityWhereInput
+  }
+
+  /**
+   * SportActivityCountOutputType without action
+   */
+  export type SportActivityCountOutputTypeCountAttendancesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ActivityAttendanceWhereInput
+  }
+
+
+  /**
+   * Count Type GroupCountOutputType
+   */
+
+  export type GroupCountOutputType = {
+    members: number
+    activities: number
+    invitations: number
+  }
+
+  export type GroupCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    members?: boolean | GroupCountOutputTypeCountMembersArgs
+    activities?: boolean | GroupCountOutputTypeCountActivitiesArgs
+    invitations?: boolean | GroupCountOutputTypeCountInvitationsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * GroupCountOutputType without action
+   */
+  export type GroupCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupCountOutputType
+     */
+    select?: GroupCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * GroupCountOutputType without action
+   */
+  export type GroupCountOutputTypeCountMembersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GroupMemberWhereInput
+  }
+
+  /**
+   * GroupCountOutputType without action
+   */
+  export type GroupCountOutputTypeCountActivitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GroupActivityWhereInput
+  }
+
+  /**
+   * GroupCountOutputType without action
+   */
+  export type GroupCountOutputTypeCountInvitationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GroupInvitationWhereInput
   }
 
 
@@ -2485,6 +3052,10 @@ export namespace Prisma {
     sports?: boolean | User$sportsArgs<ExtArgs>
     activities?: boolean | User$activitiesArgs<ExtArgs>
     activityParticipations?: boolean | User$activityParticipationsArgs<ExtArgs>
+    ownedGroups?: boolean | User$ownedGroupsArgs<ExtArgs>
+    groupMemberships?: boolean | User$groupMembershipsArgs<ExtArgs>
+    groupInvitations?: boolean | User$groupInvitationsArgs<ExtArgs>
+    activityAttendances?: boolean | User$activityAttendancesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2529,6 +3100,10 @@ export namespace Prisma {
     sports?: boolean | User$sportsArgs<ExtArgs>
     activities?: boolean | User$activitiesArgs<ExtArgs>
     activityParticipations?: boolean | User$activityParticipationsArgs<ExtArgs>
+    ownedGroups?: boolean | User$ownedGroupsArgs<ExtArgs>
+    groupMemberships?: boolean | User$groupMembershipsArgs<ExtArgs>
+    groupInvitations?: boolean | User$groupInvitationsArgs<ExtArgs>
+    activityAttendances?: boolean | User$activityAttendancesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2543,6 +3118,10 @@ export namespace Prisma {
       sports: Prisma.$UserSportPayload<ExtArgs>[]
       activities: Prisma.$SportActivityPayload<ExtArgs>[]
       activityParticipations: Prisma.$SportActivityParticipantPayload<ExtArgs>[]
+      ownedGroups: Prisma.$GroupPayload<ExtArgs>[]
+      groupMemberships: Prisma.$GroupMemberPayload<ExtArgs>[]
+      groupInvitations: Prisma.$GroupInvitationPayload<ExtArgs>[]
+      activityAttendances: Prisma.$ActivityAttendancePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -2953,6 +3532,10 @@ export namespace Prisma {
     sports<T extends User$sportsArgs<ExtArgs> = {}>(args?: Subset<T, User$sportsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserSportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     activities<T extends User$activitiesArgs<ExtArgs> = {}>(args?: Subset<T, User$activitiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SportActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     activityParticipations<T extends User$activityParticipationsArgs<ExtArgs> = {}>(args?: Subset<T, User$activityParticipationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SportActivityParticipantPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    ownedGroups<T extends User$ownedGroupsArgs<ExtArgs> = {}>(args?: Subset<T, User$ownedGroupsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GroupPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    groupMemberships<T extends User$groupMembershipsArgs<ExtArgs> = {}>(args?: Subset<T, User$groupMembershipsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GroupMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    groupInvitations<T extends User$groupInvitationsArgs<ExtArgs> = {}>(args?: Subset<T, User$groupInvitationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GroupInvitationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    activityAttendances<T extends User$activityAttendancesArgs<ExtArgs> = {}>(args?: Subset<T, User$activityAttendancesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActivityAttendancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3519,6 +4102,102 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: SportActivityParticipantScalarFieldEnum | SportActivityParticipantScalarFieldEnum[]
+  }
+
+  /**
+   * User.ownedGroups
+   */
+  export type User$ownedGroupsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Group
+     */
+    select?: GroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Group
+     */
+    omit?: GroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupInclude<ExtArgs> | null
+    where?: GroupWhereInput
+    orderBy?: GroupOrderByWithRelationInput | GroupOrderByWithRelationInput[]
+    cursor?: GroupWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: GroupScalarFieldEnum | GroupScalarFieldEnum[]
+  }
+
+  /**
+   * User.groupMemberships
+   */
+  export type User$groupMembershipsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupMember
+     */
+    select?: GroupMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupMember
+     */
+    omit?: GroupMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupMemberInclude<ExtArgs> | null
+    where?: GroupMemberWhereInput
+    orderBy?: GroupMemberOrderByWithRelationInput | GroupMemberOrderByWithRelationInput[]
+    cursor?: GroupMemberWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: GroupMemberScalarFieldEnum | GroupMemberScalarFieldEnum[]
+  }
+
+  /**
+   * User.groupInvitations
+   */
+  export type User$groupInvitationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupInvitation
+     */
+    select?: GroupInvitationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupInvitation
+     */
+    omit?: GroupInvitationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupInvitationInclude<ExtArgs> | null
+    where?: GroupInvitationWhereInput
+    orderBy?: GroupInvitationOrderByWithRelationInput | GroupInvitationOrderByWithRelationInput[]
+    cursor?: GroupInvitationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: GroupInvitationScalarFieldEnum | GroupInvitationScalarFieldEnum[]
+  }
+
+  /**
+   * User.activityAttendances
+   */
+  export type User$activityAttendancesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivityAttendance
+     */
+    select?: ActivityAttendanceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivityAttendance
+     */
+    omit?: ActivityAttendanceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivityAttendanceInclude<ExtArgs> | null
+    where?: ActivityAttendanceWhereInput
+    orderBy?: ActivityAttendanceOrderByWithRelationInput | ActivityAttendanceOrderByWithRelationInput[]
+    cursor?: ActivityAttendanceWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ActivityAttendanceScalarFieldEnum | ActivityAttendanceScalarFieldEnum[]
   }
 
   /**
@@ -12514,6 +13193,7 @@ export namespace Prisma {
     name?: boolean
     users?: boolean | Sport$usersArgs<ExtArgs>
     activities?: boolean | Sport$activitiesArgs<ExtArgs>
+    groups?: boolean | Sport$groupsArgs<ExtArgs>
     _count?: boolean | SportCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["sport"]>
 
@@ -12536,6 +13216,7 @@ export namespace Prisma {
   export type SportInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     users?: boolean | Sport$usersArgs<ExtArgs>
     activities?: boolean | Sport$activitiesArgs<ExtArgs>
+    groups?: boolean | Sport$groupsArgs<ExtArgs>
     _count?: boolean | SportCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type SportIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -12546,6 +13227,7 @@ export namespace Prisma {
     objects: {
       users: Prisma.$UserSportPayload<ExtArgs>[]
       activities: Prisma.$SportActivityPayload<ExtArgs>[]
+      groups: Prisma.$GroupPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -12946,6 +13628,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     users<T extends Sport$usersArgs<ExtArgs> = {}>(args?: Subset<T, Sport$usersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserSportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     activities<T extends Sport$activitiesArgs<ExtArgs> = {}>(args?: Subset<T, Sport$activitiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SportActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    groups<T extends Sport$groupsArgs<ExtArgs> = {}>(args?: Subset<T, Sport$groupsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GroupPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -13410,6 +14093,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: SportActivityScalarFieldEnum | SportActivityScalarFieldEnum[]
+  }
+
+  /**
+   * Sport.groups
+   */
+  export type Sport$groupsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Group
+     */
+    select?: GroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Group
+     */
+    omit?: GroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupInclude<ExtArgs> | null
+    where?: GroupWhereInput
+    orderBy?: GroupOrderByWithRelationInput | GroupOrderByWithRelationInput[]
+    cursor?: GroupWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: GroupScalarFieldEnum | GroupScalarFieldEnum[]
   }
 
   /**
@@ -14766,6 +15473,8 @@ export namespace Prisma {
     user?: boolean | UserDefaultArgs<ExtArgs>
     sport?: boolean | SportDefaultArgs<ExtArgs>
     participants?: boolean | SportActivity$participantsArgs<ExtArgs>
+    groupActivities?: boolean | SportActivity$groupActivitiesArgs<ExtArgs>
+    attendances?: boolean | SportActivity$attendancesArgs<ExtArgs>
     _count?: boolean | SportActivityCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["sportActivity"]>
 
@@ -14817,6 +15526,8 @@ export namespace Prisma {
     user?: boolean | UserDefaultArgs<ExtArgs>
     sport?: boolean | SportDefaultArgs<ExtArgs>
     participants?: boolean | SportActivity$participantsArgs<ExtArgs>
+    groupActivities?: boolean | SportActivity$groupActivitiesArgs<ExtArgs>
+    attendances?: boolean | SportActivity$attendancesArgs<ExtArgs>
     _count?: boolean | SportActivityCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type SportActivityIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -14834,6 +15545,8 @@ export namespace Prisma {
       user: Prisma.$UserPayload<ExtArgs>
       sport: Prisma.$SportPayload<ExtArgs>
       participants: Prisma.$SportActivityParticipantPayload<ExtArgs>[]
+      groupActivities: Prisma.$GroupActivityPayload<ExtArgs>[]
+      attendances: Prisma.$ActivityAttendancePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -15243,6 +15956,8 @@ export namespace Prisma {
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     sport<T extends SportDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SportDefaultArgs<ExtArgs>>): Prisma__SportClient<$Result.GetResult<Prisma.$SportPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     participants<T extends SportActivity$participantsArgs<ExtArgs> = {}>(args?: Subset<T, SportActivity$participantsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SportActivityParticipantPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    groupActivities<T extends SportActivity$groupActivitiesArgs<ExtArgs> = {}>(args?: Subset<T, SportActivity$groupActivitiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GroupActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    attendances<T extends SportActivity$attendancesArgs<ExtArgs> = {}>(args?: Subset<T, SportActivity$attendancesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActivityAttendancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -15699,6 +16414,54 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: SportActivityParticipantScalarFieldEnum | SportActivityParticipantScalarFieldEnum[]
+  }
+
+  /**
+   * SportActivity.groupActivities
+   */
+  export type SportActivity$groupActivitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupActivity
+     */
+    select?: GroupActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupActivity
+     */
+    omit?: GroupActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupActivityInclude<ExtArgs> | null
+    where?: GroupActivityWhereInput
+    orderBy?: GroupActivityOrderByWithRelationInput | GroupActivityOrderByWithRelationInput[]
+    cursor?: GroupActivityWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: GroupActivityScalarFieldEnum | GroupActivityScalarFieldEnum[]
+  }
+
+  /**
+   * SportActivity.attendances
+   */
+  export type SportActivity$attendancesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivityAttendance
+     */
+    select?: ActivityAttendanceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivityAttendance
+     */
+    omit?: ActivityAttendanceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivityAttendanceInclude<ExtArgs> | null
+    where?: ActivityAttendanceWhereInput
+    orderBy?: ActivityAttendanceOrderByWithRelationInput | ActivityAttendanceOrderByWithRelationInput[]
+    cursor?: ActivityAttendanceWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ActivityAttendanceScalarFieldEnum | ActivityAttendanceScalarFieldEnum[]
   }
 
   /**
@@ -16816,6 +17579,5664 @@ export namespace Prisma {
 
 
   /**
+   * Model Group
+   */
+
+  export type AggregateGroup = {
+    _count: GroupCountAggregateOutputType | null
+    _avg: GroupAvgAggregateOutputType | null
+    _sum: GroupSumAggregateOutputType | null
+    _min: GroupMinAggregateOutputType | null
+    _max: GroupMaxAggregateOutputType | null
+  }
+
+  export type GroupAvgAggregateOutputType = {
+    id: number | null
+    ownerId: number | null
+    sportId: number | null
+  }
+
+  export type GroupSumAggregateOutputType = {
+    id: number | null
+    ownerId: number | null
+    sportId: number | null
+  }
+
+  export type GroupMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+    description: string | null
+    ownerId: number | null
+    isPublic: boolean | null
+    createdAt: Date | null
+    sportId: number | null
+  }
+
+  export type GroupMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    description: string | null
+    ownerId: number | null
+    isPublic: boolean | null
+    createdAt: Date | null
+    sportId: number | null
+  }
+
+  export type GroupCountAggregateOutputType = {
+    id: number
+    name: number
+    description: number
+    ownerId: number
+    isPublic: number
+    createdAt: number
+    sportId: number
+    _all: number
+  }
+
+
+  export type GroupAvgAggregateInputType = {
+    id?: true
+    ownerId?: true
+    sportId?: true
+  }
+
+  export type GroupSumAggregateInputType = {
+    id?: true
+    ownerId?: true
+    sportId?: true
+  }
+
+  export type GroupMinAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    ownerId?: true
+    isPublic?: true
+    createdAt?: true
+    sportId?: true
+  }
+
+  export type GroupMaxAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    ownerId?: true
+    isPublic?: true
+    createdAt?: true
+    sportId?: true
+  }
+
+  export type GroupCountAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    ownerId?: true
+    isPublic?: true
+    createdAt?: true
+    sportId?: true
+    _all?: true
+  }
+
+  export type GroupAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Group to aggregate.
+     */
+    where?: GroupWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Groups to fetch.
+     */
+    orderBy?: GroupOrderByWithRelationInput | GroupOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: GroupWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Groups from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Groups.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Groups
+    **/
+    _count?: true | GroupCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: GroupAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: GroupSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: GroupMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: GroupMaxAggregateInputType
+  }
+
+  export type GetGroupAggregateType<T extends GroupAggregateArgs> = {
+        [P in keyof T & keyof AggregateGroup]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateGroup[P]>
+      : GetScalarType<T[P], AggregateGroup[P]>
+  }
+
+
+
+
+  export type GroupGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GroupWhereInput
+    orderBy?: GroupOrderByWithAggregationInput | GroupOrderByWithAggregationInput[]
+    by: GroupScalarFieldEnum[] | GroupScalarFieldEnum
+    having?: GroupScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: GroupCountAggregateInputType | true
+    _avg?: GroupAvgAggregateInputType
+    _sum?: GroupSumAggregateInputType
+    _min?: GroupMinAggregateInputType
+    _max?: GroupMaxAggregateInputType
+  }
+
+  export type GroupGroupByOutputType = {
+    id: number
+    name: string
+    description: string | null
+    ownerId: number
+    isPublic: boolean
+    createdAt: Date
+    sportId: number | null
+    _count: GroupCountAggregateOutputType | null
+    _avg: GroupAvgAggregateOutputType | null
+    _sum: GroupSumAggregateOutputType | null
+    _min: GroupMinAggregateOutputType | null
+    _max: GroupMaxAggregateOutputType | null
+  }
+
+  type GetGroupGroupByPayload<T extends GroupGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<GroupGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof GroupGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], GroupGroupByOutputType[P]>
+            : GetScalarType<T[P], GroupGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type GroupSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    ownerId?: boolean
+    isPublic?: boolean
+    createdAt?: boolean
+    sportId?: boolean
+    sport?: boolean | Group$sportArgs<ExtArgs>
+    owner?: boolean | UserDefaultArgs<ExtArgs>
+    members?: boolean | Group$membersArgs<ExtArgs>
+    activities?: boolean | Group$activitiesArgs<ExtArgs>
+    invitations?: boolean | Group$invitationsArgs<ExtArgs>
+    _count?: boolean | GroupCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["group"]>
+
+  export type GroupSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    ownerId?: boolean
+    isPublic?: boolean
+    createdAt?: boolean
+    sportId?: boolean
+    sport?: boolean | Group$sportArgs<ExtArgs>
+    owner?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["group"]>
+
+  export type GroupSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    ownerId?: boolean
+    isPublic?: boolean
+    createdAt?: boolean
+    sportId?: boolean
+    sport?: boolean | Group$sportArgs<ExtArgs>
+    owner?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["group"]>
+
+  export type GroupSelectScalar = {
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    ownerId?: boolean
+    isPublic?: boolean
+    createdAt?: boolean
+    sportId?: boolean
+  }
+
+  export type GroupOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "ownerId" | "isPublic" | "createdAt" | "sportId", ExtArgs["result"]["group"]>
+  export type GroupInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sport?: boolean | Group$sportArgs<ExtArgs>
+    owner?: boolean | UserDefaultArgs<ExtArgs>
+    members?: boolean | Group$membersArgs<ExtArgs>
+    activities?: boolean | Group$activitiesArgs<ExtArgs>
+    invitations?: boolean | Group$invitationsArgs<ExtArgs>
+    _count?: boolean | GroupCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type GroupIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sport?: boolean | Group$sportArgs<ExtArgs>
+    owner?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type GroupIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sport?: boolean | Group$sportArgs<ExtArgs>
+    owner?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $GroupPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Group"
+    objects: {
+      sport: Prisma.$SportPayload<ExtArgs> | null
+      owner: Prisma.$UserPayload<ExtArgs>
+      members: Prisma.$GroupMemberPayload<ExtArgs>[]
+      activities: Prisma.$GroupActivityPayload<ExtArgs>[]
+      invitations: Prisma.$GroupInvitationPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      name: string
+      description: string | null
+      ownerId: number
+      isPublic: boolean
+      createdAt: Date
+      sportId: number | null
+    }, ExtArgs["result"]["group"]>
+    composites: {}
+  }
+
+  type GroupGetPayload<S extends boolean | null | undefined | GroupDefaultArgs> = $Result.GetResult<Prisma.$GroupPayload, S>
+
+  type GroupCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<GroupFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: GroupCountAggregateInputType | true
+    }
+
+  export interface GroupDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Group'], meta: { name: 'Group' } }
+    /**
+     * Find zero or one Group that matches the filter.
+     * @param {GroupFindUniqueArgs} args - Arguments to find a Group
+     * @example
+     * // Get one Group
+     * const group = await prisma.group.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends GroupFindUniqueArgs>(args: SelectSubset<T, GroupFindUniqueArgs<ExtArgs>>): Prisma__GroupClient<$Result.GetResult<Prisma.$GroupPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Group that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {GroupFindUniqueOrThrowArgs} args - Arguments to find a Group
+     * @example
+     * // Get one Group
+     * const group = await prisma.group.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends GroupFindUniqueOrThrowArgs>(args: SelectSubset<T, GroupFindUniqueOrThrowArgs<ExtArgs>>): Prisma__GroupClient<$Result.GetResult<Prisma.$GroupPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Group that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupFindFirstArgs} args - Arguments to find a Group
+     * @example
+     * // Get one Group
+     * const group = await prisma.group.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends GroupFindFirstArgs>(args?: SelectSubset<T, GroupFindFirstArgs<ExtArgs>>): Prisma__GroupClient<$Result.GetResult<Prisma.$GroupPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Group that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupFindFirstOrThrowArgs} args - Arguments to find a Group
+     * @example
+     * // Get one Group
+     * const group = await prisma.group.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends GroupFindFirstOrThrowArgs>(args?: SelectSubset<T, GroupFindFirstOrThrowArgs<ExtArgs>>): Prisma__GroupClient<$Result.GetResult<Prisma.$GroupPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Groups that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Groups
+     * const groups = await prisma.group.findMany()
+     * 
+     * // Get first 10 Groups
+     * const groups = await prisma.group.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const groupWithIdOnly = await prisma.group.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends GroupFindManyArgs>(args?: SelectSubset<T, GroupFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GroupPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Group.
+     * @param {GroupCreateArgs} args - Arguments to create a Group.
+     * @example
+     * // Create one Group
+     * const Group = await prisma.group.create({
+     *   data: {
+     *     // ... data to create a Group
+     *   }
+     * })
+     * 
+     */
+    create<T extends GroupCreateArgs>(args: SelectSubset<T, GroupCreateArgs<ExtArgs>>): Prisma__GroupClient<$Result.GetResult<Prisma.$GroupPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Groups.
+     * @param {GroupCreateManyArgs} args - Arguments to create many Groups.
+     * @example
+     * // Create many Groups
+     * const group = await prisma.group.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends GroupCreateManyArgs>(args?: SelectSubset<T, GroupCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Groups and returns the data saved in the database.
+     * @param {GroupCreateManyAndReturnArgs} args - Arguments to create many Groups.
+     * @example
+     * // Create many Groups
+     * const group = await prisma.group.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Groups and only return the `id`
+     * const groupWithIdOnly = await prisma.group.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends GroupCreateManyAndReturnArgs>(args?: SelectSubset<T, GroupCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GroupPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Group.
+     * @param {GroupDeleteArgs} args - Arguments to delete one Group.
+     * @example
+     * // Delete one Group
+     * const Group = await prisma.group.delete({
+     *   where: {
+     *     // ... filter to delete one Group
+     *   }
+     * })
+     * 
+     */
+    delete<T extends GroupDeleteArgs>(args: SelectSubset<T, GroupDeleteArgs<ExtArgs>>): Prisma__GroupClient<$Result.GetResult<Prisma.$GroupPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Group.
+     * @param {GroupUpdateArgs} args - Arguments to update one Group.
+     * @example
+     * // Update one Group
+     * const group = await prisma.group.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends GroupUpdateArgs>(args: SelectSubset<T, GroupUpdateArgs<ExtArgs>>): Prisma__GroupClient<$Result.GetResult<Prisma.$GroupPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Groups.
+     * @param {GroupDeleteManyArgs} args - Arguments to filter Groups to delete.
+     * @example
+     * // Delete a few Groups
+     * const { count } = await prisma.group.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends GroupDeleteManyArgs>(args?: SelectSubset<T, GroupDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Groups.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Groups
+     * const group = await prisma.group.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends GroupUpdateManyArgs>(args: SelectSubset<T, GroupUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Groups and returns the data updated in the database.
+     * @param {GroupUpdateManyAndReturnArgs} args - Arguments to update many Groups.
+     * @example
+     * // Update many Groups
+     * const group = await prisma.group.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Groups and only return the `id`
+     * const groupWithIdOnly = await prisma.group.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends GroupUpdateManyAndReturnArgs>(args: SelectSubset<T, GroupUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GroupPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Group.
+     * @param {GroupUpsertArgs} args - Arguments to update or create a Group.
+     * @example
+     * // Update or create a Group
+     * const group = await prisma.group.upsert({
+     *   create: {
+     *     // ... data to create a Group
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Group we want to update
+     *   }
+     * })
+     */
+    upsert<T extends GroupUpsertArgs>(args: SelectSubset<T, GroupUpsertArgs<ExtArgs>>): Prisma__GroupClient<$Result.GetResult<Prisma.$GroupPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Groups.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupCountArgs} args - Arguments to filter Groups to count.
+     * @example
+     * // Count the number of Groups
+     * const count = await prisma.group.count({
+     *   where: {
+     *     // ... the filter for the Groups we want to count
+     *   }
+     * })
+    **/
+    count<T extends GroupCountArgs>(
+      args?: Subset<T, GroupCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], GroupCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Group.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends GroupAggregateArgs>(args: Subset<T, GroupAggregateArgs>): Prisma.PrismaPromise<GetGroupAggregateType<T>>
+
+    /**
+     * Group by Group.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends GroupGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: GroupGroupByArgs['orderBy'] }
+        : { orderBy?: GroupGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, GroupGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetGroupGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Group model
+   */
+  readonly fields: GroupFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Group.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__GroupClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    sport<T extends Group$sportArgs<ExtArgs> = {}>(args?: Subset<T, Group$sportArgs<ExtArgs>>): Prisma__SportClient<$Result.GetResult<Prisma.$SportPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    owner<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    members<T extends Group$membersArgs<ExtArgs> = {}>(args?: Subset<T, Group$membersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GroupMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    activities<T extends Group$activitiesArgs<ExtArgs> = {}>(args?: Subset<T, Group$activitiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GroupActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    invitations<T extends Group$invitationsArgs<ExtArgs> = {}>(args?: Subset<T, Group$invitationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GroupInvitationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Group model
+   */
+  interface GroupFieldRefs {
+    readonly id: FieldRef<"Group", 'Int'>
+    readonly name: FieldRef<"Group", 'String'>
+    readonly description: FieldRef<"Group", 'String'>
+    readonly ownerId: FieldRef<"Group", 'Int'>
+    readonly isPublic: FieldRef<"Group", 'Boolean'>
+    readonly createdAt: FieldRef<"Group", 'DateTime'>
+    readonly sportId: FieldRef<"Group", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Group findUnique
+   */
+  export type GroupFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Group
+     */
+    select?: GroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Group
+     */
+    omit?: GroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupInclude<ExtArgs> | null
+    /**
+     * Filter, which Group to fetch.
+     */
+    where: GroupWhereUniqueInput
+  }
+
+  /**
+   * Group findUniqueOrThrow
+   */
+  export type GroupFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Group
+     */
+    select?: GroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Group
+     */
+    omit?: GroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupInclude<ExtArgs> | null
+    /**
+     * Filter, which Group to fetch.
+     */
+    where: GroupWhereUniqueInput
+  }
+
+  /**
+   * Group findFirst
+   */
+  export type GroupFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Group
+     */
+    select?: GroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Group
+     */
+    omit?: GroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupInclude<ExtArgs> | null
+    /**
+     * Filter, which Group to fetch.
+     */
+    where?: GroupWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Groups to fetch.
+     */
+    orderBy?: GroupOrderByWithRelationInput | GroupOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Groups.
+     */
+    cursor?: GroupWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Groups from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Groups.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Groups.
+     */
+    distinct?: GroupScalarFieldEnum | GroupScalarFieldEnum[]
+  }
+
+  /**
+   * Group findFirstOrThrow
+   */
+  export type GroupFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Group
+     */
+    select?: GroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Group
+     */
+    omit?: GroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupInclude<ExtArgs> | null
+    /**
+     * Filter, which Group to fetch.
+     */
+    where?: GroupWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Groups to fetch.
+     */
+    orderBy?: GroupOrderByWithRelationInput | GroupOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Groups.
+     */
+    cursor?: GroupWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Groups from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Groups.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Groups.
+     */
+    distinct?: GroupScalarFieldEnum | GroupScalarFieldEnum[]
+  }
+
+  /**
+   * Group findMany
+   */
+  export type GroupFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Group
+     */
+    select?: GroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Group
+     */
+    omit?: GroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupInclude<ExtArgs> | null
+    /**
+     * Filter, which Groups to fetch.
+     */
+    where?: GroupWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Groups to fetch.
+     */
+    orderBy?: GroupOrderByWithRelationInput | GroupOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Groups.
+     */
+    cursor?: GroupWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Groups from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Groups.
+     */
+    skip?: number
+    distinct?: GroupScalarFieldEnum | GroupScalarFieldEnum[]
+  }
+
+  /**
+   * Group create
+   */
+  export type GroupCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Group
+     */
+    select?: GroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Group
+     */
+    omit?: GroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Group.
+     */
+    data: XOR<GroupCreateInput, GroupUncheckedCreateInput>
+  }
+
+  /**
+   * Group createMany
+   */
+  export type GroupCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Groups.
+     */
+    data: GroupCreateManyInput | GroupCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Group createManyAndReturn
+   */
+  export type GroupCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Group
+     */
+    select?: GroupSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Group
+     */
+    omit?: GroupOmit<ExtArgs> | null
+    /**
+     * The data used to create many Groups.
+     */
+    data: GroupCreateManyInput | GroupCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Group update
+   */
+  export type GroupUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Group
+     */
+    select?: GroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Group
+     */
+    omit?: GroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Group.
+     */
+    data: XOR<GroupUpdateInput, GroupUncheckedUpdateInput>
+    /**
+     * Choose, which Group to update.
+     */
+    where: GroupWhereUniqueInput
+  }
+
+  /**
+   * Group updateMany
+   */
+  export type GroupUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Groups.
+     */
+    data: XOR<GroupUpdateManyMutationInput, GroupUncheckedUpdateManyInput>
+    /**
+     * Filter which Groups to update
+     */
+    where?: GroupWhereInput
+    /**
+     * Limit how many Groups to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Group updateManyAndReturn
+   */
+  export type GroupUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Group
+     */
+    select?: GroupSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Group
+     */
+    omit?: GroupOmit<ExtArgs> | null
+    /**
+     * The data used to update Groups.
+     */
+    data: XOR<GroupUpdateManyMutationInput, GroupUncheckedUpdateManyInput>
+    /**
+     * Filter which Groups to update
+     */
+    where?: GroupWhereInput
+    /**
+     * Limit how many Groups to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Group upsert
+   */
+  export type GroupUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Group
+     */
+    select?: GroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Group
+     */
+    omit?: GroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Group to update in case it exists.
+     */
+    where: GroupWhereUniqueInput
+    /**
+     * In case the Group found by the `where` argument doesn't exist, create a new Group with this data.
+     */
+    create: XOR<GroupCreateInput, GroupUncheckedCreateInput>
+    /**
+     * In case the Group was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<GroupUpdateInput, GroupUncheckedUpdateInput>
+  }
+
+  /**
+   * Group delete
+   */
+  export type GroupDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Group
+     */
+    select?: GroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Group
+     */
+    omit?: GroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupInclude<ExtArgs> | null
+    /**
+     * Filter which Group to delete.
+     */
+    where: GroupWhereUniqueInput
+  }
+
+  /**
+   * Group deleteMany
+   */
+  export type GroupDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Groups to delete
+     */
+    where?: GroupWhereInput
+    /**
+     * Limit how many Groups to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Group.sport
+   */
+  export type Group$sportArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sport
+     */
+    select?: SportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sport
+     */
+    omit?: SportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SportInclude<ExtArgs> | null
+    where?: SportWhereInput
+  }
+
+  /**
+   * Group.members
+   */
+  export type Group$membersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupMember
+     */
+    select?: GroupMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupMember
+     */
+    omit?: GroupMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupMemberInclude<ExtArgs> | null
+    where?: GroupMemberWhereInput
+    orderBy?: GroupMemberOrderByWithRelationInput | GroupMemberOrderByWithRelationInput[]
+    cursor?: GroupMemberWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: GroupMemberScalarFieldEnum | GroupMemberScalarFieldEnum[]
+  }
+
+  /**
+   * Group.activities
+   */
+  export type Group$activitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupActivity
+     */
+    select?: GroupActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupActivity
+     */
+    omit?: GroupActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupActivityInclude<ExtArgs> | null
+    where?: GroupActivityWhereInput
+    orderBy?: GroupActivityOrderByWithRelationInput | GroupActivityOrderByWithRelationInput[]
+    cursor?: GroupActivityWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: GroupActivityScalarFieldEnum | GroupActivityScalarFieldEnum[]
+  }
+
+  /**
+   * Group.invitations
+   */
+  export type Group$invitationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupInvitation
+     */
+    select?: GroupInvitationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupInvitation
+     */
+    omit?: GroupInvitationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupInvitationInclude<ExtArgs> | null
+    where?: GroupInvitationWhereInput
+    orderBy?: GroupInvitationOrderByWithRelationInput | GroupInvitationOrderByWithRelationInput[]
+    cursor?: GroupInvitationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: GroupInvitationScalarFieldEnum | GroupInvitationScalarFieldEnum[]
+  }
+
+  /**
+   * Group without action
+   */
+  export type GroupDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Group
+     */
+    select?: GroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Group
+     */
+    omit?: GroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model GroupMember
+   */
+
+  export type AggregateGroupMember = {
+    _count: GroupMemberCountAggregateOutputType | null
+    _avg: GroupMemberAvgAggregateOutputType | null
+    _sum: GroupMemberSumAggregateOutputType | null
+    _min: GroupMemberMinAggregateOutputType | null
+    _max: GroupMemberMaxAggregateOutputType | null
+  }
+
+  export type GroupMemberAvgAggregateOutputType = {
+    id: number | null
+    groupId: number | null
+    userId: number | null
+  }
+
+  export type GroupMemberSumAggregateOutputType = {
+    id: number | null
+    groupId: number | null
+    userId: number | null
+  }
+
+  export type GroupMemberMinAggregateOutputType = {
+    id: number | null
+    groupId: number | null
+    userId: number | null
+    joinedAt: Date | null
+  }
+
+  export type GroupMemberMaxAggregateOutputType = {
+    id: number | null
+    groupId: number | null
+    userId: number | null
+    joinedAt: Date | null
+  }
+
+  export type GroupMemberCountAggregateOutputType = {
+    id: number
+    groupId: number
+    userId: number
+    joinedAt: number
+    _all: number
+  }
+
+
+  export type GroupMemberAvgAggregateInputType = {
+    id?: true
+    groupId?: true
+    userId?: true
+  }
+
+  export type GroupMemberSumAggregateInputType = {
+    id?: true
+    groupId?: true
+    userId?: true
+  }
+
+  export type GroupMemberMinAggregateInputType = {
+    id?: true
+    groupId?: true
+    userId?: true
+    joinedAt?: true
+  }
+
+  export type GroupMemberMaxAggregateInputType = {
+    id?: true
+    groupId?: true
+    userId?: true
+    joinedAt?: true
+  }
+
+  export type GroupMemberCountAggregateInputType = {
+    id?: true
+    groupId?: true
+    userId?: true
+    joinedAt?: true
+    _all?: true
+  }
+
+  export type GroupMemberAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which GroupMember to aggregate.
+     */
+    where?: GroupMemberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GroupMembers to fetch.
+     */
+    orderBy?: GroupMemberOrderByWithRelationInput | GroupMemberOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: GroupMemberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GroupMembers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GroupMembers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned GroupMembers
+    **/
+    _count?: true | GroupMemberCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: GroupMemberAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: GroupMemberSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: GroupMemberMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: GroupMemberMaxAggregateInputType
+  }
+
+  export type GetGroupMemberAggregateType<T extends GroupMemberAggregateArgs> = {
+        [P in keyof T & keyof AggregateGroupMember]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateGroupMember[P]>
+      : GetScalarType<T[P], AggregateGroupMember[P]>
+  }
+
+
+
+
+  export type GroupMemberGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GroupMemberWhereInput
+    orderBy?: GroupMemberOrderByWithAggregationInput | GroupMemberOrderByWithAggregationInput[]
+    by: GroupMemberScalarFieldEnum[] | GroupMemberScalarFieldEnum
+    having?: GroupMemberScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: GroupMemberCountAggregateInputType | true
+    _avg?: GroupMemberAvgAggregateInputType
+    _sum?: GroupMemberSumAggregateInputType
+    _min?: GroupMemberMinAggregateInputType
+    _max?: GroupMemberMaxAggregateInputType
+  }
+
+  export type GroupMemberGroupByOutputType = {
+    id: number
+    groupId: number
+    userId: number
+    joinedAt: Date
+    _count: GroupMemberCountAggregateOutputType | null
+    _avg: GroupMemberAvgAggregateOutputType | null
+    _sum: GroupMemberSumAggregateOutputType | null
+    _min: GroupMemberMinAggregateOutputType | null
+    _max: GroupMemberMaxAggregateOutputType | null
+  }
+
+  type GetGroupMemberGroupByPayload<T extends GroupMemberGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<GroupMemberGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof GroupMemberGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], GroupMemberGroupByOutputType[P]>
+            : GetScalarType<T[P], GroupMemberGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type GroupMemberSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    groupId?: boolean
+    userId?: boolean
+    joinedAt?: boolean
+    group?: boolean | GroupDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["groupMember"]>
+
+  export type GroupMemberSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    groupId?: boolean
+    userId?: boolean
+    joinedAt?: boolean
+    group?: boolean | GroupDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["groupMember"]>
+
+  export type GroupMemberSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    groupId?: boolean
+    userId?: boolean
+    joinedAt?: boolean
+    group?: boolean | GroupDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["groupMember"]>
+
+  export type GroupMemberSelectScalar = {
+    id?: boolean
+    groupId?: boolean
+    userId?: boolean
+    joinedAt?: boolean
+  }
+
+  export type GroupMemberOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "groupId" | "userId" | "joinedAt", ExtArgs["result"]["groupMember"]>
+  export type GroupMemberInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    group?: boolean | GroupDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type GroupMemberIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    group?: boolean | GroupDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type GroupMemberIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    group?: boolean | GroupDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $GroupMemberPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "GroupMember"
+    objects: {
+      group: Prisma.$GroupPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      groupId: number
+      userId: number
+      joinedAt: Date
+    }, ExtArgs["result"]["groupMember"]>
+    composites: {}
+  }
+
+  type GroupMemberGetPayload<S extends boolean | null | undefined | GroupMemberDefaultArgs> = $Result.GetResult<Prisma.$GroupMemberPayload, S>
+
+  type GroupMemberCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<GroupMemberFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: GroupMemberCountAggregateInputType | true
+    }
+
+  export interface GroupMemberDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['GroupMember'], meta: { name: 'GroupMember' } }
+    /**
+     * Find zero or one GroupMember that matches the filter.
+     * @param {GroupMemberFindUniqueArgs} args - Arguments to find a GroupMember
+     * @example
+     * // Get one GroupMember
+     * const groupMember = await prisma.groupMember.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends GroupMemberFindUniqueArgs>(args: SelectSubset<T, GroupMemberFindUniqueArgs<ExtArgs>>): Prisma__GroupMemberClient<$Result.GetResult<Prisma.$GroupMemberPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one GroupMember that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {GroupMemberFindUniqueOrThrowArgs} args - Arguments to find a GroupMember
+     * @example
+     * // Get one GroupMember
+     * const groupMember = await prisma.groupMember.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends GroupMemberFindUniqueOrThrowArgs>(args: SelectSubset<T, GroupMemberFindUniqueOrThrowArgs<ExtArgs>>): Prisma__GroupMemberClient<$Result.GetResult<Prisma.$GroupMemberPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first GroupMember that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupMemberFindFirstArgs} args - Arguments to find a GroupMember
+     * @example
+     * // Get one GroupMember
+     * const groupMember = await prisma.groupMember.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends GroupMemberFindFirstArgs>(args?: SelectSubset<T, GroupMemberFindFirstArgs<ExtArgs>>): Prisma__GroupMemberClient<$Result.GetResult<Prisma.$GroupMemberPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first GroupMember that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupMemberFindFirstOrThrowArgs} args - Arguments to find a GroupMember
+     * @example
+     * // Get one GroupMember
+     * const groupMember = await prisma.groupMember.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends GroupMemberFindFirstOrThrowArgs>(args?: SelectSubset<T, GroupMemberFindFirstOrThrowArgs<ExtArgs>>): Prisma__GroupMemberClient<$Result.GetResult<Prisma.$GroupMemberPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more GroupMembers that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupMemberFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all GroupMembers
+     * const groupMembers = await prisma.groupMember.findMany()
+     * 
+     * // Get first 10 GroupMembers
+     * const groupMembers = await prisma.groupMember.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const groupMemberWithIdOnly = await prisma.groupMember.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends GroupMemberFindManyArgs>(args?: SelectSubset<T, GroupMemberFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GroupMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a GroupMember.
+     * @param {GroupMemberCreateArgs} args - Arguments to create a GroupMember.
+     * @example
+     * // Create one GroupMember
+     * const GroupMember = await prisma.groupMember.create({
+     *   data: {
+     *     // ... data to create a GroupMember
+     *   }
+     * })
+     * 
+     */
+    create<T extends GroupMemberCreateArgs>(args: SelectSubset<T, GroupMemberCreateArgs<ExtArgs>>): Prisma__GroupMemberClient<$Result.GetResult<Prisma.$GroupMemberPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many GroupMembers.
+     * @param {GroupMemberCreateManyArgs} args - Arguments to create many GroupMembers.
+     * @example
+     * // Create many GroupMembers
+     * const groupMember = await prisma.groupMember.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends GroupMemberCreateManyArgs>(args?: SelectSubset<T, GroupMemberCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many GroupMembers and returns the data saved in the database.
+     * @param {GroupMemberCreateManyAndReturnArgs} args - Arguments to create many GroupMembers.
+     * @example
+     * // Create many GroupMembers
+     * const groupMember = await prisma.groupMember.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many GroupMembers and only return the `id`
+     * const groupMemberWithIdOnly = await prisma.groupMember.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends GroupMemberCreateManyAndReturnArgs>(args?: SelectSubset<T, GroupMemberCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GroupMemberPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a GroupMember.
+     * @param {GroupMemberDeleteArgs} args - Arguments to delete one GroupMember.
+     * @example
+     * // Delete one GroupMember
+     * const GroupMember = await prisma.groupMember.delete({
+     *   where: {
+     *     // ... filter to delete one GroupMember
+     *   }
+     * })
+     * 
+     */
+    delete<T extends GroupMemberDeleteArgs>(args: SelectSubset<T, GroupMemberDeleteArgs<ExtArgs>>): Prisma__GroupMemberClient<$Result.GetResult<Prisma.$GroupMemberPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one GroupMember.
+     * @param {GroupMemberUpdateArgs} args - Arguments to update one GroupMember.
+     * @example
+     * // Update one GroupMember
+     * const groupMember = await prisma.groupMember.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends GroupMemberUpdateArgs>(args: SelectSubset<T, GroupMemberUpdateArgs<ExtArgs>>): Prisma__GroupMemberClient<$Result.GetResult<Prisma.$GroupMemberPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more GroupMembers.
+     * @param {GroupMemberDeleteManyArgs} args - Arguments to filter GroupMembers to delete.
+     * @example
+     * // Delete a few GroupMembers
+     * const { count } = await prisma.groupMember.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends GroupMemberDeleteManyArgs>(args?: SelectSubset<T, GroupMemberDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more GroupMembers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupMemberUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many GroupMembers
+     * const groupMember = await prisma.groupMember.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends GroupMemberUpdateManyArgs>(args: SelectSubset<T, GroupMemberUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more GroupMembers and returns the data updated in the database.
+     * @param {GroupMemberUpdateManyAndReturnArgs} args - Arguments to update many GroupMembers.
+     * @example
+     * // Update many GroupMembers
+     * const groupMember = await prisma.groupMember.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more GroupMembers and only return the `id`
+     * const groupMemberWithIdOnly = await prisma.groupMember.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends GroupMemberUpdateManyAndReturnArgs>(args: SelectSubset<T, GroupMemberUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GroupMemberPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one GroupMember.
+     * @param {GroupMemberUpsertArgs} args - Arguments to update or create a GroupMember.
+     * @example
+     * // Update or create a GroupMember
+     * const groupMember = await prisma.groupMember.upsert({
+     *   create: {
+     *     // ... data to create a GroupMember
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the GroupMember we want to update
+     *   }
+     * })
+     */
+    upsert<T extends GroupMemberUpsertArgs>(args: SelectSubset<T, GroupMemberUpsertArgs<ExtArgs>>): Prisma__GroupMemberClient<$Result.GetResult<Prisma.$GroupMemberPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of GroupMembers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupMemberCountArgs} args - Arguments to filter GroupMembers to count.
+     * @example
+     * // Count the number of GroupMembers
+     * const count = await prisma.groupMember.count({
+     *   where: {
+     *     // ... the filter for the GroupMembers we want to count
+     *   }
+     * })
+    **/
+    count<T extends GroupMemberCountArgs>(
+      args?: Subset<T, GroupMemberCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], GroupMemberCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a GroupMember.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupMemberAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends GroupMemberAggregateArgs>(args: Subset<T, GroupMemberAggregateArgs>): Prisma.PrismaPromise<GetGroupMemberAggregateType<T>>
+
+    /**
+     * Group by GroupMember.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupMemberGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends GroupMemberGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: GroupMemberGroupByArgs['orderBy'] }
+        : { orderBy?: GroupMemberGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, GroupMemberGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetGroupMemberGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the GroupMember model
+   */
+  readonly fields: GroupMemberFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for GroupMember.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__GroupMemberClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    group<T extends GroupDefaultArgs<ExtArgs> = {}>(args?: Subset<T, GroupDefaultArgs<ExtArgs>>): Prisma__GroupClient<$Result.GetResult<Prisma.$GroupPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the GroupMember model
+   */
+  interface GroupMemberFieldRefs {
+    readonly id: FieldRef<"GroupMember", 'Int'>
+    readonly groupId: FieldRef<"GroupMember", 'Int'>
+    readonly userId: FieldRef<"GroupMember", 'Int'>
+    readonly joinedAt: FieldRef<"GroupMember", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * GroupMember findUnique
+   */
+  export type GroupMemberFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupMember
+     */
+    select?: GroupMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupMember
+     */
+    omit?: GroupMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupMemberInclude<ExtArgs> | null
+    /**
+     * Filter, which GroupMember to fetch.
+     */
+    where: GroupMemberWhereUniqueInput
+  }
+
+  /**
+   * GroupMember findUniqueOrThrow
+   */
+  export type GroupMemberFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupMember
+     */
+    select?: GroupMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupMember
+     */
+    omit?: GroupMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupMemberInclude<ExtArgs> | null
+    /**
+     * Filter, which GroupMember to fetch.
+     */
+    where: GroupMemberWhereUniqueInput
+  }
+
+  /**
+   * GroupMember findFirst
+   */
+  export type GroupMemberFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupMember
+     */
+    select?: GroupMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupMember
+     */
+    omit?: GroupMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupMemberInclude<ExtArgs> | null
+    /**
+     * Filter, which GroupMember to fetch.
+     */
+    where?: GroupMemberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GroupMembers to fetch.
+     */
+    orderBy?: GroupMemberOrderByWithRelationInput | GroupMemberOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for GroupMembers.
+     */
+    cursor?: GroupMemberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GroupMembers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GroupMembers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GroupMembers.
+     */
+    distinct?: GroupMemberScalarFieldEnum | GroupMemberScalarFieldEnum[]
+  }
+
+  /**
+   * GroupMember findFirstOrThrow
+   */
+  export type GroupMemberFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupMember
+     */
+    select?: GroupMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupMember
+     */
+    omit?: GroupMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupMemberInclude<ExtArgs> | null
+    /**
+     * Filter, which GroupMember to fetch.
+     */
+    where?: GroupMemberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GroupMembers to fetch.
+     */
+    orderBy?: GroupMemberOrderByWithRelationInput | GroupMemberOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for GroupMembers.
+     */
+    cursor?: GroupMemberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GroupMembers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GroupMembers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GroupMembers.
+     */
+    distinct?: GroupMemberScalarFieldEnum | GroupMemberScalarFieldEnum[]
+  }
+
+  /**
+   * GroupMember findMany
+   */
+  export type GroupMemberFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupMember
+     */
+    select?: GroupMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupMember
+     */
+    omit?: GroupMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupMemberInclude<ExtArgs> | null
+    /**
+     * Filter, which GroupMembers to fetch.
+     */
+    where?: GroupMemberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GroupMembers to fetch.
+     */
+    orderBy?: GroupMemberOrderByWithRelationInput | GroupMemberOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing GroupMembers.
+     */
+    cursor?: GroupMemberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GroupMembers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GroupMembers.
+     */
+    skip?: number
+    distinct?: GroupMemberScalarFieldEnum | GroupMemberScalarFieldEnum[]
+  }
+
+  /**
+   * GroupMember create
+   */
+  export type GroupMemberCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupMember
+     */
+    select?: GroupMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupMember
+     */
+    omit?: GroupMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupMemberInclude<ExtArgs> | null
+    /**
+     * The data needed to create a GroupMember.
+     */
+    data: XOR<GroupMemberCreateInput, GroupMemberUncheckedCreateInput>
+  }
+
+  /**
+   * GroupMember createMany
+   */
+  export type GroupMemberCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many GroupMembers.
+     */
+    data: GroupMemberCreateManyInput | GroupMemberCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * GroupMember createManyAndReturn
+   */
+  export type GroupMemberCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupMember
+     */
+    select?: GroupMemberSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupMember
+     */
+    omit?: GroupMemberOmit<ExtArgs> | null
+    /**
+     * The data used to create many GroupMembers.
+     */
+    data: GroupMemberCreateManyInput | GroupMemberCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupMemberIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * GroupMember update
+   */
+  export type GroupMemberUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupMember
+     */
+    select?: GroupMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupMember
+     */
+    omit?: GroupMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupMemberInclude<ExtArgs> | null
+    /**
+     * The data needed to update a GroupMember.
+     */
+    data: XOR<GroupMemberUpdateInput, GroupMemberUncheckedUpdateInput>
+    /**
+     * Choose, which GroupMember to update.
+     */
+    where: GroupMemberWhereUniqueInput
+  }
+
+  /**
+   * GroupMember updateMany
+   */
+  export type GroupMemberUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update GroupMembers.
+     */
+    data: XOR<GroupMemberUpdateManyMutationInput, GroupMemberUncheckedUpdateManyInput>
+    /**
+     * Filter which GroupMembers to update
+     */
+    where?: GroupMemberWhereInput
+    /**
+     * Limit how many GroupMembers to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * GroupMember updateManyAndReturn
+   */
+  export type GroupMemberUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupMember
+     */
+    select?: GroupMemberSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupMember
+     */
+    omit?: GroupMemberOmit<ExtArgs> | null
+    /**
+     * The data used to update GroupMembers.
+     */
+    data: XOR<GroupMemberUpdateManyMutationInput, GroupMemberUncheckedUpdateManyInput>
+    /**
+     * Filter which GroupMembers to update
+     */
+    where?: GroupMemberWhereInput
+    /**
+     * Limit how many GroupMembers to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupMemberIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * GroupMember upsert
+   */
+  export type GroupMemberUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupMember
+     */
+    select?: GroupMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupMember
+     */
+    omit?: GroupMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupMemberInclude<ExtArgs> | null
+    /**
+     * The filter to search for the GroupMember to update in case it exists.
+     */
+    where: GroupMemberWhereUniqueInput
+    /**
+     * In case the GroupMember found by the `where` argument doesn't exist, create a new GroupMember with this data.
+     */
+    create: XOR<GroupMemberCreateInput, GroupMemberUncheckedCreateInput>
+    /**
+     * In case the GroupMember was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<GroupMemberUpdateInput, GroupMemberUncheckedUpdateInput>
+  }
+
+  /**
+   * GroupMember delete
+   */
+  export type GroupMemberDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupMember
+     */
+    select?: GroupMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupMember
+     */
+    omit?: GroupMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupMemberInclude<ExtArgs> | null
+    /**
+     * Filter which GroupMember to delete.
+     */
+    where: GroupMemberWhereUniqueInput
+  }
+
+  /**
+   * GroupMember deleteMany
+   */
+  export type GroupMemberDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which GroupMembers to delete
+     */
+    where?: GroupMemberWhereInput
+    /**
+     * Limit how many GroupMembers to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * GroupMember without action
+   */
+  export type GroupMemberDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupMember
+     */
+    select?: GroupMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupMember
+     */
+    omit?: GroupMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupMemberInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model GroupActivity
+   */
+
+  export type AggregateGroupActivity = {
+    _count: GroupActivityCountAggregateOutputType | null
+    _avg: GroupActivityAvgAggregateOutputType | null
+    _sum: GroupActivitySumAggregateOutputType | null
+    _min: GroupActivityMinAggregateOutputType | null
+    _max: GroupActivityMaxAggregateOutputType | null
+  }
+
+  export type GroupActivityAvgAggregateOutputType = {
+    id: number | null
+    groupId: number | null
+    activityId: number | null
+  }
+
+  export type GroupActivitySumAggregateOutputType = {
+    id: number | null
+    groupId: number | null
+    activityId: number | null
+  }
+
+  export type GroupActivityMinAggregateOutputType = {
+    id: number | null
+    groupId: number | null
+    activityId: number | null
+  }
+
+  export type GroupActivityMaxAggregateOutputType = {
+    id: number | null
+    groupId: number | null
+    activityId: number | null
+  }
+
+  export type GroupActivityCountAggregateOutputType = {
+    id: number
+    groupId: number
+    activityId: number
+    _all: number
+  }
+
+
+  export type GroupActivityAvgAggregateInputType = {
+    id?: true
+    groupId?: true
+    activityId?: true
+  }
+
+  export type GroupActivitySumAggregateInputType = {
+    id?: true
+    groupId?: true
+    activityId?: true
+  }
+
+  export type GroupActivityMinAggregateInputType = {
+    id?: true
+    groupId?: true
+    activityId?: true
+  }
+
+  export type GroupActivityMaxAggregateInputType = {
+    id?: true
+    groupId?: true
+    activityId?: true
+  }
+
+  export type GroupActivityCountAggregateInputType = {
+    id?: true
+    groupId?: true
+    activityId?: true
+    _all?: true
+  }
+
+  export type GroupActivityAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which GroupActivity to aggregate.
+     */
+    where?: GroupActivityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GroupActivities to fetch.
+     */
+    orderBy?: GroupActivityOrderByWithRelationInput | GroupActivityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: GroupActivityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GroupActivities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GroupActivities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned GroupActivities
+    **/
+    _count?: true | GroupActivityCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: GroupActivityAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: GroupActivitySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: GroupActivityMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: GroupActivityMaxAggregateInputType
+  }
+
+  export type GetGroupActivityAggregateType<T extends GroupActivityAggregateArgs> = {
+        [P in keyof T & keyof AggregateGroupActivity]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateGroupActivity[P]>
+      : GetScalarType<T[P], AggregateGroupActivity[P]>
+  }
+
+
+
+
+  export type GroupActivityGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GroupActivityWhereInput
+    orderBy?: GroupActivityOrderByWithAggregationInput | GroupActivityOrderByWithAggregationInput[]
+    by: GroupActivityScalarFieldEnum[] | GroupActivityScalarFieldEnum
+    having?: GroupActivityScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: GroupActivityCountAggregateInputType | true
+    _avg?: GroupActivityAvgAggregateInputType
+    _sum?: GroupActivitySumAggregateInputType
+    _min?: GroupActivityMinAggregateInputType
+    _max?: GroupActivityMaxAggregateInputType
+  }
+
+  export type GroupActivityGroupByOutputType = {
+    id: number
+    groupId: number
+    activityId: number
+    _count: GroupActivityCountAggregateOutputType | null
+    _avg: GroupActivityAvgAggregateOutputType | null
+    _sum: GroupActivitySumAggregateOutputType | null
+    _min: GroupActivityMinAggregateOutputType | null
+    _max: GroupActivityMaxAggregateOutputType | null
+  }
+
+  type GetGroupActivityGroupByPayload<T extends GroupActivityGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<GroupActivityGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof GroupActivityGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], GroupActivityGroupByOutputType[P]>
+            : GetScalarType<T[P], GroupActivityGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type GroupActivitySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    groupId?: boolean
+    activityId?: boolean
+    group?: boolean | GroupDefaultArgs<ExtArgs>
+    activity?: boolean | SportActivityDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["groupActivity"]>
+
+  export type GroupActivitySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    groupId?: boolean
+    activityId?: boolean
+    group?: boolean | GroupDefaultArgs<ExtArgs>
+    activity?: boolean | SportActivityDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["groupActivity"]>
+
+  export type GroupActivitySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    groupId?: boolean
+    activityId?: boolean
+    group?: boolean | GroupDefaultArgs<ExtArgs>
+    activity?: boolean | SportActivityDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["groupActivity"]>
+
+  export type GroupActivitySelectScalar = {
+    id?: boolean
+    groupId?: boolean
+    activityId?: boolean
+  }
+
+  export type GroupActivityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "groupId" | "activityId", ExtArgs["result"]["groupActivity"]>
+  export type GroupActivityInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    group?: boolean | GroupDefaultArgs<ExtArgs>
+    activity?: boolean | SportActivityDefaultArgs<ExtArgs>
+  }
+  export type GroupActivityIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    group?: boolean | GroupDefaultArgs<ExtArgs>
+    activity?: boolean | SportActivityDefaultArgs<ExtArgs>
+  }
+  export type GroupActivityIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    group?: boolean | GroupDefaultArgs<ExtArgs>
+    activity?: boolean | SportActivityDefaultArgs<ExtArgs>
+  }
+
+  export type $GroupActivityPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "GroupActivity"
+    objects: {
+      group: Prisma.$GroupPayload<ExtArgs>
+      activity: Prisma.$SportActivityPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      groupId: number
+      activityId: number
+    }, ExtArgs["result"]["groupActivity"]>
+    composites: {}
+  }
+
+  type GroupActivityGetPayload<S extends boolean | null | undefined | GroupActivityDefaultArgs> = $Result.GetResult<Prisma.$GroupActivityPayload, S>
+
+  type GroupActivityCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<GroupActivityFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: GroupActivityCountAggregateInputType | true
+    }
+
+  export interface GroupActivityDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['GroupActivity'], meta: { name: 'GroupActivity' } }
+    /**
+     * Find zero or one GroupActivity that matches the filter.
+     * @param {GroupActivityFindUniqueArgs} args - Arguments to find a GroupActivity
+     * @example
+     * // Get one GroupActivity
+     * const groupActivity = await prisma.groupActivity.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends GroupActivityFindUniqueArgs>(args: SelectSubset<T, GroupActivityFindUniqueArgs<ExtArgs>>): Prisma__GroupActivityClient<$Result.GetResult<Prisma.$GroupActivityPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one GroupActivity that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {GroupActivityFindUniqueOrThrowArgs} args - Arguments to find a GroupActivity
+     * @example
+     * // Get one GroupActivity
+     * const groupActivity = await prisma.groupActivity.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends GroupActivityFindUniqueOrThrowArgs>(args: SelectSubset<T, GroupActivityFindUniqueOrThrowArgs<ExtArgs>>): Prisma__GroupActivityClient<$Result.GetResult<Prisma.$GroupActivityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first GroupActivity that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupActivityFindFirstArgs} args - Arguments to find a GroupActivity
+     * @example
+     * // Get one GroupActivity
+     * const groupActivity = await prisma.groupActivity.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends GroupActivityFindFirstArgs>(args?: SelectSubset<T, GroupActivityFindFirstArgs<ExtArgs>>): Prisma__GroupActivityClient<$Result.GetResult<Prisma.$GroupActivityPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first GroupActivity that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupActivityFindFirstOrThrowArgs} args - Arguments to find a GroupActivity
+     * @example
+     * // Get one GroupActivity
+     * const groupActivity = await prisma.groupActivity.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends GroupActivityFindFirstOrThrowArgs>(args?: SelectSubset<T, GroupActivityFindFirstOrThrowArgs<ExtArgs>>): Prisma__GroupActivityClient<$Result.GetResult<Prisma.$GroupActivityPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more GroupActivities that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupActivityFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all GroupActivities
+     * const groupActivities = await prisma.groupActivity.findMany()
+     * 
+     * // Get first 10 GroupActivities
+     * const groupActivities = await prisma.groupActivity.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const groupActivityWithIdOnly = await prisma.groupActivity.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends GroupActivityFindManyArgs>(args?: SelectSubset<T, GroupActivityFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GroupActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a GroupActivity.
+     * @param {GroupActivityCreateArgs} args - Arguments to create a GroupActivity.
+     * @example
+     * // Create one GroupActivity
+     * const GroupActivity = await prisma.groupActivity.create({
+     *   data: {
+     *     // ... data to create a GroupActivity
+     *   }
+     * })
+     * 
+     */
+    create<T extends GroupActivityCreateArgs>(args: SelectSubset<T, GroupActivityCreateArgs<ExtArgs>>): Prisma__GroupActivityClient<$Result.GetResult<Prisma.$GroupActivityPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many GroupActivities.
+     * @param {GroupActivityCreateManyArgs} args - Arguments to create many GroupActivities.
+     * @example
+     * // Create many GroupActivities
+     * const groupActivity = await prisma.groupActivity.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends GroupActivityCreateManyArgs>(args?: SelectSubset<T, GroupActivityCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many GroupActivities and returns the data saved in the database.
+     * @param {GroupActivityCreateManyAndReturnArgs} args - Arguments to create many GroupActivities.
+     * @example
+     * // Create many GroupActivities
+     * const groupActivity = await prisma.groupActivity.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many GroupActivities and only return the `id`
+     * const groupActivityWithIdOnly = await prisma.groupActivity.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends GroupActivityCreateManyAndReturnArgs>(args?: SelectSubset<T, GroupActivityCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GroupActivityPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a GroupActivity.
+     * @param {GroupActivityDeleteArgs} args - Arguments to delete one GroupActivity.
+     * @example
+     * // Delete one GroupActivity
+     * const GroupActivity = await prisma.groupActivity.delete({
+     *   where: {
+     *     // ... filter to delete one GroupActivity
+     *   }
+     * })
+     * 
+     */
+    delete<T extends GroupActivityDeleteArgs>(args: SelectSubset<T, GroupActivityDeleteArgs<ExtArgs>>): Prisma__GroupActivityClient<$Result.GetResult<Prisma.$GroupActivityPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one GroupActivity.
+     * @param {GroupActivityUpdateArgs} args - Arguments to update one GroupActivity.
+     * @example
+     * // Update one GroupActivity
+     * const groupActivity = await prisma.groupActivity.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends GroupActivityUpdateArgs>(args: SelectSubset<T, GroupActivityUpdateArgs<ExtArgs>>): Prisma__GroupActivityClient<$Result.GetResult<Prisma.$GroupActivityPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more GroupActivities.
+     * @param {GroupActivityDeleteManyArgs} args - Arguments to filter GroupActivities to delete.
+     * @example
+     * // Delete a few GroupActivities
+     * const { count } = await prisma.groupActivity.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends GroupActivityDeleteManyArgs>(args?: SelectSubset<T, GroupActivityDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more GroupActivities.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupActivityUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many GroupActivities
+     * const groupActivity = await prisma.groupActivity.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends GroupActivityUpdateManyArgs>(args: SelectSubset<T, GroupActivityUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more GroupActivities and returns the data updated in the database.
+     * @param {GroupActivityUpdateManyAndReturnArgs} args - Arguments to update many GroupActivities.
+     * @example
+     * // Update many GroupActivities
+     * const groupActivity = await prisma.groupActivity.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more GroupActivities and only return the `id`
+     * const groupActivityWithIdOnly = await prisma.groupActivity.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends GroupActivityUpdateManyAndReturnArgs>(args: SelectSubset<T, GroupActivityUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GroupActivityPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one GroupActivity.
+     * @param {GroupActivityUpsertArgs} args - Arguments to update or create a GroupActivity.
+     * @example
+     * // Update or create a GroupActivity
+     * const groupActivity = await prisma.groupActivity.upsert({
+     *   create: {
+     *     // ... data to create a GroupActivity
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the GroupActivity we want to update
+     *   }
+     * })
+     */
+    upsert<T extends GroupActivityUpsertArgs>(args: SelectSubset<T, GroupActivityUpsertArgs<ExtArgs>>): Prisma__GroupActivityClient<$Result.GetResult<Prisma.$GroupActivityPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of GroupActivities.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupActivityCountArgs} args - Arguments to filter GroupActivities to count.
+     * @example
+     * // Count the number of GroupActivities
+     * const count = await prisma.groupActivity.count({
+     *   where: {
+     *     // ... the filter for the GroupActivities we want to count
+     *   }
+     * })
+    **/
+    count<T extends GroupActivityCountArgs>(
+      args?: Subset<T, GroupActivityCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], GroupActivityCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a GroupActivity.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupActivityAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends GroupActivityAggregateArgs>(args: Subset<T, GroupActivityAggregateArgs>): Prisma.PrismaPromise<GetGroupActivityAggregateType<T>>
+
+    /**
+     * Group by GroupActivity.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupActivityGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends GroupActivityGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: GroupActivityGroupByArgs['orderBy'] }
+        : { orderBy?: GroupActivityGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, GroupActivityGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetGroupActivityGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the GroupActivity model
+   */
+  readonly fields: GroupActivityFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for GroupActivity.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__GroupActivityClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    group<T extends GroupDefaultArgs<ExtArgs> = {}>(args?: Subset<T, GroupDefaultArgs<ExtArgs>>): Prisma__GroupClient<$Result.GetResult<Prisma.$GroupPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    activity<T extends SportActivityDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SportActivityDefaultArgs<ExtArgs>>): Prisma__SportActivityClient<$Result.GetResult<Prisma.$SportActivityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the GroupActivity model
+   */
+  interface GroupActivityFieldRefs {
+    readonly id: FieldRef<"GroupActivity", 'Int'>
+    readonly groupId: FieldRef<"GroupActivity", 'Int'>
+    readonly activityId: FieldRef<"GroupActivity", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * GroupActivity findUnique
+   */
+  export type GroupActivityFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupActivity
+     */
+    select?: GroupActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupActivity
+     */
+    omit?: GroupActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupActivityInclude<ExtArgs> | null
+    /**
+     * Filter, which GroupActivity to fetch.
+     */
+    where: GroupActivityWhereUniqueInput
+  }
+
+  /**
+   * GroupActivity findUniqueOrThrow
+   */
+  export type GroupActivityFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupActivity
+     */
+    select?: GroupActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupActivity
+     */
+    omit?: GroupActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupActivityInclude<ExtArgs> | null
+    /**
+     * Filter, which GroupActivity to fetch.
+     */
+    where: GroupActivityWhereUniqueInput
+  }
+
+  /**
+   * GroupActivity findFirst
+   */
+  export type GroupActivityFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupActivity
+     */
+    select?: GroupActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupActivity
+     */
+    omit?: GroupActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupActivityInclude<ExtArgs> | null
+    /**
+     * Filter, which GroupActivity to fetch.
+     */
+    where?: GroupActivityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GroupActivities to fetch.
+     */
+    orderBy?: GroupActivityOrderByWithRelationInput | GroupActivityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for GroupActivities.
+     */
+    cursor?: GroupActivityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GroupActivities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GroupActivities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GroupActivities.
+     */
+    distinct?: GroupActivityScalarFieldEnum | GroupActivityScalarFieldEnum[]
+  }
+
+  /**
+   * GroupActivity findFirstOrThrow
+   */
+  export type GroupActivityFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupActivity
+     */
+    select?: GroupActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupActivity
+     */
+    omit?: GroupActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupActivityInclude<ExtArgs> | null
+    /**
+     * Filter, which GroupActivity to fetch.
+     */
+    where?: GroupActivityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GroupActivities to fetch.
+     */
+    orderBy?: GroupActivityOrderByWithRelationInput | GroupActivityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for GroupActivities.
+     */
+    cursor?: GroupActivityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GroupActivities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GroupActivities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GroupActivities.
+     */
+    distinct?: GroupActivityScalarFieldEnum | GroupActivityScalarFieldEnum[]
+  }
+
+  /**
+   * GroupActivity findMany
+   */
+  export type GroupActivityFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupActivity
+     */
+    select?: GroupActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupActivity
+     */
+    omit?: GroupActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupActivityInclude<ExtArgs> | null
+    /**
+     * Filter, which GroupActivities to fetch.
+     */
+    where?: GroupActivityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GroupActivities to fetch.
+     */
+    orderBy?: GroupActivityOrderByWithRelationInput | GroupActivityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing GroupActivities.
+     */
+    cursor?: GroupActivityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GroupActivities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GroupActivities.
+     */
+    skip?: number
+    distinct?: GroupActivityScalarFieldEnum | GroupActivityScalarFieldEnum[]
+  }
+
+  /**
+   * GroupActivity create
+   */
+  export type GroupActivityCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupActivity
+     */
+    select?: GroupActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupActivity
+     */
+    omit?: GroupActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupActivityInclude<ExtArgs> | null
+    /**
+     * The data needed to create a GroupActivity.
+     */
+    data: XOR<GroupActivityCreateInput, GroupActivityUncheckedCreateInput>
+  }
+
+  /**
+   * GroupActivity createMany
+   */
+  export type GroupActivityCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many GroupActivities.
+     */
+    data: GroupActivityCreateManyInput | GroupActivityCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * GroupActivity createManyAndReturn
+   */
+  export type GroupActivityCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupActivity
+     */
+    select?: GroupActivitySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupActivity
+     */
+    omit?: GroupActivityOmit<ExtArgs> | null
+    /**
+     * The data used to create many GroupActivities.
+     */
+    data: GroupActivityCreateManyInput | GroupActivityCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupActivityIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * GroupActivity update
+   */
+  export type GroupActivityUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupActivity
+     */
+    select?: GroupActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupActivity
+     */
+    omit?: GroupActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupActivityInclude<ExtArgs> | null
+    /**
+     * The data needed to update a GroupActivity.
+     */
+    data: XOR<GroupActivityUpdateInput, GroupActivityUncheckedUpdateInput>
+    /**
+     * Choose, which GroupActivity to update.
+     */
+    where: GroupActivityWhereUniqueInput
+  }
+
+  /**
+   * GroupActivity updateMany
+   */
+  export type GroupActivityUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update GroupActivities.
+     */
+    data: XOR<GroupActivityUpdateManyMutationInput, GroupActivityUncheckedUpdateManyInput>
+    /**
+     * Filter which GroupActivities to update
+     */
+    where?: GroupActivityWhereInput
+    /**
+     * Limit how many GroupActivities to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * GroupActivity updateManyAndReturn
+   */
+  export type GroupActivityUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupActivity
+     */
+    select?: GroupActivitySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupActivity
+     */
+    omit?: GroupActivityOmit<ExtArgs> | null
+    /**
+     * The data used to update GroupActivities.
+     */
+    data: XOR<GroupActivityUpdateManyMutationInput, GroupActivityUncheckedUpdateManyInput>
+    /**
+     * Filter which GroupActivities to update
+     */
+    where?: GroupActivityWhereInput
+    /**
+     * Limit how many GroupActivities to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupActivityIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * GroupActivity upsert
+   */
+  export type GroupActivityUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupActivity
+     */
+    select?: GroupActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupActivity
+     */
+    omit?: GroupActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupActivityInclude<ExtArgs> | null
+    /**
+     * The filter to search for the GroupActivity to update in case it exists.
+     */
+    where: GroupActivityWhereUniqueInput
+    /**
+     * In case the GroupActivity found by the `where` argument doesn't exist, create a new GroupActivity with this data.
+     */
+    create: XOR<GroupActivityCreateInput, GroupActivityUncheckedCreateInput>
+    /**
+     * In case the GroupActivity was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<GroupActivityUpdateInput, GroupActivityUncheckedUpdateInput>
+  }
+
+  /**
+   * GroupActivity delete
+   */
+  export type GroupActivityDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupActivity
+     */
+    select?: GroupActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupActivity
+     */
+    omit?: GroupActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupActivityInclude<ExtArgs> | null
+    /**
+     * Filter which GroupActivity to delete.
+     */
+    where: GroupActivityWhereUniqueInput
+  }
+
+  /**
+   * GroupActivity deleteMany
+   */
+  export type GroupActivityDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which GroupActivities to delete
+     */
+    where?: GroupActivityWhereInput
+    /**
+     * Limit how many GroupActivities to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * GroupActivity without action
+   */
+  export type GroupActivityDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupActivity
+     */
+    select?: GroupActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupActivity
+     */
+    omit?: GroupActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupActivityInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model GroupInvitation
+   */
+
+  export type AggregateGroupInvitation = {
+    _count: GroupInvitationCountAggregateOutputType | null
+    _avg: GroupInvitationAvgAggregateOutputType | null
+    _sum: GroupInvitationSumAggregateOutputType | null
+    _min: GroupInvitationMinAggregateOutputType | null
+    _max: GroupInvitationMaxAggregateOutputType | null
+  }
+
+  export type GroupInvitationAvgAggregateOutputType = {
+    id: number | null
+    groupId: number | null
+    userId: number | null
+  }
+
+  export type GroupInvitationSumAggregateOutputType = {
+    id: number | null
+    groupId: number | null
+    userId: number | null
+  }
+
+  export type GroupInvitationMinAggregateOutputType = {
+    id: number | null
+    groupId: number | null
+    userId: number | null
+    status: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type GroupInvitationMaxAggregateOutputType = {
+    id: number | null
+    groupId: number | null
+    userId: number | null
+    status: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type GroupInvitationCountAggregateOutputType = {
+    id: number
+    groupId: number
+    userId: number
+    status: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type GroupInvitationAvgAggregateInputType = {
+    id?: true
+    groupId?: true
+    userId?: true
+  }
+
+  export type GroupInvitationSumAggregateInputType = {
+    id?: true
+    groupId?: true
+    userId?: true
+  }
+
+  export type GroupInvitationMinAggregateInputType = {
+    id?: true
+    groupId?: true
+    userId?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type GroupInvitationMaxAggregateInputType = {
+    id?: true
+    groupId?: true
+    userId?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type GroupInvitationCountAggregateInputType = {
+    id?: true
+    groupId?: true
+    userId?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type GroupInvitationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which GroupInvitation to aggregate.
+     */
+    where?: GroupInvitationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GroupInvitations to fetch.
+     */
+    orderBy?: GroupInvitationOrderByWithRelationInput | GroupInvitationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: GroupInvitationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GroupInvitations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GroupInvitations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned GroupInvitations
+    **/
+    _count?: true | GroupInvitationCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: GroupInvitationAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: GroupInvitationSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: GroupInvitationMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: GroupInvitationMaxAggregateInputType
+  }
+
+  export type GetGroupInvitationAggregateType<T extends GroupInvitationAggregateArgs> = {
+        [P in keyof T & keyof AggregateGroupInvitation]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateGroupInvitation[P]>
+      : GetScalarType<T[P], AggregateGroupInvitation[P]>
+  }
+
+
+
+
+  export type GroupInvitationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GroupInvitationWhereInput
+    orderBy?: GroupInvitationOrderByWithAggregationInput | GroupInvitationOrderByWithAggregationInput[]
+    by: GroupInvitationScalarFieldEnum[] | GroupInvitationScalarFieldEnum
+    having?: GroupInvitationScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: GroupInvitationCountAggregateInputType | true
+    _avg?: GroupInvitationAvgAggregateInputType
+    _sum?: GroupInvitationSumAggregateInputType
+    _min?: GroupInvitationMinAggregateInputType
+    _max?: GroupInvitationMaxAggregateInputType
+  }
+
+  export type GroupInvitationGroupByOutputType = {
+    id: number
+    groupId: number
+    userId: number
+    status: string
+    createdAt: Date
+    updatedAt: Date
+    _count: GroupInvitationCountAggregateOutputType | null
+    _avg: GroupInvitationAvgAggregateOutputType | null
+    _sum: GroupInvitationSumAggregateOutputType | null
+    _min: GroupInvitationMinAggregateOutputType | null
+    _max: GroupInvitationMaxAggregateOutputType | null
+  }
+
+  type GetGroupInvitationGroupByPayload<T extends GroupInvitationGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<GroupInvitationGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof GroupInvitationGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], GroupInvitationGroupByOutputType[P]>
+            : GetScalarType<T[P], GroupInvitationGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type GroupInvitationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    groupId?: boolean
+    userId?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    group?: boolean | GroupDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["groupInvitation"]>
+
+  export type GroupInvitationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    groupId?: boolean
+    userId?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    group?: boolean | GroupDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["groupInvitation"]>
+
+  export type GroupInvitationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    groupId?: boolean
+    userId?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    group?: boolean | GroupDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["groupInvitation"]>
+
+  export type GroupInvitationSelectScalar = {
+    id?: boolean
+    groupId?: boolean
+    userId?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type GroupInvitationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "groupId" | "userId" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["groupInvitation"]>
+  export type GroupInvitationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    group?: boolean | GroupDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type GroupInvitationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    group?: boolean | GroupDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type GroupInvitationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    group?: boolean | GroupDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $GroupInvitationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "GroupInvitation"
+    objects: {
+      group: Prisma.$GroupPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      groupId: number
+      userId: number
+      status: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["groupInvitation"]>
+    composites: {}
+  }
+
+  type GroupInvitationGetPayload<S extends boolean | null | undefined | GroupInvitationDefaultArgs> = $Result.GetResult<Prisma.$GroupInvitationPayload, S>
+
+  type GroupInvitationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<GroupInvitationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: GroupInvitationCountAggregateInputType | true
+    }
+
+  export interface GroupInvitationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['GroupInvitation'], meta: { name: 'GroupInvitation' } }
+    /**
+     * Find zero or one GroupInvitation that matches the filter.
+     * @param {GroupInvitationFindUniqueArgs} args - Arguments to find a GroupInvitation
+     * @example
+     * // Get one GroupInvitation
+     * const groupInvitation = await prisma.groupInvitation.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends GroupInvitationFindUniqueArgs>(args: SelectSubset<T, GroupInvitationFindUniqueArgs<ExtArgs>>): Prisma__GroupInvitationClient<$Result.GetResult<Prisma.$GroupInvitationPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one GroupInvitation that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {GroupInvitationFindUniqueOrThrowArgs} args - Arguments to find a GroupInvitation
+     * @example
+     * // Get one GroupInvitation
+     * const groupInvitation = await prisma.groupInvitation.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends GroupInvitationFindUniqueOrThrowArgs>(args: SelectSubset<T, GroupInvitationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__GroupInvitationClient<$Result.GetResult<Prisma.$GroupInvitationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first GroupInvitation that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupInvitationFindFirstArgs} args - Arguments to find a GroupInvitation
+     * @example
+     * // Get one GroupInvitation
+     * const groupInvitation = await prisma.groupInvitation.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends GroupInvitationFindFirstArgs>(args?: SelectSubset<T, GroupInvitationFindFirstArgs<ExtArgs>>): Prisma__GroupInvitationClient<$Result.GetResult<Prisma.$GroupInvitationPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first GroupInvitation that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupInvitationFindFirstOrThrowArgs} args - Arguments to find a GroupInvitation
+     * @example
+     * // Get one GroupInvitation
+     * const groupInvitation = await prisma.groupInvitation.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends GroupInvitationFindFirstOrThrowArgs>(args?: SelectSubset<T, GroupInvitationFindFirstOrThrowArgs<ExtArgs>>): Prisma__GroupInvitationClient<$Result.GetResult<Prisma.$GroupInvitationPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more GroupInvitations that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupInvitationFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all GroupInvitations
+     * const groupInvitations = await prisma.groupInvitation.findMany()
+     * 
+     * // Get first 10 GroupInvitations
+     * const groupInvitations = await prisma.groupInvitation.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const groupInvitationWithIdOnly = await prisma.groupInvitation.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends GroupInvitationFindManyArgs>(args?: SelectSubset<T, GroupInvitationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GroupInvitationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a GroupInvitation.
+     * @param {GroupInvitationCreateArgs} args - Arguments to create a GroupInvitation.
+     * @example
+     * // Create one GroupInvitation
+     * const GroupInvitation = await prisma.groupInvitation.create({
+     *   data: {
+     *     // ... data to create a GroupInvitation
+     *   }
+     * })
+     * 
+     */
+    create<T extends GroupInvitationCreateArgs>(args: SelectSubset<T, GroupInvitationCreateArgs<ExtArgs>>): Prisma__GroupInvitationClient<$Result.GetResult<Prisma.$GroupInvitationPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many GroupInvitations.
+     * @param {GroupInvitationCreateManyArgs} args - Arguments to create many GroupInvitations.
+     * @example
+     * // Create many GroupInvitations
+     * const groupInvitation = await prisma.groupInvitation.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends GroupInvitationCreateManyArgs>(args?: SelectSubset<T, GroupInvitationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many GroupInvitations and returns the data saved in the database.
+     * @param {GroupInvitationCreateManyAndReturnArgs} args - Arguments to create many GroupInvitations.
+     * @example
+     * // Create many GroupInvitations
+     * const groupInvitation = await prisma.groupInvitation.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many GroupInvitations and only return the `id`
+     * const groupInvitationWithIdOnly = await prisma.groupInvitation.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends GroupInvitationCreateManyAndReturnArgs>(args?: SelectSubset<T, GroupInvitationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GroupInvitationPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a GroupInvitation.
+     * @param {GroupInvitationDeleteArgs} args - Arguments to delete one GroupInvitation.
+     * @example
+     * // Delete one GroupInvitation
+     * const GroupInvitation = await prisma.groupInvitation.delete({
+     *   where: {
+     *     // ... filter to delete one GroupInvitation
+     *   }
+     * })
+     * 
+     */
+    delete<T extends GroupInvitationDeleteArgs>(args: SelectSubset<T, GroupInvitationDeleteArgs<ExtArgs>>): Prisma__GroupInvitationClient<$Result.GetResult<Prisma.$GroupInvitationPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one GroupInvitation.
+     * @param {GroupInvitationUpdateArgs} args - Arguments to update one GroupInvitation.
+     * @example
+     * // Update one GroupInvitation
+     * const groupInvitation = await prisma.groupInvitation.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends GroupInvitationUpdateArgs>(args: SelectSubset<T, GroupInvitationUpdateArgs<ExtArgs>>): Prisma__GroupInvitationClient<$Result.GetResult<Prisma.$GroupInvitationPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more GroupInvitations.
+     * @param {GroupInvitationDeleteManyArgs} args - Arguments to filter GroupInvitations to delete.
+     * @example
+     * // Delete a few GroupInvitations
+     * const { count } = await prisma.groupInvitation.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends GroupInvitationDeleteManyArgs>(args?: SelectSubset<T, GroupInvitationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more GroupInvitations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupInvitationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many GroupInvitations
+     * const groupInvitation = await prisma.groupInvitation.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends GroupInvitationUpdateManyArgs>(args: SelectSubset<T, GroupInvitationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more GroupInvitations and returns the data updated in the database.
+     * @param {GroupInvitationUpdateManyAndReturnArgs} args - Arguments to update many GroupInvitations.
+     * @example
+     * // Update many GroupInvitations
+     * const groupInvitation = await prisma.groupInvitation.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more GroupInvitations and only return the `id`
+     * const groupInvitationWithIdOnly = await prisma.groupInvitation.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends GroupInvitationUpdateManyAndReturnArgs>(args: SelectSubset<T, GroupInvitationUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GroupInvitationPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one GroupInvitation.
+     * @param {GroupInvitationUpsertArgs} args - Arguments to update or create a GroupInvitation.
+     * @example
+     * // Update or create a GroupInvitation
+     * const groupInvitation = await prisma.groupInvitation.upsert({
+     *   create: {
+     *     // ... data to create a GroupInvitation
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the GroupInvitation we want to update
+     *   }
+     * })
+     */
+    upsert<T extends GroupInvitationUpsertArgs>(args: SelectSubset<T, GroupInvitationUpsertArgs<ExtArgs>>): Prisma__GroupInvitationClient<$Result.GetResult<Prisma.$GroupInvitationPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of GroupInvitations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupInvitationCountArgs} args - Arguments to filter GroupInvitations to count.
+     * @example
+     * // Count the number of GroupInvitations
+     * const count = await prisma.groupInvitation.count({
+     *   where: {
+     *     // ... the filter for the GroupInvitations we want to count
+     *   }
+     * })
+    **/
+    count<T extends GroupInvitationCountArgs>(
+      args?: Subset<T, GroupInvitationCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], GroupInvitationCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a GroupInvitation.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupInvitationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends GroupInvitationAggregateArgs>(args: Subset<T, GroupInvitationAggregateArgs>): Prisma.PrismaPromise<GetGroupInvitationAggregateType<T>>
+
+    /**
+     * Group by GroupInvitation.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupInvitationGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends GroupInvitationGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: GroupInvitationGroupByArgs['orderBy'] }
+        : { orderBy?: GroupInvitationGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, GroupInvitationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetGroupInvitationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the GroupInvitation model
+   */
+  readonly fields: GroupInvitationFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for GroupInvitation.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__GroupInvitationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    group<T extends GroupDefaultArgs<ExtArgs> = {}>(args?: Subset<T, GroupDefaultArgs<ExtArgs>>): Prisma__GroupClient<$Result.GetResult<Prisma.$GroupPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the GroupInvitation model
+   */
+  interface GroupInvitationFieldRefs {
+    readonly id: FieldRef<"GroupInvitation", 'Int'>
+    readonly groupId: FieldRef<"GroupInvitation", 'Int'>
+    readonly userId: FieldRef<"GroupInvitation", 'Int'>
+    readonly status: FieldRef<"GroupInvitation", 'String'>
+    readonly createdAt: FieldRef<"GroupInvitation", 'DateTime'>
+    readonly updatedAt: FieldRef<"GroupInvitation", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * GroupInvitation findUnique
+   */
+  export type GroupInvitationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupInvitation
+     */
+    select?: GroupInvitationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupInvitation
+     */
+    omit?: GroupInvitationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupInvitationInclude<ExtArgs> | null
+    /**
+     * Filter, which GroupInvitation to fetch.
+     */
+    where: GroupInvitationWhereUniqueInput
+  }
+
+  /**
+   * GroupInvitation findUniqueOrThrow
+   */
+  export type GroupInvitationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupInvitation
+     */
+    select?: GroupInvitationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupInvitation
+     */
+    omit?: GroupInvitationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupInvitationInclude<ExtArgs> | null
+    /**
+     * Filter, which GroupInvitation to fetch.
+     */
+    where: GroupInvitationWhereUniqueInput
+  }
+
+  /**
+   * GroupInvitation findFirst
+   */
+  export type GroupInvitationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupInvitation
+     */
+    select?: GroupInvitationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupInvitation
+     */
+    omit?: GroupInvitationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupInvitationInclude<ExtArgs> | null
+    /**
+     * Filter, which GroupInvitation to fetch.
+     */
+    where?: GroupInvitationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GroupInvitations to fetch.
+     */
+    orderBy?: GroupInvitationOrderByWithRelationInput | GroupInvitationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for GroupInvitations.
+     */
+    cursor?: GroupInvitationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GroupInvitations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GroupInvitations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GroupInvitations.
+     */
+    distinct?: GroupInvitationScalarFieldEnum | GroupInvitationScalarFieldEnum[]
+  }
+
+  /**
+   * GroupInvitation findFirstOrThrow
+   */
+  export type GroupInvitationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupInvitation
+     */
+    select?: GroupInvitationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupInvitation
+     */
+    omit?: GroupInvitationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupInvitationInclude<ExtArgs> | null
+    /**
+     * Filter, which GroupInvitation to fetch.
+     */
+    where?: GroupInvitationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GroupInvitations to fetch.
+     */
+    orderBy?: GroupInvitationOrderByWithRelationInput | GroupInvitationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for GroupInvitations.
+     */
+    cursor?: GroupInvitationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GroupInvitations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GroupInvitations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GroupInvitations.
+     */
+    distinct?: GroupInvitationScalarFieldEnum | GroupInvitationScalarFieldEnum[]
+  }
+
+  /**
+   * GroupInvitation findMany
+   */
+  export type GroupInvitationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupInvitation
+     */
+    select?: GroupInvitationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupInvitation
+     */
+    omit?: GroupInvitationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupInvitationInclude<ExtArgs> | null
+    /**
+     * Filter, which GroupInvitations to fetch.
+     */
+    where?: GroupInvitationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GroupInvitations to fetch.
+     */
+    orderBy?: GroupInvitationOrderByWithRelationInput | GroupInvitationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing GroupInvitations.
+     */
+    cursor?: GroupInvitationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GroupInvitations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GroupInvitations.
+     */
+    skip?: number
+    distinct?: GroupInvitationScalarFieldEnum | GroupInvitationScalarFieldEnum[]
+  }
+
+  /**
+   * GroupInvitation create
+   */
+  export type GroupInvitationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupInvitation
+     */
+    select?: GroupInvitationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupInvitation
+     */
+    omit?: GroupInvitationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupInvitationInclude<ExtArgs> | null
+    /**
+     * The data needed to create a GroupInvitation.
+     */
+    data: XOR<GroupInvitationCreateInput, GroupInvitationUncheckedCreateInput>
+  }
+
+  /**
+   * GroupInvitation createMany
+   */
+  export type GroupInvitationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many GroupInvitations.
+     */
+    data: GroupInvitationCreateManyInput | GroupInvitationCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * GroupInvitation createManyAndReturn
+   */
+  export type GroupInvitationCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupInvitation
+     */
+    select?: GroupInvitationSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupInvitation
+     */
+    omit?: GroupInvitationOmit<ExtArgs> | null
+    /**
+     * The data used to create many GroupInvitations.
+     */
+    data: GroupInvitationCreateManyInput | GroupInvitationCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupInvitationIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * GroupInvitation update
+   */
+  export type GroupInvitationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupInvitation
+     */
+    select?: GroupInvitationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupInvitation
+     */
+    omit?: GroupInvitationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupInvitationInclude<ExtArgs> | null
+    /**
+     * The data needed to update a GroupInvitation.
+     */
+    data: XOR<GroupInvitationUpdateInput, GroupInvitationUncheckedUpdateInput>
+    /**
+     * Choose, which GroupInvitation to update.
+     */
+    where: GroupInvitationWhereUniqueInput
+  }
+
+  /**
+   * GroupInvitation updateMany
+   */
+  export type GroupInvitationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update GroupInvitations.
+     */
+    data: XOR<GroupInvitationUpdateManyMutationInput, GroupInvitationUncheckedUpdateManyInput>
+    /**
+     * Filter which GroupInvitations to update
+     */
+    where?: GroupInvitationWhereInput
+    /**
+     * Limit how many GroupInvitations to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * GroupInvitation updateManyAndReturn
+   */
+  export type GroupInvitationUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupInvitation
+     */
+    select?: GroupInvitationSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupInvitation
+     */
+    omit?: GroupInvitationOmit<ExtArgs> | null
+    /**
+     * The data used to update GroupInvitations.
+     */
+    data: XOR<GroupInvitationUpdateManyMutationInput, GroupInvitationUncheckedUpdateManyInput>
+    /**
+     * Filter which GroupInvitations to update
+     */
+    where?: GroupInvitationWhereInput
+    /**
+     * Limit how many GroupInvitations to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupInvitationIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * GroupInvitation upsert
+   */
+  export type GroupInvitationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupInvitation
+     */
+    select?: GroupInvitationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupInvitation
+     */
+    omit?: GroupInvitationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupInvitationInclude<ExtArgs> | null
+    /**
+     * The filter to search for the GroupInvitation to update in case it exists.
+     */
+    where: GroupInvitationWhereUniqueInput
+    /**
+     * In case the GroupInvitation found by the `where` argument doesn't exist, create a new GroupInvitation with this data.
+     */
+    create: XOR<GroupInvitationCreateInput, GroupInvitationUncheckedCreateInput>
+    /**
+     * In case the GroupInvitation was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<GroupInvitationUpdateInput, GroupInvitationUncheckedUpdateInput>
+  }
+
+  /**
+   * GroupInvitation delete
+   */
+  export type GroupInvitationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupInvitation
+     */
+    select?: GroupInvitationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupInvitation
+     */
+    omit?: GroupInvitationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupInvitationInclude<ExtArgs> | null
+    /**
+     * Filter which GroupInvitation to delete.
+     */
+    where: GroupInvitationWhereUniqueInput
+  }
+
+  /**
+   * GroupInvitation deleteMany
+   */
+  export type GroupInvitationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which GroupInvitations to delete
+     */
+    where?: GroupInvitationWhereInput
+    /**
+     * Limit how many GroupInvitations to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * GroupInvitation without action
+   */
+  export type GroupInvitationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GroupInvitation
+     */
+    select?: GroupInvitationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GroupInvitation
+     */
+    omit?: GroupInvitationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GroupInvitationInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ActivityAttendance
+   */
+
+  export type AggregateActivityAttendance = {
+    _count: ActivityAttendanceCountAggregateOutputType | null
+    _avg: ActivityAttendanceAvgAggregateOutputType | null
+    _sum: ActivityAttendanceSumAggregateOutputType | null
+    _min: ActivityAttendanceMinAggregateOutputType | null
+    _max: ActivityAttendanceMaxAggregateOutputType | null
+  }
+
+  export type ActivityAttendanceAvgAggregateOutputType = {
+    id: number | null
+    activityId: number | null
+    userId: number | null
+  }
+
+  export type ActivityAttendanceSumAggregateOutputType = {
+    id: number | null
+    activityId: number | null
+    userId: number | null
+  }
+
+  export type ActivityAttendanceMinAggregateOutputType = {
+    id: number | null
+    activityId: number | null
+    userId: number | null
+    attending: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ActivityAttendanceMaxAggregateOutputType = {
+    id: number | null
+    activityId: number | null
+    userId: number | null
+    attending: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ActivityAttendanceCountAggregateOutputType = {
+    id: number
+    activityId: number
+    userId: number
+    attending: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ActivityAttendanceAvgAggregateInputType = {
+    id?: true
+    activityId?: true
+    userId?: true
+  }
+
+  export type ActivityAttendanceSumAggregateInputType = {
+    id?: true
+    activityId?: true
+    userId?: true
+  }
+
+  export type ActivityAttendanceMinAggregateInputType = {
+    id?: true
+    activityId?: true
+    userId?: true
+    attending?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ActivityAttendanceMaxAggregateInputType = {
+    id?: true
+    activityId?: true
+    userId?: true
+    attending?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ActivityAttendanceCountAggregateInputType = {
+    id?: true
+    activityId?: true
+    userId?: true
+    attending?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ActivityAttendanceAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ActivityAttendance to aggregate.
+     */
+    where?: ActivityAttendanceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ActivityAttendances to fetch.
+     */
+    orderBy?: ActivityAttendanceOrderByWithRelationInput | ActivityAttendanceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ActivityAttendanceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ActivityAttendances from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ActivityAttendances.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ActivityAttendances
+    **/
+    _count?: true | ActivityAttendanceCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ActivityAttendanceAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ActivityAttendanceSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ActivityAttendanceMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ActivityAttendanceMaxAggregateInputType
+  }
+
+  export type GetActivityAttendanceAggregateType<T extends ActivityAttendanceAggregateArgs> = {
+        [P in keyof T & keyof AggregateActivityAttendance]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateActivityAttendance[P]>
+      : GetScalarType<T[P], AggregateActivityAttendance[P]>
+  }
+
+
+
+
+  export type ActivityAttendanceGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ActivityAttendanceWhereInput
+    orderBy?: ActivityAttendanceOrderByWithAggregationInput | ActivityAttendanceOrderByWithAggregationInput[]
+    by: ActivityAttendanceScalarFieldEnum[] | ActivityAttendanceScalarFieldEnum
+    having?: ActivityAttendanceScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ActivityAttendanceCountAggregateInputType | true
+    _avg?: ActivityAttendanceAvgAggregateInputType
+    _sum?: ActivityAttendanceSumAggregateInputType
+    _min?: ActivityAttendanceMinAggregateInputType
+    _max?: ActivityAttendanceMaxAggregateInputType
+  }
+
+  export type ActivityAttendanceGroupByOutputType = {
+    id: number
+    activityId: number
+    userId: number
+    attending: boolean
+    createdAt: Date
+    updatedAt: Date
+    _count: ActivityAttendanceCountAggregateOutputType | null
+    _avg: ActivityAttendanceAvgAggregateOutputType | null
+    _sum: ActivityAttendanceSumAggregateOutputType | null
+    _min: ActivityAttendanceMinAggregateOutputType | null
+    _max: ActivityAttendanceMaxAggregateOutputType | null
+  }
+
+  type GetActivityAttendanceGroupByPayload<T extends ActivityAttendanceGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ActivityAttendanceGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ActivityAttendanceGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ActivityAttendanceGroupByOutputType[P]>
+            : GetScalarType<T[P], ActivityAttendanceGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ActivityAttendanceSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    activityId?: boolean
+    userId?: boolean
+    attending?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    activity?: boolean | SportActivityDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["activityAttendance"]>
+
+  export type ActivityAttendanceSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    activityId?: boolean
+    userId?: boolean
+    attending?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    activity?: boolean | SportActivityDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["activityAttendance"]>
+
+  export type ActivityAttendanceSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    activityId?: boolean
+    userId?: boolean
+    attending?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    activity?: boolean | SportActivityDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["activityAttendance"]>
+
+  export type ActivityAttendanceSelectScalar = {
+    id?: boolean
+    activityId?: boolean
+    userId?: boolean
+    attending?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ActivityAttendanceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "activityId" | "userId" | "attending" | "createdAt" | "updatedAt", ExtArgs["result"]["activityAttendance"]>
+  export type ActivityAttendanceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    activity?: boolean | SportActivityDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type ActivityAttendanceIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    activity?: boolean | SportActivityDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type ActivityAttendanceIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    activity?: boolean | SportActivityDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $ActivityAttendancePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ActivityAttendance"
+    objects: {
+      activity: Prisma.$SportActivityPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      activityId: number
+      userId: number
+      attending: boolean
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["activityAttendance"]>
+    composites: {}
+  }
+
+  type ActivityAttendanceGetPayload<S extends boolean | null | undefined | ActivityAttendanceDefaultArgs> = $Result.GetResult<Prisma.$ActivityAttendancePayload, S>
+
+  type ActivityAttendanceCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ActivityAttendanceFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ActivityAttendanceCountAggregateInputType | true
+    }
+
+  export interface ActivityAttendanceDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ActivityAttendance'], meta: { name: 'ActivityAttendance' } }
+    /**
+     * Find zero or one ActivityAttendance that matches the filter.
+     * @param {ActivityAttendanceFindUniqueArgs} args - Arguments to find a ActivityAttendance
+     * @example
+     * // Get one ActivityAttendance
+     * const activityAttendance = await prisma.activityAttendance.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ActivityAttendanceFindUniqueArgs>(args: SelectSubset<T, ActivityAttendanceFindUniqueArgs<ExtArgs>>): Prisma__ActivityAttendanceClient<$Result.GetResult<Prisma.$ActivityAttendancePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ActivityAttendance that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ActivityAttendanceFindUniqueOrThrowArgs} args - Arguments to find a ActivityAttendance
+     * @example
+     * // Get one ActivityAttendance
+     * const activityAttendance = await prisma.activityAttendance.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ActivityAttendanceFindUniqueOrThrowArgs>(args: SelectSubset<T, ActivityAttendanceFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ActivityAttendanceClient<$Result.GetResult<Prisma.$ActivityAttendancePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ActivityAttendance that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActivityAttendanceFindFirstArgs} args - Arguments to find a ActivityAttendance
+     * @example
+     * // Get one ActivityAttendance
+     * const activityAttendance = await prisma.activityAttendance.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ActivityAttendanceFindFirstArgs>(args?: SelectSubset<T, ActivityAttendanceFindFirstArgs<ExtArgs>>): Prisma__ActivityAttendanceClient<$Result.GetResult<Prisma.$ActivityAttendancePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ActivityAttendance that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActivityAttendanceFindFirstOrThrowArgs} args - Arguments to find a ActivityAttendance
+     * @example
+     * // Get one ActivityAttendance
+     * const activityAttendance = await prisma.activityAttendance.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ActivityAttendanceFindFirstOrThrowArgs>(args?: SelectSubset<T, ActivityAttendanceFindFirstOrThrowArgs<ExtArgs>>): Prisma__ActivityAttendanceClient<$Result.GetResult<Prisma.$ActivityAttendancePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ActivityAttendances that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActivityAttendanceFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ActivityAttendances
+     * const activityAttendances = await prisma.activityAttendance.findMany()
+     * 
+     * // Get first 10 ActivityAttendances
+     * const activityAttendances = await prisma.activityAttendance.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const activityAttendanceWithIdOnly = await prisma.activityAttendance.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ActivityAttendanceFindManyArgs>(args?: SelectSubset<T, ActivityAttendanceFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActivityAttendancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ActivityAttendance.
+     * @param {ActivityAttendanceCreateArgs} args - Arguments to create a ActivityAttendance.
+     * @example
+     * // Create one ActivityAttendance
+     * const ActivityAttendance = await prisma.activityAttendance.create({
+     *   data: {
+     *     // ... data to create a ActivityAttendance
+     *   }
+     * })
+     * 
+     */
+    create<T extends ActivityAttendanceCreateArgs>(args: SelectSubset<T, ActivityAttendanceCreateArgs<ExtArgs>>): Prisma__ActivityAttendanceClient<$Result.GetResult<Prisma.$ActivityAttendancePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ActivityAttendances.
+     * @param {ActivityAttendanceCreateManyArgs} args - Arguments to create many ActivityAttendances.
+     * @example
+     * // Create many ActivityAttendances
+     * const activityAttendance = await prisma.activityAttendance.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ActivityAttendanceCreateManyArgs>(args?: SelectSubset<T, ActivityAttendanceCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ActivityAttendances and returns the data saved in the database.
+     * @param {ActivityAttendanceCreateManyAndReturnArgs} args - Arguments to create many ActivityAttendances.
+     * @example
+     * // Create many ActivityAttendances
+     * const activityAttendance = await prisma.activityAttendance.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ActivityAttendances and only return the `id`
+     * const activityAttendanceWithIdOnly = await prisma.activityAttendance.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ActivityAttendanceCreateManyAndReturnArgs>(args?: SelectSubset<T, ActivityAttendanceCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActivityAttendancePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ActivityAttendance.
+     * @param {ActivityAttendanceDeleteArgs} args - Arguments to delete one ActivityAttendance.
+     * @example
+     * // Delete one ActivityAttendance
+     * const ActivityAttendance = await prisma.activityAttendance.delete({
+     *   where: {
+     *     // ... filter to delete one ActivityAttendance
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ActivityAttendanceDeleteArgs>(args: SelectSubset<T, ActivityAttendanceDeleteArgs<ExtArgs>>): Prisma__ActivityAttendanceClient<$Result.GetResult<Prisma.$ActivityAttendancePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ActivityAttendance.
+     * @param {ActivityAttendanceUpdateArgs} args - Arguments to update one ActivityAttendance.
+     * @example
+     * // Update one ActivityAttendance
+     * const activityAttendance = await prisma.activityAttendance.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ActivityAttendanceUpdateArgs>(args: SelectSubset<T, ActivityAttendanceUpdateArgs<ExtArgs>>): Prisma__ActivityAttendanceClient<$Result.GetResult<Prisma.$ActivityAttendancePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ActivityAttendances.
+     * @param {ActivityAttendanceDeleteManyArgs} args - Arguments to filter ActivityAttendances to delete.
+     * @example
+     * // Delete a few ActivityAttendances
+     * const { count } = await prisma.activityAttendance.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ActivityAttendanceDeleteManyArgs>(args?: SelectSubset<T, ActivityAttendanceDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ActivityAttendances.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActivityAttendanceUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ActivityAttendances
+     * const activityAttendance = await prisma.activityAttendance.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ActivityAttendanceUpdateManyArgs>(args: SelectSubset<T, ActivityAttendanceUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ActivityAttendances and returns the data updated in the database.
+     * @param {ActivityAttendanceUpdateManyAndReturnArgs} args - Arguments to update many ActivityAttendances.
+     * @example
+     * // Update many ActivityAttendances
+     * const activityAttendance = await prisma.activityAttendance.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ActivityAttendances and only return the `id`
+     * const activityAttendanceWithIdOnly = await prisma.activityAttendance.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ActivityAttendanceUpdateManyAndReturnArgs>(args: SelectSubset<T, ActivityAttendanceUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActivityAttendancePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ActivityAttendance.
+     * @param {ActivityAttendanceUpsertArgs} args - Arguments to update or create a ActivityAttendance.
+     * @example
+     * // Update or create a ActivityAttendance
+     * const activityAttendance = await prisma.activityAttendance.upsert({
+     *   create: {
+     *     // ... data to create a ActivityAttendance
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ActivityAttendance we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ActivityAttendanceUpsertArgs>(args: SelectSubset<T, ActivityAttendanceUpsertArgs<ExtArgs>>): Prisma__ActivityAttendanceClient<$Result.GetResult<Prisma.$ActivityAttendancePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ActivityAttendances.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActivityAttendanceCountArgs} args - Arguments to filter ActivityAttendances to count.
+     * @example
+     * // Count the number of ActivityAttendances
+     * const count = await prisma.activityAttendance.count({
+     *   where: {
+     *     // ... the filter for the ActivityAttendances we want to count
+     *   }
+     * })
+    **/
+    count<T extends ActivityAttendanceCountArgs>(
+      args?: Subset<T, ActivityAttendanceCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ActivityAttendanceCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ActivityAttendance.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActivityAttendanceAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ActivityAttendanceAggregateArgs>(args: Subset<T, ActivityAttendanceAggregateArgs>): Prisma.PrismaPromise<GetActivityAttendanceAggregateType<T>>
+
+    /**
+     * Group by ActivityAttendance.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActivityAttendanceGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ActivityAttendanceGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ActivityAttendanceGroupByArgs['orderBy'] }
+        : { orderBy?: ActivityAttendanceGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ActivityAttendanceGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetActivityAttendanceGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ActivityAttendance model
+   */
+  readonly fields: ActivityAttendanceFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ActivityAttendance.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ActivityAttendanceClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    activity<T extends SportActivityDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SportActivityDefaultArgs<ExtArgs>>): Prisma__SportActivityClient<$Result.GetResult<Prisma.$SportActivityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ActivityAttendance model
+   */
+  interface ActivityAttendanceFieldRefs {
+    readonly id: FieldRef<"ActivityAttendance", 'Int'>
+    readonly activityId: FieldRef<"ActivityAttendance", 'Int'>
+    readonly userId: FieldRef<"ActivityAttendance", 'Int'>
+    readonly attending: FieldRef<"ActivityAttendance", 'Boolean'>
+    readonly createdAt: FieldRef<"ActivityAttendance", 'DateTime'>
+    readonly updatedAt: FieldRef<"ActivityAttendance", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ActivityAttendance findUnique
+   */
+  export type ActivityAttendanceFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivityAttendance
+     */
+    select?: ActivityAttendanceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivityAttendance
+     */
+    omit?: ActivityAttendanceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivityAttendanceInclude<ExtArgs> | null
+    /**
+     * Filter, which ActivityAttendance to fetch.
+     */
+    where: ActivityAttendanceWhereUniqueInput
+  }
+
+  /**
+   * ActivityAttendance findUniqueOrThrow
+   */
+  export type ActivityAttendanceFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivityAttendance
+     */
+    select?: ActivityAttendanceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivityAttendance
+     */
+    omit?: ActivityAttendanceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivityAttendanceInclude<ExtArgs> | null
+    /**
+     * Filter, which ActivityAttendance to fetch.
+     */
+    where: ActivityAttendanceWhereUniqueInput
+  }
+
+  /**
+   * ActivityAttendance findFirst
+   */
+  export type ActivityAttendanceFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivityAttendance
+     */
+    select?: ActivityAttendanceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivityAttendance
+     */
+    omit?: ActivityAttendanceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivityAttendanceInclude<ExtArgs> | null
+    /**
+     * Filter, which ActivityAttendance to fetch.
+     */
+    where?: ActivityAttendanceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ActivityAttendances to fetch.
+     */
+    orderBy?: ActivityAttendanceOrderByWithRelationInput | ActivityAttendanceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ActivityAttendances.
+     */
+    cursor?: ActivityAttendanceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ActivityAttendances from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ActivityAttendances.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ActivityAttendances.
+     */
+    distinct?: ActivityAttendanceScalarFieldEnum | ActivityAttendanceScalarFieldEnum[]
+  }
+
+  /**
+   * ActivityAttendance findFirstOrThrow
+   */
+  export type ActivityAttendanceFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivityAttendance
+     */
+    select?: ActivityAttendanceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivityAttendance
+     */
+    omit?: ActivityAttendanceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivityAttendanceInclude<ExtArgs> | null
+    /**
+     * Filter, which ActivityAttendance to fetch.
+     */
+    where?: ActivityAttendanceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ActivityAttendances to fetch.
+     */
+    orderBy?: ActivityAttendanceOrderByWithRelationInput | ActivityAttendanceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ActivityAttendances.
+     */
+    cursor?: ActivityAttendanceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ActivityAttendances from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ActivityAttendances.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ActivityAttendances.
+     */
+    distinct?: ActivityAttendanceScalarFieldEnum | ActivityAttendanceScalarFieldEnum[]
+  }
+
+  /**
+   * ActivityAttendance findMany
+   */
+  export type ActivityAttendanceFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivityAttendance
+     */
+    select?: ActivityAttendanceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivityAttendance
+     */
+    omit?: ActivityAttendanceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivityAttendanceInclude<ExtArgs> | null
+    /**
+     * Filter, which ActivityAttendances to fetch.
+     */
+    where?: ActivityAttendanceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ActivityAttendances to fetch.
+     */
+    orderBy?: ActivityAttendanceOrderByWithRelationInput | ActivityAttendanceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ActivityAttendances.
+     */
+    cursor?: ActivityAttendanceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ActivityAttendances from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ActivityAttendances.
+     */
+    skip?: number
+    distinct?: ActivityAttendanceScalarFieldEnum | ActivityAttendanceScalarFieldEnum[]
+  }
+
+  /**
+   * ActivityAttendance create
+   */
+  export type ActivityAttendanceCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivityAttendance
+     */
+    select?: ActivityAttendanceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivityAttendance
+     */
+    omit?: ActivityAttendanceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivityAttendanceInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ActivityAttendance.
+     */
+    data: XOR<ActivityAttendanceCreateInput, ActivityAttendanceUncheckedCreateInput>
+  }
+
+  /**
+   * ActivityAttendance createMany
+   */
+  export type ActivityAttendanceCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ActivityAttendances.
+     */
+    data: ActivityAttendanceCreateManyInput | ActivityAttendanceCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ActivityAttendance createManyAndReturn
+   */
+  export type ActivityAttendanceCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivityAttendance
+     */
+    select?: ActivityAttendanceSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivityAttendance
+     */
+    omit?: ActivityAttendanceOmit<ExtArgs> | null
+    /**
+     * The data used to create many ActivityAttendances.
+     */
+    data: ActivityAttendanceCreateManyInput | ActivityAttendanceCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivityAttendanceIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ActivityAttendance update
+   */
+  export type ActivityAttendanceUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivityAttendance
+     */
+    select?: ActivityAttendanceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivityAttendance
+     */
+    omit?: ActivityAttendanceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivityAttendanceInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ActivityAttendance.
+     */
+    data: XOR<ActivityAttendanceUpdateInput, ActivityAttendanceUncheckedUpdateInput>
+    /**
+     * Choose, which ActivityAttendance to update.
+     */
+    where: ActivityAttendanceWhereUniqueInput
+  }
+
+  /**
+   * ActivityAttendance updateMany
+   */
+  export type ActivityAttendanceUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ActivityAttendances.
+     */
+    data: XOR<ActivityAttendanceUpdateManyMutationInput, ActivityAttendanceUncheckedUpdateManyInput>
+    /**
+     * Filter which ActivityAttendances to update
+     */
+    where?: ActivityAttendanceWhereInput
+    /**
+     * Limit how many ActivityAttendances to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ActivityAttendance updateManyAndReturn
+   */
+  export type ActivityAttendanceUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivityAttendance
+     */
+    select?: ActivityAttendanceSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivityAttendance
+     */
+    omit?: ActivityAttendanceOmit<ExtArgs> | null
+    /**
+     * The data used to update ActivityAttendances.
+     */
+    data: XOR<ActivityAttendanceUpdateManyMutationInput, ActivityAttendanceUncheckedUpdateManyInput>
+    /**
+     * Filter which ActivityAttendances to update
+     */
+    where?: ActivityAttendanceWhereInput
+    /**
+     * Limit how many ActivityAttendances to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivityAttendanceIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ActivityAttendance upsert
+   */
+  export type ActivityAttendanceUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivityAttendance
+     */
+    select?: ActivityAttendanceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivityAttendance
+     */
+    omit?: ActivityAttendanceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivityAttendanceInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ActivityAttendance to update in case it exists.
+     */
+    where: ActivityAttendanceWhereUniqueInput
+    /**
+     * In case the ActivityAttendance found by the `where` argument doesn't exist, create a new ActivityAttendance with this data.
+     */
+    create: XOR<ActivityAttendanceCreateInput, ActivityAttendanceUncheckedCreateInput>
+    /**
+     * In case the ActivityAttendance was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ActivityAttendanceUpdateInput, ActivityAttendanceUncheckedUpdateInput>
+  }
+
+  /**
+   * ActivityAttendance delete
+   */
+  export type ActivityAttendanceDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivityAttendance
+     */
+    select?: ActivityAttendanceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivityAttendance
+     */
+    omit?: ActivityAttendanceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivityAttendanceInclude<ExtArgs> | null
+    /**
+     * Filter which ActivityAttendance to delete.
+     */
+    where: ActivityAttendanceWhereUniqueInput
+  }
+
+  /**
+   * ActivityAttendance deleteMany
+   */
+  export type ActivityAttendanceDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ActivityAttendances to delete
+     */
+    where?: ActivityAttendanceWhereInput
+    /**
+     * Limit how many ActivityAttendances to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ActivityAttendance without action
+   */
+  export type ActivityAttendanceDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivityAttendance
+     */
+    select?: ActivityAttendanceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivityAttendance
+     */
+    omit?: ActivityAttendanceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivityAttendanceInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -16964,6 +23385,62 @@ export namespace Prisma {
   export type SportActivityParticipantScalarFieldEnum = (typeof SportActivityParticipantScalarFieldEnum)[keyof typeof SportActivityParticipantScalarFieldEnum]
 
 
+  export const GroupScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    description: 'description',
+    ownerId: 'ownerId',
+    isPublic: 'isPublic',
+    createdAt: 'createdAt',
+    sportId: 'sportId'
+  };
+
+  export type GroupScalarFieldEnum = (typeof GroupScalarFieldEnum)[keyof typeof GroupScalarFieldEnum]
+
+
+  export const GroupMemberScalarFieldEnum: {
+    id: 'id',
+    groupId: 'groupId',
+    userId: 'userId',
+    joinedAt: 'joinedAt'
+  };
+
+  export type GroupMemberScalarFieldEnum = (typeof GroupMemberScalarFieldEnum)[keyof typeof GroupMemberScalarFieldEnum]
+
+
+  export const GroupActivityScalarFieldEnum: {
+    id: 'id',
+    groupId: 'groupId',
+    activityId: 'activityId'
+  };
+
+  export type GroupActivityScalarFieldEnum = (typeof GroupActivityScalarFieldEnum)[keyof typeof GroupActivityScalarFieldEnum]
+
+
+  export const GroupInvitationScalarFieldEnum: {
+    id: 'id',
+    groupId: 'groupId',
+    userId: 'userId',
+    status: 'status',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type GroupInvitationScalarFieldEnum = (typeof GroupInvitationScalarFieldEnum)[keyof typeof GroupInvitationScalarFieldEnum]
+
+
+  export const ActivityAttendanceScalarFieldEnum: {
+    id: 'id',
+    activityId: 'activityId',
+    userId: 'userId',
+    attending: 'attending',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ActivityAttendanceScalarFieldEnum = (typeof ActivityAttendanceScalarFieldEnum)[keyof typeof ActivityAttendanceScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -17047,6 +23524,13 @@ export namespace Prisma {
    */
   export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
+
+
+  /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
   /**
    * Deep Input Types
    */
@@ -17070,6 +23554,10 @@ export namespace Prisma {
     sports?: UserSportListRelationFilter
     activities?: SportActivityListRelationFilter
     activityParticipations?: SportActivityParticipantListRelationFilter
+    ownedGroups?: GroupListRelationFilter
+    groupMemberships?: GroupMemberListRelationFilter
+    groupInvitations?: GroupInvitationListRelationFilter
+    activityAttendances?: ActivityAttendanceListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -17087,6 +23575,10 @@ export namespace Prisma {
     sports?: UserSportOrderByRelationAggregateInput
     activities?: SportActivityOrderByRelationAggregateInput
     activityParticipations?: SportActivityParticipantOrderByRelationAggregateInput
+    ownedGroups?: GroupOrderByRelationAggregateInput
+    groupMemberships?: GroupMemberOrderByRelationAggregateInput
+    groupInvitations?: GroupInvitationOrderByRelationAggregateInput
+    activityAttendances?: ActivityAttendanceOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -17107,6 +23599,10 @@ export namespace Prisma {
     sports?: UserSportListRelationFilter
     activities?: SportActivityListRelationFilter
     activityParticipations?: SportActivityParticipantListRelationFilter
+    ownedGroups?: GroupListRelationFilter
+    groupMemberships?: GroupMemberListRelationFilter
+    groupInvitations?: GroupInvitationListRelationFilter
+    activityAttendances?: ActivityAttendanceListRelationFilter
   }, "id" | "email" | "username">
 
   export type UserOrderByWithAggregationInput = {
@@ -17582,6 +24078,7 @@ export namespace Prisma {
     name?: StringFilter<"Sport"> | string
     users?: UserSportListRelationFilter
     activities?: SportActivityListRelationFilter
+    groups?: GroupListRelationFilter
   }
 
   export type SportOrderByWithRelationInput = {
@@ -17589,6 +24086,7 @@ export namespace Prisma {
     name?: SortOrder
     users?: UserSportOrderByRelationAggregateInput
     activities?: SportActivityOrderByRelationAggregateInput
+    groups?: GroupOrderByRelationAggregateInput
   }
 
   export type SportWhereUniqueInput = Prisma.AtLeast<{
@@ -17599,6 +24097,7 @@ export namespace Prisma {
     NOT?: SportWhereInput | SportWhereInput[]
     users?: UserSportListRelationFilter
     activities?: SportActivityListRelationFilter
+    groups?: GroupListRelationFilter
   }, "id" | "name">
 
   export type SportOrderByWithAggregationInput = {
@@ -17683,6 +24182,8 @@ export namespace Prisma {
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     sport?: XOR<SportScalarRelationFilter, SportWhereInput>
     participants?: SportActivityParticipantListRelationFilter
+    groupActivities?: GroupActivityListRelationFilter
+    attendances?: ActivityAttendanceListRelationFilter
   }
 
   export type SportActivityOrderByWithRelationInput = {
@@ -17699,6 +24200,8 @@ export namespace Prisma {
     user?: UserOrderByWithRelationInput
     sport?: SportOrderByWithRelationInput
     participants?: SportActivityParticipantOrderByRelationAggregateInput
+    groupActivities?: GroupActivityOrderByRelationAggregateInput
+    attendances?: ActivityAttendanceOrderByRelationAggregateInput
   }
 
   export type SportActivityWhereUniqueInput = Prisma.AtLeast<{
@@ -17718,6 +24221,8 @@ export namespace Prisma {
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     sport?: XOR<SportScalarRelationFilter, SportWhereInput>
     participants?: SportActivityParticipantListRelationFilter
+    groupActivities?: GroupActivityListRelationFilter
+    attendances?: ActivityAttendanceListRelationFilter
   }, "id">
 
   export type SportActivityOrderByWithAggregationInput = {
@@ -17809,6 +24314,324 @@ export namespace Prisma {
     role?: StringWithAggregatesFilter<"SportActivityParticipant"> | string
   }
 
+  export type GroupWhereInput = {
+    AND?: GroupWhereInput | GroupWhereInput[]
+    OR?: GroupWhereInput[]
+    NOT?: GroupWhereInput | GroupWhereInput[]
+    id?: IntFilter<"Group"> | number
+    name?: StringFilter<"Group"> | string
+    description?: StringNullableFilter<"Group"> | string | null
+    ownerId?: IntFilter<"Group"> | number
+    isPublic?: BoolFilter<"Group"> | boolean
+    createdAt?: DateTimeFilter<"Group"> | Date | string
+    sportId?: IntNullableFilter<"Group"> | number | null
+    sport?: XOR<SportNullableScalarRelationFilter, SportWhereInput> | null
+    owner?: XOR<UserScalarRelationFilter, UserWhereInput>
+    members?: GroupMemberListRelationFilter
+    activities?: GroupActivityListRelationFilter
+    invitations?: GroupInvitationListRelationFilter
+  }
+
+  export type GroupOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrderInput | SortOrder
+    ownerId?: SortOrder
+    isPublic?: SortOrder
+    createdAt?: SortOrder
+    sportId?: SortOrderInput | SortOrder
+    sport?: SportOrderByWithRelationInput
+    owner?: UserOrderByWithRelationInput
+    members?: GroupMemberOrderByRelationAggregateInput
+    activities?: GroupActivityOrderByRelationAggregateInput
+    invitations?: GroupInvitationOrderByRelationAggregateInput
+  }
+
+  export type GroupWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: GroupWhereInput | GroupWhereInput[]
+    OR?: GroupWhereInput[]
+    NOT?: GroupWhereInput | GroupWhereInput[]
+    name?: StringFilter<"Group"> | string
+    description?: StringNullableFilter<"Group"> | string | null
+    ownerId?: IntFilter<"Group"> | number
+    isPublic?: BoolFilter<"Group"> | boolean
+    createdAt?: DateTimeFilter<"Group"> | Date | string
+    sportId?: IntNullableFilter<"Group"> | number | null
+    sport?: XOR<SportNullableScalarRelationFilter, SportWhereInput> | null
+    owner?: XOR<UserScalarRelationFilter, UserWhereInput>
+    members?: GroupMemberListRelationFilter
+    activities?: GroupActivityListRelationFilter
+    invitations?: GroupInvitationListRelationFilter
+  }, "id">
+
+  export type GroupOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrderInput | SortOrder
+    ownerId?: SortOrder
+    isPublic?: SortOrder
+    createdAt?: SortOrder
+    sportId?: SortOrderInput | SortOrder
+    _count?: GroupCountOrderByAggregateInput
+    _avg?: GroupAvgOrderByAggregateInput
+    _max?: GroupMaxOrderByAggregateInput
+    _min?: GroupMinOrderByAggregateInput
+    _sum?: GroupSumOrderByAggregateInput
+  }
+
+  export type GroupScalarWhereWithAggregatesInput = {
+    AND?: GroupScalarWhereWithAggregatesInput | GroupScalarWhereWithAggregatesInput[]
+    OR?: GroupScalarWhereWithAggregatesInput[]
+    NOT?: GroupScalarWhereWithAggregatesInput | GroupScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Group"> | number
+    name?: StringWithAggregatesFilter<"Group"> | string
+    description?: StringNullableWithAggregatesFilter<"Group"> | string | null
+    ownerId?: IntWithAggregatesFilter<"Group"> | number
+    isPublic?: BoolWithAggregatesFilter<"Group"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"Group"> | Date | string
+    sportId?: IntNullableWithAggregatesFilter<"Group"> | number | null
+  }
+
+  export type GroupMemberWhereInput = {
+    AND?: GroupMemberWhereInput | GroupMemberWhereInput[]
+    OR?: GroupMemberWhereInput[]
+    NOT?: GroupMemberWhereInput | GroupMemberWhereInput[]
+    id?: IntFilter<"GroupMember"> | number
+    groupId?: IntFilter<"GroupMember"> | number
+    userId?: IntFilter<"GroupMember"> | number
+    joinedAt?: DateTimeFilter<"GroupMember"> | Date | string
+    group?: XOR<GroupScalarRelationFilter, GroupWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type GroupMemberOrderByWithRelationInput = {
+    id?: SortOrder
+    groupId?: SortOrder
+    userId?: SortOrder
+    joinedAt?: SortOrder
+    group?: GroupOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type GroupMemberWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    groupId_userId?: GroupMemberGroupIdUserIdCompoundUniqueInput
+    AND?: GroupMemberWhereInput | GroupMemberWhereInput[]
+    OR?: GroupMemberWhereInput[]
+    NOT?: GroupMemberWhereInput | GroupMemberWhereInput[]
+    groupId?: IntFilter<"GroupMember"> | number
+    userId?: IntFilter<"GroupMember"> | number
+    joinedAt?: DateTimeFilter<"GroupMember"> | Date | string
+    group?: XOR<GroupScalarRelationFilter, GroupWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "groupId_userId">
+
+  export type GroupMemberOrderByWithAggregationInput = {
+    id?: SortOrder
+    groupId?: SortOrder
+    userId?: SortOrder
+    joinedAt?: SortOrder
+    _count?: GroupMemberCountOrderByAggregateInput
+    _avg?: GroupMemberAvgOrderByAggregateInput
+    _max?: GroupMemberMaxOrderByAggregateInput
+    _min?: GroupMemberMinOrderByAggregateInput
+    _sum?: GroupMemberSumOrderByAggregateInput
+  }
+
+  export type GroupMemberScalarWhereWithAggregatesInput = {
+    AND?: GroupMemberScalarWhereWithAggregatesInput | GroupMemberScalarWhereWithAggregatesInput[]
+    OR?: GroupMemberScalarWhereWithAggregatesInput[]
+    NOT?: GroupMemberScalarWhereWithAggregatesInput | GroupMemberScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"GroupMember"> | number
+    groupId?: IntWithAggregatesFilter<"GroupMember"> | number
+    userId?: IntWithAggregatesFilter<"GroupMember"> | number
+    joinedAt?: DateTimeWithAggregatesFilter<"GroupMember"> | Date | string
+  }
+
+  export type GroupActivityWhereInput = {
+    AND?: GroupActivityWhereInput | GroupActivityWhereInput[]
+    OR?: GroupActivityWhereInput[]
+    NOT?: GroupActivityWhereInput | GroupActivityWhereInput[]
+    id?: IntFilter<"GroupActivity"> | number
+    groupId?: IntFilter<"GroupActivity"> | number
+    activityId?: IntFilter<"GroupActivity"> | number
+    group?: XOR<GroupScalarRelationFilter, GroupWhereInput>
+    activity?: XOR<SportActivityScalarRelationFilter, SportActivityWhereInput>
+  }
+
+  export type GroupActivityOrderByWithRelationInput = {
+    id?: SortOrder
+    groupId?: SortOrder
+    activityId?: SortOrder
+    group?: GroupOrderByWithRelationInput
+    activity?: SportActivityOrderByWithRelationInput
+  }
+
+  export type GroupActivityWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    groupId_activityId?: GroupActivityGroupIdActivityIdCompoundUniqueInput
+    AND?: GroupActivityWhereInput | GroupActivityWhereInput[]
+    OR?: GroupActivityWhereInput[]
+    NOT?: GroupActivityWhereInput | GroupActivityWhereInput[]
+    groupId?: IntFilter<"GroupActivity"> | number
+    activityId?: IntFilter<"GroupActivity"> | number
+    group?: XOR<GroupScalarRelationFilter, GroupWhereInput>
+    activity?: XOR<SportActivityScalarRelationFilter, SportActivityWhereInput>
+  }, "id" | "groupId_activityId">
+
+  export type GroupActivityOrderByWithAggregationInput = {
+    id?: SortOrder
+    groupId?: SortOrder
+    activityId?: SortOrder
+    _count?: GroupActivityCountOrderByAggregateInput
+    _avg?: GroupActivityAvgOrderByAggregateInput
+    _max?: GroupActivityMaxOrderByAggregateInput
+    _min?: GroupActivityMinOrderByAggregateInput
+    _sum?: GroupActivitySumOrderByAggregateInput
+  }
+
+  export type GroupActivityScalarWhereWithAggregatesInput = {
+    AND?: GroupActivityScalarWhereWithAggregatesInput | GroupActivityScalarWhereWithAggregatesInput[]
+    OR?: GroupActivityScalarWhereWithAggregatesInput[]
+    NOT?: GroupActivityScalarWhereWithAggregatesInput | GroupActivityScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"GroupActivity"> | number
+    groupId?: IntWithAggregatesFilter<"GroupActivity"> | number
+    activityId?: IntWithAggregatesFilter<"GroupActivity"> | number
+  }
+
+  export type GroupInvitationWhereInput = {
+    AND?: GroupInvitationWhereInput | GroupInvitationWhereInput[]
+    OR?: GroupInvitationWhereInput[]
+    NOT?: GroupInvitationWhereInput | GroupInvitationWhereInput[]
+    id?: IntFilter<"GroupInvitation"> | number
+    groupId?: IntFilter<"GroupInvitation"> | number
+    userId?: IntFilter<"GroupInvitation"> | number
+    status?: StringFilter<"GroupInvitation"> | string
+    createdAt?: DateTimeFilter<"GroupInvitation"> | Date | string
+    updatedAt?: DateTimeFilter<"GroupInvitation"> | Date | string
+    group?: XOR<GroupScalarRelationFilter, GroupWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type GroupInvitationOrderByWithRelationInput = {
+    id?: SortOrder
+    groupId?: SortOrder
+    userId?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    group?: GroupOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type GroupInvitationWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    groupId_userId?: GroupInvitationGroupIdUserIdCompoundUniqueInput
+    AND?: GroupInvitationWhereInput | GroupInvitationWhereInput[]
+    OR?: GroupInvitationWhereInput[]
+    NOT?: GroupInvitationWhereInput | GroupInvitationWhereInput[]
+    groupId?: IntFilter<"GroupInvitation"> | number
+    userId?: IntFilter<"GroupInvitation"> | number
+    status?: StringFilter<"GroupInvitation"> | string
+    createdAt?: DateTimeFilter<"GroupInvitation"> | Date | string
+    updatedAt?: DateTimeFilter<"GroupInvitation"> | Date | string
+    group?: XOR<GroupScalarRelationFilter, GroupWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "groupId_userId">
+
+  export type GroupInvitationOrderByWithAggregationInput = {
+    id?: SortOrder
+    groupId?: SortOrder
+    userId?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: GroupInvitationCountOrderByAggregateInput
+    _avg?: GroupInvitationAvgOrderByAggregateInput
+    _max?: GroupInvitationMaxOrderByAggregateInput
+    _min?: GroupInvitationMinOrderByAggregateInput
+    _sum?: GroupInvitationSumOrderByAggregateInput
+  }
+
+  export type GroupInvitationScalarWhereWithAggregatesInput = {
+    AND?: GroupInvitationScalarWhereWithAggregatesInput | GroupInvitationScalarWhereWithAggregatesInput[]
+    OR?: GroupInvitationScalarWhereWithAggregatesInput[]
+    NOT?: GroupInvitationScalarWhereWithAggregatesInput | GroupInvitationScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"GroupInvitation"> | number
+    groupId?: IntWithAggregatesFilter<"GroupInvitation"> | number
+    userId?: IntWithAggregatesFilter<"GroupInvitation"> | number
+    status?: StringWithAggregatesFilter<"GroupInvitation"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"GroupInvitation"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"GroupInvitation"> | Date | string
+  }
+
+  export type ActivityAttendanceWhereInput = {
+    AND?: ActivityAttendanceWhereInput | ActivityAttendanceWhereInput[]
+    OR?: ActivityAttendanceWhereInput[]
+    NOT?: ActivityAttendanceWhereInput | ActivityAttendanceWhereInput[]
+    id?: IntFilter<"ActivityAttendance"> | number
+    activityId?: IntFilter<"ActivityAttendance"> | number
+    userId?: IntFilter<"ActivityAttendance"> | number
+    attending?: BoolFilter<"ActivityAttendance"> | boolean
+    createdAt?: DateTimeFilter<"ActivityAttendance"> | Date | string
+    updatedAt?: DateTimeFilter<"ActivityAttendance"> | Date | string
+    activity?: XOR<SportActivityScalarRelationFilter, SportActivityWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type ActivityAttendanceOrderByWithRelationInput = {
+    id?: SortOrder
+    activityId?: SortOrder
+    userId?: SortOrder
+    attending?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    activity?: SportActivityOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type ActivityAttendanceWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    activityId_userId?: ActivityAttendanceActivityIdUserIdCompoundUniqueInput
+    AND?: ActivityAttendanceWhereInput | ActivityAttendanceWhereInput[]
+    OR?: ActivityAttendanceWhereInput[]
+    NOT?: ActivityAttendanceWhereInput | ActivityAttendanceWhereInput[]
+    activityId?: IntFilter<"ActivityAttendance"> | number
+    userId?: IntFilter<"ActivityAttendance"> | number
+    attending?: BoolFilter<"ActivityAttendance"> | boolean
+    createdAt?: DateTimeFilter<"ActivityAttendance"> | Date | string
+    updatedAt?: DateTimeFilter<"ActivityAttendance"> | Date | string
+    activity?: XOR<SportActivityScalarRelationFilter, SportActivityWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "activityId_userId">
+
+  export type ActivityAttendanceOrderByWithAggregationInput = {
+    id?: SortOrder
+    activityId?: SortOrder
+    userId?: SortOrder
+    attending?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ActivityAttendanceCountOrderByAggregateInput
+    _avg?: ActivityAttendanceAvgOrderByAggregateInput
+    _max?: ActivityAttendanceMaxOrderByAggregateInput
+    _min?: ActivityAttendanceMinOrderByAggregateInput
+    _sum?: ActivityAttendanceSumOrderByAggregateInput
+  }
+
+  export type ActivityAttendanceScalarWhereWithAggregatesInput = {
+    AND?: ActivityAttendanceScalarWhereWithAggregatesInput | ActivityAttendanceScalarWhereWithAggregatesInput[]
+    OR?: ActivityAttendanceScalarWhereWithAggregatesInput[]
+    NOT?: ActivityAttendanceScalarWhereWithAggregatesInput | ActivityAttendanceScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"ActivityAttendance"> | number
+    activityId?: IntWithAggregatesFilter<"ActivityAttendance"> | number
+    userId?: IntWithAggregatesFilter<"ActivityAttendance"> | number
+    attending?: BoolWithAggregatesFilter<"ActivityAttendance"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"ActivityAttendance"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ActivityAttendance"> | Date | string
+  }
+
   export type UserCreateInput = {
     email: string
     username: string
@@ -17823,6 +24646,10 @@ export namespace Prisma {
     sports?: UserSportCreateNestedManyWithoutUserInput
     activities?: SportActivityCreateNestedManyWithoutUserInput
     activityParticipations?: SportActivityParticipantCreateNestedManyWithoutUserInput
+    ownedGroups?: GroupCreateNestedManyWithoutOwnerInput
+    groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
+    groupInvitations?: GroupInvitationCreateNestedManyWithoutUserInput
+    activityAttendances?: ActivityAttendanceCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -17840,6 +24667,10 @@ export namespace Prisma {
     sports?: UserSportUncheckedCreateNestedManyWithoutUserInput
     activities?: SportActivityUncheckedCreateNestedManyWithoutUserInput
     activityParticipations?: SportActivityParticipantUncheckedCreateNestedManyWithoutUserInput
+    ownedGroups?: GroupUncheckedCreateNestedManyWithoutOwnerInput
+    groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
+    groupInvitations?: GroupInvitationUncheckedCreateNestedManyWithoutUserInput
+    activityAttendances?: ActivityAttendanceUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -17856,6 +24687,10 @@ export namespace Prisma {
     sports?: UserSportUpdateManyWithoutUserNestedInput
     activities?: SportActivityUpdateManyWithoutUserNestedInput
     activityParticipations?: SportActivityParticipantUpdateManyWithoutUserNestedInput
+    ownedGroups?: GroupUpdateManyWithoutOwnerNestedInput
+    groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
+    groupInvitations?: GroupInvitationUpdateManyWithoutUserNestedInput
+    activityAttendances?: ActivityAttendanceUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -17873,6 +24708,10 @@ export namespace Prisma {
     sports?: UserSportUncheckedUpdateManyWithoutUserNestedInput
     activities?: SportActivityUncheckedUpdateManyWithoutUserNestedInput
     activityParticipations?: SportActivityParticipantUncheckedUpdateManyWithoutUserNestedInput
+    ownedGroups?: GroupUncheckedUpdateManyWithoutOwnerNestedInput
+    groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
+    groupInvitations?: GroupInvitationUncheckedUpdateManyWithoutUserNestedInput
+    activityAttendances?: ActivityAttendanceUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -18282,6 +25121,7 @@ export namespace Prisma {
     name: string
     users?: UserSportCreateNestedManyWithoutSportInput
     activities?: SportActivityCreateNestedManyWithoutSportInput
+    groups?: GroupCreateNestedManyWithoutSportInput
   }
 
   export type SportUncheckedCreateInput = {
@@ -18289,12 +25129,14 @@ export namespace Prisma {
     name: string
     users?: UserSportUncheckedCreateNestedManyWithoutSportInput
     activities?: SportActivityUncheckedCreateNestedManyWithoutSportInput
+    groups?: GroupUncheckedCreateNestedManyWithoutSportInput
   }
 
   export type SportUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
     users?: UserSportUpdateManyWithoutSportNestedInput
     activities?: SportActivityUpdateManyWithoutSportNestedInput
+    groups?: GroupUpdateManyWithoutSportNestedInput
   }
 
   export type SportUncheckedUpdateInput = {
@@ -18302,6 +25144,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     users?: UserSportUncheckedUpdateManyWithoutSportNestedInput
     activities?: SportActivityUncheckedUpdateManyWithoutSportNestedInput
+    groups?: GroupUncheckedUpdateManyWithoutSportNestedInput
   }
 
   export type SportCreateManyInput = {
@@ -18372,6 +25215,8 @@ export namespace Prisma {
     user: UserCreateNestedOneWithoutActivitiesInput
     sport: SportCreateNestedOneWithoutActivitiesInput
     participants?: SportActivityParticipantCreateNestedManyWithoutActivityInput
+    groupActivities?: GroupActivityCreateNestedManyWithoutActivityInput
+    attendances?: ActivityAttendanceCreateNestedManyWithoutActivityInput
   }
 
   export type SportActivityUncheckedCreateInput = {
@@ -18386,6 +25231,8 @@ export namespace Prisma {
     longitude?: number | null
     publicity?: string
     participants?: SportActivityParticipantUncheckedCreateNestedManyWithoutActivityInput
+    groupActivities?: GroupActivityUncheckedCreateNestedManyWithoutActivityInput
+    attendances?: ActivityAttendanceUncheckedCreateNestedManyWithoutActivityInput
   }
 
   export type SportActivityUpdateInput = {
@@ -18399,6 +25246,8 @@ export namespace Prisma {
     user?: UserUpdateOneRequiredWithoutActivitiesNestedInput
     sport?: SportUpdateOneRequiredWithoutActivitiesNestedInput
     participants?: SportActivityParticipantUpdateManyWithoutActivityNestedInput
+    groupActivities?: GroupActivityUpdateManyWithoutActivityNestedInput
+    attendances?: ActivityAttendanceUpdateManyWithoutActivityNestedInput
   }
 
   export type SportActivityUncheckedUpdateInput = {
@@ -18413,6 +25262,8 @@ export namespace Prisma {
     longitude?: NullableFloatFieldUpdateOperationsInput | number | null
     publicity?: StringFieldUpdateOperationsInput | string
     participants?: SportActivityParticipantUncheckedUpdateManyWithoutActivityNestedInput
+    groupActivities?: GroupActivityUncheckedUpdateManyWithoutActivityNestedInput
+    attendances?: ActivityAttendanceUncheckedUpdateManyWithoutActivityNestedInput
   }
 
   export type SportActivityCreateManyInput = {
@@ -18495,6 +25346,281 @@ export namespace Prisma {
     role?: StringFieldUpdateOperationsInput | string
   }
 
+  export type GroupCreateInput = {
+    name: string
+    description?: string | null
+    isPublic?: boolean
+    createdAt?: Date | string
+    sport?: SportCreateNestedOneWithoutGroupsInput
+    owner: UserCreateNestedOneWithoutOwnedGroupsInput
+    members?: GroupMemberCreateNestedManyWithoutGroupInput
+    activities?: GroupActivityCreateNestedManyWithoutGroupInput
+    invitations?: GroupInvitationCreateNestedManyWithoutGroupInput
+  }
+
+  export type GroupUncheckedCreateInput = {
+    id?: number
+    name: string
+    description?: string | null
+    ownerId: number
+    isPublic?: boolean
+    createdAt?: Date | string
+    sportId?: number | null
+    members?: GroupMemberUncheckedCreateNestedManyWithoutGroupInput
+    activities?: GroupActivityUncheckedCreateNestedManyWithoutGroupInput
+    invitations?: GroupInvitationUncheckedCreateNestedManyWithoutGroupInput
+  }
+
+  export type GroupUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sport?: SportUpdateOneWithoutGroupsNestedInput
+    owner?: UserUpdateOneRequiredWithoutOwnedGroupsNestedInput
+    members?: GroupMemberUpdateManyWithoutGroupNestedInput
+    activities?: GroupActivityUpdateManyWithoutGroupNestedInput
+    invitations?: GroupInvitationUpdateManyWithoutGroupNestedInput
+  }
+
+  export type GroupUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerId?: IntFieldUpdateOperationsInput | number
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sportId?: NullableIntFieldUpdateOperationsInput | number | null
+    members?: GroupMemberUncheckedUpdateManyWithoutGroupNestedInput
+    activities?: GroupActivityUncheckedUpdateManyWithoutGroupNestedInput
+    invitations?: GroupInvitationUncheckedUpdateManyWithoutGroupNestedInput
+  }
+
+  export type GroupCreateManyInput = {
+    id?: number
+    name: string
+    description?: string | null
+    ownerId: number
+    isPublic?: boolean
+    createdAt?: Date | string
+    sportId?: number | null
+  }
+
+  export type GroupUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GroupUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerId?: IntFieldUpdateOperationsInput | number
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sportId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type GroupMemberCreateInput = {
+    joinedAt?: Date | string
+    group: GroupCreateNestedOneWithoutMembersInput
+    user: UserCreateNestedOneWithoutGroupMembershipsInput
+  }
+
+  export type GroupMemberUncheckedCreateInput = {
+    id?: number
+    groupId: number
+    userId: number
+    joinedAt?: Date | string
+  }
+
+  export type GroupMemberUpdateInput = {
+    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    group?: GroupUpdateOneRequiredWithoutMembersNestedInput
+    user?: UserUpdateOneRequiredWithoutGroupMembershipsNestedInput
+  }
+
+  export type GroupMemberUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    groupId?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GroupMemberCreateManyInput = {
+    id?: number
+    groupId: number
+    userId: number
+    joinedAt?: Date | string
+  }
+
+  export type GroupMemberUpdateManyMutationInput = {
+    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GroupMemberUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    groupId?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GroupActivityCreateInput = {
+    group: GroupCreateNestedOneWithoutActivitiesInput
+    activity: SportActivityCreateNestedOneWithoutGroupActivitiesInput
+  }
+
+  export type GroupActivityUncheckedCreateInput = {
+    id?: number
+    groupId: number
+    activityId: number
+  }
+
+  export type GroupActivityUpdateInput = {
+    group?: GroupUpdateOneRequiredWithoutActivitiesNestedInput
+    activity?: SportActivityUpdateOneRequiredWithoutGroupActivitiesNestedInput
+  }
+
+  export type GroupActivityUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    groupId?: IntFieldUpdateOperationsInput | number
+    activityId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type GroupActivityCreateManyInput = {
+    id?: number
+    groupId: number
+    activityId: number
+  }
+
+  export type GroupActivityUpdateManyMutationInput = {
+
+  }
+
+  export type GroupActivityUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    groupId?: IntFieldUpdateOperationsInput | number
+    activityId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type GroupInvitationCreateInput = {
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    group: GroupCreateNestedOneWithoutInvitationsInput
+    user: UserCreateNestedOneWithoutGroupInvitationsInput
+  }
+
+  export type GroupInvitationUncheckedCreateInput = {
+    id?: number
+    groupId: number
+    userId: number
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GroupInvitationUpdateInput = {
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    group?: GroupUpdateOneRequiredWithoutInvitationsNestedInput
+    user?: UserUpdateOneRequiredWithoutGroupInvitationsNestedInput
+  }
+
+  export type GroupInvitationUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    groupId?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GroupInvitationCreateManyInput = {
+    id?: number
+    groupId: number
+    userId: number
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GroupInvitationUpdateManyMutationInput = {
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GroupInvitationUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    groupId?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ActivityAttendanceCreateInput = {
+    attending?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    activity: SportActivityCreateNestedOneWithoutAttendancesInput
+    user: UserCreateNestedOneWithoutActivityAttendancesInput
+  }
+
+  export type ActivityAttendanceUncheckedCreateInput = {
+    id?: number
+    activityId: number
+    userId: number
+    attending?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ActivityAttendanceUpdateInput = {
+    attending?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    activity?: SportActivityUpdateOneRequiredWithoutAttendancesNestedInput
+    user?: UserUpdateOneRequiredWithoutActivityAttendancesNestedInput
+  }
+
+  export type ActivityAttendanceUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    activityId?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    attending?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ActivityAttendanceCreateManyInput = {
+    id?: number
+    activityId: number
+    userId: number
+    attending?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ActivityAttendanceUpdateManyMutationInput = {
+    attending?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ActivityAttendanceUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    activityId?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    attending?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -18551,6 +25677,30 @@ export namespace Prisma {
     none?: SportActivityParticipantWhereInput
   }
 
+  export type GroupListRelationFilter = {
+    every?: GroupWhereInput
+    some?: GroupWhereInput
+    none?: GroupWhereInput
+  }
+
+  export type GroupMemberListRelationFilter = {
+    every?: GroupMemberWhereInput
+    some?: GroupMemberWhereInput
+    none?: GroupMemberWhereInput
+  }
+
+  export type GroupInvitationListRelationFilter = {
+    every?: GroupInvitationWhereInput
+    some?: GroupInvitationWhereInput
+    none?: GroupInvitationWhereInput
+  }
+
+  export type ActivityAttendanceListRelationFilter = {
+    every?: ActivityAttendanceWhereInput
+    some?: ActivityAttendanceWhereInput
+    none?: ActivityAttendanceWhereInput
+  }
+
   export type UserLikeOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -18568,6 +25718,22 @@ export namespace Prisma {
   }
 
   export type SportActivityParticipantOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type GroupOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type GroupMemberOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type GroupInvitationOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ActivityAttendanceOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -19127,6 +26293,16 @@ export namespace Prisma {
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
+  export type GroupActivityListRelationFilter = {
+    every?: GroupActivityWhereInput
+    some?: GroupActivityWhereInput
+    none?: GroupActivityWhereInput
+  }
+
+  export type GroupActivityOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type SportActivityCountOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
@@ -19236,6 +26412,232 @@ export namespace Prisma {
     userId?: SortOrder
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type SportNullableScalarRelationFilter = {
+    is?: SportWhereInput | null
+    isNot?: SportWhereInput | null
+  }
+
+  export type GroupCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    ownerId?: SortOrder
+    isPublic?: SortOrder
+    createdAt?: SortOrder
+    sportId?: SortOrder
+  }
+
+  export type GroupAvgOrderByAggregateInput = {
+    id?: SortOrder
+    ownerId?: SortOrder
+    sportId?: SortOrder
+  }
+
+  export type GroupMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    ownerId?: SortOrder
+    isPublic?: SortOrder
+    createdAt?: SortOrder
+    sportId?: SortOrder
+  }
+
+  export type GroupMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    ownerId?: SortOrder
+    isPublic?: SortOrder
+    createdAt?: SortOrder
+    sportId?: SortOrder
+  }
+
+  export type GroupSumOrderByAggregateInput = {
+    id?: SortOrder
+    ownerId?: SortOrder
+    sportId?: SortOrder
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type GroupScalarRelationFilter = {
+    is?: GroupWhereInput
+    isNot?: GroupWhereInput
+  }
+
+  export type GroupMemberGroupIdUserIdCompoundUniqueInput = {
+    groupId: number
+    userId: number
+  }
+
+  export type GroupMemberCountOrderByAggregateInput = {
+    id?: SortOrder
+    groupId?: SortOrder
+    userId?: SortOrder
+    joinedAt?: SortOrder
+  }
+
+  export type GroupMemberAvgOrderByAggregateInput = {
+    id?: SortOrder
+    groupId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type GroupMemberMaxOrderByAggregateInput = {
+    id?: SortOrder
+    groupId?: SortOrder
+    userId?: SortOrder
+    joinedAt?: SortOrder
+  }
+
+  export type GroupMemberMinOrderByAggregateInput = {
+    id?: SortOrder
+    groupId?: SortOrder
+    userId?: SortOrder
+    joinedAt?: SortOrder
+  }
+
+  export type GroupMemberSumOrderByAggregateInput = {
+    id?: SortOrder
+    groupId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type GroupActivityGroupIdActivityIdCompoundUniqueInput = {
+    groupId: number
+    activityId: number
+  }
+
+  export type GroupActivityCountOrderByAggregateInput = {
+    id?: SortOrder
+    groupId?: SortOrder
+    activityId?: SortOrder
+  }
+
+  export type GroupActivityAvgOrderByAggregateInput = {
+    id?: SortOrder
+    groupId?: SortOrder
+    activityId?: SortOrder
+  }
+
+  export type GroupActivityMaxOrderByAggregateInput = {
+    id?: SortOrder
+    groupId?: SortOrder
+    activityId?: SortOrder
+  }
+
+  export type GroupActivityMinOrderByAggregateInput = {
+    id?: SortOrder
+    groupId?: SortOrder
+    activityId?: SortOrder
+  }
+
+  export type GroupActivitySumOrderByAggregateInput = {
+    id?: SortOrder
+    groupId?: SortOrder
+    activityId?: SortOrder
+  }
+
+  export type GroupInvitationGroupIdUserIdCompoundUniqueInput = {
+    groupId: number
+    userId: number
+  }
+
+  export type GroupInvitationCountOrderByAggregateInput = {
+    id?: SortOrder
+    groupId?: SortOrder
+    userId?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type GroupInvitationAvgOrderByAggregateInput = {
+    id?: SortOrder
+    groupId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type GroupInvitationMaxOrderByAggregateInput = {
+    id?: SortOrder
+    groupId?: SortOrder
+    userId?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type GroupInvitationMinOrderByAggregateInput = {
+    id?: SortOrder
+    groupId?: SortOrder
+    userId?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type GroupInvitationSumOrderByAggregateInput = {
+    id?: SortOrder
+    groupId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type ActivityAttendanceActivityIdUserIdCompoundUniqueInput = {
+    activityId: number
+    userId: number
+  }
+
+  export type ActivityAttendanceCountOrderByAggregateInput = {
+    id?: SortOrder
+    activityId?: SortOrder
+    userId?: SortOrder
+    attending?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ActivityAttendanceAvgOrderByAggregateInput = {
+    id?: SortOrder
+    activityId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type ActivityAttendanceMaxOrderByAggregateInput = {
+    id?: SortOrder
+    activityId?: SortOrder
+    userId?: SortOrder
+    attending?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ActivityAttendanceMinOrderByAggregateInput = {
+    id?: SortOrder
+    activityId?: SortOrder
+    userId?: SortOrder
+    attending?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ActivityAttendanceSumOrderByAggregateInput = {
+    id?: SortOrder
+    activityId?: SortOrder
+    userId?: SortOrder
+  }
+
   export type UserLikeCreateNestedManyWithoutUserInput = {
     create?: XOR<UserLikeCreateWithoutUserInput, UserLikeUncheckedCreateWithoutUserInput> | UserLikeCreateWithoutUserInput[] | UserLikeUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserLikeCreateOrConnectWithoutUserInput | UserLikeCreateOrConnectWithoutUserInput[]
@@ -19278,6 +26680,34 @@ export namespace Prisma {
     connect?: SportActivityParticipantWhereUniqueInput | SportActivityParticipantWhereUniqueInput[]
   }
 
+  export type GroupCreateNestedManyWithoutOwnerInput = {
+    create?: XOR<GroupCreateWithoutOwnerInput, GroupUncheckedCreateWithoutOwnerInput> | GroupCreateWithoutOwnerInput[] | GroupUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: GroupCreateOrConnectWithoutOwnerInput | GroupCreateOrConnectWithoutOwnerInput[]
+    createMany?: GroupCreateManyOwnerInputEnvelope
+    connect?: GroupWhereUniqueInput | GroupWhereUniqueInput[]
+  }
+
+  export type GroupMemberCreateNestedManyWithoutUserInput = {
+    create?: XOR<GroupMemberCreateWithoutUserInput, GroupMemberUncheckedCreateWithoutUserInput> | GroupMemberCreateWithoutUserInput[] | GroupMemberUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: GroupMemberCreateOrConnectWithoutUserInput | GroupMemberCreateOrConnectWithoutUserInput[]
+    createMany?: GroupMemberCreateManyUserInputEnvelope
+    connect?: GroupMemberWhereUniqueInput | GroupMemberWhereUniqueInput[]
+  }
+
+  export type GroupInvitationCreateNestedManyWithoutUserInput = {
+    create?: XOR<GroupInvitationCreateWithoutUserInput, GroupInvitationUncheckedCreateWithoutUserInput> | GroupInvitationCreateWithoutUserInput[] | GroupInvitationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: GroupInvitationCreateOrConnectWithoutUserInput | GroupInvitationCreateOrConnectWithoutUserInput[]
+    createMany?: GroupInvitationCreateManyUserInputEnvelope
+    connect?: GroupInvitationWhereUniqueInput | GroupInvitationWhereUniqueInput[]
+  }
+
+  export type ActivityAttendanceCreateNestedManyWithoutUserInput = {
+    create?: XOR<ActivityAttendanceCreateWithoutUserInput, ActivityAttendanceUncheckedCreateWithoutUserInput> | ActivityAttendanceCreateWithoutUserInput[] | ActivityAttendanceUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ActivityAttendanceCreateOrConnectWithoutUserInput | ActivityAttendanceCreateOrConnectWithoutUserInput[]
+    createMany?: ActivityAttendanceCreateManyUserInputEnvelope
+    connect?: ActivityAttendanceWhereUniqueInput | ActivityAttendanceWhereUniqueInput[]
+  }
+
   export type UserLikeUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<UserLikeCreateWithoutUserInput, UserLikeUncheckedCreateWithoutUserInput> | UserLikeCreateWithoutUserInput[] | UserLikeUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserLikeCreateOrConnectWithoutUserInput | UserLikeCreateOrConnectWithoutUserInput[]
@@ -19318,6 +26748,34 @@ export namespace Prisma {
     connectOrCreate?: SportActivityParticipantCreateOrConnectWithoutUserInput | SportActivityParticipantCreateOrConnectWithoutUserInput[]
     createMany?: SportActivityParticipantCreateManyUserInputEnvelope
     connect?: SportActivityParticipantWhereUniqueInput | SportActivityParticipantWhereUniqueInput[]
+  }
+
+  export type GroupUncheckedCreateNestedManyWithoutOwnerInput = {
+    create?: XOR<GroupCreateWithoutOwnerInput, GroupUncheckedCreateWithoutOwnerInput> | GroupCreateWithoutOwnerInput[] | GroupUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: GroupCreateOrConnectWithoutOwnerInput | GroupCreateOrConnectWithoutOwnerInput[]
+    createMany?: GroupCreateManyOwnerInputEnvelope
+    connect?: GroupWhereUniqueInput | GroupWhereUniqueInput[]
+  }
+
+  export type GroupMemberUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<GroupMemberCreateWithoutUserInput, GroupMemberUncheckedCreateWithoutUserInput> | GroupMemberCreateWithoutUserInput[] | GroupMemberUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: GroupMemberCreateOrConnectWithoutUserInput | GroupMemberCreateOrConnectWithoutUserInput[]
+    createMany?: GroupMemberCreateManyUserInputEnvelope
+    connect?: GroupMemberWhereUniqueInput | GroupMemberWhereUniqueInput[]
+  }
+
+  export type GroupInvitationUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<GroupInvitationCreateWithoutUserInput, GroupInvitationUncheckedCreateWithoutUserInput> | GroupInvitationCreateWithoutUserInput[] | GroupInvitationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: GroupInvitationCreateOrConnectWithoutUserInput | GroupInvitationCreateOrConnectWithoutUserInput[]
+    createMany?: GroupInvitationCreateManyUserInputEnvelope
+    connect?: GroupInvitationWhereUniqueInput | GroupInvitationWhereUniqueInput[]
+  }
+
+  export type ActivityAttendanceUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<ActivityAttendanceCreateWithoutUserInput, ActivityAttendanceUncheckedCreateWithoutUserInput> | ActivityAttendanceCreateWithoutUserInput[] | ActivityAttendanceUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ActivityAttendanceCreateOrConnectWithoutUserInput | ActivityAttendanceCreateOrConnectWithoutUserInput[]
+    createMany?: ActivityAttendanceCreateManyUserInputEnvelope
+    connect?: ActivityAttendanceWhereUniqueInput | ActivityAttendanceWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -19416,6 +26874,62 @@ export namespace Prisma {
     deleteMany?: SportActivityParticipantScalarWhereInput | SportActivityParticipantScalarWhereInput[]
   }
 
+  export type GroupUpdateManyWithoutOwnerNestedInput = {
+    create?: XOR<GroupCreateWithoutOwnerInput, GroupUncheckedCreateWithoutOwnerInput> | GroupCreateWithoutOwnerInput[] | GroupUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: GroupCreateOrConnectWithoutOwnerInput | GroupCreateOrConnectWithoutOwnerInput[]
+    upsert?: GroupUpsertWithWhereUniqueWithoutOwnerInput | GroupUpsertWithWhereUniqueWithoutOwnerInput[]
+    createMany?: GroupCreateManyOwnerInputEnvelope
+    set?: GroupWhereUniqueInput | GroupWhereUniqueInput[]
+    disconnect?: GroupWhereUniqueInput | GroupWhereUniqueInput[]
+    delete?: GroupWhereUniqueInput | GroupWhereUniqueInput[]
+    connect?: GroupWhereUniqueInput | GroupWhereUniqueInput[]
+    update?: GroupUpdateWithWhereUniqueWithoutOwnerInput | GroupUpdateWithWhereUniqueWithoutOwnerInput[]
+    updateMany?: GroupUpdateManyWithWhereWithoutOwnerInput | GroupUpdateManyWithWhereWithoutOwnerInput[]
+    deleteMany?: GroupScalarWhereInput | GroupScalarWhereInput[]
+  }
+
+  export type GroupMemberUpdateManyWithoutUserNestedInput = {
+    create?: XOR<GroupMemberCreateWithoutUserInput, GroupMemberUncheckedCreateWithoutUserInput> | GroupMemberCreateWithoutUserInput[] | GroupMemberUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: GroupMemberCreateOrConnectWithoutUserInput | GroupMemberCreateOrConnectWithoutUserInput[]
+    upsert?: GroupMemberUpsertWithWhereUniqueWithoutUserInput | GroupMemberUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: GroupMemberCreateManyUserInputEnvelope
+    set?: GroupMemberWhereUniqueInput | GroupMemberWhereUniqueInput[]
+    disconnect?: GroupMemberWhereUniqueInput | GroupMemberWhereUniqueInput[]
+    delete?: GroupMemberWhereUniqueInput | GroupMemberWhereUniqueInput[]
+    connect?: GroupMemberWhereUniqueInput | GroupMemberWhereUniqueInput[]
+    update?: GroupMemberUpdateWithWhereUniqueWithoutUserInput | GroupMemberUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: GroupMemberUpdateManyWithWhereWithoutUserInput | GroupMemberUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: GroupMemberScalarWhereInput | GroupMemberScalarWhereInput[]
+  }
+
+  export type GroupInvitationUpdateManyWithoutUserNestedInput = {
+    create?: XOR<GroupInvitationCreateWithoutUserInput, GroupInvitationUncheckedCreateWithoutUserInput> | GroupInvitationCreateWithoutUserInput[] | GroupInvitationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: GroupInvitationCreateOrConnectWithoutUserInput | GroupInvitationCreateOrConnectWithoutUserInput[]
+    upsert?: GroupInvitationUpsertWithWhereUniqueWithoutUserInput | GroupInvitationUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: GroupInvitationCreateManyUserInputEnvelope
+    set?: GroupInvitationWhereUniqueInput | GroupInvitationWhereUniqueInput[]
+    disconnect?: GroupInvitationWhereUniqueInput | GroupInvitationWhereUniqueInput[]
+    delete?: GroupInvitationWhereUniqueInput | GroupInvitationWhereUniqueInput[]
+    connect?: GroupInvitationWhereUniqueInput | GroupInvitationWhereUniqueInput[]
+    update?: GroupInvitationUpdateWithWhereUniqueWithoutUserInput | GroupInvitationUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: GroupInvitationUpdateManyWithWhereWithoutUserInput | GroupInvitationUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: GroupInvitationScalarWhereInput | GroupInvitationScalarWhereInput[]
+  }
+
+  export type ActivityAttendanceUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ActivityAttendanceCreateWithoutUserInput, ActivityAttendanceUncheckedCreateWithoutUserInput> | ActivityAttendanceCreateWithoutUserInput[] | ActivityAttendanceUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ActivityAttendanceCreateOrConnectWithoutUserInput | ActivityAttendanceCreateOrConnectWithoutUserInput[]
+    upsert?: ActivityAttendanceUpsertWithWhereUniqueWithoutUserInput | ActivityAttendanceUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ActivityAttendanceCreateManyUserInputEnvelope
+    set?: ActivityAttendanceWhereUniqueInput | ActivityAttendanceWhereUniqueInput[]
+    disconnect?: ActivityAttendanceWhereUniqueInput | ActivityAttendanceWhereUniqueInput[]
+    delete?: ActivityAttendanceWhereUniqueInput | ActivityAttendanceWhereUniqueInput[]
+    connect?: ActivityAttendanceWhereUniqueInput | ActivityAttendanceWhereUniqueInput[]
+    update?: ActivityAttendanceUpdateWithWhereUniqueWithoutUserInput | ActivityAttendanceUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ActivityAttendanceUpdateManyWithWhereWithoutUserInput | ActivityAttendanceUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ActivityAttendanceScalarWhereInput | ActivityAttendanceScalarWhereInput[]
+  }
+
   export type UserLikeUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<UserLikeCreateWithoutUserInput, UserLikeUncheckedCreateWithoutUserInput> | UserLikeCreateWithoutUserInput[] | UserLikeUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserLikeCreateOrConnectWithoutUserInput | UserLikeCreateOrConnectWithoutUserInput[]
@@ -19498,6 +27012,62 @@ export namespace Prisma {
     update?: SportActivityParticipantUpdateWithWhereUniqueWithoutUserInput | SportActivityParticipantUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: SportActivityParticipantUpdateManyWithWhereWithoutUserInput | SportActivityParticipantUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: SportActivityParticipantScalarWhereInput | SportActivityParticipantScalarWhereInput[]
+  }
+
+  export type GroupUncheckedUpdateManyWithoutOwnerNestedInput = {
+    create?: XOR<GroupCreateWithoutOwnerInput, GroupUncheckedCreateWithoutOwnerInput> | GroupCreateWithoutOwnerInput[] | GroupUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: GroupCreateOrConnectWithoutOwnerInput | GroupCreateOrConnectWithoutOwnerInput[]
+    upsert?: GroupUpsertWithWhereUniqueWithoutOwnerInput | GroupUpsertWithWhereUniqueWithoutOwnerInput[]
+    createMany?: GroupCreateManyOwnerInputEnvelope
+    set?: GroupWhereUniqueInput | GroupWhereUniqueInput[]
+    disconnect?: GroupWhereUniqueInput | GroupWhereUniqueInput[]
+    delete?: GroupWhereUniqueInput | GroupWhereUniqueInput[]
+    connect?: GroupWhereUniqueInput | GroupWhereUniqueInput[]
+    update?: GroupUpdateWithWhereUniqueWithoutOwnerInput | GroupUpdateWithWhereUniqueWithoutOwnerInput[]
+    updateMany?: GroupUpdateManyWithWhereWithoutOwnerInput | GroupUpdateManyWithWhereWithoutOwnerInput[]
+    deleteMany?: GroupScalarWhereInput | GroupScalarWhereInput[]
+  }
+
+  export type GroupMemberUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<GroupMemberCreateWithoutUserInput, GroupMemberUncheckedCreateWithoutUserInput> | GroupMemberCreateWithoutUserInput[] | GroupMemberUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: GroupMemberCreateOrConnectWithoutUserInput | GroupMemberCreateOrConnectWithoutUserInput[]
+    upsert?: GroupMemberUpsertWithWhereUniqueWithoutUserInput | GroupMemberUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: GroupMemberCreateManyUserInputEnvelope
+    set?: GroupMemberWhereUniqueInput | GroupMemberWhereUniqueInput[]
+    disconnect?: GroupMemberWhereUniqueInput | GroupMemberWhereUniqueInput[]
+    delete?: GroupMemberWhereUniqueInput | GroupMemberWhereUniqueInput[]
+    connect?: GroupMemberWhereUniqueInput | GroupMemberWhereUniqueInput[]
+    update?: GroupMemberUpdateWithWhereUniqueWithoutUserInput | GroupMemberUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: GroupMemberUpdateManyWithWhereWithoutUserInput | GroupMemberUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: GroupMemberScalarWhereInput | GroupMemberScalarWhereInput[]
+  }
+
+  export type GroupInvitationUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<GroupInvitationCreateWithoutUserInput, GroupInvitationUncheckedCreateWithoutUserInput> | GroupInvitationCreateWithoutUserInput[] | GroupInvitationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: GroupInvitationCreateOrConnectWithoutUserInput | GroupInvitationCreateOrConnectWithoutUserInput[]
+    upsert?: GroupInvitationUpsertWithWhereUniqueWithoutUserInput | GroupInvitationUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: GroupInvitationCreateManyUserInputEnvelope
+    set?: GroupInvitationWhereUniqueInput | GroupInvitationWhereUniqueInput[]
+    disconnect?: GroupInvitationWhereUniqueInput | GroupInvitationWhereUniqueInput[]
+    delete?: GroupInvitationWhereUniqueInput | GroupInvitationWhereUniqueInput[]
+    connect?: GroupInvitationWhereUniqueInput | GroupInvitationWhereUniqueInput[]
+    update?: GroupInvitationUpdateWithWhereUniqueWithoutUserInput | GroupInvitationUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: GroupInvitationUpdateManyWithWhereWithoutUserInput | GroupInvitationUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: GroupInvitationScalarWhereInput | GroupInvitationScalarWhereInput[]
+  }
+
+  export type ActivityAttendanceUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ActivityAttendanceCreateWithoutUserInput, ActivityAttendanceUncheckedCreateWithoutUserInput> | ActivityAttendanceCreateWithoutUserInput[] | ActivityAttendanceUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ActivityAttendanceCreateOrConnectWithoutUserInput | ActivityAttendanceCreateOrConnectWithoutUserInput[]
+    upsert?: ActivityAttendanceUpsertWithWhereUniqueWithoutUserInput | ActivityAttendanceUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ActivityAttendanceCreateManyUserInputEnvelope
+    set?: ActivityAttendanceWhereUniqueInput | ActivityAttendanceWhereUniqueInput[]
+    disconnect?: ActivityAttendanceWhereUniqueInput | ActivityAttendanceWhereUniqueInput[]
+    delete?: ActivityAttendanceWhereUniqueInput | ActivityAttendanceWhereUniqueInput[]
+    connect?: ActivityAttendanceWhereUniqueInput | ActivityAttendanceWhereUniqueInput[]
+    update?: ActivityAttendanceUpdateWithWhereUniqueWithoutUserInput | ActivityAttendanceUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ActivityAttendanceUpdateManyWithWhereWithoutUserInput | ActivityAttendanceUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ActivityAttendanceScalarWhereInput | ActivityAttendanceScalarWhereInput[]
   }
 
   export type PostHashtagCreateNestedManyWithoutPostInput = {
@@ -19894,6 +27464,13 @@ export namespace Prisma {
     connect?: SportActivityWhereUniqueInput | SportActivityWhereUniqueInput[]
   }
 
+  export type GroupCreateNestedManyWithoutSportInput = {
+    create?: XOR<GroupCreateWithoutSportInput, GroupUncheckedCreateWithoutSportInput> | GroupCreateWithoutSportInput[] | GroupUncheckedCreateWithoutSportInput[]
+    connectOrCreate?: GroupCreateOrConnectWithoutSportInput | GroupCreateOrConnectWithoutSportInput[]
+    createMany?: GroupCreateManySportInputEnvelope
+    connect?: GroupWhereUniqueInput | GroupWhereUniqueInput[]
+  }
+
   export type UserSportUncheckedCreateNestedManyWithoutSportInput = {
     create?: XOR<UserSportCreateWithoutSportInput, UserSportUncheckedCreateWithoutSportInput> | UserSportCreateWithoutSportInput[] | UserSportUncheckedCreateWithoutSportInput[]
     connectOrCreate?: UserSportCreateOrConnectWithoutSportInput | UserSportCreateOrConnectWithoutSportInput[]
@@ -19906,6 +27483,13 @@ export namespace Prisma {
     connectOrCreate?: SportActivityCreateOrConnectWithoutSportInput | SportActivityCreateOrConnectWithoutSportInput[]
     createMany?: SportActivityCreateManySportInputEnvelope
     connect?: SportActivityWhereUniqueInput | SportActivityWhereUniqueInput[]
+  }
+
+  export type GroupUncheckedCreateNestedManyWithoutSportInput = {
+    create?: XOR<GroupCreateWithoutSportInput, GroupUncheckedCreateWithoutSportInput> | GroupCreateWithoutSportInput[] | GroupUncheckedCreateWithoutSportInput[]
+    connectOrCreate?: GroupCreateOrConnectWithoutSportInput | GroupCreateOrConnectWithoutSportInput[]
+    createMany?: GroupCreateManySportInputEnvelope
+    connect?: GroupWhereUniqueInput | GroupWhereUniqueInput[]
   }
 
   export type UserSportUpdateManyWithoutSportNestedInput = {
@@ -19936,6 +27520,20 @@ export namespace Prisma {
     deleteMany?: SportActivityScalarWhereInput | SportActivityScalarWhereInput[]
   }
 
+  export type GroupUpdateManyWithoutSportNestedInput = {
+    create?: XOR<GroupCreateWithoutSportInput, GroupUncheckedCreateWithoutSportInput> | GroupCreateWithoutSportInput[] | GroupUncheckedCreateWithoutSportInput[]
+    connectOrCreate?: GroupCreateOrConnectWithoutSportInput | GroupCreateOrConnectWithoutSportInput[]
+    upsert?: GroupUpsertWithWhereUniqueWithoutSportInput | GroupUpsertWithWhereUniqueWithoutSportInput[]
+    createMany?: GroupCreateManySportInputEnvelope
+    set?: GroupWhereUniqueInput | GroupWhereUniqueInput[]
+    disconnect?: GroupWhereUniqueInput | GroupWhereUniqueInput[]
+    delete?: GroupWhereUniqueInput | GroupWhereUniqueInput[]
+    connect?: GroupWhereUniqueInput | GroupWhereUniqueInput[]
+    update?: GroupUpdateWithWhereUniqueWithoutSportInput | GroupUpdateWithWhereUniqueWithoutSportInput[]
+    updateMany?: GroupUpdateManyWithWhereWithoutSportInput | GroupUpdateManyWithWhereWithoutSportInput[]
+    deleteMany?: GroupScalarWhereInput | GroupScalarWhereInput[]
+  }
+
   export type UserSportUncheckedUpdateManyWithoutSportNestedInput = {
     create?: XOR<UserSportCreateWithoutSportInput, UserSportUncheckedCreateWithoutSportInput> | UserSportCreateWithoutSportInput[] | UserSportUncheckedCreateWithoutSportInput[]
     connectOrCreate?: UserSportCreateOrConnectWithoutSportInput | UserSportCreateOrConnectWithoutSportInput[]
@@ -19962,6 +27560,20 @@ export namespace Prisma {
     update?: SportActivityUpdateWithWhereUniqueWithoutSportInput | SportActivityUpdateWithWhereUniqueWithoutSportInput[]
     updateMany?: SportActivityUpdateManyWithWhereWithoutSportInput | SportActivityUpdateManyWithWhereWithoutSportInput[]
     deleteMany?: SportActivityScalarWhereInput | SportActivityScalarWhereInput[]
+  }
+
+  export type GroupUncheckedUpdateManyWithoutSportNestedInput = {
+    create?: XOR<GroupCreateWithoutSportInput, GroupUncheckedCreateWithoutSportInput> | GroupCreateWithoutSportInput[] | GroupUncheckedCreateWithoutSportInput[]
+    connectOrCreate?: GroupCreateOrConnectWithoutSportInput | GroupCreateOrConnectWithoutSportInput[]
+    upsert?: GroupUpsertWithWhereUniqueWithoutSportInput | GroupUpsertWithWhereUniqueWithoutSportInput[]
+    createMany?: GroupCreateManySportInputEnvelope
+    set?: GroupWhereUniqueInput | GroupWhereUniqueInput[]
+    disconnect?: GroupWhereUniqueInput | GroupWhereUniqueInput[]
+    delete?: GroupWhereUniqueInput | GroupWhereUniqueInput[]
+    connect?: GroupWhereUniqueInput | GroupWhereUniqueInput[]
+    update?: GroupUpdateWithWhereUniqueWithoutSportInput | GroupUpdateWithWhereUniqueWithoutSportInput[]
+    updateMany?: GroupUpdateManyWithWhereWithoutSportInput | GroupUpdateManyWithWhereWithoutSportInput[]
+    deleteMany?: GroupScalarWhereInput | GroupScalarWhereInput[]
   }
 
   export type UserSportCreateNestedManyWithoutSportrankInput = {
@@ -20025,11 +27637,39 @@ export namespace Prisma {
     connect?: SportActivityParticipantWhereUniqueInput | SportActivityParticipantWhereUniqueInput[]
   }
 
+  export type GroupActivityCreateNestedManyWithoutActivityInput = {
+    create?: XOR<GroupActivityCreateWithoutActivityInput, GroupActivityUncheckedCreateWithoutActivityInput> | GroupActivityCreateWithoutActivityInput[] | GroupActivityUncheckedCreateWithoutActivityInput[]
+    connectOrCreate?: GroupActivityCreateOrConnectWithoutActivityInput | GroupActivityCreateOrConnectWithoutActivityInput[]
+    createMany?: GroupActivityCreateManyActivityInputEnvelope
+    connect?: GroupActivityWhereUniqueInput | GroupActivityWhereUniqueInput[]
+  }
+
+  export type ActivityAttendanceCreateNestedManyWithoutActivityInput = {
+    create?: XOR<ActivityAttendanceCreateWithoutActivityInput, ActivityAttendanceUncheckedCreateWithoutActivityInput> | ActivityAttendanceCreateWithoutActivityInput[] | ActivityAttendanceUncheckedCreateWithoutActivityInput[]
+    connectOrCreate?: ActivityAttendanceCreateOrConnectWithoutActivityInput | ActivityAttendanceCreateOrConnectWithoutActivityInput[]
+    createMany?: ActivityAttendanceCreateManyActivityInputEnvelope
+    connect?: ActivityAttendanceWhereUniqueInput | ActivityAttendanceWhereUniqueInput[]
+  }
+
   export type SportActivityParticipantUncheckedCreateNestedManyWithoutActivityInput = {
     create?: XOR<SportActivityParticipantCreateWithoutActivityInput, SportActivityParticipantUncheckedCreateWithoutActivityInput> | SportActivityParticipantCreateWithoutActivityInput[] | SportActivityParticipantUncheckedCreateWithoutActivityInput[]
     connectOrCreate?: SportActivityParticipantCreateOrConnectWithoutActivityInput | SportActivityParticipantCreateOrConnectWithoutActivityInput[]
     createMany?: SportActivityParticipantCreateManyActivityInputEnvelope
     connect?: SportActivityParticipantWhereUniqueInput | SportActivityParticipantWhereUniqueInput[]
+  }
+
+  export type GroupActivityUncheckedCreateNestedManyWithoutActivityInput = {
+    create?: XOR<GroupActivityCreateWithoutActivityInput, GroupActivityUncheckedCreateWithoutActivityInput> | GroupActivityCreateWithoutActivityInput[] | GroupActivityUncheckedCreateWithoutActivityInput[]
+    connectOrCreate?: GroupActivityCreateOrConnectWithoutActivityInput | GroupActivityCreateOrConnectWithoutActivityInput[]
+    createMany?: GroupActivityCreateManyActivityInputEnvelope
+    connect?: GroupActivityWhereUniqueInput | GroupActivityWhereUniqueInput[]
+  }
+
+  export type ActivityAttendanceUncheckedCreateNestedManyWithoutActivityInput = {
+    create?: XOR<ActivityAttendanceCreateWithoutActivityInput, ActivityAttendanceUncheckedCreateWithoutActivityInput> | ActivityAttendanceCreateWithoutActivityInput[] | ActivityAttendanceUncheckedCreateWithoutActivityInput[]
+    connectOrCreate?: ActivityAttendanceCreateOrConnectWithoutActivityInput | ActivityAttendanceCreateOrConnectWithoutActivityInput[]
+    createMany?: ActivityAttendanceCreateManyActivityInputEnvelope
+    connect?: ActivityAttendanceWhereUniqueInput | ActivityAttendanceWhereUniqueInput[]
   }
 
   export type NullableFloatFieldUpdateOperationsInput = {
@@ -20070,6 +27710,34 @@ export namespace Prisma {
     deleteMany?: SportActivityParticipantScalarWhereInput | SportActivityParticipantScalarWhereInput[]
   }
 
+  export type GroupActivityUpdateManyWithoutActivityNestedInput = {
+    create?: XOR<GroupActivityCreateWithoutActivityInput, GroupActivityUncheckedCreateWithoutActivityInput> | GroupActivityCreateWithoutActivityInput[] | GroupActivityUncheckedCreateWithoutActivityInput[]
+    connectOrCreate?: GroupActivityCreateOrConnectWithoutActivityInput | GroupActivityCreateOrConnectWithoutActivityInput[]
+    upsert?: GroupActivityUpsertWithWhereUniqueWithoutActivityInput | GroupActivityUpsertWithWhereUniqueWithoutActivityInput[]
+    createMany?: GroupActivityCreateManyActivityInputEnvelope
+    set?: GroupActivityWhereUniqueInput | GroupActivityWhereUniqueInput[]
+    disconnect?: GroupActivityWhereUniqueInput | GroupActivityWhereUniqueInput[]
+    delete?: GroupActivityWhereUniqueInput | GroupActivityWhereUniqueInput[]
+    connect?: GroupActivityWhereUniqueInput | GroupActivityWhereUniqueInput[]
+    update?: GroupActivityUpdateWithWhereUniqueWithoutActivityInput | GroupActivityUpdateWithWhereUniqueWithoutActivityInput[]
+    updateMany?: GroupActivityUpdateManyWithWhereWithoutActivityInput | GroupActivityUpdateManyWithWhereWithoutActivityInput[]
+    deleteMany?: GroupActivityScalarWhereInput | GroupActivityScalarWhereInput[]
+  }
+
+  export type ActivityAttendanceUpdateManyWithoutActivityNestedInput = {
+    create?: XOR<ActivityAttendanceCreateWithoutActivityInput, ActivityAttendanceUncheckedCreateWithoutActivityInput> | ActivityAttendanceCreateWithoutActivityInput[] | ActivityAttendanceUncheckedCreateWithoutActivityInput[]
+    connectOrCreate?: ActivityAttendanceCreateOrConnectWithoutActivityInput | ActivityAttendanceCreateOrConnectWithoutActivityInput[]
+    upsert?: ActivityAttendanceUpsertWithWhereUniqueWithoutActivityInput | ActivityAttendanceUpsertWithWhereUniqueWithoutActivityInput[]
+    createMany?: ActivityAttendanceCreateManyActivityInputEnvelope
+    set?: ActivityAttendanceWhereUniqueInput | ActivityAttendanceWhereUniqueInput[]
+    disconnect?: ActivityAttendanceWhereUniqueInput | ActivityAttendanceWhereUniqueInput[]
+    delete?: ActivityAttendanceWhereUniqueInput | ActivityAttendanceWhereUniqueInput[]
+    connect?: ActivityAttendanceWhereUniqueInput | ActivityAttendanceWhereUniqueInput[]
+    update?: ActivityAttendanceUpdateWithWhereUniqueWithoutActivityInput | ActivityAttendanceUpdateWithWhereUniqueWithoutActivityInput[]
+    updateMany?: ActivityAttendanceUpdateManyWithWhereWithoutActivityInput | ActivityAttendanceUpdateManyWithWhereWithoutActivityInput[]
+    deleteMany?: ActivityAttendanceScalarWhereInput | ActivityAttendanceScalarWhereInput[]
+  }
+
   export type SportActivityParticipantUncheckedUpdateManyWithoutActivityNestedInput = {
     create?: XOR<SportActivityParticipantCreateWithoutActivityInput, SportActivityParticipantUncheckedCreateWithoutActivityInput> | SportActivityParticipantCreateWithoutActivityInput[] | SportActivityParticipantUncheckedCreateWithoutActivityInput[]
     connectOrCreate?: SportActivityParticipantCreateOrConnectWithoutActivityInput | SportActivityParticipantCreateOrConnectWithoutActivityInput[]
@@ -20082,6 +27750,34 @@ export namespace Prisma {
     update?: SportActivityParticipantUpdateWithWhereUniqueWithoutActivityInput | SportActivityParticipantUpdateWithWhereUniqueWithoutActivityInput[]
     updateMany?: SportActivityParticipantUpdateManyWithWhereWithoutActivityInput | SportActivityParticipantUpdateManyWithWhereWithoutActivityInput[]
     deleteMany?: SportActivityParticipantScalarWhereInput | SportActivityParticipantScalarWhereInput[]
+  }
+
+  export type GroupActivityUncheckedUpdateManyWithoutActivityNestedInput = {
+    create?: XOR<GroupActivityCreateWithoutActivityInput, GroupActivityUncheckedCreateWithoutActivityInput> | GroupActivityCreateWithoutActivityInput[] | GroupActivityUncheckedCreateWithoutActivityInput[]
+    connectOrCreate?: GroupActivityCreateOrConnectWithoutActivityInput | GroupActivityCreateOrConnectWithoutActivityInput[]
+    upsert?: GroupActivityUpsertWithWhereUniqueWithoutActivityInput | GroupActivityUpsertWithWhereUniqueWithoutActivityInput[]
+    createMany?: GroupActivityCreateManyActivityInputEnvelope
+    set?: GroupActivityWhereUniqueInput | GroupActivityWhereUniqueInput[]
+    disconnect?: GroupActivityWhereUniqueInput | GroupActivityWhereUniqueInput[]
+    delete?: GroupActivityWhereUniqueInput | GroupActivityWhereUniqueInput[]
+    connect?: GroupActivityWhereUniqueInput | GroupActivityWhereUniqueInput[]
+    update?: GroupActivityUpdateWithWhereUniqueWithoutActivityInput | GroupActivityUpdateWithWhereUniqueWithoutActivityInput[]
+    updateMany?: GroupActivityUpdateManyWithWhereWithoutActivityInput | GroupActivityUpdateManyWithWhereWithoutActivityInput[]
+    deleteMany?: GroupActivityScalarWhereInput | GroupActivityScalarWhereInput[]
+  }
+
+  export type ActivityAttendanceUncheckedUpdateManyWithoutActivityNestedInput = {
+    create?: XOR<ActivityAttendanceCreateWithoutActivityInput, ActivityAttendanceUncheckedCreateWithoutActivityInput> | ActivityAttendanceCreateWithoutActivityInput[] | ActivityAttendanceUncheckedCreateWithoutActivityInput[]
+    connectOrCreate?: ActivityAttendanceCreateOrConnectWithoutActivityInput | ActivityAttendanceCreateOrConnectWithoutActivityInput[]
+    upsert?: ActivityAttendanceUpsertWithWhereUniqueWithoutActivityInput | ActivityAttendanceUpsertWithWhereUniqueWithoutActivityInput[]
+    createMany?: ActivityAttendanceCreateManyActivityInputEnvelope
+    set?: ActivityAttendanceWhereUniqueInput | ActivityAttendanceWhereUniqueInput[]
+    disconnect?: ActivityAttendanceWhereUniqueInput | ActivityAttendanceWhereUniqueInput[]
+    delete?: ActivityAttendanceWhereUniqueInput | ActivityAttendanceWhereUniqueInput[]
+    connect?: ActivityAttendanceWhereUniqueInput | ActivityAttendanceWhereUniqueInput[]
+    update?: ActivityAttendanceUpdateWithWhereUniqueWithoutActivityInput | ActivityAttendanceUpdateWithWhereUniqueWithoutActivityInput[]
+    updateMany?: ActivityAttendanceUpdateManyWithWhereWithoutActivityInput | ActivityAttendanceUpdateManyWithWhereWithoutActivityInput[]
+    deleteMany?: ActivityAttendanceScalarWhereInput | ActivityAttendanceScalarWhereInput[]
   }
 
   export type SportActivityCreateNestedOneWithoutParticipantsInput = {
@@ -20110,6 +27806,278 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutActivityParticipationsInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutActivityParticipationsInput, UserUpdateWithoutActivityParticipationsInput>, UserUncheckedUpdateWithoutActivityParticipationsInput>
+  }
+
+  export type SportCreateNestedOneWithoutGroupsInput = {
+    create?: XOR<SportCreateWithoutGroupsInput, SportUncheckedCreateWithoutGroupsInput>
+    connectOrCreate?: SportCreateOrConnectWithoutGroupsInput
+    connect?: SportWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutOwnedGroupsInput = {
+    create?: XOR<UserCreateWithoutOwnedGroupsInput, UserUncheckedCreateWithoutOwnedGroupsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutOwnedGroupsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type GroupMemberCreateNestedManyWithoutGroupInput = {
+    create?: XOR<GroupMemberCreateWithoutGroupInput, GroupMemberUncheckedCreateWithoutGroupInput> | GroupMemberCreateWithoutGroupInput[] | GroupMemberUncheckedCreateWithoutGroupInput[]
+    connectOrCreate?: GroupMemberCreateOrConnectWithoutGroupInput | GroupMemberCreateOrConnectWithoutGroupInput[]
+    createMany?: GroupMemberCreateManyGroupInputEnvelope
+    connect?: GroupMemberWhereUniqueInput | GroupMemberWhereUniqueInput[]
+  }
+
+  export type GroupActivityCreateNestedManyWithoutGroupInput = {
+    create?: XOR<GroupActivityCreateWithoutGroupInput, GroupActivityUncheckedCreateWithoutGroupInput> | GroupActivityCreateWithoutGroupInput[] | GroupActivityUncheckedCreateWithoutGroupInput[]
+    connectOrCreate?: GroupActivityCreateOrConnectWithoutGroupInput | GroupActivityCreateOrConnectWithoutGroupInput[]
+    createMany?: GroupActivityCreateManyGroupInputEnvelope
+    connect?: GroupActivityWhereUniqueInput | GroupActivityWhereUniqueInput[]
+  }
+
+  export type GroupInvitationCreateNestedManyWithoutGroupInput = {
+    create?: XOR<GroupInvitationCreateWithoutGroupInput, GroupInvitationUncheckedCreateWithoutGroupInput> | GroupInvitationCreateWithoutGroupInput[] | GroupInvitationUncheckedCreateWithoutGroupInput[]
+    connectOrCreate?: GroupInvitationCreateOrConnectWithoutGroupInput | GroupInvitationCreateOrConnectWithoutGroupInput[]
+    createMany?: GroupInvitationCreateManyGroupInputEnvelope
+    connect?: GroupInvitationWhereUniqueInput | GroupInvitationWhereUniqueInput[]
+  }
+
+  export type GroupMemberUncheckedCreateNestedManyWithoutGroupInput = {
+    create?: XOR<GroupMemberCreateWithoutGroupInput, GroupMemberUncheckedCreateWithoutGroupInput> | GroupMemberCreateWithoutGroupInput[] | GroupMemberUncheckedCreateWithoutGroupInput[]
+    connectOrCreate?: GroupMemberCreateOrConnectWithoutGroupInput | GroupMemberCreateOrConnectWithoutGroupInput[]
+    createMany?: GroupMemberCreateManyGroupInputEnvelope
+    connect?: GroupMemberWhereUniqueInput | GroupMemberWhereUniqueInput[]
+  }
+
+  export type GroupActivityUncheckedCreateNestedManyWithoutGroupInput = {
+    create?: XOR<GroupActivityCreateWithoutGroupInput, GroupActivityUncheckedCreateWithoutGroupInput> | GroupActivityCreateWithoutGroupInput[] | GroupActivityUncheckedCreateWithoutGroupInput[]
+    connectOrCreate?: GroupActivityCreateOrConnectWithoutGroupInput | GroupActivityCreateOrConnectWithoutGroupInput[]
+    createMany?: GroupActivityCreateManyGroupInputEnvelope
+    connect?: GroupActivityWhereUniqueInput | GroupActivityWhereUniqueInput[]
+  }
+
+  export type GroupInvitationUncheckedCreateNestedManyWithoutGroupInput = {
+    create?: XOR<GroupInvitationCreateWithoutGroupInput, GroupInvitationUncheckedCreateWithoutGroupInput> | GroupInvitationCreateWithoutGroupInput[] | GroupInvitationUncheckedCreateWithoutGroupInput[]
+    connectOrCreate?: GroupInvitationCreateOrConnectWithoutGroupInput | GroupInvitationCreateOrConnectWithoutGroupInput[]
+    createMany?: GroupInvitationCreateManyGroupInputEnvelope
+    connect?: GroupInvitationWhereUniqueInput | GroupInvitationWhereUniqueInput[]
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
+  export type SportUpdateOneWithoutGroupsNestedInput = {
+    create?: XOR<SportCreateWithoutGroupsInput, SportUncheckedCreateWithoutGroupsInput>
+    connectOrCreate?: SportCreateOrConnectWithoutGroupsInput
+    upsert?: SportUpsertWithoutGroupsInput
+    disconnect?: SportWhereInput | boolean
+    delete?: SportWhereInput | boolean
+    connect?: SportWhereUniqueInput
+    update?: XOR<XOR<SportUpdateToOneWithWhereWithoutGroupsInput, SportUpdateWithoutGroupsInput>, SportUncheckedUpdateWithoutGroupsInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutOwnedGroupsNestedInput = {
+    create?: XOR<UserCreateWithoutOwnedGroupsInput, UserUncheckedCreateWithoutOwnedGroupsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutOwnedGroupsInput
+    upsert?: UserUpsertWithoutOwnedGroupsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutOwnedGroupsInput, UserUpdateWithoutOwnedGroupsInput>, UserUncheckedUpdateWithoutOwnedGroupsInput>
+  }
+
+  export type GroupMemberUpdateManyWithoutGroupNestedInput = {
+    create?: XOR<GroupMemberCreateWithoutGroupInput, GroupMemberUncheckedCreateWithoutGroupInput> | GroupMemberCreateWithoutGroupInput[] | GroupMemberUncheckedCreateWithoutGroupInput[]
+    connectOrCreate?: GroupMemberCreateOrConnectWithoutGroupInput | GroupMemberCreateOrConnectWithoutGroupInput[]
+    upsert?: GroupMemberUpsertWithWhereUniqueWithoutGroupInput | GroupMemberUpsertWithWhereUniqueWithoutGroupInput[]
+    createMany?: GroupMemberCreateManyGroupInputEnvelope
+    set?: GroupMemberWhereUniqueInput | GroupMemberWhereUniqueInput[]
+    disconnect?: GroupMemberWhereUniqueInput | GroupMemberWhereUniqueInput[]
+    delete?: GroupMemberWhereUniqueInput | GroupMemberWhereUniqueInput[]
+    connect?: GroupMemberWhereUniqueInput | GroupMemberWhereUniqueInput[]
+    update?: GroupMemberUpdateWithWhereUniqueWithoutGroupInput | GroupMemberUpdateWithWhereUniqueWithoutGroupInput[]
+    updateMany?: GroupMemberUpdateManyWithWhereWithoutGroupInput | GroupMemberUpdateManyWithWhereWithoutGroupInput[]
+    deleteMany?: GroupMemberScalarWhereInput | GroupMemberScalarWhereInput[]
+  }
+
+  export type GroupActivityUpdateManyWithoutGroupNestedInput = {
+    create?: XOR<GroupActivityCreateWithoutGroupInput, GroupActivityUncheckedCreateWithoutGroupInput> | GroupActivityCreateWithoutGroupInput[] | GroupActivityUncheckedCreateWithoutGroupInput[]
+    connectOrCreate?: GroupActivityCreateOrConnectWithoutGroupInput | GroupActivityCreateOrConnectWithoutGroupInput[]
+    upsert?: GroupActivityUpsertWithWhereUniqueWithoutGroupInput | GroupActivityUpsertWithWhereUniqueWithoutGroupInput[]
+    createMany?: GroupActivityCreateManyGroupInputEnvelope
+    set?: GroupActivityWhereUniqueInput | GroupActivityWhereUniqueInput[]
+    disconnect?: GroupActivityWhereUniqueInput | GroupActivityWhereUniqueInput[]
+    delete?: GroupActivityWhereUniqueInput | GroupActivityWhereUniqueInput[]
+    connect?: GroupActivityWhereUniqueInput | GroupActivityWhereUniqueInput[]
+    update?: GroupActivityUpdateWithWhereUniqueWithoutGroupInput | GroupActivityUpdateWithWhereUniqueWithoutGroupInput[]
+    updateMany?: GroupActivityUpdateManyWithWhereWithoutGroupInput | GroupActivityUpdateManyWithWhereWithoutGroupInput[]
+    deleteMany?: GroupActivityScalarWhereInput | GroupActivityScalarWhereInput[]
+  }
+
+  export type GroupInvitationUpdateManyWithoutGroupNestedInput = {
+    create?: XOR<GroupInvitationCreateWithoutGroupInput, GroupInvitationUncheckedCreateWithoutGroupInput> | GroupInvitationCreateWithoutGroupInput[] | GroupInvitationUncheckedCreateWithoutGroupInput[]
+    connectOrCreate?: GroupInvitationCreateOrConnectWithoutGroupInput | GroupInvitationCreateOrConnectWithoutGroupInput[]
+    upsert?: GroupInvitationUpsertWithWhereUniqueWithoutGroupInput | GroupInvitationUpsertWithWhereUniqueWithoutGroupInput[]
+    createMany?: GroupInvitationCreateManyGroupInputEnvelope
+    set?: GroupInvitationWhereUniqueInput | GroupInvitationWhereUniqueInput[]
+    disconnect?: GroupInvitationWhereUniqueInput | GroupInvitationWhereUniqueInput[]
+    delete?: GroupInvitationWhereUniqueInput | GroupInvitationWhereUniqueInput[]
+    connect?: GroupInvitationWhereUniqueInput | GroupInvitationWhereUniqueInput[]
+    update?: GroupInvitationUpdateWithWhereUniqueWithoutGroupInput | GroupInvitationUpdateWithWhereUniqueWithoutGroupInput[]
+    updateMany?: GroupInvitationUpdateManyWithWhereWithoutGroupInput | GroupInvitationUpdateManyWithWhereWithoutGroupInput[]
+    deleteMany?: GroupInvitationScalarWhereInput | GroupInvitationScalarWhereInput[]
+  }
+
+  export type GroupMemberUncheckedUpdateManyWithoutGroupNestedInput = {
+    create?: XOR<GroupMemberCreateWithoutGroupInput, GroupMemberUncheckedCreateWithoutGroupInput> | GroupMemberCreateWithoutGroupInput[] | GroupMemberUncheckedCreateWithoutGroupInput[]
+    connectOrCreate?: GroupMemberCreateOrConnectWithoutGroupInput | GroupMemberCreateOrConnectWithoutGroupInput[]
+    upsert?: GroupMemberUpsertWithWhereUniqueWithoutGroupInput | GroupMemberUpsertWithWhereUniqueWithoutGroupInput[]
+    createMany?: GroupMemberCreateManyGroupInputEnvelope
+    set?: GroupMemberWhereUniqueInput | GroupMemberWhereUniqueInput[]
+    disconnect?: GroupMemberWhereUniqueInput | GroupMemberWhereUniqueInput[]
+    delete?: GroupMemberWhereUniqueInput | GroupMemberWhereUniqueInput[]
+    connect?: GroupMemberWhereUniqueInput | GroupMemberWhereUniqueInput[]
+    update?: GroupMemberUpdateWithWhereUniqueWithoutGroupInput | GroupMemberUpdateWithWhereUniqueWithoutGroupInput[]
+    updateMany?: GroupMemberUpdateManyWithWhereWithoutGroupInput | GroupMemberUpdateManyWithWhereWithoutGroupInput[]
+    deleteMany?: GroupMemberScalarWhereInput | GroupMemberScalarWhereInput[]
+  }
+
+  export type GroupActivityUncheckedUpdateManyWithoutGroupNestedInput = {
+    create?: XOR<GroupActivityCreateWithoutGroupInput, GroupActivityUncheckedCreateWithoutGroupInput> | GroupActivityCreateWithoutGroupInput[] | GroupActivityUncheckedCreateWithoutGroupInput[]
+    connectOrCreate?: GroupActivityCreateOrConnectWithoutGroupInput | GroupActivityCreateOrConnectWithoutGroupInput[]
+    upsert?: GroupActivityUpsertWithWhereUniqueWithoutGroupInput | GroupActivityUpsertWithWhereUniqueWithoutGroupInput[]
+    createMany?: GroupActivityCreateManyGroupInputEnvelope
+    set?: GroupActivityWhereUniqueInput | GroupActivityWhereUniqueInput[]
+    disconnect?: GroupActivityWhereUniqueInput | GroupActivityWhereUniqueInput[]
+    delete?: GroupActivityWhereUniqueInput | GroupActivityWhereUniqueInput[]
+    connect?: GroupActivityWhereUniqueInput | GroupActivityWhereUniqueInput[]
+    update?: GroupActivityUpdateWithWhereUniqueWithoutGroupInput | GroupActivityUpdateWithWhereUniqueWithoutGroupInput[]
+    updateMany?: GroupActivityUpdateManyWithWhereWithoutGroupInput | GroupActivityUpdateManyWithWhereWithoutGroupInput[]
+    deleteMany?: GroupActivityScalarWhereInput | GroupActivityScalarWhereInput[]
+  }
+
+  export type GroupInvitationUncheckedUpdateManyWithoutGroupNestedInput = {
+    create?: XOR<GroupInvitationCreateWithoutGroupInput, GroupInvitationUncheckedCreateWithoutGroupInput> | GroupInvitationCreateWithoutGroupInput[] | GroupInvitationUncheckedCreateWithoutGroupInput[]
+    connectOrCreate?: GroupInvitationCreateOrConnectWithoutGroupInput | GroupInvitationCreateOrConnectWithoutGroupInput[]
+    upsert?: GroupInvitationUpsertWithWhereUniqueWithoutGroupInput | GroupInvitationUpsertWithWhereUniqueWithoutGroupInput[]
+    createMany?: GroupInvitationCreateManyGroupInputEnvelope
+    set?: GroupInvitationWhereUniqueInput | GroupInvitationWhereUniqueInput[]
+    disconnect?: GroupInvitationWhereUniqueInput | GroupInvitationWhereUniqueInput[]
+    delete?: GroupInvitationWhereUniqueInput | GroupInvitationWhereUniqueInput[]
+    connect?: GroupInvitationWhereUniqueInput | GroupInvitationWhereUniqueInput[]
+    update?: GroupInvitationUpdateWithWhereUniqueWithoutGroupInput | GroupInvitationUpdateWithWhereUniqueWithoutGroupInput[]
+    updateMany?: GroupInvitationUpdateManyWithWhereWithoutGroupInput | GroupInvitationUpdateManyWithWhereWithoutGroupInput[]
+    deleteMany?: GroupInvitationScalarWhereInput | GroupInvitationScalarWhereInput[]
+  }
+
+  export type GroupCreateNestedOneWithoutMembersInput = {
+    create?: XOR<GroupCreateWithoutMembersInput, GroupUncheckedCreateWithoutMembersInput>
+    connectOrCreate?: GroupCreateOrConnectWithoutMembersInput
+    connect?: GroupWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutGroupMembershipsInput = {
+    create?: XOR<UserCreateWithoutGroupMembershipsInput, UserUncheckedCreateWithoutGroupMembershipsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutGroupMembershipsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type GroupUpdateOneRequiredWithoutMembersNestedInput = {
+    create?: XOR<GroupCreateWithoutMembersInput, GroupUncheckedCreateWithoutMembersInput>
+    connectOrCreate?: GroupCreateOrConnectWithoutMembersInput
+    upsert?: GroupUpsertWithoutMembersInput
+    connect?: GroupWhereUniqueInput
+    update?: XOR<XOR<GroupUpdateToOneWithWhereWithoutMembersInput, GroupUpdateWithoutMembersInput>, GroupUncheckedUpdateWithoutMembersInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutGroupMembershipsNestedInput = {
+    create?: XOR<UserCreateWithoutGroupMembershipsInput, UserUncheckedCreateWithoutGroupMembershipsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutGroupMembershipsInput
+    upsert?: UserUpsertWithoutGroupMembershipsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutGroupMembershipsInput, UserUpdateWithoutGroupMembershipsInput>, UserUncheckedUpdateWithoutGroupMembershipsInput>
+  }
+
+  export type GroupCreateNestedOneWithoutActivitiesInput = {
+    create?: XOR<GroupCreateWithoutActivitiesInput, GroupUncheckedCreateWithoutActivitiesInput>
+    connectOrCreate?: GroupCreateOrConnectWithoutActivitiesInput
+    connect?: GroupWhereUniqueInput
+  }
+
+  export type SportActivityCreateNestedOneWithoutGroupActivitiesInput = {
+    create?: XOR<SportActivityCreateWithoutGroupActivitiesInput, SportActivityUncheckedCreateWithoutGroupActivitiesInput>
+    connectOrCreate?: SportActivityCreateOrConnectWithoutGroupActivitiesInput
+    connect?: SportActivityWhereUniqueInput
+  }
+
+  export type GroupUpdateOneRequiredWithoutActivitiesNestedInput = {
+    create?: XOR<GroupCreateWithoutActivitiesInput, GroupUncheckedCreateWithoutActivitiesInput>
+    connectOrCreate?: GroupCreateOrConnectWithoutActivitiesInput
+    upsert?: GroupUpsertWithoutActivitiesInput
+    connect?: GroupWhereUniqueInput
+    update?: XOR<XOR<GroupUpdateToOneWithWhereWithoutActivitiesInput, GroupUpdateWithoutActivitiesInput>, GroupUncheckedUpdateWithoutActivitiesInput>
+  }
+
+  export type SportActivityUpdateOneRequiredWithoutGroupActivitiesNestedInput = {
+    create?: XOR<SportActivityCreateWithoutGroupActivitiesInput, SportActivityUncheckedCreateWithoutGroupActivitiesInput>
+    connectOrCreate?: SportActivityCreateOrConnectWithoutGroupActivitiesInput
+    upsert?: SportActivityUpsertWithoutGroupActivitiesInput
+    connect?: SportActivityWhereUniqueInput
+    update?: XOR<XOR<SportActivityUpdateToOneWithWhereWithoutGroupActivitiesInput, SportActivityUpdateWithoutGroupActivitiesInput>, SportActivityUncheckedUpdateWithoutGroupActivitiesInput>
+  }
+
+  export type GroupCreateNestedOneWithoutInvitationsInput = {
+    create?: XOR<GroupCreateWithoutInvitationsInput, GroupUncheckedCreateWithoutInvitationsInput>
+    connectOrCreate?: GroupCreateOrConnectWithoutInvitationsInput
+    connect?: GroupWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutGroupInvitationsInput = {
+    create?: XOR<UserCreateWithoutGroupInvitationsInput, UserUncheckedCreateWithoutGroupInvitationsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutGroupInvitationsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type GroupUpdateOneRequiredWithoutInvitationsNestedInput = {
+    create?: XOR<GroupCreateWithoutInvitationsInput, GroupUncheckedCreateWithoutInvitationsInput>
+    connectOrCreate?: GroupCreateOrConnectWithoutInvitationsInput
+    upsert?: GroupUpsertWithoutInvitationsInput
+    connect?: GroupWhereUniqueInput
+    update?: XOR<XOR<GroupUpdateToOneWithWhereWithoutInvitationsInput, GroupUpdateWithoutInvitationsInput>, GroupUncheckedUpdateWithoutInvitationsInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutGroupInvitationsNestedInput = {
+    create?: XOR<UserCreateWithoutGroupInvitationsInput, UserUncheckedCreateWithoutGroupInvitationsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutGroupInvitationsInput
+    upsert?: UserUpsertWithoutGroupInvitationsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutGroupInvitationsInput, UserUpdateWithoutGroupInvitationsInput>, UserUncheckedUpdateWithoutGroupInvitationsInput>
+  }
+
+  export type SportActivityCreateNestedOneWithoutAttendancesInput = {
+    create?: XOR<SportActivityCreateWithoutAttendancesInput, SportActivityUncheckedCreateWithoutAttendancesInput>
+    connectOrCreate?: SportActivityCreateOrConnectWithoutAttendancesInput
+    connect?: SportActivityWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutActivityAttendancesInput = {
+    create?: XOR<UserCreateWithoutActivityAttendancesInput, UserUncheckedCreateWithoutActivityAttendancesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutActivityAttendancesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type SportActivityUpdateOneRequiredWithoutAttendancesNestedInput = {
+    create?: XOR<SportActivityCreateWithoutAttendancesInput, SportActivityUncheckedCreateWithoutAttendancesInput>
+    connectOrCreate?: SportActivityCreateOrConnectWithoutAttendancesInput
+    upsert?: SportActivityUpsertWithoutAttendancesInput
+    connect?: SportActivityWhereUniqueInput
+    update?: XOR<XOR<SportActivityUpdateToOneWithWhereWithoutAttendancesInput, SportActivityUpdateWithoutAttendancesInput>, SportActivityUncheckedUpdateWithoutAttendancesInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutActivityAttendancesNestedInput = {
+    create?: XOR<UserCreateWithoutActivityAttendancesInput, UserUncheckedCreateWithoutActivityAttendancesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutActivityAttendancesInput
+    upsert?: UserUpsertWithoutActivityAttendancesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutActivityAttendancesInput, UserUpdateWithoutActivityAttendancesInput>, UserUncheckedUpdateWithoutActivityAttendancesInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -20291,6 +28259,19 @@ export namespace Prisma {
     _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type UserLikeCreateWithoutUserInput = {
     createdAt?: Date | string
     post: PostCreateNestedOneWithoutUserLikesInput
@@ -20389,6 +28370,8 @@ export namespace Prisma {
     publicity?: string
     sport: SportCreateNestedOneWithoutActivitiesInput
     participants?: SportActivityParticipantCreateNestedManyWithoutActivityInput
+    groupActivities?: GroupActivityCreateNestedManyWithoutActivityInput
+    attendances?: ActivityAttendanceCreateNestedManyWithoutActivityInput
   }
 
   export type SportActivityUncheckedCreateWithoutUserInput = {
@@ -20402,6 +28385,8 @@ export namespace Prisma {
     longitude?: number | null
     publicity?: string
     participants?: SportActivityParticipantUncheckedCreateNestedManyWithoutActivityInput
+    groupActivities?: GroupActivityUncheckedCreateNestedManyWithoutActivityInput
+    attendances?: ActivityAttendanceUncheckedCreateNestedManyWithoutActivityInput
   }
 
   export type SportActivityCreateOrConnectWithoutUserInput = {
@@ -20432,6 +28417,110 @@ export namespace Prisma {
 
   export type SportActivityParticipantCreateManyUserInputEnvelope = {
     data: SportActivityParticipantCreateManyUserInput | SportActivityParticipantCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type GroupCreateWithoutOwnerInput = {
+    name: string
+    description?: string | null
+    isPublic?: boolean
+    createdAt?: Date | string
+    sport?: SportCreateNestedOneWithoutGroupsInput
+    members?: GroupMemberCreateNestedManyWithoutGroupInput
+    activities?: GroupActivityCreateNestedManyWithoutGroupInput
+    invitations?: GroupInvitationCreateNestedManyWithoutGroupInput
+  }
+
+  export type GroupUncheckedCreateWithoutOwnerInput = {
+    id?: number
+    name: string
+    description?: string | null
+    isPublic?: boolean
+    createdAt?: Date | string
+    sportId?: number | null
+    members?: GroupMemberUncheckedCreateNestedManyWithoutGroupInput
+    activities?: GroupActivityUncheckedCreateNestedManyWithoutGroupInput
+    invitations?: GroupInvitationUncheckedCreateNestedManyWithoutGroupInput
+  }
+
+  export type GroupCreateOrConnectWithoutOwnerInput = {
+    where: GroupWhereUniqueInput
+    create: XOR<GroupCreateWithoutOwnerInput, GroupUncheckedCreateWithoutOwnerInput>
+  }
+
+  export type GroupCreateManyOwnerInputEnvelope = {
+    data: GroupCreateManyOwnerInput | GroupCreateManyOwnerInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type GroupMemberCreateWithoutUserInput = {
+    joinedAt?: Date | string
+    group: GroupCreateNestedOneWithoutMembersInput
+  }
+
+  export type GroupMemberUncheckedCreateWithoutUserInput = {
+    id?: number
+    groupId: number
+    joinedAt?: Date | string
+  }
+
+  export type GroupMemberCreateOrConnectWithoutUserInput = {
+    where: GroupMemberWhereUniqueInput
+    create: XOR<GroupMemberCreateWithoutUserInput, GroupMemberUncheckedCreateWithoutUserInput>
+  }
+
+  export type GroupMemberCreateManyUserInputEnvelope = {
+    data: GroupMemberCreateManyUserInput | GroupMemberCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type GroupInvitationCreateWithoutUserInput = {
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    group: GroupCreateNestedOneWithoutInvitationsInput
+  }
+
+  export type GroupInvitationUncheckedCreateWithoutUserInput = {
+    id?: number
+    groupId: number
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GroupInvitationCreateOrConnectWithoutUserInput = {
+    where: GroupInvitationWhereUniqueInput
+    create: XOR<GroupInvitationCreateWithoutUserInput, GroupInvitationUncheckedCreateWithoutUserInput>
+  }
+
+  export type GroupInvitationCreateManyUserInputEnvelope = {
+    data: GroupInvitationCreateManyUserInput | GroupInvitationCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ActivityAttendanceCreateWithoutUserInput = {
+    attending?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    activity: SportActivityCreateNestedOneWithoutAttendancesInput
+  }
+
+  export type ActivityAttendanceUncheckedCreateWithoutUserInput = {
+    id?: number
+    activityId: number
+    attending?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ActivityAttendanceCreateOrConnectWithoutUserInput = {
+    where: ActivityAttendanceWhereUniqueInput
+    create: XOR<ActivityAttendanceCreateWithoutUserInput, ActivityAttendanceUncheckedCreateWithoutUserInput>
+  }
+
+  export type ActivityAttendanceCreateManyUserInputEnvelope = {
+    data: ActivityAttendanceCreateManyUserInput | ActivityAttendanceCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -20587,6 +28676,117 @@ export namespace Prisma {
     activityId?: IntFilter<"SportActivityParticipant"> | number
     userId?: IntFilter<"SportActivityParticipant"> | number
     role?: StringFilter<"SportActivityParticipant"> | string
+  }
+
+  export type GroupUpsertWithWhereUniqueWithoutOwnerInput = {
+    where: GroupWhereUniqueInput
+    update: XOR<GroupUpdateWithoutOwnerInput, GroupUncheckedUpdateWithoutOwnerInput>
+    create: XOR<GroupCreateWithoutOwnerInput, GroupUncheckedCreateWithoutOwnerInput>
+  }
+
+  export type GroupUpdateWithWhereUniqueWithoutOwnerInput = {
+    where: GroupWhereUniqueInput
+    data: XOR<GroupUpdateWithoutOwnerInput, GroupUncheckedUpdateWithoutOwnerInput>
+  }
+
+  export type GroupUpdateManyWithWhereWithoutOwnerInput = {
+    where: GroupScalarWhereInput
+    data: XOR<GroupUpdateManyMutationInput, GroupUncheckedUpdateManyWithoutOwnerInput>
+  }
+
+  export type GroupScalarWhereInput = {
+    AND?: GroupScalarWhereInput | GroupScalarWhereInput[]
+    OR?: GroupScalarWhereInput[]
+    NOT?: GroupScalarWhereInput | GroupScalarWhereInput[]
+    id?: IntFilter<"Group"> | number
+    name?: StringFilter<"Group"> | string
+    description?: StringNullableFilter<"Group"> | string | null
+    ownerId?: IntFilter<"Group"> | number
+    isPublic?: BoolFilter<"Group"> | boolean
+    createdAt?: DateTimeFilter<"Group"> | Date | string
+    sportId?: IntNullableFilter<"Group"> | number | null
+  }
+
+  export type GroupMemberUpsertWithWhereUniqueWithoutUserInput = {
+    where: GroupMemberWhereUniqueInput
+    update: XOR<GroupMemberUpdateWithoutUserInput, GroupMemberUncheckedUpdateWithoutUserInput>
+    create: XOR<GroupMemberCreateWithoutUserInput, GroupMemberUncheckedCreateWithoutUserInput>
+  }
+
+  export type GroupMemberUpdateWithWhereUniqueWithoutUserInput = {
+    where: GroupMemberWhereUniqueInput
+    data: XOR<GroupMemberUpdateWithoutUserInput, GroupMemberUncheckedUpdateWithoutUserInput>
+  }
+
+  export type GroupMemberUpdateManyWithWhereWithoutUserInput = {
+    where: GroupMemberScalarWhereInput
+    data: XOR<GroupMemberUpdateManyMutationInput, GroupMemberUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type GroupMemberScalarWhereInput = {
+    AND?: GroupMemberScalarWhereInput | GroupMemberScalarWhereInput[]
+    OR?: GroupMemberScalarWhereInput[]
+    NOT?: GroupMemberScalarWhereInput | GroupMemberScalarWhereInput[]
+    id?: IntFilter<"GroupMember"> | number
+    groupId?: IntFilter<"GroupMember"> | number
+    userId?: IntFilter<"GroupMember"> | number
+    joinedAt?: DateTimeFilter<"GroupMember"> | Date | string
+  }
+
+  export type GroupInvitationUpsertWithWhereUniqueWithoutUserInput = {
+    where: GroupInvitationWhereUniqueInput
+    update: XOR<GroupInvitationUpdateWithoutUserInput, GroupInvitationUncheckedUpdateWithoutUserInput>
+    create: XOR<GroupInvitationCreateWithoutUserInput, GroupInvitationUncheckedCreateWithoutUserInput>
+  }
+
+  export type GroupInvitationUpdateWithWhereUniqueWithoutUserInput = {
+    where: GroupInvitationWhereUniqueInput
+    data: XOR<GroupInvitationUpdateWithoutUserInput, GroupInvitationUncheckedUpdateWithoutUserInput>
+  }
+
+  export type GroupInvitationUpdateManyWithWhereWithoutUserInput = {
+    where: GroupInvitationScalarWhereInput
+    data: XOR<GroupInvitationUpdateManyMutationInput, GroupInvitationUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type GroupInvitationScalarWhereInput = {
+    AND?: GroupInvitationScalarWhereInput | GroupInvitationScalarWhereInput[]
+    OR?: GroupInvitationScalarWhereInput[]
+    NOT?: GroupInvitationScalarWhereInput | GroupInvitationScalarWhereInput[]
+    id?: IntFilter<"GroupInvitation"> | number
+    groupId?: IntFilter<"GroupInvitation"> | number
+    userId?: IntFilter<"GroupInvitation"> | number
+    status?: StringFilter<"GroupInvitation"> | string
+    createdAt?: DateTimeFilter<"GroupInvitation"> | Date | string
+    updatedAt?: DateTimeFilter<"GroupInvitation"> | Date | string
+  }
+
+  export type ActivityAttendanceUpsertWithWhereUniqueWithoutUserInput = {
+    where: ActivityAttendanceWhereUniqueInput
+    update: XOR<ActivityAttendanceUpdateWithoutUserInput, ActivityAttendanceUncheckedUpdateWithoutUserInput>
+    create: XOR<ActivityAttendanceCreateWithoutUserInput, ActivityAttendanceUncheckedCreateWithoutUserInput>
+  }
+
+  export type ActivityAttendanceUpdateWithWhereUniqueWithoutUserInput = {
+    where: ActivityAttendanceWhereUniqueInput
+    data: XOR<ActivityAttendanceUpdateWithoutUserInput, ActivityAttendanceUncheckedUpdateWithoutUserInput>
+  }
+
+  export type ActivityAttendanceUpdateManyWithWhereWithoutUserInput = {
+    where: ActivityAttendanceScalarWhereInput
+    data: XOR<ActivityAttendanceUpdateManyMutationInput, ActivityAttendanceUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type ActivityAttendanceScalarWhereInput = {
+    AND?: ActivityAttendanceScalarWhereInput | ActivityAttendanceScalarWhereInput[]
+    OR?: ActivityAttendanceScalarWhereInput[]
+    NOT?: ActivityAttendanceScalarWhereInput | ActivityAttendanceScalarWhereInput[]
+    id?: IntFilter<"ActivityAttendance"> | number
+    activityId?: IntFilter<"ActivityAttendance"> | number
+    userId?: IntFilter<"ActivityAttendance"> | number
+    attending?: BoolFilter<"ActivityAttendance"> | boolean
+    createdAt?: DateTimeFilter<"ActivityAttendance"> | Date | string
+    updatedAt?: DateTimeFilter<"ActivityAttendance"> | Date | string
   }
 
   export type PostHashtagCreateWithoutPostInput = {
@@ -20983,6 +29183,10 @@ export namespace Prisma {
     sports?: UserSportCreateNestedManyWithoutUserInput
     activities?: SportActivityCreateNestedManyWithoutUserInput
     activityParticipations?: SportActivityParticipantCreateNestedManyWithoutUserInput
+    ownedGroups?: GroupCreateNestedManyWithoutOwnerInput
+    groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
+    groupInvitations?: GroupInvitationCreateNestedManyWithoutUserInput
+    activityAttendances?: ActivityAttendanceCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUserLikesInput = {
@@ -20999,6 +29203,10 @@ export namespace Prisma {
     sports?: UserSportUncheckedCreateNestedManyWithoutUserInput
     activities?: SportActivityUncheckedCreateNestedManyWithoutUserInput
     activityParticipations?: SportActivityParticipantUncheckedCreateNestedManyWithoutUserInput
+    ownedGroups?: GroupUncheckedCreateNestedManyWithoutOwnerInput
+    groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
+    groupInvitations?: GroupInvitationUncheckedCreateNestedManyWithoutUserInput
+    activityAttendances?: ActivityAttendanceUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUserLikesInput = {
@@ -21056,6 +29264,10 @@ export namespace Prisma {
     sports?: UserSportUpdateManyWithoutUserNestedInput
     activities?: SportActivityUpdateManyWithoutUserNestedInput
     activityParticipations?: SportActivityParticipantUpdateManyWithoutUserNestedInput
+    ownedGroups?: GroupUpdateManyWithoutOwnerNestedInput
+    groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
+    groupInvitations?: GroupInvitationUpdateManyWithoutUserNestedInput
+    activityAttendances?: ActivityAttendanceUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUserLikesInput = {
@@ -21072,6 +29284,10 @@ export namespace Prisma {
     sports?: UserSportUncheckedUpdateManyWithoutUserNestedInput
     activities?: SportActivityUncheckedUpdateManyWithoutUserNestedInput
     activityParticipations?: SportActivityParticipantUncheckedUpdateManyWithoutUserNestedInput
+    ownedGroups?: GroupUncheckedUpdateManyWithoutOwnerNestedInput
+    groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
+    groupInvitations?: GroupInvitationUncheckedUpdateManyWithoutUserNestedInput
+    activityAttendances?: ActivityAttendanceUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type PostUpsertWithoutUserLikesInput = {
@@ -21119,6 +29335,10 @@ export namespace Prisma {
     sports?: UserSportCreateNestedManyWithoutUserInput
     activities?: SportActivityCreateNestedManyWithoutUserInput
     activityParticipations?: SportActivityParticipantCreateNestedManyWithoutUserInput
+    ownedGroups?: GroupCreateNestedManyWithoutOwnerInput
+    groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
+    groupInvitations?: GroupInvitationCreateNestedManyWithoutUserInput
+    activityAttendances?: ActivityAttendanceCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutFollowingInput = {
@@ -21135,6 +29355,10 @@ export namespace Prisma {
     sports?: UserSportUncheckedCreateNestedManyWithoutUserInput
     activities?: SportActivityUncheckedCreateNestedManyWithoutUserInput
     activityParticipations?: SportActivityParticipantUncheckedCreateNestedManyWithoutUserInput
+    ownedGroups?: GroupUncheckedCreateNestedManyWithoutOwnerInput
+    groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
+    groupInvitations?: GroupInvitationUncheckedCreateNestedManyWithoutUserInput
+    activityAttendances?: ActivityAttendanceUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutFollowingInput = {
@@ -21155,6 +29379,10 @@ export namespace Prisma {
     sports?: UserSportCreateNestedManyWithoutUserInput
     activities?: SportActivityCreateNestedManyWithoutUserInput
     activityParticipations?: SportActivityParticipantCreateNestedManyWithoutUserInput
+    ownedGroups?: GroupCreateNestedManyWithoutOwnerInput
+    groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
+    groupInvitations?: GroupInvitationCreateNestedManyWithoutUserInput
+    activityAttendances?: ActivityAttendanceCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutFollowersInput = {
@@ -21171,6 +29399,10 @@ export namespace Prisma {
     sports?: UserSportUncheckedCreateNestedManyWithoutUserInput
     activities?: SportActivityUncheckedCreateNestedManyWithoutUserInput
     activityParticipations?: SportActivityParticipantUncheckedCreateNestedManyWithoutUserInput
+    ownedGroups?: GroupUncheckedCreateNestedManyWithoutOwnerInput
+    groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
+    groupInvitations?: GroupInvitationUncheckedCreateNestedManyWithoutUserInput
+    activityAttendances?: ActivityAttendanceUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutFollowersInput = {
@@ -21202,6 +29434,10 @@ export namespace Prisma {
     sports?: UserSportUpdateManyWithoutUserNestedInput
     activities?: SportActivityUpdateManyWithoutUserNestedInput
     activityParticipations?: SportActivityParticipantUpdateManyWithoutUserNestedInput
+    ownedGroups?: GroupUpdateManyWithoutOwnerNestedInput
+    groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
+    groupInvitations?: GroupInvitationUpdateManyWithoutUserNestedInput
+    activityAttendances?: ActivityAttendanceUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutFollowingInput = {
@@ -21218,6 +29454,10 @@ export namespace Prisma {
     sports?: UserSportUncheckedUpdateManyWithoutUserNestedInput
     activities?: SportActivityUncheckedUpdateManyWithoutUserNestedInput
     activityParticipations?: SportActivityParticipantUncheckedUpdateManyWithoutUserNestedInput
+    ownedGroups?: GroupUncheckedUpdateManyWithoutOwnerNestedInput
+    groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
+    groupInvitations?: GroupInvitationUncheckedUpdateManyWithoutUserNestedInput
+    activityAttendances?: ActivityAttendanceUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutFollowersInput = {
@@ -21244,6 +29484,10 @@ export namespace Prisma {
     sports?: UserSportUpdateManyWithoutUserNestedInput
     activities?: SportActivityUpdateManyWithoutUserNestedInput
     activityParticipations?: SportActivityParticipantUpdateManyWithoutUserNestedInput
+    ownedGroups?: GroupUpdateManyWithoutOwnerNestedInput
+    groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
+    groupInvitations?: GroupInvitationUpdateManyWithoutUserNestedInput
+    activityAttendances?: ActivityAttendanceUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutFollowersInput = {
@@ -21260,6 +29504,10 @@ export namespace Prisma {
     sports?: UserSportUncheckedUpdateManyWithoutUserNestedInput
     activities?: SportActivityUncheckedUpdateManyWithoutUserNestedInput
     activityParticipations?: SportActivityParticipantUncheckedUpdateManyWithoutUserNestedInput
+    ownedGroups?: GroupUncheckedUpdateManyWithoutOwnerNestedInput
+    groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
+    groupInvitations?: GroupInvitationUncheckedUpdateManyWithoutUserNestedInput
+    activityAttendances?: ActivityAttendanceUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutSportsInput = {
@@ -21275,6 +29523,10 @@ export namespace Prisma {
     following?: UserFollowCreateNestedManyWithoutFollowerInput
     activities?: SportActivityCreateNestedManyWithoutUserInput
     activityParticipations?: SportActivityParticipantCreateNestedManyWithoutUserInput
+    ownedGroups?: GroupCreateNestedManyWithoutOwnerInput
+    groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
+    groupInvitations?: GroupInvitationCreateNestedManyWithoutUserInput
+    activityAttendances?: ActivityAttendanceCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSportsInput = {
@@ -21291,6 +29543,10 @@ export namespace Prisma {
     following?: UserFollowUncheckedCreateNestedManyWithoutFollowerInput
     activities?: SportActivityUncheckedCreateNestedManyWithoutUserInput
     activityParticipations?: SportActivityParticipantUncheckedCreateNestedManyWithoutUserInput
+    ownedGroups?: GroupUncheckedCreateNestedManyWithoutOwnerInput
+    groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
+    groupInvitations?: GroupInvitationUncheckedCreateNestedManyWithoutUserInput
+    activityAttendances?: ActivityAttendanceUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSportsInput = {
@@ -21301,12 +29557,14 @@ export namespace Prisma {
   export type SportCreateWithoutUsersInput = {
     name: string
     activities?: SportActivityCreateNestedManyWithoutSportInput
+    groups?: GroupCreateNestedManyWithoutSportInput
   }
 
   export type SportUncheckedCreateWithoutUsersInput = {
     id?: number
     name: string
     activities?: SportActivityUncheckedCreateNestedManyWithoutSportInput
+    groups?: GroupUncheckedCreateNestedManyWithoutSportInput
   }
 
   export type SportCreateOrConnectWithoutUsersInput = {
@@ -21354,6 +29612,10 @@ export namespace Prisma {
     following?: UserFollowUpdateManyWithoutFollowerNestedInput
     activities?: SportActivityUpdateManyWithoutUserNestedInput
     activityParticipations?: SportActivityParticipantUpdateManyWithoutUserNestedInput
+    ownedGroups?: GroupUpdateManyWithoutOwnerNestedInput
+    groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
+    groupInvitations?: GroupInvitationUpdateManyWithoutUserNestedInput
+    activityAttendances?: ActivityAttendanceUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSportsInput = {
@@ -21370,6 +29632,10 @@ export namespace Prisma {
     following?: UserFollowUncheckedUpdateManyWithoutFollowerNestedInput
     activities?: SportActivityUncheckedUpdateManyWithoutUserNestedInput
     activityParticipations?: SportActivityParticipantUncheckedUpdateManyWithoutUserNestedInput
+    ownedGroups?: GroupUncheckedUpdateManyWithoutOwnerNestedInput
+    groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
+    groupInvitations?: GroupInvitationUncheckedUpdateManyWithoutUserNestedInput
+    activityAttendances?: ActivityAttendanceUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type SportUpsertWithoutUsersInput = {
@@ -21386,12 +29652,14 @@ export namespace Prisma {
   export type SportUpdateWithoutUsersInput = {
     name?: StringFieldUpdateOperationsInput | string
     activities?: SportActivityUpdateManyWithoutSportNestedInput
+    groups?: GroupUpdateManyWithoutSportNestedInput
   }
 
   export type SportUncheckedUpdateWithoutUsersInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     activities?: SportActivityUncheckedUpdateManyWithoutSportNestedInput
+    groups?: GroupUncheckedUpdateManyWithoutSportNestedInput
   }
 
   export type SportRanksUpsertWithoutUsersInput = {
@@ -21451,6 +29719,8 @@ export namespace Prisma {
     publicity?: string
     user: UserCreateNestedOneWithoutActivitiesInput
     participants?: SportActivityParticipantCreateNestedManyWithoutActivityInput
+    groupActivities?: GroupActivityCreateNestedManyWithoutActivityInput
+    attendances?: ActivityAttendanceCreateNestedManyWithoutActivityInput
   }
 
   export type SportActivityUncheckedCreateWithoutSportInput = {
@@ -21464,6 +29734,8 @@ export namespace Prisma {
     longitude?: number | null
     publicity?: string
     participants?: SportActivityParticipantUncheckedCreateNestedManyWithoutActivityInput
+    groupActivities?: GroupActivityUncheckedCreateNestedManyWithoutActivityInput
+    attendances?: ActivityAttendanceUncheckedCreateNestedManyWithoutActivityInput
   }
 
   export type SportActivityCreateOrConnectWithoutSportInput = {
@@ -21473,6 +29745,39 @@ export namespace Prisma {
 
   export type SportActivityCreateManySportInputEnvelope = {
     data: SportActivityCreateManySportInput | SportActivityCreateManySportInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type GroupCreateWithoutSportInput = {
+    name: string
+    description?: string | null
+    isPublic?: boolean
+    createdAt?: Date | string
+    owner: UserCreateNestedOneWithoutOwnedGroupsInput
+    members?: GroupMemberCreateNestedManyWithoutGroupInput
+    activities?: GroupActivityCreateNestedManyWithoutGroupInput
+    invitations?: GroupInvitationCreateNestedManyWithoutGroupInput
+  }
+
+  export type GroupUncheckedCreateWithoutSportInput = {
+    id?: number
+    name: string
+    description?: string | null
+    ownerId: number
+    isPublic?: boolean
+    createdAt?: Date | string
+    members?: GroupMemberUncheckedCreateNestedManyWithoutGroupInput
+    activities?: GroupActivityUncheckedCreateNestedManyWithoutGroupInput
+    invitations?: GroupInvitationUncheckedCreateNestedManyWithoutGroupInput
+  }
+
+  export type GroupCreateOrConnectWithoutSportInput = {
+    where: GroupWhereUniqueInput
+    create: XOR<GroupCreateWithoutSportInput, GroupUncheckedCreateWithoutSportInput>
+  }
+
+  export type GroupCreateManySportInputEnvelope = {
+    data: GroupCreateManySportInput | GroupCreateManySportInput[]
     skipDuplicates?: boolean
   }
 
@@ -21506,6 +29811,22 @@ export namespace Prisma {
   export type SportActivityUpdateManyWithWhereWithoutSportInput = {
     where: SportActivityScalarWhereInput
     data: XOR<SportActivityUpdateManyMutationInput, SportActivityUncheckedUpdateManyWithoutSportInput>
+  }
+
+  export type GroupUpsertWithWhereUniqueWithoutSportInput = {
+    where: GroupWhereUniqueInput
+    update: XOR<GroupUpdateWithoutSportInput, GroupUncheckedUpdateWithoutSportInput>
+    create: XOR<GroupCreateWithoutSportInput, GroupUncheckedCreateWithoutSportInput>
+  }
+
+  export type GroupUpdateWithWhereUniqueWithoutSportInput = {
+    where: GroupWhereUniqueInput
+    data: XOR<GroupUpdateWithoutSportInput, GroupUncheckedUpdateWithoutSportInput>
+  }
+
+  export type GroupUpdateManyWithWhereWithoutSportInput = {
+    where: GroupScalarWhereInput
+    data: XOR<GroupUpdateManyMutationInput, GroupUncheckedUpdateManyWithoutSportInput>
   }
 
   export type UserSportCreateWithoutSportrankInput = {
@@ -21562,6 +29883,10 @@ export namespace Prisma {
     following?: UserFollowCreateNestedManyWithoutFollowerInput
     sports?: UserSportCreateNestedManyWithoutUserInput
     activityParticipations?: SportActivityParticipantCreateNestedManyWithoutUserInput
+    ownedGroups?: GroupCreateNestedManyWithoutOwnerInput
+    groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
+    groupInvitations?: GroupInvitationCreateNestedManyWithoutUserInput
+    activityAttendances?: ActivityAttendanceCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutActivitiesInput = {
@@ -21578,6 +29903,10 @@ export namespace Prisma {
     following?: UserFollowUncheckedCreateNestedManyWithoutFollowerInput
     sports?: UserSportUncheckedCreateNestedManyWithoutUserInput
     activityParticipations?: SportActivityParticipantUncheckedCreateNestedManyWithoutUserInput
+    ownedGroups?: GroupUncheckedCreateNestedManyWithoutOwnerInput
+    groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
+    groupInvitations?: GroupInvitationUncheckedCreateNestedManyWithoutUserInput
+    activityAttendances?: ActivityAttendanceUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutActivitiesInput = {
@@ -21588,12 +29917,14 @@ export namespace Prisma {
   export type SportCreateWithoutActivitiesInput = {
     name: string
     users?: UserSportCreateNestedManyWithoutSportInput
+    groups?: GroupCreateNestedManyWithoutSportInput
   }
 
   export type SportUncheckedCreateWithoutActivitiesInput = {
     id?: number
     name: string
     users?: UserSportUncheckedCreateNestedManyWithoutSportInput
+    groups?: GroupUncheckedCreateNestedManyWithoutSportInput
   }
 
   export type SportCreateOrConnectWithoutActivitiesInput = {
@@ -21622,6 +29953,50 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type GroupActivityCreateWithoutActivityInput = {
+    group: GroupCreateNestedOneWithoutActivitiesInput
+  }
+
+  export type GroupActivityUncheckedCreateWithoutActivityInput = {
+    id?: number
+    groupId: number
+  }
+
+  export type GroupActivityCreateOrConnectWithoutActivityInput = {
+    where: GroupActivityWhereUniqueInput
+    create: XOR<GroupActivityCreateWithoutActivityInput, GroupActivityUncheckedCreateWithoutActivityInput>
+  }
+
+  export type GroupActivityCreateManyActivityInputEnvelope = {
+    data: GroupActivityCreateManyActivityInput | GroupActivityCreateManyActivityInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ActivityAttendanceCreateWithoutActivityInput = {
+    attending?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutActivityAttendancesInput
+  }
+
+  export type ActivityAttendanceUncheckedCreateWithoutActivityInput = {
+    id?: number
+    userId: number
+    attending?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ActivityAttendanceCreateOrConnectWithoutActivityInput = {
+    where: ActivityAttendanceWhereUniqueInput
+    create: XOR<ActivityAttendanceCreateWithoutActivityInput, ActivityAttendanceUncheckedCreateWithoutActivityInput>
+  }
+
+  export type ActivityAttendanceCreateManyActivityInputEnvelope = {
+    data: ActivityAttendanceCreateManyActivityInput | ActivityAttendanceCreateManyActivityInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserUpsertWithoutActivitiesInput = {
     update: XOR<UserUpdateWithoutActivitiesInput, UserUncheckedUpdateWithoutActivitiesInput>
     create: XOR<UserCreateWithoutActivitiesInput, UserUncheckedCreateWithoutActivitiesInput>
@@ -21646,6 +30021,10 @@ export namespace Prisma {
     following?: UserFollowUpdateManyWithoutFollowerNestedInput
     sports?: UserSportUpdateManyWithoutUserNestedInput
     activityParticipations?: SportActivityParticipantUpdateManyWithoutUserNestedInput
+    ownedGroups?: GroupUpdateManyWithoutOwnerNestedInput
+    groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
+    groupInvitations?: GroupInvitationUpdateManyWithoutUserNestedInput
+    activityAttendances?: ActivityAttendanceUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutActivitiesInput = {
@@ -21662,6 +30041,10 @@ export namespace Prisma {
     following?: UserFollowUncheckedUpdateManyWithoutFollowerNestedInput
     sports?: UserSportUncheckedUpdateManyWithoutUserNestedInput
     activityParticipations?: SportActivityParticipantUncheckedUpdateManyWithoutUserNestedInput
+    ownedGroups?: GroupUncheckedUpdateManyWithoutOwnerNestedInput
+    groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
+    groupInvitations?: GroupInvitationUncheckedUpdateManyWithoutUserNestedInput
+    activityAttendances?: ActivityAttendanceUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type SportUpsertWithoutActivitiesInput = {
@@ -21678,12 +30061,14 @@ export namespace Prisma {
   export type SportUpdateWithoutActivitiesInput = {
     name?: StringFieldUpdateOperationsInput | string
     users?: UserSportUpdateManyWithoutSportNestedInput
+    groups?: GroupUpdateManyWithoutSportNestedInput
   }
 
   export type SportUncheckedUpdateWithoutActivitiesInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     users?: UserSportUncheckedUpdateManyWithoutSportNestedInput
+    groups?: GroupUncheckedUpdateManyWithoutSportNestedInput
   }
 
   export type SportActivityParticipantUpsertWithWhereUniqueWithoutActivityInput = {
@@ -21702,6 +30087,47 @@ export namespace Prisma {
     data: XOR<SportActivityParticipantUpdateManyMutationInput, SportActivityParticipantUncheckedUpdateManyWithoutActivityInput>
   }
 
+  export type GroupActivityUpsertWithWhereUniqueWithoutActivityInput = {
+    where: GroupActivityWhereUniqueInput
+    update: XOR<GroupActivityUpdateWithoutActivityInput, GroupActivityUncheckedUpdateWithoutActivityInput>
+    create: XOR<GroupActivityCreateWithoutActivityInput, GroupActivityUncheckedCreateWithoutActivityInput>
+  }
+
+  export type GroupActivityUpdateWithWhereUniqueWithoutActivityInput = {
+    where: GroupActivityWhereUniqueInput
+    data: XOR<GroupActivityUpdateWithoutActivityInput, GroupActivityUncheckedUpdateWithoutActivityInput>
+  }
+
+  export type GroupActivityUpdateManyWithWhereWithoutActivityInput = {
+    where: GroupActivityScalarWhereInput
+    data: XOR<GroupActivityUpdateManyMutationInput, GroupActivityUncheckedUpdateManyWithoutActivityInput>
+  }
+
+  export type GroupActivityScalarWhereInput = {
+    AND?: GroupActivityScalarWhereInput | GroupActivityScalarWhereInput[]
+    OR?: GroupActivityScalarWhereInput[]
+    NOT?: GroupActivityScalarWhereInput | GroupActivityScalarWhereInput[]
+    id?: IntFilter<"GroupActivity"> | number
+    groupId?: IntFilter<"GroupActivity"> | number
+    activityId?: IntFilter<"GroupActivity"> | number
+  }
+
+  export type ActivityAttendanceUpsertWithWhereUniqueWithoutActivityInput = {
+    where: ActivityAttendanceWhereUniqueInput
+    update: XOR<ActivityAttendanceUpdateWithoutActivityInput, ActivityAttendanceUncheckedUpdateWithoutActivityInput>
+    create: XOR<ActivityAttendanceCreateWithoutActivityInput, ActivityAttendanceUncheckedCreateWithoutActivityInput>
+  }
+
+  export type ActivityAttendanceUpdateWithWhereUniqueWithoutActivityInput = {
+    where: ActivityAttendanceWhereUniqueInput
+    data: XOR<ActivityAttendanceUpdateWithoutActivityInput, ActivityAttendanceUncheckedUpdateWithoutActivityInput>
+  }
+
+  export type ActivityAttendanceUpdateManyWithWhereWithoutActivityInput = {
+    where: ActivityAttendanceScalarWhereInput
+    data: XOR<ActivityAttendanceUpdateManyMutationInput, ActivityAttendanceUncheckedUpdateManyWithoutActivityInput>
+  }
+
   export type SportActivityCreateWithoutParticipantsInput = {
     starttime: string
     endtime: string
@@ -21712,6 +30138,8 @@ export namespace Prisma {
     publicity?: string
     user: UserCreateNestedOneWithoutActivitiesInput
     sport: SportCreateNestedOneWithoutActivitiesInput
+    groupActivities?: GroupActivityCreateNestedManyWithoutActivityInput
+    attendances?: ActivityAttendanceCreateNestedManyWithoutActivityInput
   }
 
   export type SportActivityUncheckedCreateWithoutParticipantsInput = {
@@ -21725,6 +30153,8 @@ export namespace Prisma {
     latitude?: number | null
     longitude?: number | null
     publicity?: string
+    groupActivities?: GroupActivityUncheckedCreateNestedManyWithoutActivityInput
+    attendances?: ActivityAttendanceUncheckedCreateNestedManyWithoutActivityInput
   }
 
   export type SportActivityCreateOrConnectWithoutParticipantsInput = {
@@ -21745,6 +30175,10 @@ export namespace Prisma {
     following?: UserFollowCreateNestedManyWithoutFollowerInput
     sports?: UserSportCreateNestedManyWithoutUserInput
     activities?: SportActivityCreateNestedManyWithoutUserInput
+    ownedGroups?: GroupCreateNestedManyWithoutOwnerInput
+    groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
+    groupInvitations?: GroupInvitationCreateNestedManyWithoutUserInput
+    activityAttendances?: ActivityAttendanceCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutActivityParticipationsInput = {
@@ -21761,6 +30195,10 @@ export namespace Prisma {
     following?: UserFollowUncheckedCreateNestedManyWithoutFollowerInput
     sports?: UserSportUncheckedCreateNestedManyWithoutUserInput
     activities?: SportActivityUncheckedCreateNestedManyWithoutUserInput
+    ownedGroups?: GroupUncheckedCreateNestedManyWithoutOwnerInput
+    groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
+    groupInvitations?: GroupInvitationUncheckedCreateNestedManyWithoutUserInput
+    activityAttendances?: ActivityAttendanceUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutActivityParticipationsInput = {
@@ -21789,6 +30227,8 @@ export namespace Prisma {
     publicity?: StringFieldUpdateOperationsInput | string
     user?: UserUpdateOneRequiredWithoutActivitiesNestedInput
     sport?: SportUpdateOneRequiredWithoutActivitiesNestedInput
+    groupActivities?: GroupActivityUpdateManyWithoutActivityNestedInput
+    attendances?: ActivityAttendanceUpdateManyWithoutActivityNestedInput
   }
 
   export type SportActivityUncheckedUpdateWithoutParticipantsInput = {
@@ -21802,6 +30242,8 @@ export namespace Prisma {
     latitude?: NullableFloatFieldUpdateOperationsInput | number | null
     longitude?: NullableFloatFieldUpdateOperationsInput | number | null
     publicity?: StringFieldUpdateOperationsInput | string
+    groupActivities?: GroupActivityUncheckedUpdateManyWithoutActivityNestedInput
+    attendances?: ActivityAttendanceUncheckedUpdateManyWithoutActivityNestedInput
   }
 
   export type UserUpsertWithoutActivityParticipationsInput = {
@@ -21828,6 +30270,10 @@ export namespace Prisma {
     following?: UserFollowUpdateManyWithoutFollowerNestedInput
     sports?: UserSportUpdateManyWithoutUserNestedInput
     activities?: SportActivityUpdateManyWithoutUserNestedInput
+    ownedGroups?: GroupUpdateManyWithoutOwnerNestedInput
+    groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
+    groupInvitations?: GroupInvitationUpdateManyWithoutUserNestedInput
+    activityAttendances?: ActivityAttendanceUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutActivityParticipationsInput = {
@@ -21844,6 +30290,875 @@ export namespace Prisma {
     following?: UserFollowUncheckedUpdateManyWithoutFollowerNestedInput
     sports?: UserSportUncheckedUpdateManyWithoutUserNestedInput
     activities?: SportActivityUncheckedUpdateManyWithoutUserNestedInput
+    ownedGroups?: GroupUncheckedUpdateManyWithoutOwnerNestedInput
+    groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
+    groupInvitations?: GroupInvitationUncheckedUpdateManyWithoutUserNestedInput
+    activityAttendances?: ActivityAttendanceUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type SportCreateWithoutGroupsInput = {
+    name: string
+    users?: UserSportCreateNestedManyWithoutSportInput
+    activities?: SportActivityCreateNestedManyWithoutSportInput
+  }
+
+  export type SportUncheckedCreateWithoutGroupsInput = {
+    id?: number
+    name: string
+    users?: UserSportUncheckedCreateNestedManyWithoutSportInput
+    activities?: SportActivityUncheckedCreateNestedManyWithoutSportInput
+  }
+
+  export type SportCreateOrConnectWithoutGroupsInput = {
+    where: SportWhereUniqueInput
+    create: XOR<SportCreateWithoutGroupsInput, SportUncheckedCreateWithoutGroupsInput>
+  }
+
+  export type UserCreateWithoutOwnedGroupsInput = {
+    email: string
+    username: string
+    password?: string
+    bio?: string
+    image?: string
+    followersCount?: number
+    followingCount?: number
+    userLikes?: UserLikeCreateNestedManyWithoutUserInput
+    followers?: UserFollowCreateNestedManyWithoutFollowingInput
+    following?: UserFollowCreateNestedManyWithoutFollowerInput
+    sports?: UserSportCreateNestedManyWithoutUserInput
+    activities?: SportActivityCreateNestedManyWithoutUserInput
+    activityParticipations?: SportActivityParticipantCreateNestedManyWithoutUserInput
+    groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
+    groupInvitations?: GroupInvitationCreateNestedManyWithoutUserInput
+    activityAttendances?: ActivityAttendanceCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutOwnedGroupsInput = {
+    id?: number
+    email: string
+    username: string
+    password?: string
+    bio?: string
+    image?: string
+    followersCount?: number
+    followingCount?: number
+    userLikes?: UserLikeUncheckedCreateNestedManyWithoutUserInput
+    followers?: UserFollowUncheckedCreateNestedManyWithoutFollowingInput
+    following?: UserFollowUncheckedCreateNestedManyWithoutFollowerInput
+    sports?: UserSportUncheckedCreateNestedManyWithoutUserInput
+    activities?: SportActivityUncheckedCreateNestedManyWithoutUserInput
+    activityParticipations?: SportActivityParticipantUncheckedCreateNestedManyWithoutUserInput
+    groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
+    groupInvitations?: GroupInvitationUncheckedCreateNestedManyWithoutUserInput
+    activityAttendances?: ActivityAttendanceUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutOwnedGroupsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutOwnedGroupsInput, UserUncheckedCreateWithoutOwnedGroupsInput>
+  }
+
+  export type GroupMemberCreateWithoutGroupInput = {
+    joinedAt?: Date | string
+    user: UserCreateNestedOneWithoutGroupMembershipsInput
+  }
+
+  export type GroupMemberUncheckedCreateWithoutGroupInput = {
+    id?: number
+    userId: number
+    joinedAt?: Date | string
+  }
+
+  export type GroupMemberCreateOrConnectWithoutGroupInput = {
+    where: GroupMemberWhereUniqueInput
+    create: XOR<GroupMemberCreateWithoutGroupInput, GroupMemberUncheckedCreateWithoutGroupInput>
+  }
+
+  export type GroupMemberCreateManyGroupInputEnvelope = {
+    data: GroupMemberCreateManyGroupInput | GroupMemberCreateManyGroupInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type GroupActivityCreateWithoutGroupInput = {
+    activity: SportActivityCreateNestedOneWithoutGroupActivitiesInput
+  }
+
+  export type GroupActivityUncheckedCreateWithoutGroupInput = {
+    id?: number
+    activityId: number
+  }
+
+  export type GroupActivityCreateOrConnectWithoutGroupInput = {
+    where: GroupActivityWhereUniqueInput
+    create: XOR<GroupActivityCreateWithoutGroupInput, GroupActivityUncheckedCreateWithoutGroupInput>
+  }
+
+  export type GroupActivityCreateManyGroupInputEnvelope = {
+    data: GroupActivityCreateManyGroupInput | GroupActivityCreateManyGroupInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type GroupInvitationCreateWithoutGroupInput = {
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutGroupInvitationsInput
+  }
+
+  export type GroupInvitationUncheckedCreateWithoutGroupInput = {
+    id?: number
+    userId: number
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GroupInvitationCreateOrConnectWithoutGroupInput = {
+    where: GroupInvitationWhereUniqueInput
+    create: XOR<GroupInvitationCreateWithoutGroupInput, GroupInvitationUncheckedCreateWithoutGroupInput>
+  }
+
+  export type GroupInvitationCreateManyGroupInputEnvelope = {
+    data: GroupInvitationCreateManyGroupInput | GroupInvitationCreateManyGroupInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SportUpsertWithoutGroupsInput = {
+    update: XOR<SportUpdateWithoutGroupsInput, SportUncheckedUpdateWithoutGroupsInput>
+    create: XOR<SportCreateWithoutGroupsInput, SportUncheckedCreateWithoutGroupsInput>
+    where?: SportWhereInput
+  }
+
+  export type SportUpdateToOneWithWhereWithoutGroupsInput = {
+    where?: SportWhereInput
+    data: XOR<SportUpdateWithoutGroupsInput, SportUncheckedUpdateWithoutGroupsInput>
+  }
+
+  export type SportUpdateWithoutGroupsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    users?: UserSportUpdateManyWithoutSportNestedInput
+    activities?: SportActivityUpdateManyWithoutSportNestedInput
+  }
+
+  export type SportUncheckedUpdateWithoutGroupsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    users?: UserSportUncheckedUpdateManyWithoutSportNestedInput
+    activities?: SportActivityUncheckedUpdateManyWithoutSportNestedInput
+  }
+
+  export type UserUpsertWithoutOwnedGroupsInput = {
+    update: XOR<UserUpdateWithoutOwnedGroupsInput, UserUncheckedUpdateWithoutOwnedGroupsInput>
+    create: XOR<UserCreateWithoutOwnedGroupsInput, UserUncheckedCreateWithoutOwnedGroupsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutOwnedGroupsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutOwnedGroupsInput, UserUncheckedUpdateWithoutOwnedGroupsInput>
+  }
+
+  export type UserUpdateWithoutOwnedGroupsInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
+    followersCount?: IntFieldUpdateOperationsInput | number
+    followingCount?: IntFieldUpdateOperationsInput | number
+    userLikes?: UserLikeUpdateManyWithoutUserNestedInput
+    followers?: UserFollowUpdateManyWithoutFollowingNestedInput
+    following?: UserFollowUpdateManyWithoutFollowerNestedInput
+    sports?: UserSportUpdateManyWithoutUserNestedInput
+    activities?: SportActivityUpdateManyWithoutUserNestedInput
+    activityParticipations?: SportActivityParticipantUpdateManyWithoutUserNestedInput
+    groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
+    groupInvitations?: GroupInvitationUpdateManyWithoutUserNestedInput
+    activityAttendances?: ActivityAttendanceUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutOwnedGroupsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
+    followersCount?: IntFieldUpdateOperationsInput | number
+    followingCount?: IntFieldUpdateOperationsInput | number
+    userLikes?: UserLikeUncheckedUpdateManyWithoutUserNestedInput
+    followers?: UserFollowUncheckedUpdateManyWithoutFollowingNestedInput
+    following?: UserFollowUncheckedUpdateManyWithoutFollowerNestedInput
+    sports?: UserSportUncheckedUpdateManyWithoutUserNestedInput
+    activities?: SportActivityUncheckedUpdateManyWithoutUserNestedInput
+    activityParticipations?: SportActivityParticipantUncheckedUpdateManyWithoutUserNestedInput
+    groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
+    groupInvitations?: GroupInvitationUncheckedUpdateManyWithoutUserNestedInput
+    activityAttendances?: ActivityAttendanceUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type GroupMemberUpsertWithWhereUniqueWithoutGroupInput = {
+    where: GroupMemberWhereUniqueInput
+    update: XOR<GroupMemberUpdateWithoutGroupInput, GroupMemberUncheckedUpdateWithoutGroupInput>
+    create: XOR<GroupMemberCreateWithoutGroupInput, GroupMemberUncheckedCreateWithoutGroupInput>
+  }
+
+  export type GroupMemberUpdateWithWhereUniqueWithoutGroupInput = {
+    where: GroupMemberWhereUniqueInput
+    data: XOR<GroupMemberUpdateWithoutGroupInput, GroupMemberUncheckedUpdateWithoutGroupInput>
+  }
+
+  export type GroupMemberUpdateManyWithWhereWithoutGroupInput = {
+    where: GroupMemberScalarWhereInput
+    data: XOR<GroupMemberUpdateManyMutationInput, GroupMemberUncheckedUpdateManyWithoutGroupInput>
+  }
+
+  export type GroupActivityUpsertWithWhereUniqueWithoutGroupInput = {
+    where: GroupActivityWhereUniqueInput
+    update: XOR<GroupActivityUpdateWithoutGroupInput, GroupActivityUncheckedUpdateWithoutGroupInput>
+    create: XOR<GroupActivityCreateWithoutGroupInput, GroupActivityUncheckedCreateWithoutGroupInput>
+  }
+
+  export type GroupActivityUpdateWithWhereUniqueWithoutGroupInput = {
+    where: GroupActivityWhereUniqueInput
+    data: XOR<GroupActivityUpdateWithoutGroupInput, GroupActivityUncheckedUpdateWithoutGroupInput>
+  }
+
+  export type GroupActivityUpdateManyWithWhereWithoutGroupInput = {
+    where: GroupActivityScalarWhereInput
+    data: XOR<GroupActivityUpdateManyMutationInput, GroupActivityUncheckedUpdateManyWithoutGroupInput>
+  }
+
+  export type GroupInvitationUpsertWithWhereUniqueWithoutGroupInput = {
+    where: GroupInvitationWhereUniqueInput
+    update: XOR<GroupInvitationUpdateWithoutGroupInput, GroupInvitationUncheckedUpdateWithoutGroupInput>
+    create: XOR<GroupInvitationCreateWithoutGroupInput, GroupInvitationUncheckedCreateWithoutGroupInput>
+  }
+
+  export type GroupInvitationUpdateWithWhereUniqueWithoutGroupInput = {
+    where: GroupInvitationWhereUniqueInput
+    data: XOR<GroupInvitationUpdateWithoutGroupInput, GroupInvitationUncheckedUpdateWithoutGroupInput>
+  }
+
+  export type GroupInvitationUpdateManyWithWhereWithoutGroupInput = {
+    where: GroupInvitationScalarWhereInput
+    data: XOR<GroupInvitationUpdateManyMutationInput, GroupInvitationUncheckedUpdateManyWithoutGroupInput>
+  }
+
+  export type GroupCreateWithoutMembersInput = {
+    name: string
+    description?: string | null
+    isPublic?: boolean
+    createdAt?: Date | string
+    sport?: SportCreateNestedOneWithoutGroupsInput
+    owner: UserCreateNestedOneWithoutOwnedGroupsInput
+    activities?: GroupActivityCreateNestedManyWithoutGroupInput
+    invitations?: GroupInvitationCreateNestedManyWithoutGroupInput
+  }
+
+  export type GroupUncheckedCreateWithoutMembersInput = {
+    id?: number
+    name: string
+    description?: string | null
+    ownerId: number
+    isPublic?: boolean
+    createdAt?: Date | string
+    sportId?: number | null
+    activities?: GroupActivityUncheckedCreateNestedManyWithoutGroupInput
+    invitations?: GroupInvitationUncheckedCreateNestedManyWithoutGroupInput
+  }
+
+  export type GroupCreateOrConnectWithoutMembersInput = {
+    where: GroupWhereUniqueInput
+    create: XOR<GroupCreateWithoutMembersInput, GroupUncheckedCreateWithoutMembersInput>
+  }
+
+  export type UserCreateWithoutGroupMembershipsInput = {
+    email: string
+    username: string
+    password?: string
+    bio?: string
+    image?: string
+    followersCount?: number
+    followingCount?: number
+    userLikes?: UserLikeCreateNestedManyWithoutUserInput
+    followers?: UserFollowCreateNestedManyWithoutFollowingInput
+    following?: UserFollowCreateNestedManyWithoutFollowerInput
+    sports?: UserSportCreateNestedManyWithoutUserInput
+    activities?: SportActivityCreateNestedManyWithoutUserInput
+    activityParticipations?: SportActivityParticipantCreateNestedManyWithoutUserInput
+    ownedGroups?: GroupCreateNestedManyWithoutOwnerInput
+    groupInvitations?: GroupInvitationCreateNestedManyWithoutUserInput
+    activityAttendances?: ActivityAttendanceCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutGroupMembershipsInput = {
+    id?: number
+    email: string
+    username: string
+    password?: string
+    bio?: string
+    image?: string
+    followersCount?: number
+    followingCount?: number
+    userLikes?: UserLikeUncheckedCreateNestedManyWithoutUserInput
+    followers?: UserFollowUncheckedCreateNestedManyWithoutFollowingInput
+    following?: UserFollowUncheckedCreateNestedManyWithoutFollowerInput
+    sports?: UserSportUncheckedCreateNestedManyWithoutUserInput
+    activities?: SportActivityUncheckedCreateNestedManyWithoutUserInput
+    activityParticipations?: SportActivityParticipantUncheckedCreateNestedManyWithoutUserInput
+    ownedGroups?: GroupUncheckedCreateNestedManyWithoutOwnerInput
+    groupInvitations?: GroupInvitationUncheckedCreateNestedManyWithoutUserInput
+    activityAttendances?: ActivityAttendanceUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutGroupMembershipsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutGroupMembershipsInput, UserUncheckedCreateWithoutGroupMembershipsInput>
+  }
+
+  export type GroupUpsertWithoutMembersInput = {
+    update: XOR<GroupUpdateWithoutMembersInput, GroupUncheckedUpdateWithoutMembersInput>
+    create: XOR<GroupCreateWithoutMembersInput, GroupUncheckedCreateWithoutMembersInput>
+    where?: GroupWhereInput
+  }
+
+  export type GroupUpdateToOneWithWhereWithoutMembersInput = {
+    where?: GroupWhereInput
+    data: XOR<GroupUpdateWithoutMembersInput, GroupUncheckedUpdateWithoutMembersInput>
+  }
+
+  export type GroupUpdateWithoutMembersInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sport?: SportUpdateOneWithoutGroupsNestedInput
+    owner?: UserUpdateOneRequiredWithoutOwnedGroupsNestedInput
+    activities?: GroupActivityUpdateManyWithoutGroupNestedInput
+    invitations?: GroupInvitationUpdateManyWithoutGroupNestedInput
+  }
+
+  export type GroupUncheckedUpdateWithoutMembersInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerId?: IntFieldUpdateOperationsInput | number
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sportId?: NullableIntFieldUpdateOperationsInput | number | null
+    activities?: GroupActivityUncheckedUpdateManyWithoutGroupNestedInput
+    invitations?: GroupInvitationUncheckedUpdateManyWithoutGroupNestedInput
+  }
+
+  export type UserUpsertWithoutGroupMembershipsInput = {
+    update: XOR<UserUpdateWithoutGroupMembershipsInput, UserUncheckedUpdateWithoutGroupMembershipsInput>
+    create: XOR<UserCreateWithoutGroupMembershipsInput, UserUncheckedCreateWithoutGroupMembershipsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutGroupMembershipsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutGroupMembershipsInput, UserUncheckedUpdateWithoutGroupMembershipsInput>
+  }
+
+  export type UserUpdateWithoutGroupMembershipsInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
+    followersCount?: IntFieldUpdateOperationsInput | number
+    followingCount?: IntFieldUpdateOperationsInput | number
+    userLikes?: UserLikeUpdateManyWithoutUserNestedInput
+    followers?: UserFollowUpdateManyWithoutFollowingNestedInput
+    following?: UserFollowUpdateManyWithoutFollowerNestedInput
+    sports?: UserSportUpdateManyWithoutUserNestedInput
+    activities?: SportActivityUpdateManyWithoutUserNestedInput
+    activityParticipations?: SportActivityParticipantUpdateManyWithoutUserNestedInput
+    ownedGroups?: GroupUpdateManyWithoutOwnerNestedInput
+    groupInvitations?: GroupInvitationUpdateManyWithoutUserNestedInput
+    activityAttendances?: ActivityAttendanceUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutGroupMembershipsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
+    followersCount?: IntFieldUpdateOperationsInput | number
+    followingCount?: IntFieldUpdateOperationsInput | number
+    userLikes?: UserLikeUncheckedUpdateManyWithoutUserNestedInput
+    followers?: UserFollowUncheckedUpdateManyWithoutFollowingNestedInput
+    following?: UserFollowUncheckedUpdateManyWithoutFollowerNestedInput
+    sports?: UserSportUncheckedUpdateManyWithoutUserNestedInput
+    activities?: SportActivityUncheckedUpdateManyWithoutUserNestedInput
+    activityParticipations?: SportActivityParticipantUncheckedUpdateManyWithoutUserNestedInput
+    ownedGroups?: GroupUncheckedUpdateManyWithoutOwnerNestedInput
+    groupInvitations?: GroupInvitationUncheckedUpdateManyWithoutUserNestedInput
+    activityAttendances?: ActivityAttendanceUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type GroupCreateWithoutActivitiesInput = {
+    name: string
+    description?: string | null
+    isPublic?: boolean
+    createdAt?: Date | string
+    sport?: SportCreateNestedOneWithoutGroupsInput
+    owner: UserCreateNestedOneWithoutOwnedGroupsInput
+    members?: GroupMemberCreateNestedManyWithoutGroupInput
+    invitations?: GroupInvitationCreateNestedManyWithoutGroupInput
+  }
+
+  export type GroupUncheckedCreateWithoutActivitiesInput = {
+    id?: number
+    name: string
+    description?: string | null
+    ownerId: number
+    isPublic?: boolean
+    createdAt?: Date | string
+    sportId?: number | null
+    members?: GroupMemberUncheckedCreateNestedManyWithoutGroupInput
+    invitations?: GroupInvitationUncheckedCreateNestedManyWithoutGroupInput
+  }
+
+  export type GroupCreateOrConnectWithoutActivitiesInput = {
+    where: GroupWhereUniqueInput
+    create: XOR<GroupCreateWithoutActivitiesInput, GroupUncheckedCreateWithoutActivitiesInput>
+  }
+
+  export type SportActivityCreateWithoutGroupActivitiesInput = {
+    starttime: string
+    endtime: string
+    description: string
+    date?: Date | string
+    latitude?: number | null
+    longitude?: number | null
+    publicity?: string
+    user: UserCreateNestedOneWithoutActivitiesInput
+    sport: SportCreateNestedOneWithoutActivitiesInput
+    participants?: SportActivityParticipantCreateNestedManyWithoutActivityInput
+    attendances?: ActivityAttendanceCreateNestedManyWithoutActivityInput
+  }
+
+  export type SportActivityUncheckedCreateWithoutGroupActivitiesInput = {
+    id?: number
+    userId: number
+    sportId: number
+    starttime: string
+    endtime: string
+    description: string
+    date?: Date | string
+    latitude?: number | null
+    longitude?: number | null
+    publicity?: string
+    participants?: SportActivityParticipantUncheckedCreateNestedManyWithoutActivityInput
+    attendances?: ActivityAttendanceUncheckedCreateNestedManyWithoutActivityInput
+  }
+
+  export type SportActivityCreateOrConnectWithoutGroupActivitiesInput = {
+    where: SportActivityWhereUniqueInput
+    create: XOR<SportActivityCreateWithoutGroupActivitiesInput, SportActivityUncheckedCreateWithoutGroupActivitiesInput>
+  }
+
+  export type GroupUpsertWithoutActivitiesInput = {
+    update: XOR<GroupUpdateWithoutActivitiesInput, GroupUncheckedUpdateWithoutActivitiesInput>
+    create: XOR<GroupCreateWithoutActivitiesInput, GroupUncheckedCreateWithoutActivitiesInput>
+    where?: GroupWhereInput
+  }
+
+  export type GroupUpdateToOneWithWhereWithoutActivitiesInput = {
+    where?: GroupWhereInput
+    data: XOR<GroupUpdateWithoutActivitiesInput, GroupUncheckedUpdateWithoutActivitiesInput>
+  }
+
+  export type GroupUpdateWithoutActivitiesInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sport?: SportUpdateOneWithoutGroupsNestedInput
+    owner?: UserUpdateOneRequiredWithoutOwnedGroupsNestedInput
+    members?: GroupMemberUpdateManyWithoutGroupNestedInput
+    invitations?: GroupInvitationUpdateManyWithoutGroupNestedInput
+  }
+
+  export type GroupUncheckedUpdateWithoutActivitiesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerId?: IntFieldUpdateOperationsInput | number
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sportId?: NullableIntFieldUpdateOperationsInput | number | null
+    members?: GroupMemberUncheckedUpdateManyWithoutGroupNestedInput
+    invitations?: GroupInvitationUncheckedUpdateManyWithoutGroupNestedInput
+  }
+
+  export type SportActivityUpsertWithoutGroupActivitiesInput = {
+    update: XOR<SportActivityUpdateWithoutGroupActivitiesInput, SportActivityUncheckedUpdateWithoutGroupActivitiesInput>
+    create: XOR<SportActivityCreateWithoutGroupActivitiesInput, SportActivityUncheckedCreateWithoutGroupActivitiesInput>
+    where?: SportActivityWhereInput
+  }
+
+  export type SportActivityUpdateToOneWithWhereWithoutGroupActivitiesInput = {
+    where?: SportActivityWhereInput
+    data: XOR<SportActivityUpdateWithoutGroupActivitiesInput, SportActivityUncheckedUpdateWithoutGroupActivitiesInput>
+  }
+
+  export type SportActivityUpdateWithoutGroupActivitiesInput = {
+    starttime?: StringFieldUpdateOperationsInput | string
+    endtime?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    latitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    publicity?: StringFieldUpdateOperationsInput | string
+    user?: UserUpdateOneRequiredWithoutActivitiesNestedInput
+    sport?: SportUpdateOneRequiredWithoutActivitiesNestedInput
+    participants?: SportActivityParticipantUpdateManyWithoutActivityNestedInput
+    attendances?: ActivityAttendanceUpdateManyWithoutActivityNestedInput
+  }
+
+  export type SportActivityUncheckedUpdateWithoutGroupActivitiesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    sportId?: IntFieldUpdateOperationsInput | number
+    starttime?: StringFieldUpdateOperationsInput | string
+    endtime?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    latitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    publicity?: StringFieldUpdateOperationsInput | string
+    participants?: SportActivityParticipantUncheckedUpdateManyWithoutActivityNestedInput
+    attendances?: ActivityAttendanceUncheckedUpdateManyWithoutActivityNestedInput
+  }
+
+  export type GroupCreateWithoutInvitationsInput = {
+    name: string
+    description?: string | null
+    isPublic?: boolean
+    createdAt?: Date | string
+    sport?: SportCreateNestedOneWithoutGroupsInput
+    owner: UserCreateNestedOneWithoutOwnedGroupsInput
+    members?: GroupMemberCreateNestedManyWithoutGroupInput
+    activities?: GroupActivityCreateNestedManyWithoutGroupInput
+  }
+
+  export type GroupUncheckedCreateWithoutInvitationsInput = {
+    id?: number
+    name: string
+    description?: string | null
+    ownerId: number
+    isPublic?: boolean
+    createdAt?: Date | string
+    sportId?: number | null
+    members?: GroupMemberUncheckedCreateNestedManyWithoutGroupInput
+    activities?: GroupActivityUncheckedCreateNestedManyWithoutGroupInput
+  }
+
+  export type GroupCreateOrConnectWithoutInvitationsInput = {
+    where: GroupWhereUniqueInput
+    create: XOR<GroupCreateWithoutInvitationsInput, GroupUncheckedCreateWithoutInvitationsInput>
+  }
+
+  export type UserCreateWithoutGroupInvitationsInput = {
+    email: string
+    username: string
+    password?: string
+    bio?: string
+    image?: string
+    followersCount?: number
+    followingCount?: number
+    userLikes?: UserLikeCreateNestedManyWithoutUserInput
+    followers?: UserFollowCreateNestedManyWithoutFollowingInput
+    following?: UserFollowCreateNestedManyWithoutFollowerInput
+    sports?: UserSportCreateNestedManyWithoutUserInput
+    activities?: SportActivityCreateNestedManyWithoutUserInput
+    activityParticipations?: SportActivityParticipantCreateNestedManyWithoutUserInput
+    ownedGroups?: GroupCreateNestedManyWithoutOwnerInput
+    groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
+    activityAttendances?: ActivityAttendanceCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutGroupInvitationsInput = {
+    id?: number
+    email: string
+    username: string
+    password?: string
+    bio?: string
+    image?: string
+    followersCount?: number
+    followingCount?: number
+    userLikes?: UserLikeUncheckedCreateNestedManyWithoutUserInput
+    followers?: UserFollowUncheckedCreateNestedManyWithoutFollowingInput
+    following?: UserFollowUncheckedCreateNestedManyWithoutFollowerInput
+    sports?: UserSportUncheckedCreateNestedManyWithoutUserInput
+    activities?: SportActivityUncheckedCreateNestedManyWithoutUserInput
+    activityParticipations?: SportActivityParticipantUncheckedCreateNestedManyWithoutUserInput
+    ownedGroups?: GroupUncheckedCreateNestedManyWithoutOwnerInput
+    groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
+    activityAttendances?: ActivityAttendanceUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutGroupInvitationsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutGroupInvitationsInput, UserUncheckedCreateWithoutGroupInvitationsInput>
+  }
+
+  export type GroupUpsertWithoutInvitationsInput = {
+    update: XOR<GroupUpdateWithoutInvitationsInput, GroupUncheckedUpdateWithoutInvitationsInput>
+    create: XOR<GroupCreateWithoutInvitationsInput, GroupUncheckedCreateWithoutInvitationsInput>
+    where?: GroupWhereInput
+  }
+
+  export type GroupUpdateToOneWithWhereWithoutInvitationsInput = {
+    where?: GroupWhereInput
+    data: XOR<GroupUpdateWithoutInvitationsInput, GroupUncheckedUpdateWithoutInvitationsInput>
+  }
+
+  export type GroupUpdateWithoutInvitationsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sport?: SportUpdateOneWithoutGroupsNestedInput
+    owner?: UserUpdateOneRequiredWithoutOwnedGroupsNestedInput
+    members?: GroupMemberUpdateManyWithoutGroupNestedInput
+    activities?: GroupActivityUpdateManyWithoutGroupNestedInput
+  }
+
+  export type GroupUncheckedUpdateWithoutInvitationsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerId?: IntFieldUpdateOperationsInput | number
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sportId?: NullableIntFieldUpdateOperationsInput | number | null
+    members?: GroupMemberUncheckedUpdateManyWithoutGroupNestedInput
+    activities?: GroupActivityUncheckedUpdateManyWithoutGroupNestedInput
+  }
+
+  export type UserUpsertWithoutGroupInvitationsInput = {
+    update: XOR<UserUpdateWithoutGroupInvitationsInput, UserUncheckedUpdateWithoutGroupInvitationsInput>
+    create: XOR<UserCreateWithoutGroupInvitationsInput, UserUncheckedCreateWithoutGroupInvitationsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutGroupInvitationsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutGroupInvitationsInput, UserUncheckedUpdateWithoutGroupInvitationsInput>
+  }
+
+  export type UserUpdateWithoutGroupInvitationsInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
+    followersCount?: IntFieldUpdateOperationsInput | number
+    followingCount?: IntFieldUpdateOperationsInput | number
+    userLikes?: UserLikeUpdateManyWithoutUserNestedInput
+    followers?: UserFollowUpdateManyWithoutFollowingNestedInput
+    following?: UserFollowUpdateManyWithoutFollowerNestedInput
+    sports?: UserSportUpdateManyWithoutUserNestedInput
+    activities?: SportActivityUpdateManyWithoutUserNestedInput
+    activityParticipations?: SportActivityParticipantUpdateManyWithoutUserNestedInput
+    ownedGroups?: GroupUpdateManyWithoutOwnerNestedInput
+    groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
+    activityAttendances?: ActivityAttendanceUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutGroupInvitationsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
+    followersCount?: IntFieldUpdateOperationsInput | number
+    followingCount?: IntFieldUpdateOperationsInput | number
+    userLikes?: UserLikeUncheckedUpdateManyWithoutUserNestedInput
+    followers?: UserFollowUncheckedUpdateManyWithoutFollowingNestedInput
+    following?: UserFollowUncheckedUpdateManyWithoutFollowerNestedInput
+    sports?: UserSportUncheckedUpdateManyWithoutUserNestedInput
+    activities?: SportActivityUncheckedUpdateManyWithoutUserNestedInput
+    activityParticipations?: SportActivityParticipantUncheckedUpdateManyWithoutUserNestedInput
+    ownedGroups?: GroupUncheckedUpdateManyWithoutOwnerNestedInput
+    groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
+    activityAttendances?: ActivityAttendanceUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type SportActivityCreateWithoutAttendancesInput = {
+    starttime: string
+    endtime: string
+    description: string
+    date?: Date | string
+    latitude?: number | null
+    longitude?: number | null
+    publicity?: string
+    user: UserCreateNestedOneWithoutActivitiesInput
+    sport: SportCreateNestedOneWithoutActivitiesInput
+    participants?: SportActivityParticipantCreateNestedManyWithoutActivityInput
+    groupActivities?: GroupActivityCreateNestedManyWithoutActivityInput
+  }
+
+  export type SportActivityUncheckedCreateWithoutAttendancesInput = {
+    id?: number
+    userId: number
+    sportId: number
+    starttime: string
+    endtime: string
+    description: string
+    date?: Date | string
+    latitude?: number | null
+    longitude?: number | null
+    publicity?: string
+    participants?: SportActivityParticipantUncheckedCreateNestedManyWithoutActivityInput
+    groupActivities?: GroupActivityUncheckedCreateNestedManyWithoutActivityInput
+  }
+
+  export type SportActivityCreateOrConnectWithoutAttendancesInput = {
+    where: SportActivityWhereUniqueInput
+    create: XOR<SportActivityCreateWithoutAttendancesInput, SportActivityUncheckedCreateWithoutAttendancesInput>
+  }
+
+  export type UserCreateWithoutActivityAttendancesInput = {
+    email: string
+    username: string
+    password?: string
+    bio?: string
+    image?: string
+    followersCount?: number
+    followingCount?: number
+    userLikes?: UserLikeCreateNestedManyWithoutUserInput
+    followers?: UserFollowCreateNestedManyWithoutFollowingInput
+    following?: UserFollowCreateNestedManyWithoutFollowerInput
+    sports?: UserSportCreateNestedManyWithoutUserInput
+    activities?: SportActivityCreateNestedManyWithoutUserInput
+    activityParticipations?: SportActivityParticipantCreateNestedManyWithoutUserInput
+    ownedGroups?: GroupCreateNestedManyWithoutOwnerInput
+    groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
+    groupInvitations?: GroupInvitationCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutActivityAttendancesInput = {
+    id?: number
+    email: string
+    username: string
+    password?: string
+    bio?: string
+    image?: string
+    followersCount?: number
+    followingCount?: number
+    userLikes?: UserLikeUncheckedCreateNestedManyWithoutUserInput
+    followers?: UserFollowUncheckedCreateNestedManyWithoutFollowingInput
+    following?: UserFollowUncheckedCreateNestedManyWithoutFollowerInput
+    sports?: UserSportUncheckedCreateNestedManyWithoutUserInput
+    activities?: SportActivityUncheckedCreateNestedManyWithoutUserInput
+    activityParticipations?: SportActivityParticipantUncheckedCreateNestedManyWithoutUserInput
+    ownedGroups?: GroupUncheckedCreateNestedManyWithoutOwnerInput
+    groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
+    groupInvitations?: GroupInvitationUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutActivityAttendancesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutActivityAttendancesInput, UserUncheckedCreateWithoutActivityAttendancesInput>
+  }
+
+  export type SportActivityUpsertWithoutAttendancesInput = {
+    update: XOR<SportActivityUpdateWithoutAttendancesInput, SportActivityUncheckedUpdateWithoutAttendancesInput>
+    create: XOR<SportActivityCreateWithoutAttendancesInput, SportActivityUncheckedCreateWithoutAttendancesInput>
+    where?: SportActivityWhereInput
+  }
+
+  export type SportActivityUpdateToOneWithWhereWithoutAttendancesInput = {
+    where?: SportActivityWhereInput
+    data: XOR<SportActivityUpdateWithoutAttendancesInput, SportActivityUncheckedUpdateWithoutAttendancesInput>
+  }
+
+  export type SportActivityUpdateWithoutAttendancesInput = {
+    starttime?: StringFieldUpdateOperationsInput | string
+    endtime?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    latitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    publicity?: StringFieldUpdateOperationsInput | string
+    user?: UserUpdateOneRequiredWithoutActivitiesNestedInput
+    sport?: SportUpdateOneRequiredWithoutActivitiesNestedInput
+    participants?: SportActivityParticipantUpdateManyWithoutActivityNestedInput
+    groupActivities?: GroupActivityUpdateManyWithoutActivityNestedInput
+  }
+
+  export type SportActivityUncheckedUpdateWithoutAttendancesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    sportId?: IntFieldUpdateOperationsInput | number
+    starttime?: StringFieldUpdateOperationsInput | string
+    endtime?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    latitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    publicity?: StringFieldUpdateOperationsInput | string
+    participants?: SportActivityParticipantUncheckedUpdateManyWithoutActivityNestedInput
+    groupActivities?: GroupActivityUncheckedUpdateManyWithoutActivityNestedInput
+  }
+
+  export type UserUpsertWithoutActivityAttendancesInput = {
+    update: XOR<UserUpdateWithoutActivityAttendancesInput, UserUncheckedUpdateWithoutActivityAttendancesInput>
+    create: XOR<UserCreateWithoutActivityAttendancesInput, UserUncheckedCreateWithoutActivityAttendancesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutActivityAttendancesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutActivityAttendancesInput, UserUncheckedUpdateWithoutActivityAttendancesInput>
+  }
+
+  export type UserUpdateWithoutActivityAttendancesInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
+    followersCount?: IntFieldUpdateOperationsInput | number
+    followingCount?: IntFieldUpdateOperationsInput | number
+    userLikes?: UserLikeUpdateManyWithoutUserNestedInput
+    followers?: UserFollowUpdateManyWithoutFollowingNestedInput
+    following?: UserFollowUpdateManyWithoutFollowerNestedInput
+    sports?: UserSportUpdateManyWithoutUserNestedInput
+    activities?: SportActivityUpdateManyWithoutUserNestedInput
+    activityParticipations?: SportActivityParticipantUpdateManyWithoutUserNestedInput
+    ownedGroups?: GroupUpdateManyWithoutOwnerNestedInput
+    groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
+    groupInvitations?: GroupInvitationUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutActivityAttendancesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
+    followersCount?: IntFieldUpdateOperationsInput | number
+    followingCount?: IntFieldUpdateOperationsInput | number
+    userLikes?: UserLikeUncheckedUpdateManyWithoutUserNestedInput
+    followers?: UserFollowUncheckedUpdateManyWithoutFollowingNestedInput
+    following?: UserFollowUncheckedUpdateManyWithoutFollowerNestedInput
+    sports?: UserSportUncheckedUpdateManyWithoutUserNestedInput
+    activities?: SportActivityUncheckedUpdateManyWithoutUserNestedInput
+    activityParticipations?: SportActivityParticipantUncheckedUpdateManyWithoutUserNestedInput
+    ownedGroups?: GroupUncheckedUpdateManyWithoutOwnerNestedInput
+    groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
+    groupInvitations?: GroupInvitationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserLikeCreateManyUserInput = {
@@ -21888,6 +31203,37 @@ export namespace Prisma {
     id?: number
     activityId: number
     role: string
+  }
+
+  export type GroupCreateManyOwnerInput = {
+    id?: number
+    name: string
+    description?: string | null
+    isPublic?: boolean
+    createdAt?: Date | string
+    sportId?: number | null
+  }
+
+  export type GroupMemberCreateManyUserInput = {
+    id?: number
+    groupId: number
+    joinedAt?: Date | string
+  }
+
+  export type GroupInvitationCreateManyUserInput = {
+    id?: number
+    groupId: number
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ActivityAttendanceCreateManyUserInput = {
+    id?: number
+    activityId: number
+    attending?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type UserLikeUpdateWithoutUserInput = {
@@ -21974,6 +31320,8 @@ export namespace Prisma {
     publicity?: StringFieldUpdateOperationsInput | string
     sport?: SportUpdateOneRequiredWithoutActivitiesNestedInput
     participants?: SportActivityParticipantUpdateManyWithoutActivityNestedInput
+    groupActivities?: GroupActivityUpdateManyWithoutActivityNestedInput
+    attendances?: ActivityAttendanceUpdateManyWithoutActivityNestedInput
   }
 
   export type SportActivityUncheckedUpdateWithoutUserInput = {
@@ -21987,6 +31335,8 @@ export namespace Prisma {
     longitude?: NullableFloatFieldUpdateOperationsInput | number | null
     publicity?: StringFieldUpdateOperationsInput | string
     participants?: SportActivityParticipantUncheckedUpdateManyWithoutActivityNestedInput
+    groupActivities?: GroupActivityUncheckedUpdateManyWithoutActivityNestedInput
+    attendances?: ActivityAttendanceUncheckedUpdateManyWithoutActivityNestedInput
   }
 
   export type SportActivityUncheckedUpdateManyWithoutUserInput = {
@@ -22016,6 +31366,101 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     activityId?: IntFieldUpdateOperationsInput | number
     role?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type GroupUpdateWithoutOwnerInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sport?: SportUpdateOneWithoutGroupsNestedInput
+    members?: GroupMemberUpdateManyWithoutGroupNestedInput
+    activities?: GroupActivityUpdateManyWithoutGroupNestedInput
+    invitations?: GroupInvitationUpdateManyWithoutGroupNestedInput
+  }
+
+  export type GroupUncheckedUpdateWithoutOwnerInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sportId?: NullableIntFieldUpdateOperationsInput | number | null
+    members?: GroupMemberUncheckedUpdateManyWithoutGroupNestedInput
+    activities?: GroupActivityUncheckedUpdateManyWithoutGroupNestedInput
+    invitations?: GroupInvitationUncheckedUpdateManyWithoutGroupNestedInput
+  }
+
+  export type GroupUncheckedUpdateManyWithoutOwnerInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sportId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type GroupMemberUpdateWithoutUserInput = {
+    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    group?: GroupUpdateOneRequiredWithoutMembersNestedInput
+  }
+
+  export type GroupMemberUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    groupId?: IntFieldUpdateOperationsInput | number
+    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GroupMemberUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    groupId?: IntFieldUpdateOperationsInput | number
+    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GroupInvitationUpdateWithoutUserInput = {
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    group?: GroupUpdateOneRequiredWithoutInvitationsNestedInput
+  }
+
+  export type GroupInvitationUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    groupId?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GroupInvitationUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    groupId?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ActivityAttendanceUpdateWithoutUserInput = {
+    attending?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    activity?: SportActivityUpdateOneRequiredWithoutAttendancesNestedInput
+  }
+
+  export type ActivityAttendanceUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    activityId?: IntFieldUpdateOperationsInput | number
+    attending?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ActivityAttendanceUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    activityId?: IntFieldUpdateOperationsInput | number
+    attending?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PostHashtagCreateManyPostInput = {
@@ -22125,6 +31570,15 @@ export namespace Prisma {
     publicity?: string
   }
 
+  export type GroupCreateManySportInput = {
+    id?: number
+    name: string
+    description?: string | null
+    ownerId: number
+    isPublic?: boolean
+    createdAt?: Date | string
+  }
+
   export type UserSportUpdateWithoutSportInput = {
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     color?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22158,6 +31612,8 @@ export namespace Prisma {
     publicity?: StringFieldUpdateOperationsInput | string
     user?: UserUpdateOneRequiredWithoutActivitiesNestedInput
     participants?: SportActivityParticipantUpdateManyWithoutActivityNestedInput
+    groupActivities?: GroupActivityUpdateManyWithoutActivityNestedInput
+    attendances?: ActivityAttendanceUpdateManyWithoutActivityNestedInput
   }
 
   export type SportActivityUncheckedUpdateWithoutSportInput = {
@@ -22171,6 +31627,8 @@ export namespace Prisma {
     longitude?: NullableFloatFieldUpdateOperationsInput | number | null
     publicity?: StringFieldUpdateOperationsInput | string
     participants?: SportActivityParticipantUncheckedUpdateManyWithoutActivityNestedInput
+    groupActivities?: GroupActivityUncheckedUpdateManyWithoutActivityNestedInput
+    attendances?: ActivityAttendanceUncheckedUpdateManyWithoutActivityNestedInput
   }
 
   export type SportActivityUncheckedUpdateManyWithoutSportInput = {
@@ -22183,6 +31641,38 @@ export namespace Prisma {
     latitude?: NullableFloatFieldUpdateOperationsInput | number | null
     longitude?: NullableFloatFieldUpdateOperationsInput | number | null
     publicity?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type GroupUpdateWithoutSportInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    owner?: UserUpdateOneRequiredWithoutOwnedGroupsNestedInput
+    members?: GroupMemberUpdateManyWithoutGroupNestedInput
+    activities?: GroupActivityUpdateManyWithoutGroupNestedInput
+    invitations?: GroupInvitationUpdateManyWithoutGroupNestedInput
+  }
+
+  export type GroupUncheckedUpdateWithoutSportInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerId?: IntFieldUpdateOperationsInput | number
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    members?: GroupMemberUncheckedUpdateManyWithoutGroupNestedInput
+    activities?: GroupActivityUncheckedUpdateManyWithoutGroupNestedInput
+    invitations?: GroupInvitationUncheckedUpdateManyWithoutGroupNestedInput
+  }
+
+  export type GroupUncheckedUpdateManyWithoutSportInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerId?: IntFieldUpdateOperationsInput | number
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserSportCreateManySportrankInput = {
@@ -22222,6 +31712,19 @@ export namespace Prisma {
     role: string
   }
 
+  export type GroupActivityCreateManyActivityInput = {
+    id?: number
+    groupId: number
+  }
+
+  export type ActivityAttendanceCreateManyActivityInput = {
+    id?: number
+    userId: number
+    attending?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type SportActivityParticipantUpdateWithoutActivityInput = {
     role?: StringFieldUpdateOperationsInput | string
     user?: UserUpdateOneRequiredWithoutActivityParticipationsNestedInput
@@ -22237,6 +31740,116 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
     role?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type GroupActivityUpdateWithoutActivityInput = {
+    group?: GroupUpdateOneRequiredWithoutActivitiesNestedInput
+  }
+
+  export type GroupActivityUncheckedUpdateWithoutActivityInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    groupId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type GroupActivityUncheckedUpdateManyWithoutActivityInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    groupId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ActivityAttendanceUpdateWithoutActivityInput = {
+    attending?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutActivityAttendancesNestedInput
+  }
+
+  export type ActivityAttendanceUncheckedUpdateWithoutActivityInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    attending?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ActivityAttendanceUncheckedUpdateManyWithoutActivityInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    attending?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GroupMemberCreateManyGroupInput = {
+    id?: number
+    userId: number
+    joinedAt?: Date | string
+  }
+
+  export type GroupActivityCreateManyGroupInput = {
+    id?: number
+    activityId: number
+  }
+
+  export type GroupInvitationCreateManyGroupInput = {
+    id?: number
+    userId: number
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GroupMemberUpdateWithoutGroupInput = {
+    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutGroupMembershipsNestedInput
+  }
+
+  export type GroupMemberUncheckedUpdateWithoutGroupInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GroupMemberUncheckedUpdateManyWithoutGroupInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GroupActivityUpdateWithoutGroupInput = {
+    activity?: SportActivityUpdateOneRequiredWithoutGroupActivitiesNestedInput
+  }
+
+  export type GroupActivityUncheckedUpdateWithoutGroupInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    activityId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type GroupActivityUncheckedUpdateManyWithoutGroupInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    activityId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type GroupInvitationUpdateWithoutGroupInput = {
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutGroupInvitationsNestedInput
+  }
+
+  export type GroupInvitationUncheckedUpdateWithoutGroupInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GroupInvitationUncheckedUpdateManyWithoutGroupInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

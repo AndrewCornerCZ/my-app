@@ -41,6 +41,12 @@ export default async function Profile({ params }: {params: Promise<{ username: s
         activities: {
           include: {
             sport: true, // This attaches the related Sport object to each activity
+            user: { //přidáme i uživatele, aby šlo zobrazit username u aktivity v kalendáři
+              select: {
+                id: true,
+                username: true
+              }
+            }
         }
       },
         sports: { //taktéž sporty navázané na jeho profil
@@ -49,6 +55,7 @@ export default async function Profile({ params }: {params: Promise<{ username: s
           sportrank: true
         },
       },
+
       }
 
     }),
@@ -162,6 +169,7 @@ export default async function Profile({ params }: {params: Promise<{ username: s
         <ActivityCalendar 
           initialActivities={serializedActivities}
           userSports={user.sports} 
+          userId={user.id}
         />
       </div>
   {/*Komponenty pro přidání a úpravu sportů na profilu */}

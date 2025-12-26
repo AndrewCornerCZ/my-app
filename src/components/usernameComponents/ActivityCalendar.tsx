@@ -6,6 +6,7 @@ import 'leaflet/dist/leaflet.css'
 import { useSession } from 'next-auth/react'
 import ActivityParticipantsModal from './ActivityParticipantsModal'
 import type { Icon, IconOptions } from 'leaflet'
+import { useMemo } from 'react'
 
 
 const MapContainer = dynamic(
@@ -41,14 +42,25 @@ interface ActivityWithSport {
   latitude: number | null
   longitude: number | null
   publicity: string
+  user: {
+    id: number
+    username: string
+  }
   sport: {
     name: string
   }
+  participants?: {
+    id: number
+    activityId: number
+    userId: number
+    role: string
+  }[]
 }
 
 interface ActivityCalendarProps {
   initialActivities: ActivityWithSport[]
   userSports: UserSport[]
+  userId: number
 }
 
 interface CalendarDay {
@@ -60,8 +72,10 @@ interface CalendarDay {
 export default function ActivityCalendar({
   initialActivities,
   userSports,
+  userId
 }: ActivityCalendarProps) {
   const [activities] = useState(initialActivities)
+  const [participantingActivities, setParticipatingActivities] = useState<ActivityWithSport[]>([])
   const [currentDate, setCurrentDate] = useState(new Date())
   const [days, setDays] = useState<CalendarDay[]>([])
   const [selectedActivities, setSelectedActivities] =
@@ -76,6 +90,26 @@ export default function ActivityCalendar({
   const [participantsModalOpen, setParticipantsModalOpen] = useState(false)
   const { data: session } = useSession()
 
+   const mergedActivities = useMemo<ActivityWithSport[]>(() => {
+    
+    const map = new Map<number, ActivityWithSport>()
+    console.log('participantingActivities', participantingActivities);
+    activities.forEach(act => {
+      map.set(act.id, act)
+    })
+
+    participantingActivities.forEach(act => {
+      if (!map.has(act.id)) {
+        map.set(act.id, act)
+      }
+    })
+
+    return Array.from(map.values())
+  }, [activities, participantingActivities])
+
+useEffect(() => {
+  findParticipatingActivities()
+}, [])
   useEffect(() => {
     import('leaflet').then(L => {
       const icon = new L.Icon({
@@ -86,7 +120,42 @@ export default function ActivityCalendar({
       setMarkerIcon(icon)
     })
   }, [])
+  const findParticipatingActivities = async () => {
+    try {
+      const res = await fetch(`/api/activities/${userId}/findattending`)
+      if (!res.ok) throw new Error("Failed to load participants")
+      const json = await res.json()
+      console.log(json);
+      setParticipatingActivities(json)
+    } catch (e) {
+      console.error(e)
+    }
+  } 
+  
+  // Přepočet duration v minutách mezi start a end
+function getActivityDurationMinutes(act: ActivityWithSport) {
+  const [sh, sm] = act.starttime.split(':').map(Number)
+  const [eh, em] = act.endtime.split(':').map(Number)
+  return (eh * 60 + em) - (sh * 60 + sm)
+}
 
+// Seřazení aktivit podle měsíce YYYY-MM
+function getMonthlyStats(activities: ActivityWithSport[]) {
+  const map: Record<string, number> = {}
+  mergedActivities.forEach(act => {
+    const month = new Date(act.date).toISOString().slice(0, 7) // "YYYY-MM"
+    map[month] = (map[month] || 0) + getActivityDurationMinutes(act)
+  })
+  return Object.entries(map).map(([month, totalMinutes]) => ({ month, totalMinutes }))
+}
+
+// Výběr badge podle počtu minut
+function getBadge(totalMinutes: number) {
+  if (totalMinutes >= 30 * 60) return 'gold'   // 30+ hodin
+  if (totalMinutes >= 20 * 60) return 'silver' // 20+ hodin
+  if (totalMinutes >= 10 * 60 ) return 'bronze'// 10+ hodin
+  return 'none'
+}
   useEffect(() => {
     const generateCalendarGrid = () => {
       const year = currentDate.getFullYear()
@@ -100,7 +169,7 @@ export default function ActivityCalendar({
         const date = new Date(startDate)
         date.setDate(startDate.getDate() + i)
 
-        const activitiesForDay = activities.filter(act => {
+        const activitiesForDay = mergedActivities.filter(act => {
           const actDate = new Date(act.date)
           return (
             actDate.getFullYear() === date.getFullYear() &&
@@ -122,7 +191,7 @@ export default function ActivityCalendar({
     }
 
     generateCalendarGrid()
-  }, [currentDate, activities, userSports])
+  }, [currentDate, mergedActivities, userSports])
 
   const handlePrevMonth = () => {
     setCurrentDate(
@@ -137,7 +206,8 @@ export default function ActivityCalendar({
   }
 
   const handleDayClick = (date: Date) => {
-    const activitiesForDay = activities.filter(
+
+    const activitiesForDay = mergedActivities.filter(
       act => new Date(act.date).toDateString() === date.toDateString()
     )
     setSelectedActivities(activitiesForDay.length ? activitiesForDay : null)
@@ -291,7 +361,44 @@ export default function ActivityCalendar({
               </div>
             </div>
           ))}
+          </div>
+          <div className="mt-6 bg-zinc-800 p-4 rounded-lg shadow">
+            <h3 className="text-white font-semibold mb-2">Monthly Progress & Badges</h3>
+            {getMonthlyStats(activities).map(stat => {
+  const badge = getBadge(stat.totalMinutes)
+  
+  // extrahuj měsíc z "YYYY-MM" formátu
+  const statMonthNumber = Number(stat.month.split('-')[1]) // "2025-11" -> 11
+  const currentMonthNumber = currentDate.getMonth() + 1 // getMonth() vrací 0-11, takže +1
+  
+  if (statMonthNumber === currentMonthNumber) {
+    return (
+      <div key={stat.month} className="flex items-center gap-2 mb-2">
+        <span className="w-20 text-gray-300">{stat.month}</span>
+        <div className="w-full bg-zinc-700 h-4 rounded overflow-hidden">
+          <div
+            className={`h-4 ${
+              badge === 'gold'
+                ? 'bg-yellow-400'
+                : badge === 'silver'
+                  ? 'bg-gray-400'
+                  : 'bg-amber-700'
+            }`}
+            style={{
+              width: `${Math.min(stat.totalMinutes / 600 * 100, 100)}%`,
+            }}
+          />
         </div>
+        <p className="text-xs text-white text-center">
+          {Math.floor(stat.totalMinutes / 60)}h {stat.totalMinutes % 60}m
+        </p>
+        <span className="text-xs text-white ml-2 capitalize">{badge}</span>
+      </div>
+    )
+  }
+})}
+          </div>
+        
 
         {selectedActivities && (
           <div
@@ -315,6 +422,9 @@ export default function ActivityCalendar({
                   <div key={act.id} className="bg-zinc-900 p-3 rounded">
                     <div className="flex justify-between items-start">
                       <div>
+                        <p className="text-sm text-white font-semibold mb-1">
+                          @{act.user.username}
+                        </p>
                         <p className="text-sm text-gray-300 font-semibold">
                           {act.sport.name}
                         </p>
@@ -407,7 +517,6 @@ export default function ActivityCalendar({
           </div>
         )}
       </div>
-      {console.log(selectedActivity)}
         {selectedActivity && selectedActivity?.publicity !== 'private' && (
         <ActivityParticipantsModal
           activityId={selectedActivity.id}

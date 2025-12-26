@@ -31,6 +31,10 @@ model User {
   activityParticipations SportActivityParticipant[]
   followersCount Int          @default(0)
   followingCount Int          @default(0)
+  ownedGroups   Group[]             @relation("GroupOwner")
+  groupMemberships GroupMember[]    @relation("GroupMemberships")
+  groupInvitations   GroupInvitation[]   @relation("GroupInvitations")
+  activityAttendances  ActivityAttendance[]
 }
 
 model Post {
@@ -121,6 +125,7 @@ model Sport {
   name      String      @unique
   users     UserSport[] // sport může mít víc uživatelů
   activities SportActivity[]
+  groups    Group[]      // <-- add this line
 }
 
 model SportRanks {
@@ -140,14 +145,16 @@ model SportActivity {
   date      DateTime @default(now())
   latitude  Float?
   longitude Float?
-  publicity String  @default("private") // 'public', 'friends-only', 'private'
+  publicity String  @default("private")
   user      User     @relation(fields: [userId], references: [id])
   sport     Sport    @relation(fields: [sportId], references: [id])
 
-  // Přidáno: opačná relation na SportActivityPrivacy
+  // Přidáno: opačná relation na SportActivityParticipant
   participants SportActivityParticipant[]
+  // Přidáno: opačná relation na GroupActivity
+  groupActivities GroupActivity[]
+  attendances  ActivityAttendance[]
 }
-
 
 model SportActivityParticipant {
   id          Int      @id @default(autoincrement())
@@ -156,4 +163,71 @@ model SportActivityParticipant {
   role        String   // e.g., "participant", "organizer"
   activity    SportActivity @relation(fields: [activityId], references: [id])
   user        User         @relation(fields: [userId], references: [id])
+}
+
+model Group {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String?
+  ownerId     Int
+  isPublic    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  sportId     Int?      
+  sport       Sport?    @relation(fields: [sportId], references: [id])
+
+  owner       User      @relation("GroupOwner", fields: [ownerId], references: [id])
+  members     GroupMember[]
+  activities  GroupActivity[]
+  invitations GroupInvitation[]
+}
+
+model GroupMember {
+  id        Int   @id @default(autoincrement())
+  groupId   Int
+  userId    Int
+  joinedAt  DateTime @default(now())
+
+  group     Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  user      User  @relation("GroupMemberships", fields: [userId], references: [id])
+
+  @@unique([groupId, userId])
+}
+
+model GroupActivity {
+  id          Int   @id @default(autoincrement())
+  groupId     Int
+  activityId  Int
+
+  group       Group           @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  activity    SportActivity   @relation(fields: [activityId], references: [id], onDelete: Cascade)
+
+  @@unique([groupId, activityId])
+}
+
+model GroupInvitation {
+  id        Int       @id @default(autoincrement())
+  groupId   Int
+  userId    Int
+  status    String    @default("pending") // pending, accepted, rejected
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  group     Group     @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  user      User      @relation("GroupInvitations", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([groupId, userId])
+}
+
+model ActivityAttendance {
+  id          Int   @id @default(autoincrement())
+  activityId  Int
+  userId      Int
+  attending   Boolean @default(true)  // <-- add this field
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  activity    SportActivity @relation(fields: [activityId], references: [id], onDelete: Cascade)
+  user        User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([activityId, userId])
 }
