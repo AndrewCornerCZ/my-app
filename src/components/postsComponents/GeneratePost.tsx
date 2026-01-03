@@ -16,7 +16,7 @@ interface GeneratePostProps {
 
 const post = await prisma.post.findUnique({
 where : {
-    id: searchpostId
+    id: Number(searchpostId)
     },
     include: {
       postHashtags: {

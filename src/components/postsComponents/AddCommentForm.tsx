@@ -43,7 +43,7 @@ export default function AddCommentForm  (postId: AddCommentFormProps){
                     value={text}
                     onChange={(e) => setText(e.target.value)}
                     placeholder="Write your comment..."
-                    className="border border-gray-300 rounded-md p-2"
+                    className="border text-black border-gray-300 rounded-md p-2"
                     required
                 />
                 {error && <p className="text-red-500">{error}</p>}
@@ -52,5 +52,6 @@ export default function AddCommentForm  (postId: AddCommentFormProps){
                 </button>
             </form>
         </div>
+        
     );
 };

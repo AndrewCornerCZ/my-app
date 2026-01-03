@@ -1,5 +1,4 @@
 
-import React from 'react';
 import { prisma } from '@/lib/db';
 
 interface ShowCommentsProps {
@@ -11,7 +10,7 @@ const ShowComments = async ({postId}: ShowCommentsProps) => {
         where: {
             PostComment: {
                 some: {
-                    postId: postId
+                    postId: Number(postId)
                 }
             }
         },

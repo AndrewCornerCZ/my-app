@@ -66,7 +66,7 @@ export default async function Friends() {
         <ul className="w-full max-w-md space-y-4">
           {mutualFollows.map((user) => (
             <li key={user.id} className="bg-zinc-800 p-4 rounded-lg hover:bg-zinc-700 transition-colors">
-              <a href={`/userprofile/${user.username}`} className="flex items-center justify-between">
+              <a href={`/chat/${user.id}`} className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center">
                     <span className="text-white font-bold">

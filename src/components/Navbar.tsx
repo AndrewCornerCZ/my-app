@@ -31,6 +31,7 @@ export default function Navbar() {
     const Links = [
         { href: `/userprofile/${session?.user?.name || ""}`, text: "Profile" },
         { href: "/", text: "Home" },
+        { href: "/AddPost", text: "Add Post" },
         { href: "/search", text: "Search" },
         { href: "/friends", text: "Friends" },
         { href: "/Map", text: "Map" },

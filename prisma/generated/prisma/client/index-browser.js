@@ -254,6 +254,26 @@ exports.Prisma.ActivityAttendanceScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.ChatScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.ChatParticipantScalarFieldEnum = {
+  id: 'id',
+  chatId: 'chatId',
+  userId: 'userId'
+};
+
+exports.Prisma.MessageScalarFieldEnum = {
+  id: 'id',
+  chatId: 'chatId',
+  senderId: 'senderId',
+  receiverId: 'receiverId',
+  content: 'content',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -288,7 +308,10 @@ exports.Prisma.ModelName = {
   GroupMember: 'GroupMember',
   GroupActivity: 'GroupActivity',
   GroupInvitation: 'GroupInvitation',
-  ActivityAttendance: 'ActivityAttendance'
+  ActivityAttendance: 'ActivityAttendance',
+  Chat: 'Chat',
+  ChatParticipant: 'ChatParticipant',
+  Message: 'Message'
 };
 
 /**

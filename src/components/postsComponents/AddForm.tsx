@@ -43,13 +43,13 @@ export default function AddForm  (){
             <form className="flex flex-col items-left justify-center font-[18px] m-[20px]" onSubmit={handleSubmit}>
                 <label className="text-indigo-500">Theme</label>
                 <input
-                    className="border border-indigo-500 rounded-lg p-2 m-2"
+                    className="border text-black border-indigo-500 rounded-lg p-2 m-2"
                     value={hashtag}
                     onChange={(e) => setHashtag(e.target.value)}
                 />
                 <label className="text-indigo-500">Content</label>
                 <textarea
-                    className="border border-indigo-500 rounded-lg p-2 m-2"
+                    className="border text-black border-indigo-500 rounded-lg p-2 m-2"
                     value={text}
                     onChange={(e) => setText(e.target.value)}
                 />

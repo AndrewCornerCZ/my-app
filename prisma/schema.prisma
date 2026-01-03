@@ -16,25 +16,27 @@ datasource db {
 }
 
 model User {
-  id             Int          @id @default(autoincrement())
-  email          String       @unique
-  username       String       @unique
-  password       String       @default("")
-  bio            String       @default("")
-  image          String       @default("")
-  userLikes      UserLike[] // Add this line
-  followers      UserFollow[] @relation("Following")
-  following      UserFollow[] @relation("Follower")
-  sports         UserSport[]
-  activities     SportActivity[]
+  id                     Int                        @id @default(autoincrement())
+  email                  String                     @unique
+  username               String                     @unique
+  password               String                     @default("")
+  bio                    String                     @default("")
+  image                  String                     @default("")
+  userLikes              UserLike[] // Add this line
+  followers              UserFollow[]               @relation("Following")
+  following              UserFollow[]               @relation("Follower")
+  sports                 UserSport[]
+  activities             SportActivity[]
   // Přidáno: opačná relation na SportActivityParticipant
   activityParticipations SportActivityParticipant[]
-  followersCount Int          @default(0)
-  followingCount Int          @default(0)
-  ownedGroups   Group[]             @relation("GroupOwner")
-  groupMemberships GroupMember[]    @relation("GroupMemberships")
-  groupInvitations   GroupInvitation[]   @relation("GroupInvitations")
-  activityAttendances  ActivityAttendance[]
+  followersCount         Int                        @default(0)
+  followingCount         Int                        @default(0)
+  ownedGroups            Group[]                    @relation("GroupOwner")
+  groupMemberships       GroupMember[]              @relation("GroupMemberships")
+  groupInvitations       GroupInvitation[]          @relation("GroupInvitations")
+  activityAttendances    ActivityAttendance[]
+  chatParticipants       ChatParticipant[]
+  sentMessages           Message[]                  @relation("SentMessages")
 }
 
 model Post {
@@ -107,127 +109,157 @@ model UserFollow {
 }
 
 model UserSport {
-  id      Int   @id @default(autoincrement())
-  userId  Int
-  sportId Int
+  id          Int        @id @default(autoincrement())
+  userId      Int
+  sportId     Int
   sportRankId Int
-  startedAt DateTime    @default(now())
-  color    String?       @default("blue")
-  user    User  @relation(fields: [userId], references: [id])
-  sport   Sport @relation(fields: [sportId], references: [id])
-  sportrank SportRanks @relation(fields: [sportRankId], references: [id])
+  startedAt   DateTime   @default(now())
+  color       String?    @default("blue")
+  user        User       @relation(fields: [userId], references: [id])
+  sport       Sport      @relation(fields: [sportId], references: [id])
+  sportrank   SportRanks @relation(fields: [sportRankId], references: [id])
 
   @@unique([userId, sportId])
 }
 
 model Sport {
-  id        Int         @id @default(autoincrement())
-  name      String      @unique
-  users     UserSport[] // sport může mít víc uživatelů
+  id         Int             @id @default(autoincrement())
+  name       String          @unique
+  users      UserSport[] // sport může mít víc uživatelů
   activities SportActivity[]
-  groups    Group[]      // <-- add this line
+  groups     Group[] // <-- add this line
 }
 
 model SportRanks {
-  id          Int     @id @default(autoincrement())
-  name        String  @unique
+  id          Int         @id @default(autoincrement())
+  name        String      @unique
   description String
-  users     UserSport[]
+  users       UserSport[]
 }
 
 model SportActivity {
-  id        Int      @id @default(autoincrement())
-  userId    Int
-  sportId   Int
-  starttime String
-  endtime   String
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  sportId     Int
+  starttime   String
+  endtime     String
   description String
-  date      DateTime @default(now())
-  latitude  Float?
-  longitude Float?
-  publicity String  @default("private")
-  user      User     @relation(fields: [userId], references: [id])
-  sport     Sport    @relation(fields: [sportId], references: [id])
+  date        DateTime @default(now())
+  latitude    Float?
+  longitude   Float?
+  publicity   String   @default("private")
+  user        User     @relation(fields: [userId], references: [id])
+  sport       Sport    @relation(fields: [sportId], references: [id])
 
   // Přidáno: opačná relation na SportActivityParticipant
-  participants SportActivityParticipant[]
+  participants    SportActivityParticipant[]
   // Přidáno: opačná relation na GroupActivity
   groupActivities GroupActivity[]
-  attendances  ActivityAttendance[]
+  attendances     ActivityAttendance[]
 }
 
 model SportActivityParticipant {
-  id          Int      @id @default(autoincrement())
-  activityId  Int
-  userId      Int
-  role        String   // e.g., "participant", "organizer"
-  activity    SportActivity @relation(fields: [activityId], references: [id])
-  user        User         @relation(fields: [userId], references: [id])
+  id         Int           @id @default(autoincrement())
+  activityId Int
+  userId     Int
+  role       String // e.g., "participant", "organizer"
+  activity   SportActivity @relation(fields: [activityId], references: [id])
+  user       User          @relation(fields: [userId], references: [id])
 }
 
 model Group {
-  id          Int       @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   name        String
   description String?
   ownerId     Int
-  isPublic    Boolean   @default(true)
-  createdAt   DateTime  @default(now())
-  sportId     Int?      
-  sport       Sport?    @relation(fields: [sportId], references: [id])
+  isPublic    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  sportId     Int?
+  sport       Sport?   @relation(fields: [sportId], references: [id])
 
-  owner       User      @relation("GroupOwner", fields: [ownerId], references: [id])
+  owner       User              @relation("GroupOwner", fields: [ownerId], references: [id])
   members     GroupMember[]
   activities  GroupActivity[]
   invitations GroupInvitation[]
 }
 
 model GroupMember {
-  id        Int   @id @default(autoincrement())
-  groupId   Int
-  userId    Int
-  joinedAt  DateTime @default(now())
+  id       Int      @id @default(autoincrement())
+  groupId  Int
+  userId   Int
+  joinedAt DateTime @default(now())
 
-  group     Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
-  user      User  @relation("GroupMemberships", fields: [userId], references: [id])
+  group Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  user  User  @relation("GroupMemberships", fields: [userId], references: [id])
 
   @@unique([groupId, userId])
 }
 
 model GroupActivity {
-  id          Int   @id @default(autoincrement())
-  groupId     Int
-  activityId  Int
+  id         Int @id @default(autoincrement())
+  groupId    Int
+  activityId Int
 
-  group       Group           @relation(fields: [groupId], references: [id], onDelete: Cascade)
-  activity    SportActivity   @relation(fields: [activityId], references: [id], onDelete: Cascade)
+  group    Group         @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  activity SportActivity @relation(fields: [activityId], references: [id], onDelete: Cascade)
 
   @@unique([groupId, activityId])
 }
 
 model GroupInvitation {
-  id        Int       @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   groupId   Int
   userId    Int
-  status    String    @default("pending") // pending, accepted, rejected
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  status    String   @default("pending") // pending, accepted, rejected
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  group     Group     @relation(fields: [groupId], references: [id], onDelete: Cascade)
-  user      User      @relation("GroupInvitations", fields: [userId], references: [id], onDelete: Cascade)
+  group Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  user  User  @relation("GroupInvitations", fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([groupId, userId])
 }
 
 model ActivityAttendance {
-  id          Int   @id @default(autoincrement())
-  activityId  Int
-  userId      Int
-  attending   Boolean @default(true)  // <-- add this field
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id         Int      @id @default(autoincrement())
+  activityId Int
+  userId     Int
+  attending  Boolean  @default(true) // <-- add this field
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
-  activity    SportActivity @relation(fields: [activityId], references: [id], onDelete: Cascade)
-  user        User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  activity SportActivity @relation(fields: [activityId], references: [id], onDelete: Cascade)
+  user     User          @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([activityId, userId])
+}
+
+model Chat {
+  id           Int               @id @default(autoincrement())
+  participants ChatParticipant[]
+  messages     Message[]
+  createdAt    DateTime          @default(now())
+}
+
+model ChatParticipant {
+  id     Int @id @default(autoincrement())
+  chatId Int
+  userId Int
+
+  chat Chat @relation(fields: [chatId], references: [id])
+  user User @relation(fields: [userId], references: [id])
+
+  @@unique([chatId, userId])
+}
+
+model Message {
+  id        Int      @id @default(autoincrement())
+  chatId    Int
+  senderId  Int
+  receiverId Int
+  content   String
+  createdAt DateTime @default(now())
+
+  chat   Chat @relation(fields: [chatId], references: [id])
+  sender User @relation("SentMessages", fields: [senderId], references: [id])
 }
