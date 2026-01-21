@@ -5,8 +5,9 @@ import { prisma } from "@/lib/db";
 
 export async function GET(
   req: Request,
-  { params }: { params: { userId: string } }
+  { params }: { params: Promise<{ chatid: string }> }
 ) {
+  const resolvedParams = await params
   const session = await getServerSession(options);
   if (!session?.user?.email) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -14,7 +15,7 @@ export async function GET(
 
   const chat = await prisma.chat.findFirst({
     where: {
-        id: Number(params.userId),
+        id: Number(resolvedParams.chatid),
         participants: {
             some: {
                 id: Number(session.user.id)
