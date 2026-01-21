@@ -8,7 +8,7 @@ import ChatClient from "@/components/ChatClient";
 export default async function ChatPage({
   params,
 }: {
-  params: { chatid: string };
+  params: Promise<{ chatid: string }>;
 }) {
   const { chatid } = await params;
   const session = await getServerSession(options);
