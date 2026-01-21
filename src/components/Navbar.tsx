@@ -47,7 +47,7 @@ export default function Navbar() {
             >
                 <div className="px-4 py-3 border-b border-zinc-800">
                     <Link href="/" className="text-white font-semibold text-lg">
-                        SportTracker
+                        <img src="/assety/BEFIT_Logo.png" alt="Logo" className="h-[97px] w-[97px] inline-block mr-2" />
                     </Link>
                 </div>
 

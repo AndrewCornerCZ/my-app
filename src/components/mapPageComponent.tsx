@@ -249,14 +249,14 @@ useEffect(() => {
             <input
               type="range"
               min="1"
-              max="50"
+              max="100"
               value={radius}
               onChange={e => handleRadiusChange(Number(e.target.value))}
               className="w-full"
             />
             <div className="text-xs text-gray-400 flex justify-between mt-1">
               <span>1km</span>
-              <span>50km</span>
+              <span>100km</span>
             </div>
           </div>
           {/* Sport Filters */}
