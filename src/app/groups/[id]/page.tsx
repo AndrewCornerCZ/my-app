@@ -2,7 +2,7 @@ import { prisma } from "@/lib/db"
 import { notFound } from "next/navigation"
 import GroupView from "@/components/GroupView"
 
-export default async function GroupPage({ params }: { params: { id: string } }) {
+export default async function GroupPage({ params }: { params: Promise<{ id: string }> }) {
   // params can be a Promise in some Next.js versions — await it before using
   const resolvedParams = await params
   const id = Number(resolvedParams?.id)
