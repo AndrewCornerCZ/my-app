@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation"
 export default function CreateGroupForm({ onSuccess, onCancel }: { onSuccess?: () => void; onCancel?: () => void }) {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
-  const [sports, setSports] = useState<any[]>([])
+  const [sports, setSports] = useState<{ id: number; name: string }[]>([])
   
   const [form, setForm] = useState({
     name: "",
@@ -60,9 +60,10 @@ export default function CreateGroupForm({ onSuccess, onCancel }: { onSuccess?: (
         // redirect if standalone
         router.push(`/groups/${json.id}`)
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(err)
-      alert(err.message || 'Failed to create group')
+      const errorMessage = err instanceof Error ? err.message : 'Failed to create group'
+      alert(errorMessage)
     } finally {
       setLoading(false)
     }

@@ -23,6 +23,53 @@ type Participant = {
   }
 }
 
+type Activity = {
+  id: number
+  sport?: { name: string }
+  user?: { username: string }
+  date?: string
+  starttime?: string
+  endtime?: string
+  description?: string
+  latitude?: number
+  longitude?: number
+}
+
+type GroupActivity = {
+  id: number
+  activity: Activity
+}
+
+type GroupMember = {
+  id: number
+  user: {
+    id: number | string
+    username: string
+  }
+}
+
+type GroupInvitation = {
+  id: number
+  status: string
+  user?: {
+    id: number | string
+    username?: string
+    email?: string
+  }
+}
+
+type GroupData = {
+  id: number | string
+  name: string
+  description?: string
+  ownerId: number
+  sportId: number
+  owner?: { username: string }
+  members?: GroupMember[]
+  activities?: GroupActivity[]
+  invitations?: GroupInvitation[]
+}
+
 const markerIcon = new L.Icon({
   iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
   iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
@@ -54,17 +101,17 @@ function MapPicker({ lat, lng, onChange, zoom = 13 }: { lat?: number; lng?: numb
   )
 }
 
-export default function GroupView({ group }: { group: any }) {
+export default function GroupView({ group }: { group: GroupData }) {
   const { data: session } = useSession()
   const [members, setMembers] = useState(group.members ?? [])
   const [activities, setActivities] = useState(group.activities ?? [])
   const [invitations, setInvitations] = useState(group.invitations ?? [])
   const [loading, setLoading] = useState(false)
-  const [selectedActivity, setSelectedActivity] = useState<any>(null)
+  const [selectedActivity, setSelectedActivity] = useState<GroupActivity | null>(null)
   const [mapLocation, setMapLocation] = useState<{ lat: number; lng: number } | null>(null)
 
   // nový stav pro účastníky a info, zda jsem odpověděl
-  const [participants, setParticipants] = useState<any[]>([])
+  const [participants, setParticipants] = useState<Participant[]>([])
   const [userAttending, setUserAttending] = useState<boolean | null>(null)
 
   // activity form: removed manual lat/lng fields
@@ -81,7 +128,7 @@ export default function GroupView({ group }: { group: any }) {
   const [selectedSport, setSelectedSport] = useState<number | null>(group?.sportId ?? null)
   // invite form (owner)
   const isOwner = session?.user?.id && Number(session.user.id) === group.ownerId
-  const isMember = session?.user?.id && members.some((m: any) => Number(m.user.id) === Number(session.user.id))
+  const isMember = session?.user?.id && members.some((m: GroupMember) => Number(m.user.id) === Number(session.user.id))
 
 useEffect(() => {
   async function loadSport() {
@@ -340,7 +387,7 @@ useEffect(() => {
                   })
                   alert("Request sent to owner")
                   await refresh()
-                } catch (e) {
+                } catch {
                   alert("Failed to send request")
                 } finally {
                   setLoading(false)
@@ -359,7 +406,7 @@ useEffect(() => {
             <h3 className="text-white font-bold mb-3">👥 Members ({members.length})</h3>
             <div className="space-y-2">
               {members.length === 0 && <div className="text-gray-400 text-sm">No members yet</div>}
-              {members.map((m: any) => (
+              {members.map((m) => (
                 <div key={m.id} className="flex items-center justify-between bg-zinc-700 p-2 rounded">
                   <div className="text-white text-sm font-medium">{m.user?.username}</div>
                   {Number(m.user.id) === group.ownerId && (
@@ -367,7 +414,7 @@ useEffect(() => {
                   )}
                   {isOwner && Number(m.user.id) !== group.ownerId && (
                     <button
-                      onClick={() => removeMember(m.user.id, m.user.username)}
+                      onClick={() => removeMember(Number(m.user.id), m.user.username)}
                       disabled={loading}
                       className="text-xs text-red-400 hover:text-red-300"
                     >
@@ -387,9 +434,9 @@ useEffect(() => {
               <h3 className="text-white font-semibold mb-3">Invitations</h3>
               <div className="space-y-2">
               {invitations.length > 0 && (
-                <p className="text-xs text-gray-400 mt-2">⏳ {invitations.filter((i: any) => i.status === 'pending').length} pending invitation(s)</p>
+                <p className="text-xs text-gray-400 mt-2">⏳ {invitations.filter((i: GroupInvitation) => i.status === 'pending').length} pending invitation(s)</p>
               )}
-                {invitations.map((inv: any) => {
+                {invitations.map((inv: GroupInvitation) => {
                   if (inv.status === 'pending') {
                     const isForMe = Number(inv.user?.id) === Number(session?.user?.id)
                     const canAct = isForMe || isOwner
@@ -463,7 +510,7 @@ useEffect(() => {
                 <h4 className="text-white font-semibold mb-2">Participants ({participants.filter(p => p.attending).length})</h4>
                 {participants.length === 0 && <div className="text-gray-400 text-sm">Nikdo zatím nejde</div>}
                 <div className="space-y-2">
-                  {participants.map((p: any) => {
+                  {participants.map((p: Participant) => {
                     const isMe = session?.user?.id && Number(p.user?.id) === Number(session.user.id)
                     return (
                       p.attending === true && 
@@ -482,11 +529,11 @@ useEffect(() => {
                 {userAttending !== null && (
                   <div className="mt-3 text-xs">
                     {userAttending == true ? (
-                      <span className="text-emerald-400">✅ Odpověděl(a) jsi, že jdeš</span>
+                      <span className="text-emerald-400">✅ Odpověděl(a) jsi, že jde&scaron;</span>
                     ) : userAttending == false ? (
-                      <span className="text-red-400">❌ Odpověděl(a) jsi, že nejdeš</span>
+                      <span className="text-red-400">❌ Odpověděl(a) jsi, že nejde&scaron;</span>
                     ) : (
-                      <span className="text-gray-400">ℹ️ Neodpověděl(a) jsi, že jdeš</span>
+                      <span className="text-gray-400">ℹ️ Neodpověděl(a) jsi, že jde&scaron;</span>
                     )}
                   </div>
                 )}
@@ -500,7 +547,7 @@ useEffect(() => {
                     disabled={loading}
                     className="flex-1 px-4 py-2 bg-emerald-600 rounded text-white hover:bg-emerald-700 disabled:opacity-50"
                   >
-                    ✅ I'm Going
+                    ✅ I&apos;m Going
                   </button>
                   <button
                     onClick={() => respondToActivity(selectedActivity.activity.id, false)}
@@ -520,7 +567,7 @@ useEffect(() => {
               <h3 className="text-white font-bold mb-3">🏃 Activities ({activities.length})</h3>
               {activities.length === 0 && <div className="text-gray-400 text-sm">No activities yet</div>}
               <div className="space-y-3">
-                {activities.map((ga: any) => (
+                {activities.map((ga: GroupActivity) => (
                   <div
                     key={ga.id}
                     onClick={() => setSelectedActivity(ga)}

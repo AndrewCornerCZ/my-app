@@ -4,7 +4,7 @@ import { options } from '@/app/api/auth/[...nextauth]/options'
 import { prisma } from '@/lib/db'
 
 
-export async function GET(req: Request, context: { params: any }) {
+export async function GET(req: Request, context: { params: Promise<{ id: string }> }) {
     const params = await context.params
   const groupId = Number(params?.id)
   const session = await getServerSession(options)

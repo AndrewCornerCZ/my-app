@@ -173,7 +173,7 @@ export default function GroupsClient() {
       <section>
         <h2 className="text-white font-bold text-xl mb-4">🏘️ Your Groups</h2>
         {mygroups.length === 0 ? (
-          <p className="text-gray-400 mb-4">You don't own any groups yet.</p>
+          <p className="text-gray-400 mb-4">You don&apos;t own any groups yet.</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {mygroups.map(group => (
@@ -193,7 +193,7 @@ export default function GroupsClient() {
       </section>
 
       <section>
-        <h2 className="text-white font-bold text-xl mb-4">🏘️ Friends' Groups</h2>
+        <h2 className="text-white font-bold text-xl mb-4">🏘️ Friends&apos; Groups</h2>
         {friendsgroups.length === 0 ? (
           <p className="text-gray-400 mb-4">No groups from people you follow.</p>
         ) : (

@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth"
 import { options } from "@/app/api/auth/[...nextauth]/options"
 import { prisma } from "@/lib/db"
 
-export async function POST(req: Request, context: { params: any }) {
+export async function POST(req: Request, context: { params: Promise<{ id: string; actId: string }> }) {
   const session = await getServerSession(options)
   if (!session?.user?.id) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
 
@@ -41,7 +41,7 @@ export async function POST(req: Request, context: { params: any }) {
   }
 }
 
-export async function GET(req: Request, context: { params: any }) {
+export async function GET(req: Request, context: { params: Promise<{ id: string; actId: string }> }) {
   const session = await getServerSession(options)
   if (!session?.user?.id) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   const params = await context.params

@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 
-export async function GET(req: Request, context: { params: any }) {
+export async function GET(req: Request, context: { params: Promise<{ id: string }> }) {
   try {
     const params = await context.params
     const sportid = Number(params?.id)

@@ -1,5 +1,3 @@
-import { getServerSession } from "next-auth"
-import { options } from "@/app/api/auth/[...nextauth]/options"
 import { prisma } from "@/lib/db"
 import { notFound } from "next/navigation"
 import GroupView from "@/components/GroupView"

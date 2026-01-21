@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth"
 import { options } from "@/app/api/auth/[...nextauth]/options"
 import { prisma } from "@/lib/db"
 
-export async function PATCH(req: Request, context: { params: any }) {
+export async function PATCH(req: Request, context: { params: Promise<{ id: string }> }) {
   const session = await getServerSession(options)
   if (!session?.user?.id) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
 

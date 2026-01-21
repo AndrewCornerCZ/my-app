@@ -140,7 +140,7 @@ function getActivityDurationMinutes(act: ActivityWithSport) {
 }
 
 // Seřazení aktivit podle měsíce YYYY-MM
-function getMonthlyStats(activities: ActivityWithSport[]) {
+function getMonthlyStats() {
   const map: Record<string, number> = {}
   mergedActivities.forEach(act => {
     const month = new Date(act.date).toISOString().slice(0, 7) // "YYYY-MM"
@@ -364,7 +364,7 @@ function getBadge(totalMinutes: number) {
           </div>
           <div className="mt-6 bg-zinc-800 p-4 rounded-lg shadow">
             <h3 className="text-white font-semibold mb-2">Monthly Progress & Badges</h3>
-            {getMonthlyStats(activities).map(stat => {
+            {getMonthlyStats().map(stat => {
   const badge = getBadge(stat.totalMinutes)
   
   // extrahuj měsíc z "YYYY-MM" formátu
