@@ -1,21 +1,43 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useState } from 'react'
 
-export default function Socket() {
-  const ws = useRef<WebSocket | null>(null)
+export default function Page() {
+  const [status, setStatus] = useState('connecting')
 
   useEffect(() => {
-    ws.current = new WebSocket(
-      'pleasing-love-production-1ecc.up.railway.app'
-    )
+  const socket = new WebSocket(
+  "wss://pleasing-love-production-1ecc.up.railway.app"
+  );
 
-    ws.current.onmessage = (event) => {
-      console.log('WS:', event.data)
+    socket.onopen = () => {
+      console.log('🟢 WS connected')
+      setStatus('connected')
     }
 
-    return () => ws.current?.close()
+    socket.onmessage = (e) => {
+      console.log('📩 WS message:', e.data)
+    }
+
+    socket.onerror = (e) => {
+      console.error('🔴 WS error', e)
+      setStatus('error')
+    }
+
+    socket.onclose = () => {
+      console.log('🟡 WS closed')
+      setStatus('closed')
+    }
+
+    return () => socket.close()
   }, [])
 
-  return <div>WebSocket connected</div>
+  return (
+  
+  <div>
+    <h1>WebSocket test</h1>
+    <p>Status: {status}</p>
+  </div>
+)
+
 }
