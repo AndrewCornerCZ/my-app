@@ -1,43 +1,22 @@
-'use client'
+import { WebSocketServer } from 'ws'
+import http from 'http'
 
-import { useEffect, useState } from 'react'
+const PORT = process.env.PORT || 3001
 
-export default function Page() {
-  const [status, setStatus] = useState('connecting')
+const server = http.createServer()
 
-  useEffect(() => {
-  const socket = new WebSocket(
-  "wss://pleasing-love-production-1ecc.up.railway.app"
-  );
+const wss = new WebSocketServer({ server })
 
-    socket.onopen = () => {
-      console.log('🟢 WS connected')
-      setStatus('connected')
-    }
+wss.on('connection', (ws) => {
+  console.log('🟢 Client connected')
 
-    socket.onmessage = (e) => {
-      console.log('📩 WS message:', e.data)
-    }
+  ws.send('Hello from Railway WS server 👋')
 
-    socket.onerror = (e) => {
-      console.error('🔴 WS error', e)
-      setStatus('error')
-    }
+  ws.on('message', (msg) => {
+    console.log('📩 Received:', msg.toString())
+  })
+})
 
-    socket.onclose = () => {
-      console.log('🟡 WS closed')
-      setStatus('closed')
-    }
-
-    return () => socket.close()
-  }, [])
-
-  return (
-  
-  <div>
-    <h1>WebSocket test</h1>
-    <p>Status: {status}</p>
-  </div>
-)
-
-}
+server.listen(PORT, () => {
+  console.log(`🚀 WebSocket server running on port ${PORT}`)
+})

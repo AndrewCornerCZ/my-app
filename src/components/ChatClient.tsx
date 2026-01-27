@@ -24,65 +24,88 @@ export default function ChatClient({
   const [messages, setMessages] = useState<Message[]>([]);
   const [text, setText] = useState("");
   const [skip, setSkip] = useState(0);
+
   const socketRef = useRef<Socket | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
-  // --- SOCKET.IO CONNECTION ---
   useEffect(() => {
-    const socket = io("http://localhost:3001");
+    const socket = io(
+      process.env.NEXT_PUBLIC_SOCKET_URL ??
+        "https://pleasing-love-production-1ecc.up.railway.app",
+      {
+        transports: ["websocket"],
+        withCredentials: true,
+      }
+    );
+
     socketRef.current = socket;
 
     socket.on("connect", () => {
-      console.log("Socket connected:", socket.id);
-      socket.emit("join", chatId);
+      console.log("🟢 Socket connected:", socket.id);
+
+      socket.emit("join_chat", {
+        chatId,
+        userId: currentUserId,
+      });
     });
 
     socket.on("receive_message", (message: Message) => {
       setMessages((prev) => {
-        if (prev.find((m) => m.id === message.id)) return prev; // duplicitní
-        return [...prev, message]; // nové zprávy dole
+        if (prev.some((m) => m.id === message.id)) return prev;
+        return [...prev, message];
       });
+    });
+
+    socket.on("disconnect", () => {
+      console.log("🟡 Socket disconnected");
     });
 
     return () => {
       socket.disconnect();
       socketRef.current = null;
     };
-  }, [chatId]);
+  }, [chatId, currentUserId]);
 
-  // --- LOAD MESSAGES (starší) ---
+  // =========================
+  // LOAD OLDER MESSAGES
+  // =========================
   const loadMessages = async () => {
-    const res = await fetch(`/api/chat/messages?chatId=${chatId}&skip=${skip}&take=10`);
+    const res = await fetch(
+      `/api/chat/messages?chatId=${chatId}&skip=${skip}&take=10`
+    );
+
     const data: Message[] = await res.json();
 
     if (Array.isArray(data) && data.length > 0) {
       setMessages((prev) => {
-        const newMessages = data.filter((msg) => !prev.some((m) => m.id === msg.id));
-        return [...newMessages, ...prev]; // starší nahoře
+        const newMessages = data.filter(
+          (msg) => !prev.some((m) => m.id === msg.id)
+        );
+        return [...newMessages, ...prev];
       });
+
       setSkip((prev) => prev + data.length);
     }
   };
 
   useEffect(() => {
-    loadMessages(); // první dávka při mountu
+    loadMessages();
   }, []);
 
-  // --- SEND MESSAGE ---
-  const sendMessage = async () => {
+  // =========================
+  // SEND MESSAGE
+  // =========================
+  const sendMessage = () => {
     if (!text.trim() || !socketRef.current) return;
 
-    // --- Přidání lokálně pro okamžité zobrazení ---
     const tempMessage: Message = {
-      id: Date.now(), // dočasné unikátní id, server pošle skutečné
+      id: Date.now(), // temporary ID
       content: text,
       senderId: currentUserId,
       createdAt: new Date().toISOString(),
     };
-    setMessages((prev) => [...prev, tempMessage]);
-    setText("");
 
-    // --- Odeslat na server ---
+    setText("");
     socketRef.current.emit("send_message", {
       chatId,
       senderId: currentUserId,
@@ -91,17 +114,27 @@ export default function ChatClient({
     });
   };
 
-  // --- SCROLL TO BOTTOM WHEN NEW MESSAGE ---
+  // =========================
+  // AUTO SCROLL
+  // =========================
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // --- FORMAT DATETIME ---
+  // =========================
+  // FORMAT DATETIME
+  // =========================
   const formatDateTime = (iso: string) => {
     const date = new Date(iso);
-    return date.toLocaleString([], { dateStyle: "short", timeStyle: "short" });
+    return date.toLocaleString([], {
+      dateStyle: "short",
+      timeStyle: "short",
+    });
   };
 
+  // =========================
+  // RENDER
+  // =========================
   return (
     <div className="flex flex-col h-[calc(100vh-64px)] bg-gray-900 text-white">
       {/* Header */}
@@ -111,7 +144,6 @@ export default function ChatClient({
 
       {/* Messages */}
       <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-4">
-        {/* Load more button */}
         {messages.length > 0 && (
           <button
             onClick={loadMessages}
@@ -137,7 +169,6 @@ export default function ChatClient({
           </div>
         ))}
 
-        {/* Dummy div for scrolling */}
         <div ref={messagesEndRef} />
       </div>
 

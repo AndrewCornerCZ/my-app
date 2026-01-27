@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "socket-server": "tsx socket-server.ts",
-    "build": "npm run prisma && next build",
+    "dev": "next dev && tsx socket-server.tsx",
+    "socket-server": "tsx socket-server.tsx",
+    "build": "npm run prisma && next build && tsx socket-server.tsx",
     "start": "next start",
     "lint": "next lint",
     "prisma": "prisma generate"
@@ -38,6 +38,7 @@
     "@types/node": "^20.19.30",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/ws": "^8.18.1",
     "eslint": "^9",
     "eslint-config-next": "15.1.5",
     "postcss": "^8",
