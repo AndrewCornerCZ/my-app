@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev && tsx socket-server.tsx",
+    "dev": "next dev",
     "socket-server": "tsx socket-server.tsx",
-    "build": "npm run prisma && next build && tsx socket-server.tsx",
+    "build": "npm run prisma && next build",
     "start": "next start",
     "lint": "next lint",
     "prisma": "prisma generate"
