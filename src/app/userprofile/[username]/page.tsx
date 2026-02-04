@@ -91,117 +91,124 @@ export default async function Profile({ params }: {params: Promise<{ username: s
 
 
    return (
-    <div className="min-h-screen bg-gray-900">
+    <div className="min-h-screen bg-gray-950">
       <Navbar />
       <div className="container mx-auto px-4 py-8">
-        <div className="bg-zinc-800 rounded-lg p-6 mb-8 shadow-xl relative">
-          {/* Přidáme settings do pravého rohu */}
-          {session?.user?.name === decodedUsername && ( //ale jenom pokud je to jeho profil
-            <div className="absolute top-4 right-4">
-              <SettingsButton />
-            </div>
-          )}
+        {/* HLAVNÍ DVOUSTUPŇOVÝ LAYOUT */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           
-          <div className="flex items-center gap-4 mb-6">
-            <div className="relative w-16 h-16">
-              {user.image ? ( //načteme profilovku, pokud není, tak zobrazíme první písmeno username
-                <Image
-                  src={user.image}
-                  alt={`${user.username}'s profile`}
-                  fill
-                  className="rounded-full object-cover" //kruhové zobrazení
-                />
-              ) : (
-                <div className="w-16 h-16 bg-indigo-600 rounded-full flex items-center justify-center">
-                  <span className="text-2xl text-white font-bold"> 
-                    {user.username.charAt(0).toUpperCase()} {/*První písmeno username, pokud nemá obrázek*/}
-                  </span>
+          {/* LEVÁ STRANA - PROFIL A POSTY */}
+          <div className="lg:col-span-2 space-y-6">
+            
+            {/* PROFIL HEADER - HORNÍ LIŠTA S TLAČÍTKY */}
+            <div className="bg-gray-900 rounded-lg p-6 shadow-xl">
+              <div className="flex items-start justify-between mb-4">
+                <div className="flex items-center gap-4 flex-1">
+                  <div className="relative w-16 h-16">
+                    {user.image ? (
+                      <Image
+                        src={user.image}
+                        alt={`${user.username}'s profile`}
+                        fill
+                        className="rounded-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-16 h-16 bg-teal-600 rounded-full flex items-center justify-center">
+                        <span className="text-2xl text-white font-bold">
+                          {user.username.charAt(0).toUpperCase()}
+                        </span>
+                      </div>
+                    )}
+                    {session?.user?.name === username && (
+                      <ProfileImageUploader userId={user.id} />
+                    )}
+                  </div>
+                  <div>
+                    <h1 className="text-2xl font-bold text-white">@{user.username}</h1>
+                  </div>
                 </div>
-              )}
-             {session?.user?.name === username && ( //ověříme že je to jeho profil
-              <ProfileImageUploader userId={user.id} /> //componenta pro uploud, použita služba cloudinary
-             )}
+                
+                {/* TLAČÍTKA NAHOŘE VPRAVO */}
+                <div className="flex gap-2">
+                  {session?.user?.name === decodedUsername && (
+                    <>
+                      <button className="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white text-sm font-medium rounded-lg transition-colors">
+                        Edit profile
+                      </button>
+                      <button className="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white text-sm font-medium rounded-lg transition-colors">
+                        Manage sports
+                      </button>
+                    </>
+                  )}
+                  {session?.user?.name !== decodedUsername && (
+                    <FollowButton 
+                      userId={user.id} 
+                      initialFollowState={!!isFollowing}
+                    />
+                  )}
+                </div>
+              </div>
+
+              {/* BIO A STATISTIKY */}
+              <div className="space-y-3">
+                {user.bio && (
+                  <p className="text-gray-300 text-sm leading-relaxed">{user.bio}</p>
+                )}
+                <div className="text-sm text-gray-400">
+                  <span className="font-semibold text-teal-400">{user.followers.length}</span> Followers • 
+                  <span className="font-semibold text-teal-400 ml-2">{user.following.length}</span> Following
+                </div>
+              </div>
             </div>
-            <div className="flex items-center gap-4">
-              <h1 className="text-2xl font-bold text-white mb-1">@{user.username}</h1>
-              {session?.user?.name !== decodedUsername && ( //pokud to není jeho profil, zobrazíme follow button
-                <FollowButton 
-                  userId={user.id} 
-                  initialFollowState={!!isFollowing} //zjistíme jestli ho už náhodou nesleduje
-                />
-              )}
-            </div>
-          </div>
-          <div className="flex flex-col gap-4">
-            {user.bio && ( //vypíšeme bio pokud ho má
-              <div className="text-gray-300 bg-zinc-700/50 rounded-lg p-4">
-                <p className="text-sm">{user.bio}</p>
+
+            {/* SPORTY SEKCE - MINIMALISTICKÉ */}
+            {user.sports.length > 0 && (
+              <div className="bg-gray-900 rounded-lg p-6 shadow-xl">
+                <h2 className="text-lg font-semibold text-white mb-3">Sports</h2>
+                <div className="flex flex-wrap gap-2">
+                  {user.sports.map((us) => (
+                    <span
+                      key={us.sportId}
+                      className="px-3 py-1 text-white rounded-full text-xs font-medium"
+                      style={{ backgroundColor: us.color || '#14b8a6' }}
+                    >
+                      {us.sport.name}
+                    </span>
+                  ))}
+                </div>
               </div>
             )}
-            <div className="bg-zinc-800 rounded-lg p-6 mb-8 shadow-xl">
-  <h2 className="text-xl font-semibold text-white mb-4 border-b border-zinc-700 pb-2">
-    Sports
-  </h2>
-  <div className="flex flex-wrap gap-2 mb-4">
-    {user.sports.map((us) => {
-      // 1. Uděláme si výpočet pro "streak", což je počet dní od data ve startedAt
-      const now = new Date();
-      const start = new Date(us.startedAt);
-      const diffTime = Math.abs(now.getTime() - start.getTime());
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-      // 2. Vrátime JSX s tooltipem
-      return (
-        <span
-          key={us.sportId}
-          className="px-3 py-1 text-white rounded-full text-sm"
-          // 3. Vypíšeme rank, streak a od kdy to dělá v tooltipu
-          title={`Rank: ${us.sportrank.name} / Streak: ${diffDays} days / Since: ${us.startedAt.toDateString()}`}
-          style={{ backgroundColor: us.color || '#3b82f6' }}
-        >
-          {us.sport.name}
-        </span>
-      );
-    })}
-  </div>
-        <div className="bg-zinc-800 rounded-lg p-6 mb-8 shadow-xl w-1/2 mx-auto">
-        {/* Předáme data kalendáři (normalized) */}
-        <ActivityCalendar 
-          initialActivities={serializedActivities}
-          userSports={user.sports} 
-          userId={user.id}
-        />
-      </div>
-  {/*Komponenty pro přidání a úpravu sportů na profilu */}
-        {session?.user?.name === user.username && (
-          <div className="flex gap-4 mt-4 ite">
-            <AddSportModal userId={user.id} userSports={user.sports} />
-            {user.sports.length > 0 && (
-              <>
-              <ManageSportsModal userSports={user.sports} />
-              <AddActivityModal userSports={user.sports} />
-              </>
-            )}
-          </div>
-        )}
-</div>
-            <div className="text-gray-400 display-flex flex-col">
-              <p className="mb-2">Followers: {user.followers.length}</p> {/*Počty followerů a followingů*/}
-              <p>Following: {user.following.length}</p>
+            {/* POSTY SEKCE */}
+            <div>
+              <h2 className="text-lg font-semibold text-white mb-4">Posts</h2>
+              <div className="space-y-4">
+                <PostProfile id={user.id} />
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="mb-6">
-          <h2 className="text-xl font-semibold text-white mb-4 border-b border-zinc-700 pb-2"> {/*A vypíšeme si všechny jeho posty */}
-            Posts
-          </h2>
-          <PostProfile id={user.id} />
-        </div>
+          {/* PRAVÁ STRANA - KALENDÁŘ A ADD ACTIVITY */}
+          <div className="lg:col-span-1">
+            <div className="sticky top-24 space-y-6">
+              {/* KALENDÁŘ */}
+              <div className="bg-gray-900 rounded-lg p-6 shadow-xl">
+                <ActivityCalendar 
+                  initialActivities={serializedActivities}
+                  userSports={user.sports} 
+                  userId={user.id}
+                />
+                {session?.user?.name === user.username && user.sports.length > 0 && (
+                <div className="mt-4 text-left">
+                  <AddActivityModal userSports={user.sports} />
+                </div>
+              )}
+              </div>
 
-        <div className="flex gap-4">
-          <AddPostButton />
-          <AddLogoutButton />
+              {/* ADD ACTIVITY */}
+
+            </div>
+          </div>
         </div>
       </div>
     </div>

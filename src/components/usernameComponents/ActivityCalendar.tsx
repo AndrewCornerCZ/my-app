@@ -303,7 +303,7 @@ function getBadge(totalMinutes: number) {
             &lt;
           </button>
           <h3 className="text-xl font-semibold text-white">
-            {currentDate.toLocaleString('default', {
+            {currentDate.toLocaleString('en-US', {
               month: 'long',
               year: 'numeric',
             })}

@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 
 import { getServerSession } from 'next-auth/next';
 import { options } from '../../app/api/auth/[...nextauth]/options';
@@ -19,6 +20,7 @@ const posts = await prisma.post.findMany({
 
 const hashtagsmap = new Map<number, Hashtag[]>();
 const usernamesmap = new Map<number, string[]>();
+const userimagesmap = new Map<number, string>();
 const commentsmap = new Map<number, number>();
 
 for (const post of posts) {
@@ -38,6 +40,7 @@ for (const post of posts) {
     }
   });
     usernamesmap.set(post.id, usernames.map((user) => user.username));
+    userimagesmap.set(post.id, usernames[0]?.image || '');
 }
 const likedPosts = await prisma.userLike.findMany({
   where: {
@@ -73,9 +76,25 @@ for (const post of posts) {
         >
           {/* Username */}
           <div className="flex items-center gap-2 mb-2">
+            <div className="relative w-10 h-10 flex-shrink-0">
+              {userimagesmap.get(post.id) ? (
+                <Image
+                  src={userimagesmap.get(post.id)!}
+                  alt={`${usernamesmap.get(post.id)}'s profile`}
+                  fill
+                  className="rounded-full object-cover"
+                />
+              ) : (
+                <div className="w-10 h-10 bg-teal-600 rounded-full flex items-center justify-center">
+                  <span className="text-lg text-white font-bold">
+                    {usernamesmap.get(post.id)?.[0]?.charAt(0).toUpperCase()}
+                  </span>
+                </div>
+              )}
+            </div>
             <a href={`/userprofile/${usernamesmap.get(post.id)}`} className="text-white font-semibold">@{usernamesmap.get(post.id)}</a>
           </div>
-
+        
           {/* Post text */}
           <p className="text-white text-lg mb-3 whitespace-pre-line">
             {post.text}
