@@ -99,7 +99,7 @@ export default function AddSportModal({ userId, userSports }: AddSportModalProps
     return (
       <button
         onClick={() => setIsOpen(true)}
-        className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+        className="text-white px-3 py-1 rounded-md transition border-2 border-[#2E2E2E] text-base duration-200"
       >
         Add Sport
       </button>

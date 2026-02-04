@@ -117,7 +117,7 @@ export default function ManageSportsModal({ userSports }: ManageSportsModalProps
 
   if (!isOpen) {
     return (
-      <button onClick={openModal} className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+      <button onClick={openModal} className="text-white px-3 py-1 rounded-md transition border-2 border-[#2E2E2E] text-base duration-200">
         Manage Sports
       </button>
     );

@@ -83,7 +83,7 @@ export default function AddActivityModal({ userSports }: AddActivityModalProps) 
 
   if (!isOpen) {
     return (
-        <button onClick={() => setIsOpen(true)} className="px-4 py-2 bg-purple-600 text-white rounded">
+        <button onClick={() => setIsOpen(true)} className="text-white px-3 py-1 rounded-md transition border-2 border-[#2E2E2E] text-base duration-200">
             Add Activity
         </button>
     );

@@ -1,7 +1,5 @@
 import React from "react";
 import Navbar from "../../../components/Navbar";
-import AddLogoutButton from "@/components/usernameComponents/AddLogoutButton";
-import AddPostButton from "@/components/postsComponents/AddPostButton";
 import SettingsButton from "@/components/usernameComponents/SettingsButton";
 import PostProfile from "@/components/usernameComponents/PostProfile";
 import { prisma } from "@/lib/db";
@@ -132,12 +130,9 @@ export default async function Profile({ params }: {params: Promise<{ username: s
                 <div className="flex gap-2">
                   {session?.user?.name === decodedUsername && (
                     <>
-                      <button className="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white text-sm font-medium rounded-lg transition-colors">
-                        Edit profile
-                      </button>
-                      <button className="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white text-sm font-medium rounded-lg transition-colors">
-                        Manage sports
-                      </button>
+                      <SettingsButton />
+                      <ManageSportsModal userSports={user.sports} />
+                      <AddSportModal userId={user.id} userSports={user.sports} />
                     </>
                   )}
                   {session?.user?.name !== decodedUsername && (
@@ -159,11 +154,9 @@ export default async function Profile({ params }: {params: Promise<{ username: s
                   <span className="font-semibold text-teal-400 ml-2">{user.following.length}</span> Following
                 </div>
               </div>
-            </div>
 
-            {/* SPORTY SEKCE - MINIMALISTICKÉ */}
-            {user.sports.length > 0 && (
-              <div className="bg-gray-900 rounded-lg p-6 shadow-xl">
+              {user.sports.length > 0 && (
+              <div className="mt-4">
                 <h2 className="text-lg font-semibold text-white mb-3">Sports</h2>
                 <div className="flex flex-wrap gap-2">
                   {user.sports.map((us) => (
@@ -178,6 +171,8 @@ export default async function Profile({ params }: {params: Promise<{ username: s
                 </div>
               </div>
             )}
+            </div>
+
 
             {/* POSTY SEKCE */}
             <div>
@@ -190,19 +185,19 @@ export default async function Profile({ params }: {params: Promise<{ username: s
 
           {/* PRAVÁ STRANA - KALENDÁŘ A ADD ACTIVITY */}
           <div className="lg:col-span-1">
-            <div className="sticky top-24 space-y-6">
+            <div className="sticky top-6 space-y-6">
               {/* KALENDÁŘ */}
               <div className="bg-gray-900 rounded-lg p-6 shadow-xl">
+                {session?.user?.name === user.username && user.sports.length > 0 && (
+                  <div className="mt-3 text-left space-y-1 pb-5">
+                    <AddActivityModal userSports={user.sports} />
+                  </div>
+                )}
                 <ActivityCalendar 
                   initialActivities={serializedActivities}
                   userSports={user.sports} 
                   userId={user.id}
                 />
-                {session?.user?.name === user.username && user.sports.length > 0 && (
-                <div className="mt-4 text-left">
-                  <AddActivityModal userSports={user.sports} />
-                </div>
-              )}
               </div>
 
               {/* ADD ACTIVITY */}

@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import { useSession, signOut } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { Eye, EyeOff } from 'lucide-react'
-import './settings.css'
 
 interface FormData {
   username: string;
@@ -107,12 +106,12 @@ export default function SettingsPage() {
     }
   }
   return (
-    <div className="settings-page">
-      <div className="settings-container">
-        <h1 className="settings-title">Account Settings</h1>
-        <form onSubmit={handleSubmit} className="settings-form">
-          <div className="form-group">
-            <label htmlFor="username" className="form-label">
+    <div className="min-h-screen bg-gray-950 pt-8 pb-12">
+      <div className="max-w-2xl mx-auto px-4">
+        <h1 className="text-3xl font-bold text-white mb-8">Account Settings</h1>
+        <form onSubmit={handleSubmit} className="bg-gray-900 rounded-lg p-8 shadow-lg space-y-6">
+          <div className="space-y-2">
+            <label htmlFor="username" className="block text-white font-semibold">
               Username
             </label>
             <input
@@ -121,12 +120,12 @@ export default function SettingsPage() {
               name="username"
               value={formData.username}
               onChange={handleChange}
-              className="form-input"
+              className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded text-white placeholder-gray-500 focus:outline-none focus:border-teal-500"
               minLength={3}
             />
           </div>
-          <div className="form-group">
-            <label htmlFor="bio" className="form-label">
+          <div className="space-y-2">
+            <label htmlFor="bio" className="block text-white font-semibold">
               Bio
             </label>
             <textarea
@@ -134,30 +133,31 @@ export default function SettingsPage() {
               name="bio"
               value={formData.bio}
               onChange={handleChange}
-              className="form-textarea"
+              className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded text-white placeholder-gray-500 focus:outline-none focus:border-teal-500 resize-none"
               maxLength={160}
+              rows={4}
             />
-            <span className="bio-character-count">
+            <span className="text-sm text-gray-400">
               {formData.bio.length}/160
             </span>
           </div>
-              <div className="form-group">
-                <label htmlFor="currentPassword" className="form-label">
+              <div className="space-y-2">
+                <label htmlFor="currentPassword" className="block text-white font-semibold">
                   Current Password
                 </label>
-                <div className="password-input-wrapper">
+                <div className="relative">
                   <input
                     type={showPasswords.current ? 'text' : 'password'}
                     id="currentPassword"
                     name="currentPassword"
                     value={formData.currentPassword}
                     onChange={handleChange}
-                    className="form-input"
+                    className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded text-white placeholder-gray-500 focus:outline-none focus:border-teal-500 pr-10"
                     required
                   />
                   <button
                     type="button"
-                    className="password-toggle"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
                     onClick={() => togglePasswordVisibility('current')}
                   >
                     {showPasswords.current ? <EyeOff size={20} /> : <Eye size={20} />}
@@ -167,30 +167,30 @@ export default function SettingsPage() {
           <button
             type="button"
             onClick={() => setShowPasswordSection(!showPasswordSection)}
-            className="password-section-toggle"
+            className="w-full py-2 px-4 bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded transition duration-200"
           >
             {showPasswordSection ? 'Hide Password Change' : 'Change Password'}
           </button>
           
           {showPasswordSection && (
-            <div className="password-section">
-              <div className="form-group">
-                <label htmlFor="newPassword" className="form-label">
+            <div className="space-y-6 pt-4 border-t border-gray-700">
+              <div className="space-y-2">
+                <label htmlFor="newPassword" className="block text-white font-semibold">
                   New Password
                 </label>
-                <div className="password-input-wrapper">
+                <div className="relative">
                   <input
                     type={showPasswords.new ? 'text' : 'password'}
                     id="newPassword"
                     name="newPassword"
                     value={formData.newPassword}
                     onChange={handleChange}
-                    className="form-input"
+                    className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded text-white placeholder-gray-500 focus:outline-none focus:border-teal-500 pr-10"
                     minLength={8}
                   />
                   <button
                     type="button"
-                    className="password-toggle"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
                     onClick={() => togglePasswordVisibility('new')}
                   >
                     {showPasswords.new ? <EyeOff size={20} /> : <Eye size={20} />}
@@ -198,23 +198,23 @@ export default function SettingsPage() {
                 </div>
               </div>
 
-              <div className="form-group">
-                <label htmlFor="confirmPassword" className="form-label">
+              <div className="space-y-2">
+                <label htmlFor="confirmPassword" className="block text-white font-semibold">
                   Confirm New Password
                 </label>
-                <div className="password-input-wrapper">
+                <div className="relative">
                   <input
                     type={showPasswords.confirm ? 'text' : 'password'}
                     id="confirmPassword"
                     name="confirmPassword"
                     value={formData.confirmPassword}
                     onChange={handleChange}
-                    className="form-input"
+                    className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded text-white placeholder-gray-500 focus:outline-none focus:border-teal-500 pr-10"
                     minLength={8}
                   />
                   <button
                     type="button"
-                    className="password-toggle"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
                     onClick={() => togglePasswordVisibility('confirm')}
                   >
                     {showPasswords.confirm ? <EyeOff size={20} /> : <Eye size={20} />}
@@ -224,12 +224,12 @@ export default function SettingsPage() {
             </div>
           )}
 
-          {error && <p className="error-message">{error}</p>}
-          {success && <p className="success-message">{success}</p>}
+          {error && <p className="text-red-500 font-semibold">{error}</p>}
+          {success && <p className="text-green-500 font-semibold">{success}</p>}
 
           <button
             type="submit"
-            className="submit-button"
+            className="w-full py-2 px-4 bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
             disabled={loading}
           >
             {loading ? 'Updating...' : 'Update Settings'}

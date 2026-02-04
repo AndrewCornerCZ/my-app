@@ -5,7 +5,7 @@ const SettingsButton = () => {
     return (
         <div className="flex justify-end w-full">
             <button 
-                className="bg-indigo-500 text-white px-3 py-1 rounded-md hover:bg-indigo-800 transition duration-200" 
+                className="text-white px-3 py-1 rounded-md transition border-2 border-[#2E2E2E] text-base duration-200" 
                 onClick={() => window.location.href = '/settings'}
             >
                 Settings
