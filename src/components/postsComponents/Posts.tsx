@@ -1,4 +1,3 @@
-import React from 'react';
 import Image from 'next/image';
 import { getServerSession } from 'next-auth/next';
 import { options } from '../../app/api/auth/[...nextauth]/options';
@@ -7,8 +6,7 @@ import { prisma } from '@/lib/db';
 import LikeButton from './LikeButton';
 import AddCommentButton from './AddCommentButton';
 import ShowComments from './ShowCommentsButton';
-import { comment } from 'postcss';
-import { Console } from 'console';
+import { Hashtag, Post, PostComment, PostHashtag, UserLike } from '../../../prisma/generated/prisma/client';
 
 const Posts = async () => {
   const session = await getServerSession(options);
@@ -105,7 +103,14 @@ const Posts = async () => {
   // =========================
   // SCORING
   // =========================
-  function calculatePostScore(post: any): number {
+  // Define the shape of Post WITH relations
+  type PostWithRelations = Post & {
+    userLikes: UserLike[];
+    PostComment: PostComment[];
+    postHashtags: (PostHashtag & { hashtag: Hashtag })[];
+  };
+
+  function calculatePostScore(post: PostWithRelations): number {
     let score = 0;
 
     if (followingIds.has(post.authorId)) {
@@ -115,25 +120,25 @@ const Posts = async () => {
     score += post.userLikes.length * 2;
     score += post.PostComment.length * 3;
 
-    post.userLikes.forEach((like: any) => {
+    post.userLikes.forEach((like) => {
       user?.following.forEach((follow) => {
         if (follow.followingId === like.userId) {
           score += 10;
         }
+      });
       if (like.userId === session?.user.id) {
         score -= 20;
       }
-      });
     });
 
-    post.postHashtags.forEach((ph: any) => {
+    post.postHashtags.forEach((ph) => {
       const tag = ph.hashtag.text.toLowerCase();
       if (usedHashtags.has(tag)) {
         score += 15 * (usedHashtags.get(tag) ?? 1);
       }
     });
 
-    post.postHashtags.forEach((ph: any) => {
+    post.postHashtags.forEach((ph) => {
       if (userSports.has(ph.hashtag.text.toLowerCase())) {
         score += 20;
       }
