@@ -1,11 +1,26 @@
 import { NextResponse } from 'next/server'
-import bcrypt from 'bcryptjs'
+import argon2 from 'argon2'
 import {prisma} from "@/lib/db";
 
 export async function POST(req: Request) {
   try {
     const { email, username, password } = await req.json()
     
+    // Validace vstupů
+    if (!email || !username || !password) {
+      return NextResponse.json(
+        { error: 'Email, username a heslo jsou povinné' },
+        { status: 400 }
+      )
+    }
+
+    if (password.length < 6) {
+      return NextResponse.json(
+        { error: 'Heslo musí mít alespoň 6 znaků' },
+        { status: 400 }
+      )
+    }
+
     // Check if user exists
     const existingUser = await prisma.user.findFirst({
       where: {
@@ -18,12 +33,12 @@ export async function POST(req: Request) {
 
     if (existingUser) {
       return NextResponse.json(
-        { error: 'Email or username already taken' },
+        { error: 'Email nebo username je již zaregistrován' },
         { status: 400 }
       )
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10)
+    const hashedPassword = await argon2.hash(password)
 
     const user = await prisma.user.create({
       data: {
@@ -33,14 +48,22 @@ export async function POST(req: Request) {
       }
     })
 
-    // Remove password from response
-    const {...safeUser } = user
-
-    return NextResponse.json({ user: safeUser }, { status: 201 })
+    // Vrátíme jen bezpečné údaje
+    return NextResponse.json(
+      { 
+        message: 'Uživatel úspěšně registrován!',
+        user: { 
+          id: user.id, 
+          email: user.email, 
+          username: user.username 
+        } 
+      }, 
+      { status: 201 }
+    )
   } catch (error) {
     console.error('Registration error:', error)
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: 'Interní chyba serveru' },
       { status: 500 }
     )
   }

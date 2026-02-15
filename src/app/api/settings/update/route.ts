@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { options } from '../../auth/[...nextauth]/options'
 import { prisma } from '@/lib/db'
-import bcrypt from 'bcryptjs'
+import argon2 from 'argon2'
 
 type UpdateData = {
   username?: string
@@ -31,7 +31,7 @@ export async function POST(req: Request) {
 
     // If changing password, verify current password
     if (currentPassword) {
-      const isValid = await bcrypt.compare(currentPassword, user.password)
+      const isValid = await argon2.verify(user.password, currentPassword)
       if (!isValid) {
         return NextResponse.json({ error: 'Current password is incorrect' }, { status: 400 })
       }
@@ -54,7 +54,7 @@ export async function POST(req: Request) {
     }
 
     if (newPassword) {
-      updateData.password = await bcrypt.hash(newPassword, 10)
+      updateData.password = await argon2.hash(newPassword)
     }
 
     // Add bio update
@@ -74,7 +74,7 @@ export async function POST(req: Request) {
         where: { email: session.user.email },
         data: {
           ...(username && username !== user.username ? { username } : {}),
-          ...(newPassword ? { password: await bcrypt.hash(newPassword, 10) } : {}),
+          ...(newPassword ? { password: await argon2.hash(newPassword) } : {}),
           ...(bio !== undefined && bio !== user.bio ? { bio } : {})
   }
       })

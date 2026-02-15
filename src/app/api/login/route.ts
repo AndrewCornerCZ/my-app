@@ -1,4 +1,4 @@
-import bcrypt from "bcryptjs";
+import argon2 from 'argon2'
 import { NextResponse } from "next/server";
 import {prisma} from "@/lib/db";
 
@@ -16,7 +16,7 @@ export async function POST(req: Request) {
     }
 
     // Porovnání hesla
-    const isValidPassword = await bcrypt.compare(password, existingUser.password);
+    const isValidPassword = await argon2.verify(existingUser.password, password);
     if (!isValidPassword) {
       return NextResponse.json({ error: "Nesprávné heslo" }, { status: 400 });
     }

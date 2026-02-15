@@ -301,7 +301,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\Dell\\Plocha\\my-app\\prisma\\generated\\prisma\\client",
+      "value": "C:\\Users\\ondra\\Desktop\\VSCode\\my-app\\prisma\\generated\\prisma\\client",
       "fromEnvVar": null
     },
     "config": {
@@ -315,7 +315,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\Dell\\Plocha\\my-app\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\ondra\\Desktop\\VSCode\\my-app\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -329,7 +329,6 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {

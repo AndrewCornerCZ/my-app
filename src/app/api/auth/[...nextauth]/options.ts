@@ -1,6 +1,6 @@
 import type { NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
-import bcrypt from "bcryptjs";
+import argon2 from 'argon2'
 import {User} from "next-auth"
 import {prisma} from "@/lib/db";
 
@@ -31,7 +31,7 @@ export const options: NextAuthOptions = {
                     throw new Error("No user found");
                 }
 
-                const isValid = await bcrypt.compare(credentials.password, user.password);
+                const isValid = await argon2.verify(user.password, credentials.password);
                 if (isValid) {
                     return {  id: user.id, email: user.email, name: user.username, bio: user.bio, image: user.image }; // Include all required properties
                 } else {
