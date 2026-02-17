@@ -127,6 +127,7 @@ export default function ManageSportsModal({ userSports }: ManageSportsModalProps
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
       <div className="bg-zinc-800 p-6 rounded-lg shadow-xl w-full max-w-md">
         {view === 'list' && (
+          
           <div>
             <h3 className="text-lg font-bold text-white mb-4">Your Sports</h3>
             <div className="space-y-2">
@@ -135,6 +136,10 @@ export default function ManageSportsModal({ userSports }: ManageSportsModalProps
                   {us.sport.name}
                 </button>
               ))}
+              {userSports.length == 0}
+                <div className="w-full text-left p-3 bg-zinc-700 rounded-lg hover:bg-zinc-600">
+                  No selected sport
+                </div>
             </div>
             <div className="flex justify-end mt-6">
               <button onClick={() => setIsOpen(false)} className="px-4 py-2 bg-zinc-600 text-white rounded-lg hover:bg-zinc-700">

@@ -64,6 +64,7 @@ export default function Navbar() {
                             }`}
                         >
                             {link.text === "Home" && <span className="mr-3">🏠</span>}
+                            {link.text === "Add post" && <span className="mr-3">+</span>}
                             {link.text === "Search" && <span className="mr-3">🔍</span>}
                             {link.text === "Friends" && <span className="mr-3">👥</span>}
                             {link.text === "Groups" && <span className="mr-3">👫</span>}
