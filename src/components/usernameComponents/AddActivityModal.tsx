@@ -1,10 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
-import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
-import * as L from "leaflet";
 import Geolocation from './Geolocation';
 
 interface UserSport {
@@ -17,29 +15,14 @@ interface AddActivityModalProps {
     userSports: UserSport[];
 }
 
-const markerIcon = new L.Icon({
-  iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-});
-
-function LocationPicker({ onSelect }: { onSelect: (lat: number, lng: number) => void }) {
-  useMapEvents({
-    click(e) {
-      onSelect(e.latlng.lat, e.latlng.lng);
-    },
-  });
-  return null;
-}
-
 
 export default function AddActivityModal({ userSports }: AddActivityModalProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedSportId, setSelectedSportId] = useState(() => 
+  const [selectedSportId, setSelectedSportId] = useState(() =>
   userSports && userSports.length > 0 ? String(userSports[0].sportId) : ''
 );
   const [starttime, setStartTime] = useState('');
-  const [endtime, setEndTime] = useState('');  
+  const [endtime, setEndTime] = useState('');
   const [description, setDescription] = useState('');
   const [privacy, setPrivacy] = useState('');
   if (!privacy) setPrivacy('public');
@@ -48,6 +31,90 @@ export default function AddActivityModal({ userSports }: AddActivityModalProps) 
   const [error, setError] = useState('');
   const router = useRouter();
   const [location, setLocation] = useState<{ lat: number; lng: number } | null>(null);
+  const [isClient, setIsClient] = useState(false);
+
+  const mapContainerRef = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<any>(null);
+  const markerRef = useRef<any>(null);
+  const markerIconRef = useRef<any>(null);
+  const tileLayerRef = useRef<any>(null);
+  const LRef = useRef<any>(null);
+
+  // Initialize map and Leaflet
+  useEffect(() => {
+    setIsClient(true);
+    import('leaflet').then(L => {
+      LRef.current = L;
+      markerIconRef.current = new L.Icon({
+        iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+      });
+    });
+  }, []);
+
+  // Initialize map when modal opens
+  useEffect(() => {
+    if (!isOpen || !isClient || !mapContainerRef.current || !LRef.current) return;
+
+    const L = LRef.current;
+
+    // Only create map if it doesn't already exist
+    if (!mapRef.current) {
+      const map = L.map(mapContainerRef.current, {
+        center: [51.505, -0.09],
+        zoom: 6,
+      });
+
+      // Add tile layer
+      const tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      }).addTo(map);
+
+      // Add click listener to place marker
+      map.on('click', (e: any) => {
+        setLocation({ lat: e.latlng.lat, lng: e.latlng.lng });
+      });
+
+      mapRef.current = map;
+      tileLayerRef.current = tileLayer;
+    } else {
+      // Map already exists, just reset view
+      mapRef.current.setView([51.505, -0.09], 6);
+    }
+
+    // Cleanup: remove map when modal closes
+    return () => {
+      if (mapRef.current) {
+        mapRef.current.remove();
+        mapRef.current = null;
+      }
+    };
+  }, [isOpen, isClient]);
+
+  // Update marker and view when location changes
+  useEffect(() => {
+    if (!mapRef.current || !location || !LRef.current) return;
+
+    const L = LRef.current;
+
+    // Remove old marker
+    if (markerRef.current) {
+      mapRef.current.removeLayer(markerRef.current);
+    }
+
+    // Add new marker
+    if (markerIconRef.current) {
+      markerRef.current = L.marker(
+        [location.lat, location.lng],
+        { icon: markerIconRef.current }
+      ).addTo(mapRef.current);
+    }
+
+    // Center map on marker
+    mapRef.current.setView([location.lat, location.lng], 13);
+  }, [location]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     setLoading(true);
@@ -71,6 +138,7 @@ export default function AddActivityModal({ userSports }: AddActivityModalProps) 
             }),
         });
         setIsOpen(false);
+        setLocation(null); // Reset location when closing
         router.refresh();
       }
     } catch {
@@ -79,6 +147,11 @@ export default function AddActivityModal({ userSports }: AddActivityModalProps) 
     } finally {
         setLoading(false);
     }
+  }
+
+  const handleClose = () => {
+    setIsOpen(false);
+    setLocation(null); // Reset location when closing
   }
 
   if (!isOpen) {
@@ -137,18 +210,11 @@ export default function AddActivityModal({ userSports }: AddActivityModalProps) 
           <div className="col-span-1 md:col-span-2">
             <Geolocation onLocate={(lat, lng) => setLocation({ lat, lng })} />
             <label className="block text-sm text-gray-300 mb-1">Select Location</label>
-            <div className="rounded overflow-hidden border border-zinc-700">
-              <MapContainer
-                 center={location ? [location.lat, location.lng] : [51.505, -0.09]} // <--- fixed
-                 zoom={location ? 13 : 6}
-                 style={{ height: '220px', width: '100%' }}
-                 key={`map-${location?.lat ?? 'n'}-${location?.lng ?? 'n'}`}
-               >
-                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                <LocationPicker onSelect={(lat, lng) => setLocation({ lat, lng })} />
-                {location && <Marker position={[location.lat, location.lng]} icon={markerIcon} />}
-              </MapContainer>
-            </div>
+            <div
+              ref={mapContainerRef}
+              className="rounded overflow-hidden border border-zinc-700"
+              style={{ height: '220px', width: '100%', background: '#3f3f46' }}
+            />
             {location && (
               <p className="text-xs text-gray-400 mt-1">
                 📍 Selected: {location.lat.toFixed(4)}, {location.lng.toFixed(4)}
@@ -157,7 +223,7 @@ export default function AddActivityModal({ userSports }: AddActivityModalProps) 
           </div>
 
           <div className="col-span-1 md:col-span-2 flex justify-end gap-4 pt-2 sticky bottom-0 bg-gradient-to-t from-zinc-800/90">
-            <button type="button" onClick={() => setIsOpen(false)} className="px-4 py-2 bg-zinc-600 rounded-lg">Cancel</button>
+            <button type="button" onClick={handleClose} className="px-4 py-2 bg-zinc-600 rounded-lg">Cancel</button>
             <button type="submit" disabled={loading} className="px-4 py-2 bg-indigo-600 rounded-lg">{loading ? 'Logging...' : 'Log'}</button>
           </div>
         </form>

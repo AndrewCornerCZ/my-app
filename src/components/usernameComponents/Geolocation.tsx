@@ -41,7 +41,7 @@ export default function Geolocation({ onLocate }: Props) {
         onClick={handleGet}
         disabled={loading}
       >
-        {loading ? 'Získávám polohu…' : 'Použít moji polohu'}
+        {loading ? 'Searching...' : 'Use My Location'}
       </button>
 
       {pos && (
