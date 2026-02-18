@@ -23,13 +23,13 @@ export default function LoginPage() {
       });
 
       if (result?.error) {
-        setError(result.error || "Chyba při přihlášení. Zkuste to znovu!");
+        setError(result.error || "Error during login. Please try again.");
       } else if (result?.ok) {
         router.push("/");
       }
     } catch (err) {
       console.error("Chyba při přihlášení:", err);
-      setError("Chyba při přihlášení. Zkuste to znovu!");
+      setError("Error during login. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -40,19 +40,19 @@ export default function LoginPage() {
       <div className="w-full max-w-md">
         <div className="bg-white rounded-2xl shadow-2xl p-8 space-y-6">
           <div className="space-y-2 text-center">
-            <h1 className="text-3xl font-bold text-gray-900">تسجيل الدخول</h1>
-            <p className="text-gray-600">مرحبًا بعودتكم!</p>
+            <h1 className="text-3xl font-bold text-gray-900">Login</h1>
+            <p className="text-gray-600">Welcome back!</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                البريد الإلكتروني
+                Email
               </label>
               <input
                 id="email"
                 type="email"
-                placeholder="tvůj@email.cz"
+                placeholder="your@email.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -62,7 +62,7 @@ export default function LoginPage() {
 
             <div className="space-y-2">
               <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                كلمة المرور
+                Password
               </label>
               <input
                 id="password"
@@ -92,22 +92,22 @@ export default function LoginPage() {
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
-                  <span>Přihlašuji...</span>
+                  <span>Logging in...</span>
                 </span>
               ) : (
-                "Přihlásit se"
+                "Log in"
               )}
             </button>
           </form>
 
           <div className="pt-4 border-t border-gray-200">
             <p className="text-center text-gray-600 text-sm">
-              Nemáš účet?{" "}
+              Dont have an account?{" "}
               <a
                 href="../register"
-                className="font-semibold text-indigo-600 hover:text-indigo-700 hover:underline transition"
+                className="font-semibold text-teal-600 hover:text-teal-700 hover:underline transition"
               >
-                Zaregistruj se
+                Register
               </a>
             </p>
           </div>
