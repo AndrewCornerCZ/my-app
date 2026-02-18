@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import 'leaflet/dist/leaflet.css'
+import type { Map, Marker, Icon, TileLayer, LeafletMouseEvent } from 'leaflet'
 import Geolocation from './Geolocation';
 
 interface UserSport {
@@ -34,11 +35,11 @@ export default function AddActivityModal({ userSports }: AddActivityModalProps) 
   const [isClient, setIsClient] = useState(false);
 
   const mapContainerRef = useRef<HTMLDivElement>(null);
-  const mapRef = useRef<any>(null);
-  const markerRef = useRef<any>(null);
-  const markerIconRef = useRef<any>(null);
-  const tileLayerRef = useRef<any>(null);
-  const LRef = useRef<any>(null);
+  const mapRef = useRef<Map | null>(null);
+  const markerRef = useRef<Marker | null>(null);
+  const markerIconRef = useRef<Icon | null>(null);
+  const tileLayerRef = useRef<TileLayer | null>(null);
+  const LRef = useRef<typeof import('leaflet') | null>(null);
 
   // Initialize map and Leaflet
   useEffect(() => {
@@ -73,7 +74,7 @@ export default function AddActivityModal({ userSports }: AddActivityModalProps) 
       }).addTo(map);
 
       // Add click listener to place marker
-      map.on('click', (e: any) => {
+      map.on('click', (e: LeafletMouseEvent) => {
         setLocation({ lat: e.latlng.lat, lng: e.latlng.lng });
       });
 

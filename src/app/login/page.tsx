@@ -40,14 +40,14 @@ export default function LoginPage() {
       <div className="w-full max-w-md">
         <div className="bg-white rounded-2xl shadow-2xl p-8 space-y-6">
           <div className="space-y-2 text-center">
-            <h1 className="text-3xl font-bold text-gray-900">Přihlášení</h1>
-            <p className="text-gray-600">Vítejte zpět!</p>
+            <h1 className="text-3xl font-bold text-gray-900">تسجيل الدخول</h1>
+            <p className="text-gray-600">مرحبًا بعودتكم!</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                Email
+                البريد الإلكتروني
               </label>
               <input
                 id="email"
@@ -62,7 +62,7 @@ export default function LoginPage() {
 
             <div className="space-y-2">
               <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                Heslo
+                كلمة المرور
               </label>
               <input
                 id="password"
