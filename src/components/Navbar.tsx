@@ -32,11 +32,11 @@ export default function Navbar() {
     const Links = [
         { href: `/userprofile/${session?.user?.name || ""}`, text: "Profile" },
         { href: "/", text: "Home" },
-        { href: "/AddPost", text: "Add Post" },
         { href: "/search", text: "Search" },
         { href: "/friends", text: "Friends" },
         { href: "/Map", text: "Map" },
         { href: "/groups", text: "Groups" },
+        { href: "/AddPost", text: "Add Post" },
     ];
 
     return (
@@ -53,7 +53,7 @@ export default function Navbar() {
                 </div>
 
                 <nav className="px-4 py-6 space-y-3 flex-1">
-                    {Links.filter(link => link.text !== "Add Post" && link.text !== "Profile").map((link) => (
+                    {Links.filter(link => link.text !== "Profile").map((link) => (
                         <Link
                             key={link.href}
                             href={link.href}
@@ -64,11 +64,11 @@ export default function Navbar() {
                             }`}
                         >
                             {link.text === "Home" && <span className="mr-3">🏠</span>}
-                            {link.text === "Add post" && <span className="mr-3">+</span>}
                             {link.text === "Search" && <span className="mr-3">🔍</span>}
                             {link.text === "Friends" && <span className="mr-3">👥</span>}
                             {link.text === "Groups" && <span className="mr-3">👫</span>}
                             {link.text === "Map" && <span className="mr-3">🗺️</span>}
+                            {link.text === "Add Post" && <span className="mr-3">➕</span>}
                             {link.text}
                         </Link>
                     ))}

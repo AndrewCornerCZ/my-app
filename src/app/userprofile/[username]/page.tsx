@@ -91,7 +91,7 @@ export default async function Profile({ params }: {params: Promise<{ username: s
    return (
     <div className="min-h-screen bg-gray-950">
       <Navbar />
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-4">
         {/* HLAVNÍ DVOUSTUPŇOVÝ LAYOUT */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           
@@ -185,7 +185,7 @@ export default async function Profile({ params }: {params: Promise<{ username: s
 
           {/* PRAVÁ STRANA - KALENDÁŘ A ADD ACTIVITY */}
           <div className="lg:col-span-1">
-            <div className="sticky top-6 space-y-6">
+            <div className="sticky top-4 space-y-6">
               {/* KALENDÁŘ */}
               <div className="bg-gray-900 rounded-lg p-6 shadow-xl">
                 {session?.user?.name === user.username && user.sports.length > 0 && (

@@ -69,18 +69,18 @@ export default async function Friends() {
           {mutualFollows.map((user) => (
             <li key={user.id} className="bg-zinc-800 p-4 rounded-lg hover:bg-zinc-700 transition-colors">
               
-              <a href={`/userprofile/${user.id}`} className="flex items-center justify-between">
+              <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center">
-                    <span className="text-white font-bold">
+                    <a href={`/userprofile/${user.username}`} className="text-white font-bold">
                       {user.username.charAt(0).toUpperCase()}
-                    </span>
+                    </a>
                   </div>
-                  <span className="text-white">@{user.username}</span>
+                  <a href={`/userprofile/${user.username}`} className="text-white">@{user.username}</a>
                 </div>
                 <span className="text-zinc-400">View profile →</span>
                 <StartChatButton otherUserId={user.id} />
-              </a>
+              </div>
               
             </li>
           ))}
