@@ -17,7 +17,7 @@ interface ShowCommentsModalProps {
 
 const COMMENTS_PER_PAGE = 5;
 
-export default function ShowCommentsModal({ comments, postId, totalCount }: ShowCommentsModalProps) {
+export default function ShowCommentsModal({ comments, totalCount }: ShowCommentsModalProps) {
   const [open, setOpen] = useState(false);
   const [page, setPage] = useState(0);
 
