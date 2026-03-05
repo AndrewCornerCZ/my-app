@@ -1,9 +1,9 @@
 import { prisma } from "@/lib/db"
 import { notFound } from "next/navigation"
 import GroupView from "@/components/GroupView"
+import Navbar from "@/components/Navbar"
 
 export default async function GroupPage({ params }: { params: Promise<{ id: string }> }) {
-  // params can be a Promise in some Next.js versions — await it before using
   const resolvedParams = await params
   const id = Number(resolvedParams?.id)
   if (Number.isNaN(id)) return notFound()
@@ -31,12 +31,17 @@ export default async function GroupPage({ params }: { params: Promise<{ id: stri
   if (!group) return notFound()
 
   const safeGroup = JSON.parse(JSON.stringify(group))
+
   return (
-    <div className="min-h-screen bg-zinc-900">
-      <div className="container mx-auto px-6 py-8">
+    <div className="min-h-screen bg-gray-950 text-white relative overflow-hidden">
+      <div className="pointer-events-none fixed -top-32 -left-32 w-96 h-96 rounded-full bg-teal-700 opacity-20 blur-3xl" />
+      <div className="pointer-events-none fixed -bottom-24 -right-24 w-80 h-80 rounded-full bg-teal-900 opacity-20 blur-3xl" />
+
+      <Navbar />
+
+      <div className="relative z-10 container mx-auto px-4 pt-24 pb-16">
         <GroupView group={safeGroup} />
       </div>
     </div>
   )
 }
-

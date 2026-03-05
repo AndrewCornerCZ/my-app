@@ -15,84 +15,41 @@ const Posts = async () => {
     return <div className="text-white">Not authenticated</div>;
   }
 
-  // =========================
-  // USER
-  // =========================
   const user = await prisma.user.findUnique({
     where: { id: session.user.id },
     include: {
       following: true,
-      sports: {
-        include: { sport: true },
-      },
+      sports: { include: { sport: true } },
     },
   });
 
-  if (!user) {
-    return <div className="text-white">User not found</div>;
-  }
+  if (!user) return <div className="text-white">User not found</div>;
 
-  // =========================
-  // POSTS
-  // =========================
   const posts = await prisma.post.findMany({
     include: {
       userLikes: true,
       PostComment: true,
-      postHashtags: {
-        include: { hashtag: true },
-      },
+      postHashtags: { include: { hashtag: true } },
     },
     take: 200,
   });
-  // =========================
-  // AUTOŘI POSTŮ (MAPA)
-  // =========================
+
   const authorIds = [...new Set(posts.map(p => p.authorId))];
-
   const authors = await prisma.user.findMany({
-    where: {
-      id: { in: authorIds },
-    },
-    select: {
-      id: true,
-      username: true,
-      image: true,
-    },
+    where: { id: { in: authorIds } },
+    select: { id: true, username: true, image: true },
   });
+  const authorMap = new Map(authors.map(a => [a.id, a]));
 
-  const authorMap = new Map(
-    authors.map(author => [author.id, author])
-  );
+  const followingIds = new Set(user.following.map(f => f.followingId));
+  const userSports = new Set(user.sports.map(s => s.sport.name.toLowerCase()));
 
-  // =========================
-  // FOLLOWING IDS
-  // =========================
-  const followingIds = new Set(
-    user.following.map(f => f.followingId)
-  );
-
-  // =========================
-  // USER SPORTY
-  // =========================
-  const userSports = new Set(
-    user.sports.map(s => s.sport.name.toLowerCase())
-  );
-
-  // =========================
-  // HASHTAGY, KTERÉ USER POUŽÍVÁ
-  // =========================
   const userPosts = await prisma.post.findMany({
     where: { authorId: user.id },
-    include: {
-      postHashtags: {
-        include: { hashtag: true },
-      },
-    },
+    include: { postHashtags: { include: { hashtag: true } } },
   });
 
   const usedHashtags = new Map<string, number>();
-
   userPosts.forEach(post => {
     post.postHashtags.forEach(ph => {
       const tag = ph.hashtag.text.toLowerCase();
@@ -100,10 +57,6 @@ const Posts = async () => {
     });
   });
 
-  // =========================
-  // SCORING
-  // =========================
-  // Define the shape of Post WITH relations
   type PostWithRelations = Post & {
     userLikes: UserLike[];
     PostComment: PostComment[];
@@ -112,158 +65,121 @@ const Posts = async () => {
 
   function calculatePostScore(post: PostWithRelations): number {
     let score = 0;
-
-    if (followingIds.has(post.authorId)) {
-      score += 50;
-    }
-    
-    score += post.userLikes.length * 2;
-    score += post.PostComment.length * 3;
-
+    if (followingIds.has(post.authorId)) score += 50;
+    score += post.userLikes.length;
+    score += post.PostComment.length;
     post.userLikes.forEach((like) => {
       user?.following.forEach((follow) => {
-        if (follow.followingId === like.userId) {
-          score += 10;
-        }
+        if (follow.followingId === like.userId) score += 10;
       });
-      if (like.userId === session?.user.id) {
-        score -= 20;
-      }
+      if (like.userId === session?.user.id) score -= 100;
     });
-
     post.postHashtags.forEach((ph) => {
       const tag = ph.hashtag.text.toLowerCase();
-      if (usedHashtags.has(tag)) {
-        score += 15 * (usedHashtags.get(tag) ?? 1);
-      }
+      if (usedHashtags.has(tag)) score += 20 * (usedHashtags.get(tag) ?? 1);
+      if (userSports.has(tag)) score += 20;
     });
-
-    post.postHashtags.forEach((ph) => {
-      if (userSports.has(ph.hashtag.text.toLowerCase())) {
-        score += 20;
-      }
-    });
-
-    if (post.authorId === session?.user.id) {
-      score -= 20;
-    }
-    const hoursOld =
-      (Date.now() - new Date(post.created_at).getTime()) / 36e5;
-
+    if (post.authorId === session?.user.id) score -= 100;
+    const hoursOld = (Date.now() - new Date(post.created_at).getTime()) / 36e5;
     if (hoursOld < 1) score += 30;
     else if (hoursOld < 6) score += 20;
     else if (hoursOld < 24) score += 10;
-    else if (hoursOld > 72) score -= 10;
+    else if (hoursOld > 72) score -= hoursOld - 72;
     return score;
   }
 
-  // =========================
-  // FEED
-  // =========================
   const feed = posts
-    .map(post => ({
-      post,
-      score: calculatePostScore(post),
-    }))
+    .map(post => ({ post, score: calculatePostScore(post) }))
     .sort((a, b) => b.score - a.score)
     .slice(0, 30)
     .map(item => item.post);
 
-    for (const post of feed) {
-      console.log(`Post ID: ${post.id}, Score: ${calculatePostScore(post)}`);
-    }
-  // =========================
-  // LIKED POSTS
-  // =========================
-  const likedPosts = await prisma.userLike.findMany({
-    where: { userId: user.id },
-  });
-
+  const likedPosts = await prisma.userLike.findMany({ where: { userId: user.id } });
   const likedPostIds = new Set(likedPosts.map(lp => lp.postId));
 
-  // =========================
-  // RENDER
-  // =========================
+  // Helper: relative time
+  function relativeTime(date: Date): string {
+    const diff = (Date.now() - new Date(date).getTime()) / 1000;
+    if (diff < 60) return 'just now';
+    if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
+    if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
+    return `${Math.floor(diff / 86400)}d ago`;
+  }
+
   return (
-    <div className="flex flex-col items-center gap-4 p-4">
+    <div className="flex flex-col gap-4 w-full">
       {feed.map(post => {
         const author = authorMap.get(post.authorId);
 
         return (
           <div
             key={post.id}
-            className="w-full max-w-xl bg-zinc-900 border border-zinc-700 rounded-xl p-5 shadow-md"
+            className="w-full bg-white/5 border border-white/10 hover:border-white/20 rounded-3xl p-5 shadow-xl backdrop-blur-sm transition-all duration-200"
           >
-            {/* AUTHOR */}
-            <div className="flex items-center gap-2 mb-2">
-              <div className="relative w-10 h-10">
+            {/* Author row */}
+            <div className="flex items-center gap-3 mb-4">
+              <div className="relative w-10 h-10 flex-shrink-0">
                 {author?.image ? (
                   <Image
                     src={author.image}
                     alt="profile"
                     fill
-                    className="rounded-full object-cover"
+                    className="rounded-full object-cover ring-2 ring-white/10"
                   />
                 ) : (
-                  <div className="w-10 h-10 bg-teal-600 rounded-full flex items-center justify-center">
-                    <span className="text-white font-bold">
-                      {author?.username?.[0]?.toUpperCase()}
+                  <div className="w-10 h-10 bg-gradient-to-br from-teal-400 to-teal-700 rounded-full flex items-center justify-center ring-2 ring-white/10 shadow shadow-teal-900/40">
+                    <span className="text-white font-bold text-sm">
+                      {author?.username?.[0]?.toUpperCase() ?? '?'}
                     </span>
                   </div>
                 )}
               </div>
 
-              <a
-                href={`/userprofile/${author?.username}`}
-                className="text-white font-semibold"
-              >
-                @{author?.username}
-              </a>
+              <div className="flex flex-col">
+                <a
+                  href={`/userprofile/${author?.username}`}
+                  className="text-white font-semibold text-sm hover:text-teal-300 transition-colors duration-200"
+                >
+                  @{author?.username}
+                </a>
+                <span className="text-gray-600 text-xs">{relativeTime(post.created_at)}</span>
+              </div>
             </div>
 
-            {/* TEXT */}
-            <p className="text-white text-lg mb-3 whitespace-pre-line">
+            {/* Post text */}
+            <p className="text-gray-100 text-sm leading-relaxed mb-4 whitespace-pre-line">
               {post.text}
             </p>
 
-            {/* HASHTAGS */}
-            <div className="flex flex-wrap gap-2 mb-3">
-              {post.postHashtags.map(ph => (
-                <a
-                  key={ph.hashtag.id}
-                  href={`/searchresults?searchTerm=${ph.hashtag.text}&filter=hashtags`}
-                  className="text-indigo-400 hover:underline"
-                >
-                  #{ph.hashtag.text}
-                </a>
-              ))}
-            </div>
+            {/* Hashtags */}
+            {post.postHashtags.length > 0 && (
+              <div className="flex flex-wrap gap-1.5 mb-4">
+                {post.postHashtags.map(ph => (
+                  <a
+                    key={ph.hashtag.id}
+                    href={`/searchresults?searchTerm=${ph.hashtag.text}&filter=hashtags`}
+                    className="text-xs font-medium px-2.5 py-1 rounded-full bg-teal-500/10 border border-teal-500/20 text-teal-400 hover:bg-teal-500/20 hover:border-teal-400/40 transition-all duration-200"
+                  >
+                    #{ph.hashtag.text}
+                  </a>
+                ))}
+              </div>
+            )}
 
-            {/* TIME */}
-            <div className="text-zinc-400 text-sm flex gap-2">
-              <span>{new Date(post.created_at).toLocaleDateString()}</span>
-              <span>•</span>
-              <span>
-                {new Date(post.created_at).toLocaleTimeString([], {
-                  hour: '2-digit',
-                  minute: '2-digit',
-                })}
-              </span>
-            </div>
+            {/* Divider */}
+            <div className="h-px bg-white/5 mb-3" />
 
-            {/* ACTIONS */}
-            <div className="flex items-center gap-4 mt-3">
+            {/* Actions */}
+            <div className="flex items-center gap-4">
               <LikeButton
                 postId={post.id}
                 initialLikes={post.userLikes.length}
                 liked={likedPostIds.has(post.id)}
               />
-
               <ShowComments
                 postId={post.id}
                 comments={post.PostComment.length}
               />
-
               <AddCommentButton postId={post.id} />
             </div>
           </div>

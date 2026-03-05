@@ -1,37 +1,43 @@
-'use client'
+import { prisma } from '@/lib/db';
+import ShowCommentsModal from './ShowCommentsModal';
 
-import { useState } from 'react';
-import ShowComments from './ShowComments';
 interface ShowCommentsProps {
   postId: number;
-  comments: number;
+  comments: number; // count shown on button before opening
 }
 
-const ShowCommentsButton: React.FC<ShowCommentsProps> = ({ postId, comments }) => {
-  const [isExpanded] = useState(false);
+const ShowComments = async ({ postId, comments: commentCount }: ShowCommentsProps) => {
+  const comments = await prisma.comment.findMany({
+    where: {
+      PostComment: {
+        some: { postId: Number(postId) },
+      },
+    },
+    include: { PostComment: true },
+    orderBy: { createdAt: 'desc' },
+  });
 
+  const users = await prisma.user.findMany({
+    where: { id: { in: comments.map((c) => c.authorId) } },
+  });
 
+  const usersMap = new Map<number, string>();
+  users.forEach((user) => usersMap.set(user.id, user.username));
+
+  const serialized = comments.map((c) => ({
+    id: c.id,
+    text: c.text,
+    createdAt: c.createdAt.toISOString(),
+    authorUsername: usersMap.get(c.authorId) ?? 'unknown',
+  }));
 
   return (
-    <div className="relative">
-      <button 
-        onClick={() => window.location.href = '/Showpost?postId=' + postId} 
-        className="text-zinc-400 text-sm flex items-center gap-2"
-      >
-        Comments
-        <span className="bg-zinc-700 px-2 py-0.5 rounded-full text-xs">
-          {comments}
-        </span>
-        {isExpanded && <span className="text-xs">(Hide)</span>}
-      </button>
-      
-      {isExpanded && (
-        <div className="absolute top-full left-0 mt-2 w-full z-10">
-          <ShowComments postId={postId} />
-        </div>
-      )}
-    </div>
+    <ShowCommentsModal
+      comments={serialized}
+      postId={postId}
+      totalCount={commentCount}
+    />
   );
 };
 
-export default ShowCommentsButton;
+export default ShowComments;

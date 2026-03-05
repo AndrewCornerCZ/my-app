@@ -4,7 +4,7 @@ import AddForm from "@/components/postsComponents/AddForm";
 export default async function AddPost() {
 
   return (
-    <><h1 className="text-4xl text-indigo-500 text-left m-[10px]">Add Post</h1>
+    <>
     <AddForm></AddForm>
     </>
   );

@@ -1,211 +1,197 @@
-import React from "react";
-import Navbar from "../../../components/Navbar";
-import SettingsButton from "@/components/usernameComponents/SettingsButton";
-import PostProfile from "@/components/usernameComponents/PostProfile";
-import { prisma } from "@/lib/db";
-import FollowButton from "@/components/usernameComponents/FollowButton";
-import { getServerSession } from "next-auth/next";
-import { options } from "@/app/api/auth/[...nextauth]/options";
+import React from "react"
+import Navbar from "../../../components/Navbar"
+import SettingsButton from "@/components/usernameComponents/SettingsButton"
+import PostProfile from "@/components/usernameComponents/PostProfile"
+import { prisma } from "@/lib/db"
+import FollowButton from "@/components/usernameComponents/FollowButton"
+import { getServerSession } from "next-auth/next"
+import { options } from "@/app/api/auth/[...nextauth]/options"
 import Image from 'next/image'
-import ManageSportsModal from '@/components/usernameComponents/ManageSportsModal'; // Nahraďte EditSportModal
-import ProfileImageUploader from "@/components/usernameComponents/ProfileImageUploader";
-import AddSportModal from '@/components/usernameComponents/AddSportModal'; // Přidejte tento import
-import AddActivityModal from "@/components/usernameComponents/AddActivityModal";
-import ActivityCalendar from '@/components/usernameComponents/ActivityCalendar';
+import ManageSportsModal from '@/components/usernameComponents/ManageSportsModal'
+import ProfileImageUploader from "@/components/usernameComponents/ProfileImageUploader"
+import AddSportModal from '@/components/usernameComponents/AddSportModal'
+import AddActivityModal from "@/components/usernameComponents/AddActivityModal"
+import ActivityCalendar from '@/components/usernameComponents/ActivityCalendar'
 
+export default async function Profile({ params }: { params: Promise<{ username: string }> }) {
+  const { username } = await params
+  const session = await getServerSession(options)
+  const decodedUsername = decodeURIComponent(username)
 
+  if (!decodedUsername || !username) return <div className="text-white">Invalid username</div>
 
-export default async function Profile({ params }: {params: Promise<{ username: string }>;}) {
-    const { username } = await params; 
-  const session = await getServerSession(options);
-  
-  const decodedUsername = decodeURIComponent(username);
-  if (!decodedUsername) {
-    return <div className='text-white'>Invalid username</div>;
-  }
-  if (!username) { //Pokud username nemáme, tak vypíšeme error
-    return <div className='text-white'>Invalid username</div>;
-  }
- 
-  // Načtem si uživatele z db
   const [user, currentUser] = await Promise.all([
-    prisma.user.findUnique({ //najdem si ho podle unique username
-      where: {
-        username: decodedUsername,
-      },
-      include: { //Zahrneme i jeho posty a followery a followings
+    prisma.user.findUnique({
+      where: { username: decodedUsername },
+      include: {
         followers: true,
         following: true,
         activities: {
           include: {
-            sport: true, // This attaches the related Sport object to each activity
-            user: { //přidáme i uživatele, aby šlo zobrazit username u aktivity v kalendáři
-              select: {
-                id: true,
-                username: true
-              }
-            }
-        }
-      },
-        sports: { //taktéž sporty navázané na jeho profil
-        include: {
-          sport: true,
-          sportrank: true
+            sport: true,
+            user: { select: { id: true, username: true } },
+          },
+        },
+        sports: {
+          include: { sport: true, sportrank: true },
         },
       },
-
-      }
-
     }),
-    session?.user?.email ? prisma.user.findUnique({ //najdem si i current usera pokud je přihlášený, bude to potřeba pro práva na profilu
-      where: {
-        email: session.user.email
-      }
-    }) : null
-  ]);
+    session?.user?.email
+      ? prisma.user.findUnique({ where: { email: session.user.email } })
+      : null,
+  ])
 
-  if (!user) {
-    return <div className='text-white'>User not found</div>;
-  }
+  if (!user) return <div className="text-white">User not found</div>
 
-  // Normalize activities so shape matches ActivityWithSport (add 'longitude' expected by client)
   const serializedActivities = user.activities.map(a => ({
     ...a,
-    // ensure date is serializable (ActivityCalendar accepts string|Date)
     date: a.date instanceof Date ? a.date.toISOString() : String(a.date),
-    // keep original latitude and add the misspelled field 'longitude' the client type expects
     latitude: a.latitude ?? null,
     longitude: a.longitude ?? null,
   }))
-   // Zkontrolujeme, jestli current user sleduje zobrazovaného uživatele
-   const isFollowing = currentUser ? await prisma.userFollow.findFirst({
-     where: {
-       AND: [
-         { followerId: currentUser.id },
-         { followingId: user.id }
-       ]
-     }
-   }) : null;
 
+  const isFollowing = currentUser
+    ? await prisma.userFollow.findFirst({
+        where: { AND: [{ followerId: currentUser.id }, { followingId: user.id }] },
+      })
+    : null
 
-   return (
-    <div className="min-h-screen bg-gray-950">
+  const isOwner = session?.user?.name === decodedUsername
+
+  return (
+    <div className="min-h-screen bg-gray-950 text-white relative overflow-hidden">
+      {/* Background blobs */}
+      <div className="pointer-events-none fixed -top-32 -left-32 w-96 h-96 rounded-full bg-teal-700 opacity-20 blur-3xl" />
+      <div className="pointer-events-none fixed -bottom-24 -right-24 w-80 h-80 rounded-full bg-teal-900 opacity-20 blur-3xl" />
+
       <Navbar />
-      <div className="container mx-auto px-4 py-4">
-        {/* HLAVNÍ DVOUSTUPŇOVÝ LAYOUT */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          
-          {/* LEVÁ STRANA - PROFIL A POSTY */}
-          <div className="lg:col-span-2 space-y-6">
-            
-            {/* PROFIL HEADER - HORNÍ LIŠTA S TLAČÍTKY */}
-            <div className="bg-gray-900 rounded-lg p-6 shadow-xl">
-              <div className="flex items-start justify-between mb-4">
-                <div className="flex items-center gap-4 flex-1">
-                  <div className="relative w-16 h-16">
+
+      <div className="relative z-10 container mx-auto px-4 pt-24 pb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+          {/* ── LEFT: Profile + Posts ── */}
+          <div className="lg:col-span-2 space-y-5">
+
+            {/* Profile header */}
+            <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
+              <div className="flex items-start justify-between gap-4 mb-4">
+                {/* Avatar + name */}
+                <div className="flex items-center gap-4">
+                  <div className="relative w-16 h-16 flex-shrink-0">
                     {user.image ? (
                       <Image
                         src={user.image}
                         alt={`${user.username}'s profile`}
                         fill
-                        className="rounded-full object-cover"
+                        className="rounded-2xl object-cover"
                       />
                     ) : (
-                      <div className="w-16 h-16 bg-teal-600 rounded-full flex items-center justify-center">
-                        <span className="text-2xl text-white font-bold">
+                      <div className="w-16 h-16 bg-gradient-to-br from-teal-400 to-teal-700 rounded-2xl flex items-center justify-center shadow-lg shadow-teal-900/40">
+                        <span className="text-2xl text-white font-extrabold">
                           {user.username.charAt(0).toUpperCase()}
                         </span>
                       </div>
                     )}
-                    {session?.user?.name === username && (
-                      <ProfileImageUploader userId={user.id} />
+                    {isOwner && (
+                      <div className="absolute -bottom-1 -right-1">
+                        <ProfileImageUploader userId={user.id} />
+                      </div>
                     )}
                   </div>
                   <div>
-                    <h1 className="text-2xl font-bold text-white">@{user.username}</h1>
+                    <p className="text-xs font-semibold uppercase tracking-widest text-teal-500 mb-0.5">Profile</p>
+                    <h1 className="text-xl font-extrabold text-white tracking-tight">@{user.username}</h1>
                   </div>
                 </div>
-                
-                {/* TLAČÍTKA NAHOŘE VPRAVO */}
-                <div className="flex gap-2">
-                  {session?.user?.name === decodedUsername && (
+
+                {/* Action buttons */}
+                <div className="flex items-center gap-2 flex-wrap justify-end">
+                  {isOwner ? (
                     <>
                       <SettingsButton />
                       <ManageSportsModal userSports={user.sports} />
                       <AddSportModal userId={user.id} userSports={user.sports} />
                     </>
-                  )}
-                  {session?.user?.name !== decodedUsername && (
-                    <FollowButton 
-                      userId={user.id} 
-                      initialFollowState={!!isFollowing}
-                    />
+                  ) : (
+                    <FollowButton userId={user.id} initialFollowState={!!isFollowing} />
                   )}
                 </div>
               </div>
 
-              {/* BIO A STATISTIKY */}
+              {/* Bio + Stats */}
               <div className="space-y-3">
                 {user.bio && (
-                  <p className="text-gray-300 text-sm leading-relaxed">{user.bio}</p>
+                  <p className="text-gray-400 text-sm leading-relaxed">{user.bio}</p>
                 )}
-                <div className="text-sm text-gray-400">
-                  <span className="font-semibold text-teal-400">{user.followers.length}</span> Followers • 
-                  <span className="font-semibold text-teal-400 ml-2">{user.following.length}</span> Following
+                <div className="flex items-center gap-4 text-sm">
+                  <span>
+                    <span className="text-teal-400 font-bold">{user.followers.length}</span>
+                    <span className="text-gray-500 ml-1">Followers</span>
+                  </span>
+                  <span className="text-gray-700">·</span>
+                  <span>
+                    <span className="text-teal-400 font-bold">{user.following.length}</span>
+                    <span className="text-gray-500 ml-1">Following</span>
+                  </span>
+                  <span className="text-gray-700">·</span>
+                  <span>
+                    <span className="text-teal-400 font-bold">{user.activities.length}</span>
+                    <span className="text-gray-500 ml-1">Activities</span>
+                  </span>
                 </div>
               </div>
 
+              {/* Sports chips */}
               {user.sports.length > 0 && (
-              <div className="mt-4">
-                <h2 className="text-lg font-semibold text-white mb-3">Sports</h2>
-                <div className="flex flex-wrap gap-2">
-                  {user.sports.map((us) => (
-                    <span
-                      key={us.sportId}
-                      className="px-3 py-1 text-white rounded-full text-xs font-medium"
-                      style={{ backgroundColor: us.color || '#14b8a6' }}
-                    >
-                      {us.sport.name}
-                    </span>
-                  ))}
+                <div className="mt-4 pt-4 border-t border-white/10">
+                  <p className="text-xs font-semibold uppercase tracking-widest text-gray-600 mb-2.5">Sports</p>
+                  <div className="flex flex-wrap gap-2">
+                    {user.sports.map(us => (
+                      <span
+                        key={us.sportId}
+                        className="px-3 py-1 rounded-full text-xs font-semibold text-white"
+                        style={{ backgroundColor: (us.color || '#14b8a6') + '33', border: `1.5px solid ${us.color || '#14b8a6'}`, color: us.color || '#14b8a6' }}
+                      >
+                        {us.sport.name}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
             </div>
 
-
-            {/* POSTY SEKCE */}
+            {/* Posts */}
             <div>
-              <h2 className="text-lg font-semibold text-white mb-4">Posts</h2>
-              <div className="space-y-4">
-                <PostProfile id={user.id} />
-              </div>
+              <p className="text-xs font-semibold uppercase tracking-widest text-teal-500 mb-3">Posts</p>
+              <PostProfile id={user.id} />
             </div>
           </div>
 
-          {/* PRAVÁ STRANA - KALENDÁŘ A ADD ACTIVITY */}
+          {/* ── RIGHT: Calendar ── */}
           <div className="lg:col-span-1">
-            <div className="sticky top-4 space-y-6">
-              {/* KALENDÁŘ */}
-              <div className="bg-gray-900 rounded-lg p-6 shadow-xl">
-                {session?.user?.name === user.username && user.sports.length > 0 && (
-                  <div className="mt-3 text-left space-y-1 pb-5">
-                    <AddActivityModal userSports={user.sports} />
+            <div className="sticky top-6">
+              <div className="bg-white/5 border border-white/10 rounded-3xl p-5">
+                <div className="flex items-center justify-between mb-4">
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-widest text-teal-500 mb-0.5">Schedule</p>
+                    <h2 className="text-sm font-bold text-white">Activity Calendar</h2>
                   </div>
-                )}
-                <ActivityCalendar 
+                  {isOwner && user.sports.length > 0 && (
+                    <AddActivityModal userSports={user.sports} />
+                  )}
+                </div>
+                <ActivityCalendar
                   initialActivities={serializedActivities}
-                  userSports={user.sports} 
+                  userSports={user.sports}
                   userId={user.id}
                 />
               </div>
-
-              {/* ADD ACTIVITY */}
-
             </div>
           </div>
+
         </div>
       </div>
     </div>
-  );
+  )
 }

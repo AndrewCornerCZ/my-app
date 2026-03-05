@@ -17,12 +17,7 @@ export async function POST(req: Request) {
 
   try {
     const group = await prisma.group.create({
-      data: {
-        name,
-        description,
-        ownerId: Number(session.user.id),
-        sportId,
-      },
+      data: { name, description, ownerId: Number(session.user.id), sportId },
     })
     return NextResponse.json(group, { status: 201 })
   } catch (e) {
@@ -38,41 +33,52 @@ export async function GET() {
   try {
     const userId = Number(session.user.id)
 
-    // nejdříve získat, koho už sleduju
-    const followinguser = await prisma.user.findMany({
+    // Koho sleduji
+    const followingUsers = await prisma.user.findMany({
+      where: { followers: { some: { followerId: userId } } },
+    })
+    const followingIds = followingUsers.map(u => u.id)
+
+    // Moje skupiny = vlastním NEBO jsem členem
+    const mygroups = await prisma.group.findMany({
       where: {
-        followers: {
-          some: { followerId: userId },
-        },
+        OR: [
+          { ownerId: userId },
+          { members: { some: { userId } } },
+        ],
+      },
+      include: {
+        owner: { select: { id: true, username: true } },
+        _count: { select: { members: true } },
       },
     })
 
-    const followingIds = followinguser.map(u => u.id)
-    const excludeOwnerIds = [userId, ...followingIds] // vyřadit své i přátelské skupiny
+    const mygroupIds = mygroups.map(g => g.id)
 
-    // veřejné skupiny, které nejsou moje a nejsou od lidí, které sleduju
+    // Skupiny přátel = přítel je owner NEBO member (a já tam ještě nejsem)
+    const friendsgroups = followingIds.length > 0
+      ? await prisma.group.findMany({
+          where: {
+            id: { notIn: mygroupIds },
+            OR: [
+              { ownerId: { in: followingIds } },
+              { members: { some: { userId: { in: followingIds } } } },
+            ],
+          },
+          include: {
+            owner: { select: { id: true, username: true } },
+            _count: { select: { members: true } },
+          },
+        })
+      : []
+
+    const friendsgroupIds = friendsgroups.map(g => g.id)
+
+    // Všechny veřejné skupiny (které nemám ani nejsou od/v přátel)
     const groupsall = await prisma.group.findMany({
       where: {
         isPublic: true,
-        ownerId: { notIn: excludeOwnerIds },
-      },
-      include: {
-        owner: { select: { id: true, username: true } },
-        _count: { select: { members: true } },
-      },
-    })
-
-    const mygroups = await prisma.group.findMany({
-      where: { ownerId: userId },
-      include: {
-        owner: { select: { id: true, username: true } },
-        _count: { select: { members: true } },
-      },
-    })
-
-    const friendsgroups = await prisma.group.findMany({
-      where: {
-        ownerId: { in: followingIds },
+        id: { notIn: [...mygroupIds, ...friendsgroupIds] },
       },
       include: {
         owner: { select: { id: true, username: true } },

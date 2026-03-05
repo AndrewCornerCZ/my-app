@@ -4,13 +4,14 @@ import { useState, useEffect } from 'react'
 import { useSession, signOut } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { Eye, EyeOff } from 'lucide-react'
+import Navbar from '@/components/Navbar'
 
 interface FormData {
-  username: string;
-  currentPassword: string;
-  newPassword: string;
-  confirmPassword: string;
-  bio: string; // Add this line
+  username: string
+  currentPassword: string
+  newPassword: string
+  confirmPassword: string
+  bio: string
 }
 
 export default function SettingsPage() {
@@ -24,56 +25,48 @@ export default function SettingsPage() {
     currentPassword: '',
     newPassword: '',
     confirmPassword: '',
-    bio: ''
+    bio: '',
   })
-  const [showPasswords, setShowPasswords] = useState({
-    current: false,
-    new: false,
-    confirm: false
-  })
+  const [showPasswords, setShowPasswords] = useState({ current: false, new: false, confirm: false })
   const [showPasswordSection, setShowPasswordSection] = useState(false)
 
-  // Update username when session is loaded
   useEffect(() => {
     if (session?.user) {
       setFormData(prev => ({
         ...prev,
         username: session.user.name || '',
-        bio: session.user.bio || '' // Add this line
+        bio: session.user.bio || '',
       }))
     }
   }, [session])
-  // Redirect to login if unauthenticated
+
   useEffect(() => {
-    if (status === 'unauthenticated') {
-      router.push('/login')
-    }
+    if (status === 'unauthenticated') router.push('/login')
   }, [status, router])
 
-  // Show loading state while checking authentication
   if (status === 'loading') {
-    return <div className="settings-page">Loading...</div>
+    return (
+      <div className="min-h-screen bg-gray-950 flex items-center justify-center">
+        <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-teal-400 to-teal-700 animate-pulse" />
+      </div>
+    )
   }
-  // Don't render the form if not authenticated
-  if (!session) {
-    return null
-  }
+  if (!session) return null
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setFormData(prev => ({ ...prev, [name]: value } as FormData))
   }
+
   const togglePasswordVisibility = (field: 'current' | 'new' | 'confirm') => {
-    setShowPasswords(prev => ({
-      ...prev,
-      [field]: !prev[field]
-    }))
+    setShowPasswords(prev => ({ ...prev, [field]: !prev[field] }))
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
-    
+    setError('')
+    setSuccess('')
     try {
       const response = await fetch('/api/settings/update', {
         method: 'POST',
@@ -82,160 +75,177 @@ export default function SettingsPage() {
           username: formData.username || undefined,
           currentPassword: formData.currentPassword,
           newPassword: formData.newPassword || undefined,
-          bio: formData.bio || undefined // Add this line
-        })
+          bio: formData.bio || undefined,
+        }),
       })
-
       const data = await response.json()
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Something went wrong')
-      }
-
+      if (!response.ok) throw new Error(data.error || 'Something went wrong')
       setSuccess(data.message)
-
-      // If server indicates we should logout, do so
-      if (data.shouldLogout) {
-        await signOut({ redirect: true, callbackUrl: '/login' })
-      }
-
+      if (data.shouldLogout) await signOut({ redirect: true, callbackUrl: '/login' })
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong')
     } finally {
       setLoading(false)
     }
   }
+
+  // Reusable password input
+  const PasswordInput = ({
+    id, label, field
+  }: {
+    id: 'currentPassword' | 'newPassword' | 'confirmPassword'
+    label: string
+    field: 'current' | 'new' | 'confirm'
+  }) => (
+    <div>
+      <label className="block text-xs font-semibold uppercase tracking-widest text-gray-500 mb-2">{label}</label>
+      <div className="relative">
+        <input
+          type={showPasswords[field] ? 'text' : 'password'}
+          id={id}
+          name={id}
+          value={formData[id]}
+          onChange={handleChange}
+          className="w-full px-4 py-3 pr-11 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-600 text-sm outline-none focus:border-teal-500/50 focus:ring-2 focus:ring-teal-500/20 transition-all duration-200"
+        />
+        <button
+          type="button"
+          onClick={() => togglePasswordVisibility(field)}
+          className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-600 hover:text-teal-400 transition-colors duration-200"
+        >
+          {showPasswords[field] ? <EyeOff size={16} /> : <Eye size={16} />}
+        </button>
+      </div>
+    </div>
+  )
+
   return (
-    <div className="min-h-screen bg-gray-950 pt-8 pb-12">
-      <div className="max-w-2xl mx-auto px-4">
-        <h1 className="text-3xl font-bold text-white mb-8">Account Settings</h1>
-        <form onSubmit={handleSubmit} className="bg-gray-900 rounded-lg p-8 shadow-lg space-y-6">
-          <div className="space-y-2">
-            <label htmlFor="username" className="block text-white font-semibold">
-              Username
-            </label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              value={formData.username}
-              onChange={handleChange}
-              className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded text-white placeholder-gray-500 focus:outline-none focus:border-teal-500"
-              minLength={3}
-            />
+    <div className="min-h-screen bg-gray-950 text-white relative overflow-hidden">
+      <div className="pointer-events-none fixed -top-32 -left-32 w-96 h-96 rounded-full bg-teal-700 opacity-20 blur-3xl" />
+      <div className="pointer-events-none fixed -bottom-24 -right-24 w-80 h-80 rounded-full bg-teal-900 opacity-20 blur-3xl" />
+
+      <Navbar />
+
+      <div className="relative z-10 flex flex-col items-center px-4 pt-28 pb-16">
+        <div className="w-full max-w-lg">
+
+          {/* Header */}
+          <div className="mb-6">
+            <p className="text-xs font-semibold uppercase tracking-widest text-teal-500 mb-1">Account</p>
+            <h1 className="text-2xl font-extrabold tracking-tight">
+              Settings
+            </h1>
           </div>
-          <div className="space-y-2">
-            <label htmlFor="bio" className="block text-white font-semibold">
-              Bio
-            </label>
-            <textarea
-              id="bio"
-              name="bio"
-              value={formData.bio}
-              onChange={handleChange}
-              className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded text-white placeholder-gray-500 focus:outline-none focus:border-teal-500 resize-none"
-              maxLength={160}
-              rows={4}
-            />
-            <span className="text-sm text-gray-400">
-              {formData.bio.length}/160
-            </span>
-          </div>
-              <div className="space-y-2">
-                <label htmlFor="currentPassword" className="block text-white font-semibold">
-                  Current Password
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+
+            {/* Profile section */}
+            <div className="bg-white/5 border border-white/10 rounded-3xl p-6 space-y-4">
+              <p className="text-xs font-semibold uppercase tracking-widest text-teal-500">Profile</p>
+
+              {/* Username */}
+              <div>
+                <label htmlFor="username" className="block text-xs font-semibold uppercase tracking-widest text-gray-500 mb-2">
+                  Username
                 </label>
-                <div className="relative">
-                  <input
-                    type={showPasswords.current ? 'text' : 'password'}
-                    id="currentPassword"
-                    name="currentPassword"
-                    value={formData.currentPassword}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded text-white placeholder-gray-500 focus:outline-none focus:border-teal-500 pr-10"
-                    required
-                  />
-                  <button
-                    type="button"
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
-                    onClick={() => togglePasswordVisibility('current')}
-                  >
-                    {showPasswords.current ? <EyeOff size={20} /> : <Eye size={20} />}
-                  </button>
-                </div>
-              </div>
-          <button
-            type="button"
-            onClick={() => setShowPasswordSection(!showPasswordSection)}
-            className="w-full py-2 px-4 bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded transition duration-200"
-          >
-            {showPasswordSection ? 'Hide Password Change' : 'Change Password'}
-          </button>
-          
-          {showPasswordSection && (
-            <div className="space-y-6 pt-4 border-t border-gray-700">
-              <div className="space-y-2">
-                <label htmlFor="newPassword" className="block text-white font-semibold">
-                  New Password
-                </label>
-                <div className="relative">
-                  <input
-                    type={showPasswords.new ? 'text' : 'password'}
-                    id="newPassword"
-                    name="newPassword"
-                    value={formData.newPassword}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded text-white placeholder-gray-500 focus:outline-none focus:border-teal-500 pr-10"
-                    minLength={8}
-                  />
-                  <button
-                    type="button"
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
-                    onClick={() => togglePasswordVisibility('new')}
-                  >
-                    {showPasswords.new ? <EyeOff size={20} /> : <Eye size={20} />}
-                  </button>
-                </div>
+                <input
+                  type="text"
+                  id="username"
+                  name="username"
+                  value={formData.username}
+                  onChange={handleChange}
+                  minLength={3}
+                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white text-sm placeholder-gray-600 outline-none focus:border-teal-500/50 focus:ring-2 focus:ring-teal-500/20 transition-all duration-200"
+                />
               </div>
 
-              <div className="space-y-2">
-                <label htmlFor="confirmPassword" className="block text-white font-semibold">
-                  Confirm New Password
-                </label>
-                <div className="relative">
-                  <input
-                    type={showPasswords.confirm ? 'text' : 'password'}
-                    id="confirmPassword"
-                    name="confirmPassword"
-                    value={formData.confirmPassword}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded text-white placeholder-gray-500 focus:outline-none focus:border-teal-500 pr-10"
-                    minLength={8}
-                  />
-                  <button
-                    type="button"
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
-                    onClick={() => togglePasswordVisibility('confirm')}
-                  >
-                    {showPasswords.confirm ? <EyeOff size={20} /> : <Eye size={20} />}
-                  </button>
+              {/* Bio */}
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <label htmlFor="bio" className="block text-xs font-semibold uppercase tracking-widest text-gray-500">
+                    Bio
+                  </label>
+                  <span className={`text-xs ${formData.bio.length > 140 ? 'text-yellow-500' : 'text-gray-600'}`}>
+                    {formData.bio.length}/160
+                  </span>
                 </div>
+                <textarea
+                  id="bio"
+                  name="bio"
+                  value={formData.bio}
+                  onChange={handleChange}
+                  maxLength={160}
+                  rows={3}
+                  placeholder="Tell people a little about yourself..."
+                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white text-sm placeholder-gray-600 outline-none focus:border-teal-500/50 focus:ring-2 focus:ring-teal-500/20 transition-all duration-200 resize-none"
+                />
               </div>
             </div>
-          )}
 
-          {error && <p className="text-red-500 font-semibold">{error}</p>}
-          {success && <p className="text-green-500 font-semibold">{success}</p>}
+            {/* Security section */}
+            <div className="bg-white/5 border border-white/10 rounded-3xl p-6 space-y-4">
+              <p className="text-xs font-semibold uppercase tracking-widest text-teal-500">Security</p>
 
-          <button
-            type="submit"
-            className="w-full py-2 px-4 bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-            disabled={loading}
-          >
-            {loading ? 'Updating...' : 'Update Settings'}
-          </button>
-        </form>
- </div>
+              <PasswordInput id="currentPassword" label="Current Password" field="current" />
+
+              {/* Toggle change password */}
+              <button
+                type="button"
+                onClick={() => setShowPasswordSection(!showPasswordSection)}
+                className={`w-full py-2.5 px-4 rounded-xl border text-sm font-medium transition-all duration-200 ${
+                  showPasswordSection
+                    ? 'bg-teal-500/20 border-teal-500/50 text-teal-300'
+                    : 'bg-white/5 border-white/10 text-gray-400 hover:text-white hover:border-white/20'
+                }`}
+              >
+                {showPasswordSection ? 'Hide Password Change' : 'Change Password'}
+              </button>
+
+              {showPasswordSection && (
+                <div className="space-y-4 pt-2 border-t border-white/10">
+                  <PasswordInput id="newPassword" label="New Password" field="new" />
+                  <PasswordInput id="confirmPassword" label="Confirm New Password" field="confirm" />
+                </div>
+              )}
+            </div>
+
+            {/* Feedback */}
+            {error && (
+              <div className="flex items-center gap-2 px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm">
+                <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/>
+                </svg>
+                {error}
+              </div>
+            )}
+            {success && (
+              <div className="flex items-center gap-2 px-4 py-3 rounded-xl bg-teal-500/10 border border-teal-500/20 text-teal-400 text-sm">
+                <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                {success}
+              </div>
+            )}
+
+            {/* Submit */}
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full py-3.5 rounded-xl bg-gradient-to-r from-teal-400 to-teal-600 text-white font-semibold text-sm shadow-lg shadow-teal-900/40 hover:brightness-110 hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:translate-y-0 transition-all duration-200 flex items-center justify-center gap-2"
+            >
+              {loading ? (
+                <>
+                  <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>
+                  </svg>
+                  Saving...
+                </>
+              ) : 'Save Changes'}
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
   )
 }

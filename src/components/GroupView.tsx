@@ -4,25 +4,17 @@ import React, { useState, useEffect } from "react"
 import { useSession } from "next-auth/react"
 import Link from "next/link"
 import dynamic from "next/dynamic"
-
-// dynamic Map preview (ke kompatibilitě se SSR)
-const MapComponent = dynamic(() => import("@/components/MapComponent"), { ssr: false })
-
-// react-leaflet used directly for the picker (client only)
 import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 
+const MapComponent = dynamic(() => import("@/components/MapComponent"), { ssr: false })
+
 type Participant = {
   id?: number
   attending?: boolean
-  user?: {
-    id?: number | string
-    username?: string
-    email?: string
-  }
+  user?: { id?: number | string; username?: string; email?: string }
 }
-
 type Activity = {
   id: number
   sport?: { name: string }
@@ -34,30 +26,9 @@ type Activity = {
   latitude?: number
   longitude?: number
 }
-
-type GroupActivity = {
-  id: number
-  activity: Activity
-}
-
-type GroupMember = {
-  id: number
-  user: {
-    id: number | string
-    username: string
-  }
-}
-
-type GroupInvitation = {
-  id: number
-  status: string
-  user?: {
-    id: number | string
-    username?: string
-    email?: string
-  }
-}
-
+type GroupActivity = { id: number; activity: Activity }
+type GroupMember = { id: number; user: { id: number | string; username: string } }
+type GroupInvitation = { id: number; status: string; user?: { id: number | string; username?: string; email?: string } }
 type GroupData = {
   id: number | string
   name: string
@@ -70,35 +41,42 @@ type GroupData = {
   invitations?: GroupInvitation[]
 }
 
-const markerIcon = new L.Icon({
+const markerIcon = typeof window !== 'undefined' ? new L.Icon({
   iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
   iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
   shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-})
+  iconSize: [25, 41], iconAnchor: [12, 41],
+}) : undefined
 
 function MapClickHandler({ onClick }: { onClick: (lat: number, lng: number) => void }) {
-  useMapEvents({
-    click(e) {
-      onClick(e.latlng.lat, e.latlng.lng)
-    },
-  })
+  useMapEvents({ click(e) { onClick(e.latlng.lat, e.latlng.lng) } })
   return null
 }
 
 function MapPicker({ lat, lng, onChange, zoom = 13 }: { lat?: number; lng?: number; onChange: (lat: number, lng: number) => void; zoom?: number }) {
   const center: [number, number] = [lat ?? 50.08, lng ?? 14.44]
-
   return (
-    <div className="h-48 w-full rounded overflow-hidden">
+    <div className="h-48 w-full rounded-xl overflow-hidden border border-white/10">
       <MapContainer center={center} zoom={zoom} style={{ height: '100%', width: '100%' }}>
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         <MapClickHandler onClick={onChange} />
-        {lat !== undefined && lng !== undefined && <Marker position={[lat, lng]} icon={markerIcon} />}
+        {lat !== undefined && lng !== undefined && markerIcon && <Marker position={[lat, lng]} icon={markerIcon} />}
       </MapContainer>
     </div>
   )
+}
+
+// Small reusable card wrapper
+function Card({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return (
+    <div className={`bg-white/5 border border-white/10 rounded-2xl p-5 ${className}`}>
+      {children}
+    </div>
+  )
+}
+
+function SectionTitle({ children }: { children: React.ReactNode }) {
+  return <p className="text-xs font-semibold uppercase tracking-widest text-teal-500 mb-3">{children}</p>
 }
 
 export default function GroupView({ group }: { group: GroupData }) {
@@ -109,41 +87,27 @@ export default function GroupView({ group }: { group: GroupData }) {
   const [loading, setLoading] = useState(false)
   const [selectedActivity, setSelectedActivity] = useState<GroupActivity | null>(null)
   const [mapLocation, setMapLocation] = useState<{ lat: number; lng: number } | null>(null)
-
-  // nový stav pro účastníky a info, zda jsem odpověděl
   const [participants, setParticipants] = useState<Participant[]>([])
   const [userAttending, setUserAttending] = useState<boolean | null>(null)
-
-  // activity form: removed manual lat/lng fields
-  const [activityForm, setActivityForm] = useState({
-    sportId: "", // kept for backward compatibility but we'll use selectedSport
-    date: "",
-    starttime: "",
-    endtime: "",
-    description: "",
-  })
-
-  // sports list + group selected sport
   const [sport, setSport] = useState<string>("")
-  const [selectedSport, setSelectedSport] = useState<number | null>(group?.sportId ?? null)
-  // invite form (owner)
+  const [selectedSport] = useState<number | null>(group?.sportId ?? null)
+  const [activityForm, setActivityForm] = useState({ sportId: "", date: "", starttime: "", endtime: "", description: "" })
+
   const isOwner = session?.user?.id && Number(session.user.id) === group.ownerId
   const isMember = session?.user?.id && members.some((m: GroupMember) => Number(m.user.id) === Number(session.user.id))
 
-useEffect(() => {
-  async function loadSport() {
-    try {
-      const res = await fetch('/api/sport/' + group.sportId)
-      if (!res.ok) return
-      const json = await res.json()
-      setSport(json || [])
-    } catch (e) {
-      console.error(e)
+  useEffect(() => {
+    async function loadSport() {
+      try {
+        const res = await fetch('/api/sport/' + group.sportId)
+        if (!res.ok) return
+        const json = await res.json()
+        setSport(json || [])
+      } catch (e) { console.error(e) }
     }
-  }
-  loadSport()
-}, [group.sportId])
-  
+    loadSport()
+  }, [group.sportId])
+
   async function refresh() {
     try {
       const res = await fetch(`/api/groups/${group.id}`)
@@ -152,44 +116,30 @@ useEffect(() => {
       setMembers(json.members || [])
       setActivities(json.activities || [])
       setInvitations(json.invitations || [])
-      // sync selectedSport with server value if present
-      if (json.sportId) setSelectedSport(json.sportId)
-    } catch (e) {
-      console.error(e)
-    }
+    } catch (e) { console.error(e) }
   }
 
-  // Get user location for map default
   function getCurrentLocation() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords
-          setMapLocation({ lat: latitude, lng: longitude })
-        },
-        () => {
-          alert("Could not get your location")
-        }
+        ({ coords }) => setMapLocation({ lat: coords.latitude, lng: coords.longitude }),
+        () => alert("Could not get your location")
       )
-    } else {
-      alert("Geolocation not supported")
     }
   }
 
   async function createActivity(e?: React.FormEvent) {
     e?.preventDefault()
     if (!isMember && !isOwner) return alert("Only members can create activities")
-    if (!selectedSport) return alert("Vyber sport pro skupinu")
+    if (!selectedSport) return alert("Select a sport for the group")
     setLoading(true)
     try {
       const res = await fetch(`/api/groups/${group.id}/activities`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          sportId: Number(selectedSport), // use group-selected sport
-          date: activityForm.date,
-          starttime: activityForm.starttime,
-          endtime: activityForm.endtime,
+          sportId: Number(selectedSport),
+          date: activityForm.date, starttime: activityForm.starttime, endtime: activityForm.endtime,
           description: activityForm.description,
           latitude: mapLocation ? Number(mapLocation.lat) : null,
           longitude: mapLocation ? Number(mapLocation.lng) : null,
@@ -199,89 +149,52 @@ useEffect(() => {
       setActivityForm({ sportId: "", date: "", starttime: "", endtime: "", description: "" })
       setMapLocation(null)
       await refresh()
-      alert("Activity created!")
-    } catch (err) {
-      console.error(err)
-      alert("Chyba při vytváření aktivity")
-    } finally {
-      setLoading(false)
-    }
+    } catch (err) { console.error(err); alert("Error creating activity") }
+    finally { setLoading(false) }
   }
 
-  // accept / reject invitation (owner or invitee)
   async function handleInvitationResponse(inviteId: number, action: 'accept' | 'reject') {
-    if (!session?.user?.id) return alert("Přihlas se")
     setLoading(true)
     try {
       const res = await fetch(`/api/groups/invitations/${inviteId}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
+        method: 'PATCH', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action }),
       })
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({}))
-        throw new Error(err?.error || 'Failed')
-      }
+      if (!res.ok) throw new Error('Failed')
       await refresh()
-      if (action === 'accept') alert('Invitation accepted')
-      else alert('Invitation rejected')
-    } catch (err) {
-      console.error(err)
-      alert('Action failed')
-    } finally {
-      setLoading(false)
-    }
+    } catch (err) { console.error(err); alert('Action failed') }
+    finally { setLoading(false) }
   }
 
   async function removeMember(userId: number, username: string) {
     if (!isOwner) return
     if (!confirm(`Remove ${username} from group?`)) return
-    
     setLoading(true)
     try {
       const res = await fetch(`/api/groups/${group.id}/members/${userId}`, { method: "DELETE" })
       if (!res.ok) throw new Error("Failed")
       await refresh()
-      alert("Member removed")
-    } catch (err) {
-      console.error(err)
-      alert("Failed to remove member")
-    } finally {
-      setLoading(false)
-    }
+    } catch (err) { console.error(err); alert("Failed to remove member") }
+    finally { setLoading(false) }
   }
 
   async function leaveGroup() {
-    if (!session?.user?.id) return
-    if (!confirm("Leave group?")) return
-    
+    if (!session?.user?.id || !confirm("Leave group?")) return
     setLoading(true)
     try {
       const res = await fetch(`/api/groups/${group.id}/members/${session.user.id}`, { method: "DELETE" })
       if (!res.ok) throw new Error("Failed")
-      alert("Left group")
       window.location.href = "/groups"
-    } catch (err) {
-      console.error(err)
-      alert("Failed to leave group")
-    } finally {
-      setLoading(false)
-    }
+    } catch (err) { console.error(err); alert("Failed to leave group") }
+    finally { setLoading(false) }
   }
 
-  // načte účastníky aktivity (opravena cesta -> attendance)
   async function loadParticipants(activityId: number) {
     try {
-      const res = await fetch(`/api/groups/${group.id}/activities/${activityId}/attendance`, { method: "GET" })
-      if (!res.ok) throw new Error("Failed to load participants")
-      const json = await res.json()
-      console.log(json);
-      return json || []
-    }
-    catch (err) {
-      console.error(err)
-      return []
-    }
+      const res = await fetch(`/api/groups/${group.id}/activities/${activityId}/attendance`)
+      if (!res.ok) throw new Error("Failed")
+      return await res.json() || []
+    } catch (err) { console.error(err); return [] }
   }
 
   async function respondToActivity(activityId: number, attending: boolean) {
@@ -289,393 +202,330 @@ useEffect(() => {
     setLoading(true)
     try {
       const res = await fetch(`/api/groups/${group.id}/activities/${activityId}/attendance`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+        method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ attending }),
       })
       if (!res.ok) throw new Error("Failed")
       await refresh()
-      // refresh participants in case detail is open
-      if (selectedActivity && selectedActivity.activity?.id === activityId) {
+      if (selectedActivity?.activity?.id === activityId) {
         const parts = await loadParticipants(activityId)
-        console.log(parts);
         setParticipants(parts)
-        setParticipants(parts)
-          const me = parts.find(
-          (p: Participant) =>
-          Number(p.user?.id) === Number(session?.user?.id)
-        )
-        console.log(me.attending);
-        setUserAttending(me.attending)
+        const me = parts.find((p: Participant) => Number(p.user?.id) === Number(session?.user?.id))
+        setUserAttending(me?.attending ?? null)
       }
-      alert(attending ? "You're going!" : "You're not going")
-    } catch (err) {
-      console.error(err)
-      alert("Failed to update attendance")
-    } finally {
-      setLoading(false)
-    }
+    } catch (err) { console.error(err); alert("Failed to update attendance") }
+    finally { setLoading(false) }
   }
 
-  // když se vybere aktivita, natáhnout účastníky a nastavit userAttending
   useEffect(() => {
     let mounted = true
     async function load() {
-      if (!selectedActivity) {
-        setParticipants([])
-        setUserAttending(null)
-        return
-      }
+      if (!selectedActivity) { setParticipants([]); setUserAttending(null); return }
       setLoading(true)
       try {
-        const activityId = selectedActivity.activity?.id ?? selectedActivity.id
-        const parts = await loadParticipants(activityId)
-        console.log (parts);
+        const parts = await loadParticipants(selectedActivity.activity?.id ?? selectedActivity.id)
         if (!mounted) return
         setParticipants(parts)
-          const me = parts.find(
-          (p: Participant) =>
-          Number(p.user?.id) === Number(session?.user?.id)
-        )
-        setUserAttending(me.attending)
-      } catch (e) {
-        console.error(e)
-      } finally {
-        if (mounted) setLoading(false)
-      }
+        const me = parts.find((p: Participant) => Number(p.user?.id) === Number(session?.user?.id))
+        setUserAttending(me?.attending ?? null)
+      } catch (e) { console.error(e) }
+      finally { if (mounted) setLoading(false) }
     }
     load()
     return () => { mounted = false }
   }, [selectedActivity, session?.user?.id])
 
-
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <Link href="/groups" className="text-indigo-400 hover:text-indigo-300 text-sm">← Back to groups</Link>
-        <div />
-      </div>
 
-      <div className="bg-zinc-800 rounded-lg p-6">
-        <div className="flex items-start justify-between mb-4">
-          <div>
-            <h1 className="text-3xl font-bold text-white">{group.name}</h1>
-            <p className="text-sm text-gray-400 mt-1">Owner: <span className="text-white">{group.owner?.username}</span></p>
+      {/* Back */}
+      <Link href="/groups" className="inline-flex items-center gap-1.5 text-gray-500 hover:text-teal-400 text-sm transition-colors duration-200">
+        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7"/>
+        </svg>
+        Back to groups
+      </Link>
 
-            {/* Sport selection */}
-            <div className="mt-3 flex items-center gap-3">
-              <label className="text-xs text-gray-400">Group sport: {sport}</label>
-            </div>
-
-            {group.description && <p className="text-sm text-gray-300 mt-2">{group.description}</p>}
+      {/* Group header */}
+      <Card>
+        <div className="flex items-start justify-between gap-4">
+          <div className="flex-1 min-w-0">
+            <p className="text-xs font-semibold uppercase tracking-widest text-teal-500 mb-1">{sport}</p>
+            <h1 className="text-2xl font-extrabold tracking-tight text-white mb-1">{group.name}</h1>
+            <p className="text-sm text-gray-500">
+              Owner: <span className="text-gray-300">@{group.owner?.username}</span>
+            </p>
+            {group.description && (
+              <p className="text-sm text-gray-400 mt-2">{group.description}</p>
+            )}
           </div>
 
-          <div className="flex gap-2">
+          <div className="flex-shrink-0">
             {isOwner ? (
-              <span className="px-4 py-2 bg-emerald-600 text-white rounded">👑 Owner</span>
+              <span className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-teal-500/15 border border-teal-500/30 text-teal-300 text-sm font-medium">
+                👑 Owner
+              </span>
             ) : isMember ? (
-              <button onClick={leaveGroup} disabled={loading} className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 disabled:opacity-50">Leave</button>
+              <button onClick={leaveGroup} disabled={loading}
+                className="px-3.5 py-2 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm font-medium hover:bg-red-500/20 disabled:opacity-50 transition-all duration-200">
+                Leave
+              </button>
             ) : (
               <button onClick={async () => {
                 setLoading(true)
                 try {
                   await fetch(`/api/groups/${group.id}/invite`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
+                    method: "POST", headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ userId: session?.user?.id }),
                   })
-                  alert("Request sent to owner")
                   await refresh()
-                } catch {
-                  alert("Failed to send request")
-                } finally {
-                  setLoading(false)
-                }
-              }} disabled={loading} className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50">Request Join</button>
+                } catch { alert("Failed to send request") }
+                finally { setLoading(false) }
+              }} disabled={loading}
+                className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-teal-400 to-teal-600 text-white text-sm font-semibold hover:brightness-110 disabled:opacity-50 transition-all duration-200">
+                Request Join
+              </button>
             )}
           </div>
         </div>
-      </div>
+      </Card>
 
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        {/* Left sidebar - Members & Invitations */}
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-5">
+
+        {/* Left sidebar */}
         <div className="lg:col-span-1 space-y-4">
+
           {/* Members */}
-          <div className="bg-zinc-800 rounded-lg p-4">
-            <h3 className="text-white font-bold mb-3">👥 Members ({members.length})</h3>
+          <Card>
+            <SectionTitle>Members ({members.length})</SectionTitle>
             <div className="space-y-2">
-              {members.length === 0 && <div className="text-gray-400 text-sm">No members yet</div>}
+              {members.length === 0 && <p className="text-gray-600 text-sm">No members yet</p>}
               {members.map((m) => (
-                <div key={m.id} className="flex items-center justify-between bg-zinc-700 p-2 rounded">
-                  <div className="text-white text-sm font-medium">{m.user?.username}</div>
-                  {Number(m.user.id) === group.ownerId && (
-                    <span className="text-xs bg-yellow-500 px-2 py-1 rounded text-black">Owner</span>
-                  )}
-                  {isOwner && Number(m.user.id) !== group.ownerId && (
-                    <button
-                      onClick={() => removeMember(Number(m.user.id), m.user.username)}
-                      disabled={loading}
-                      className="text-xs text-red-400 hover:text-red-300"
-                    >
-                      Remove
-                    </button>
-                  )}
+                <div key={m.id} className="flex items-center justify-between py-1.5">
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 bg-gradient-to-br from-teal-400 to-teal-700 rounded-full flex items-center justify-center flex-shrink-0">
+                      <span className="text-white text-xs font-bold">{m.user?.username?.[0]?.toUpperCase()}</span>
+                    </div>
+                    <span className="text-white text-sm">{m.user?.username}</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    {Number(m.user.id) === group.ownerId && (
+                      <span className="text-xs bg-teal-500/15 border border-teal-500/30 text-teal-300 px-2 py-0.5 rounded-lg">Owner</span>
+                    )}
+                    {isOwner && Number(m.user.id) !== group.ownerId && (
+                      <button onClick={() => removeMember(Number(m.user.id), m.user.username)} disabled={loading}
+                        className="text-xs text-red-400 hover:text-red-300 transition-colors">Remove</button>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>
-          </div>
+          </Card>
 
-
-          {/* Invitations list with accept/reject (owner and invitee can act) */}
-        
+          {/* Invitations (owner only) */}
           {isOwner && (
-            <div className="bg-zinc-700 rounded-lg p-4">
-              <h3 className="text-white font-semibold mb-3">Invitations</h3>
+            <Card>
+              <SectionTitle>Invitations</SectionTitle>
               <div className="space-y-2">
-              {invitations.length > 0 && (
-                <p className="text-xs text-gray-400 mt-2">⏳ {invitations.filter((i: GroupInvitation) => i.status === 'pending').length} pending invitation(s)</p>
-              )}
+                {invitations.filter(i => i.status === 'pending').length === 0 && (
+                  <p className="text-gray-600 text-sm">No pending invitations</p>
+                )}
                 {invitations.map((inv: GroupInvitation) => {
-                  if (inv.status === 'pending') {
-                    const isForMe = Number(inv.user?.id) === Number(session?.user?.id)
-                    const canAct = isForMe || isOwner
-                    return (
-                      <div key={inv.id} className="flex items-center justify-between bg-zinc-800 p-2 rounded">
-                        <div>
-                          <div className="text-sm text-white">{inv.user?.username ?? inv.user?.email}</div>
-                          <div className="text-xs text-gray-400">Status: {inv.status}</div>
+                  if (inv.status !== 'pending') return null
+                  const isForMe = Number(inv.user?.id) === Number(session?.user?.id)
+                  const canAct = isForMe || isOwner
+                  return (
+                    <div key={inv.id} className="bg-white/5 border border-white/10 rounded-xl p-3">
+                      <p className="text-white text-sm font-medium mb-0.5">{inv.user?.username ?? inv.user?.email}</p>
+                      <p className="text-xs text-gray-600 mb-2">Pending</p>
+                      {canAct && (
+                        <div className="flex gap-2">
+                          <button onClick={() => handleInvitationResponse(inv.id, 'accept')} disabled={loading}
+                            className="flex-1 py-1.5 rounded-lg bg-teal-500/20 border border-teal-500/30 text-teal-300 text-xs font-medium hover:bg-teal-500/30 transition-all duration-200">
+                            Accept
+                          </button>
+                          <button onClick={() => handleInvitationResponse(inv.id, 'reject')} disabled={loading}
+                            className="flex-1 py-1.5 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-medium hover:bg-red-500/20 transition-all duration-200">
+                            Reject
+                          </button>
                         </div>
-                        {canAct ? (
-                          <div className="flex gap-2">
-                            <button
-                              onClick={() => handleInvitationResponse(inv.id, 'accept')}
-                              disabled={loading}
-                              className="px-3 py-1 bg-emerald-600 rounded text-white text-sm"
-                            >
-                              Accept
-                            </button>
-                            <button
-                              onClick={() => handleInvitationResponse(inv.id, 'reject')}
-                              disabled={loading}
-                              className="px-3 py-1 bg-red-600 rounded text-white text-sm"
-                            >
-                              Reject
-                            </button>
-                          </div>
-                        ) : (
-                          <div className="text-xs text-gray-400">Waiting</div>
-                        )}
-                      </div>
-                    )
-                  }
-                  return null
+                      )}
+                    </div>
+                  )
                 })}
               </div>
-            </div>
+            </Card>
           )}
         </div>
 
-        {/* Right content - Activities */}
+        {/* Right content */}
         <div className="lg:col-span-3 space-y-4">
-          {/* Selected activity detail with map */}
+
+          {/* Activity detail */}
           {selectedActivity && (
-            <div className="bg-zinc-800 rounded-lg p-4">
-              <button onClick={() => { setSelectedActivity(null); setParticipants([]); setUserAttending(null) }} className="text-indigo-400 hover:text-indigo-300 text-sm mb-3">← Back to list</button>
-              <h3 className="text-white font-bold mb-3">
-                {selectedActivity.activity.sport?.name} - {selectedActivity.activity.user?.username}
+            <Card>
+              <button onClick={() => { setSelectedActivity(null); setParticipants([]); setUserAttending(null) }}
+                className="inline-flex items-center gap-1.5 text-gray-500 hover:text-teal-400 text-sm mb-4 transition-colors duration-200">
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7"/>
+                </svg>
+                Back to activities
+              </button>
+
+              <SectionTitle>{selectedActivity.activity.sport?.name}</SectionTitle>
+              <h3 className="text-white font-bold text-lg mb-3">
+                by @{selectedActivity.activity.user?.username}
               </h3>
-              <div className="mb-4">
-                <p className="text-sm text-gray-300 mb-2">
-                  📅 {selectedActivity.activity.date?.slice(0, 10)} | ⏰ {selectedActivity.activity.starttime} – {selectedActivity.activity.endtime}
-                </p>
-                {selectedActivity.activity.description && (
-                  <p className="text-sm text-gray-300 mb-4">{selectedActivity.activity.description}</p>
-                )}
+
+              <div className="flex items-center gap-3 text-sm text-gray-400 mb-3">
+                <span>📅 {selectedActivity.activity.date?.slice(0, 10)}</span>
+                <span>⏰ {selectedActivity.activity.starttime}–{selectedActivity.activity.endtime}</span>
               </div>
 
-              {/* Map */}
+              {selectedActivity.activity.description && (
+                <p className="text-gray-400 text-sm mb-4">{selectedActivity.activity.description}</p>
+              )}
+
               {selectedActivity.activity.latitude && selectedActivity.activity.longitude && (
-                <div className="mb-4 h-64 rounded overflow-hidden">
-                  <MapComponent
-                    latitude={selectedActivity.activity.latitude}
-                    longitude={selectedActivity.activity.longitude}
-                    zoom={14}
-                  />
+                <div className="mb-4 h-56 rounded-xl overflow-hidden border border-white/10">
+                  <MapComponent latitude={selectedActivity.activity.latitude} longitude={selectedActivity.activity.longitude} zoom={14} />
                 </div>
               )}
 
-              {/* Participants list */}
-              <div className="mb-4 bg-zinc-700 p-3 rounded">
-                <h4 className="text-white font-semibold mb-2">Participants ({participants.filter(p => p.attending).length})</h4>
-                {participants.length === 0 && <div className="text-gray-400 text-sm">Nikdo zatím nejde</div>}
+              {/* Participants */}
+              <div className="bg-white/5 border border-white/10 rounded-xl p-4 mb-4">
+                <p className="text-xs font-semibold uppercase tracking-widest text-teal-500 mb-3">
+                  Going ({participants.filter(p => p.attending).length})
+                </p>
+                {participants.filter(p => p.attending).length === 0 && (
+                  <p className="text-gray-600 text-sm">Nobody is going yet</p>
+                )}
                 <div className="space-y-2">
                   {participants.map((p: Participant) => {
+                    if (!p.attending) return null
                     const isMe = session?.user?.id && Number(p.user?.id) === Number(session.user.id)
                     return (
-                      p.attending === true && 
-                      <div key={p.id ?? p.user?.id} className={`flex items-center justify-between p-2 rounded ${isMe ? 'bg-zinc-600' : 'bg-zinc-800'}`}>
-                        <div>
-                          <div className="text-sm text-white">{p.user?.username ?? p.user?.email}</div>
+                      <div key={p.id ?? p.user?.id} className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <div className="w-6 h-6 bg-gradient-to-br from-teal-400 to-teal-700 rounded-full flex items-center justify-center">
+                            <span className="text-white text-xs font-bold">{(p.user?.username ?? '?')[0]?.toUpperCase()}</span>
+                          </div>
+                          <span className="text-white text-sm">{p.user?.username ?? p.user?.email}</span>
                         </div>
-                        {isMe && <span className="text-xs bg-indigo-500 px-2 py-1 rounded text-white">You</span>}
+                        {isMe && <span className="text-xs bg-teal-500/15 border border-teal-500/30 text-teal-300 px-2 py-0.5 rounded-lg">You</span>}
                       </div>
-                      
                     )
                   })}
                 </div>
 
-                {/* If I already responded, ukázat status */}
                 {userAttending !== null && (
-                  <div className="mt-3 text-xs">
-                    {userAttending == true ? (
-                      <span className="text-emerald-400">✅ Odpověděl(a) jsi, že jde&scaron;</span>
-                    ) : userAttending == false ? (
-                      <span className="text-red-400">❌ Odpověděl(a) jsi, že nejde&scaron;</span>
-                    ) : (
-                      <span className="text-gray-400">ℹ️ Neodpověděl(a) jsi, že jde&scaron;</span>
-                    )}
+                  <div className="mt-3 pt-3 border-t border-white/10">
+                    {userAttending
+                      ? <span className="text-teal-400 text-xs">✅ You&apos;re going</span>
+                      : <span className="text-red-400 text-xs">❌ You&apos;re not going</span>}
                   </div>
                 )}
               </div>
 
-              {/* Attendance buttons */}
               {isMember && (
-                <div className="flex gap-2 mb-4">
-                  <button
-                    onClick={() => respondToActivity(selectedActivity.activity.id, true)}
-                    disabled={loading}
-                    className="flex-1 px-4 py-2 bg-emerald-600 rounded text-white hover:bg-emerald-700 disabled:opacity-50"
-                  >
+                <div className="flex gap-3">
+                  <button onClick={() => respondToActivity(selectedActivity.activity.id, true)} disabled={loading}
+                    className="flex-1 py-2.5 rounded-xl bg-teal-500/15 border border-teal-500/30 text-teal-300 text-sm font-semibold hover:bg-teal-500/25 disabled:opacity-50 transition-all duration-200">
                     ✅ I&apos;m Going
                   </button>
-                  <button
-                    onClick={() => respondToActivity(selectedActivity.activity.id, false)}
-                    disabled={loading}
-                    className="flex-1 px-4 py-2 bg-red-600 rounded text-white hover:bg-red-700 disabled:opacity-50"
-                  >
+                  <button onClick={() => respondToActivity(selectedActivity.activity.id, false)} disabled={loading}
+                    className="flex-1 py-2.5 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm font-semibold hover:bg-red-500/20 disabled:opacity-50 transition-all duration-200">
                     ❌ Not Going
                   </button>
                 </div>
               )}
-            </div>
+            </Card>
           )}
 
           {/* Activities list */}
           {!selectedActivity && (
-            <div className="bg-zinc-800 rounded-lg p-4">
-              <h3 className="text-white font-bold mb-3">🏃 Activities ({activities.length})</h3>
-              {activities.length === 0 && <div className="text-gray-400 text-sm">No activities yet</div>}
+            <Card>
+              <SectionTitle>Activities ({activities.length})</SectionTitle>
+              {activities.length === 0 && <p className="text-gray-600 text-sm">No activities yet</p>}
               <div className="space-y-3">
                 {activities.map((ga: GroupActivity) => (
-                  <div
-                    key={ga.id}
-                    onClick={() => setSelectedActivity(ga)}
-                    className="bg-zinc-700 p-3 rounded cursor-pointer hover:bg-zinc-600 transition"
-                  >
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className="text-sm font-bold text-indigo-400">{ga.activity.sport?.name ?? "Sport"}</span>
-                          <span className="text-xs text-gray-400">by {ga.activity.user?.username ?? "User"}</span>
-                        </div>
-                        <div className="text-xs text-gray-400">
-                          📅 {ga.activity.date?.slice(0, 10)} | ⏰ {ga.activity.starttime} – {ga.activity.endtime}
+                  <button key={ga.id} onClick={() => setSelectedActivity(ga)}
+                    className="w-full text-left bg-white/5 border border-white/10 hover:border-teal-500/30 rounded-xl p-4 transition-all duration-200 group/act">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex-1 min-w-0">
+                        <p className="text-white font-semibold text-sm group-hover/act:text-teal-300 transition-colors duration-200">
+                          {ga.activity.sport?.name ?? "Activity"}
+                        </p>
+                        <p className="text-gray-500 text-xs mt-0.5">by @{ga.activity.user?.username ?? "User"}</p>
+                        <div className="flex items-center gap-2 mt-2 text-xs text-gray-500">
+                          <span>📅 {ga.activity.date?.slice(0, 10)}</span>
+                          <span>⏰ {ga.activity.starttime}–{ga.activity.endtime}</span>
                         </div>
                         {ga.activity.description && (
-                          <div className="text-xs text-gray-300 mt-2 italic line-clamp-1">{ga.activity.description}</div>
+                          <p className="text-gray-600 text-xs mt-1.5 line-clamp-1">{ga.activity.description}</p>
                         )}
                       </div>
-                      <span className="text-xs text-indigo-400 ml-2">View →</span>
+                      <svg className="w-4 h-4 text-gray-600 group-hover/act:text-teal-400 transition-colors duration-200 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/>
+                      </svg>
                     </div>
-                  </div>
+                  </button>
                 ))}
               </div>
-            </div>
+            </Card>
           )}
 
-          {/* Create activity form with map picker */}
+          {/* Create activity form */}
           {!selectedActivity && (isOwner || isMember) && (
-            <div className="bg-zinc-800 rounded-lg p-4">
-              <h3 className="text-white font-bold mb-3">➕ Create Activity</h3>
+            <Card>
+              <SectionTitle>Create Activity</SectionTitle>
               <form onSubmit={createActivity} className="space-y-3">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  <input
-                    required
-                    type="date"
-                    value={activityForm.date}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                  <input required type="date" value={activityForm.date}
                     onChange={e => setActivityForm({ ...activityForm, date: e.target.value })}
-                    className="p-2 bg-zinc-700 rounded text-white text-sm"
-                  />
-                  <input
-                    required
-                    placeholder="Start time (e.g., 10:00)"
-                    value={activityForm.starttime}
+                    className="px-3 py-2.5 bg-white/5 border border-white/10 rounded-xl text-white text-sm outline-none focus:border-teal-500/50 focus:ring-2 focus:ring-teal-500/20 transition-all duration-200" />
+                  <input required placeholder="Start (10:00)" value={activityForm.starttime}
                     onChange={e => setActivityForm({ ...activityForm, starttime: e.target.value })}
-                    className="p-2 bg-zinc-700 rounded text-white text-sm"
-                  />
-                  <input
-                    required
-                    placeholder="End time (e.g., 11:00)"
-                    value={activityForm.endtime}
+                    className="px-3 py-2.5 bg-white/5 border border-white/10 rounded-xl text-white text-sm placeholder-gray-600 outline-none focus:border-teal-500/50 focus:ring-2 focus:ring-teal-500/20 transition-all duration-200" />
+                  <input required placeholder="End (11:00)" value={activityForm.endtime}
                     onChange={e => setActivityForm({ ...activityForm, endtime: e.target.value })}
-                    className="p-2 bg-zinc-700 rounded text-white text-sm"
-                  />
+                    className="px-3 py-2.5 bg-white/5 border border-white/10 rounded-xl text-white text-sm placeholder-gray-600 outline-none focus:border-teal-500/50 focus:ring-2 focus:ring-teal-500/20 transition-all duration-200" />
                 </div>
 
                 {/* Location picker */}
-                <div className="bg-zinc-700 p-3 rounded">
-                  <div className="flex justify-between items-center mb-2">
-                    <label className="text-white text-sm font-semibold">📍 Location (klikni na mapu)</label>
+                <div className="bg-white/5 border border-white/10 rounded-xl p-3">
+                  <div className="flex items-center justify-between mb-2">
+                    <p className="text-xs font-semibold uppercase tracking-widest text-gray-500">Location</p>
                     <div className="flex gap-2">
-                      <button
-                        type="button"
-                        onClick={getCurrentLocation}
-                        className="text-xs bg-indigo-600 px-2 py-1 rounded text-white hover:bg-indigo-700"
-                      >
+                      <button type="button" onClick={getCurrentLocation}
+                        className="text-xs px-2.5 py-1 rounded-lg bg-teal-500/15 border border-teal-500/30 text-teal-400 hover:bg-teal-500/25 transition-all duration-200">
                         Use My Location
                       </button>
-                      <button
-                        type="button"
-                        onClick={() => setMapLocation(null)}
-                        className="text-xs bg-gray-600 px-2 py-1 rounded text-white hover:bg-gray-500"
-                      >
+                      <button type="button" onClick={() => setMapLocation(null)}
+                        className="text-xs px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-gray-500 hover:text-white transition-all duration-200">
                         Clear
                       </button>
                     </div>
                   </div>
-
-                  {/* Map picker (click to set) */}
-                  <MapPicker
-                    lat={mapLocation?.lat}
-                    lng={mapLocation?.lng}
-                    onChange={(lat, lng) => setMapLocation({ lat, lng })}
-                    zoom={13}
-                  />
-
-                  <div className="mt-2 text-xs text-gray-400">
-                    {mapLocation ? `Vybráno: ${mapLocation.lat.toFixed(5)}, ${mapLocation.lng.toFixed(5)}` : 'Žádná pozice není vybraná.'}
-                  </div>
+                  <MapPicker lat={mapLocation?.lat} lng={mapLocation?.lng} onChange={(lat, lng) => setMapLocation({ lat, lng })} zoom={13} />
+                  <p className="mt-2 text-xs text-gray-600">
+                    {mapLocation ? `${mapLocation.lat.toFixed(5)}, ${mapLocation.lng.toFixed(5)}` : 'Click on the map to set location'}
+                  </p>
                 </div>
 
-                <textarea
-                  placeholder="Description (optional)"
-                  value={activityForm.description}
+                <textarea placeholder="Description (optional)" value={activityForm.description}
                   onChange={e => setActivityForm({ ...activityForm, description: e.target.value })}
-                  className="w-full p-2 bg-zinc-700 rounded text-white text-sm"
-                  rows={2}
-                />
+                  className="w-full px-3 py-2.5 bg-white/5 border border-white/10 rounded-xl text-white text-sm placeholder-gray-600 outline-none focus:border-teal-500/50 focus:ring-2 focus:ring-teal-500/20 transition-all duration-200 resize-none"
+                  rows={2} />
+
                 <div className="flex justify-end">
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    className="px-4 py-2 bg-emerald-600 rounded text-white hover:bg-emerald-700 disabled:opacity-50"
-                  >
+                  <button type="submit" disabled={loading}
+                    className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-teal-400 to-teal-600 text-white text-sm font-semibold shadow-lg shadow-teal-900/40 hover:brightness-110 disabled:opacity-50 transition-all duration-200">
                     {loading ? "Creating..." : "Create Activity"}
                   </button>
                 </div>
               </form>
-            </div>
+            </Card>
           )}
         </div>
       </div>
