@@ -24,7 +24,6 @@ export default function ChatClient({
   const [messages, setMessages] = useState<Message[]>([]);
   const [text, setText] = useState("");
   const [skip, setSkip] = useState(0);
-  const [connected, setConnected] = useState(false);
 
   const socketRef = useRef<Socket | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
@@ -39,7 +38,6 @@ export default function ChatClient({
     socketRef.current = socket;
 
     socket.on("connect", () => {
-      setConnected(true);
       socket.emit("join_chat", { chatId, userId: currentUserId });
     });
 
@@ -50,7 +48,6 @@ export default function ChatClient({
       });
     });
 
-    socket.on("disconnect", () => setConnected(false));
 
     return () => {
       socket.disconnect();
