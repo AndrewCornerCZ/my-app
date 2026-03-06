@@ -29,18 +29,20 @@ export default function ChatClient({
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    // connect to websocket
     const socket = io(
-      process.env.NEXT_PUBLIC_SOCKET_URL ??
-        "https://pleasing-love-production-1ecc.up.railway.app",
+      process.env.NEXT_PUBLIC_WS_URL,
       { transports: ["websocket"], withCredentials: true }
     );
 
     socketRef.current = socket;
 
+    // if connect thern socket get data about current chat
     socket.on("connect", () => {
       socket.emit("join_chat", { chatId, userId: currentUserId });
     });
 
+    // listen if websocket emit new message
     socket.on("receive_message", (message: Message) => {
       setMessages((prev) => {
         if (prev.some((m) => m.id === message.id)) return prev;
