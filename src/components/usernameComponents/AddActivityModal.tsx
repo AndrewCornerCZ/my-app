@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import 'leaflet/dist/leaflet.css'
-import type { Map, Marker, Icon, TileLayer, LeafletMouseEvent } from 'leaflet'
+import type { Map, Marker, Icon, LeafletMouseEvent } from 'leaflet'
 import Geolocation from './Geolocation'
 
 interface UserSport {
@@ -42,7 +42,6 @@ export default function AddActivityModal({ userSports }: AddActivityModalProps) 
   const mapRef = useRef<Map | null>(null)
   const markerRef = useRef<Marker | null>(null)
   const markerIconRef = useRef<Icon | null>(null)
-  const tileLayerRef = useRef<TileLayer | null>(null)
   const LRef = useRef<typeof import('leaflet') | null>(null)
 
   useEffect(() => {

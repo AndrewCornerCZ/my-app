@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
 import dynamic from 'next/dynamic'
 import 'leaflet/dist/leaflet.css'
 import { useSession } from 'next-auth/react'
