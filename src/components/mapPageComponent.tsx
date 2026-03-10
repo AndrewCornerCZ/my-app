@@ -43,43 +43,6 @@ function relativeDate(dateStr: string) {
   return date.toLocaleDateString([], { month: 'short', day: 'numeric' })
 }
 
-// Funkce na vytvoření emoji markeru
-const createEmojiMarker = (emoji: string): Icon<IconOptions> => {
-  const canvas = document.createElement('canvas')
-  canvas.width = 41
-  canvas.height = 41
-  const ctx = canvas.getContext('2d')
-  
-  if (ctx) {
-    // Bílý kruh na pozadí
-    ctx.fillStyle = '#ffffff'
-    ctx.beginPath()
-    ctx.arc(20.5, 15, 12, 0, Math.PI * 2)
-    ctx.fill()
-    
-    // Teal border
-    ctx.strokeStyle = '#14b8a6'
-    ctx.lineWidth = 2
-    ctx.beginPath()
-    ctx.arc(20.5, 15, 12, 0, Math.PI * 2)
-    ctx.stroke()
-    
-    // Emoji text
-    ctx.font = 'bold 20px Arial'
-    ctx.textAlign = 'center'
-    ctx.textBaseline = 'middle'
-    ctx.fillText(emoji, 20.5, 15)
-  }
-
-  const iconUrl = canvas.toDataURL('image/png')
-  return new L.Icon({
-    iconUrl,
-    iconSize: [41, 41],
-    iconAnchor: [20.5, 41],
-    popupAnchor: [0, -41],
-  })
-}
-
 export default function ActivitiesMapPage() {
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null)
   const [activities, setActivities] = useState<ActivityMarker[]>([])
@@ -94,6 +57,52 @@ export default function ActivitiesMapPage() {
   const [showSidebar, setShowSidebar] = useState(true)
   const [selectedActivity, setSelectedActivity] = useState<ActivityMarker | null>(null)
   const [dateFilter] = useState<string | null>(() => new Date().toISOString().split('T')[0])
+
+  // ✅ Funkce DOVNITŘ komponenty - chráněna 'use client'
+  const createEmojiMarker = (emoji: string): Icon<IconOptions> => {
+    if (typeof window === 'undefined') {
+      // Server-side fallback
+      return new L.Icon({
+        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+      })
+    }
+
+    const canvas = document.createElement('canvas')
+    canvas.width = 41
+    canvas.height = 41
+    const ctx = canvas.getContext('2d')
+    
+    if (ctx) {
+      // Bílý kruh na pozadí
+      ctx.fillStyle = '#ffffff'
+      ctx.beginPath()
+      ctx.arc(20.5, 15, 12, 0, Math.PI * 2)
+      ctx.fill()
+      
+      // Teal border
+      ctx.strokeStyle = '#14b8a6'
+      ctx.lineWidth = 2
+      ctx.beginPath()
+      ctx.arc(20.5, 15, 12, 0, Math.PI * 2)
+      ctx.stroke()
+      
+      // Emoji text
+      ctx.font = 'bold 20px Arial'
+      ctx.textAlign = 'center'
+      ctx.textBaseline = 'middle'
+      ctx.fillText(emoji, 20.5, 15)
+    }
+
+    const iconUrl = canvas.toDataURL('image/png')
+    return new L.Icon({
+      iconUrl,
+      iconSize: [41, 41],
+      iconAnchor: [20.5, 41],
+      popupAnchor: [0, -41],
+    })
+  }
 
   useEffect(() => {
     const userMarkerIcon = new L.Icon({
