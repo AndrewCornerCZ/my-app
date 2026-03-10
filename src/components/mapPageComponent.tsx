@@ -4,6 +4,7 @@ import { useEffect, useState, useMemo } from 'react'
 import dynamic from 'next/dynamic'
 import 'leaflet/dist/leaflet.css'
 import type { Icon, IconOptions } from 'leaflet'
+import L from 'leaflet'
 
 const MapContainer = dynamic(() => import('react-leaflet').then(mod => mod.MapContainer), { ssr: false })
 const TileLayer = dynamic(() => import('react-leaflet').then(mod => mod.TileLayer), { ssr: false })
@@ -43,44 +44,39 @@ function relativeDate(dateStr: string) {
 }
 
 // Funkce na vytvoření emoji markeru
-const createEmojiMarker = (emoji: string) => {
-  return new Promise<Icon<IconOptions>>((resolve) => {
-    import('leaflet').then(L => {
-      const canvas = document.createElement('canvas')
-      canvas.width = 41
-      canvas.height = 41
-      const ctx = canvas.getContext('2d')
-      
-      if (ctx) {
-        // Bílý kruh na pozadí
-        ctx.fillStyle = '#ffffff'
-        ctx.beginPath()
-        ctx.arc(20.5, 15, 12, 0, Math.PI * 2)
-        ctx.fill()
-        
-        // Teal border
-        ctx.strokeStyle = '#14b8a6'
-        ctx.lineWidth = 2
-        ctx.beginPath()
-        ctx.arc(20.5, 15, 12, 0, Math.PI * 2)
-        ctx.stroke()
-        
-        // Emoji text
-        ctx.font = 'bold 20px Arial'
-        ctx.textAlign = 'center'
-        ctx.textBaseline = 'middle'
-        ctx.fillText(emoji, 20.5, 15)
-      }
+const createEmojiMarker = (emoji: string): Icon<IconOptions> => {
+  const canvas = document.createElement('canvas')
+  canvas.width = 41
+  canvas.height = 41
+  const ctx = canvas.getContext('2d')
+  
+  if (ctx) {
+    // Bílý kruh na pozadí
+    ctx.fillStyle = '#ffffff'
+    ctx.beginPath()
+    ctx.arc(20.5, 15, 12, 0, Math.PI * 2)
+    ctx.fill()
+    
+    // Teal border
+    ctx.strokeStyle = '#14b8a6'
+    ctx.lineWidth = 2
+    ctx.beginPath()
+    ctx.arc(20.5, 15, 12, 0, Math.PI * 2)
+    ctx.stroke()
+    
+    // Emoji text
+    ctx.font = 'bold 20px Arial'
+    ctx.textAlign = 'center'
+    ctx.textBaseline = 'middle'
+    ctx.fillText(emoji, 20.5, 15)
+  }
 
-      const iconUrl = canvas.toDataURL('image/png')
-      const icon = new L.Icon({
-        iconUrl,
-        iconSize: [41, 41],
-        iconAnchor: [20.5, 41],
-        popupAnchor: [0, -41],
-      })
-      resolve(icon)
-    })
+  const iconUrl = canvas.toDataURL('image/png')
+  return new L.Icon({
+    iconUrl,
+    iconSize: [41, 41],
+    iconAnchor: [20.5, 41],
+    popupAnchor: [0, -41],
   })
 }
 
@@ -100,29 +96,30 @@ export default function ActivitiesMapPage() {
   const [dateFilter] = useState<string | null>(() => new Date().toISOString().split('T')[0])
 
   useEffect(() => {
-    import('leaflet').then(L => {
-      setUserIcon(new L.Icon({
-        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
-        iconSize: [25, 41], iconAnchor: [12, 41],
-      }))
+    const userMarkerIcon = new L.Icon({
+      iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
     })
+    setUserIcon(userMarkerIcon)
   }, [])
 
   // Vytvořit markery pro všechny sporty
   useEffect(() => {
-    const createMarkers = async () => {
-      const newMarkerIcons = new Map<number, Icon<IconOptions>>()
-      for (const sport of availableSports) {
-        if (!markerIcons.has(sport.id)) {
-          const icon = await createEmojiMarker(sport.emoji)
+    const newMarkerIcons = new Map<number, Icon<IconOptions>>()
+    availableSports.forEach(sport => {
+      if (!markerIcons.has(sport.id)) {
+        try {
+          const icon = createEmojiMarker(sport.emoji)
           newMarkerIcons.set(sport.id, icon)
+        } catch (err) {
+          console.error(`Error creating marker for sport ${sport.id}:`, err)
         }
       }
-      if (newMarkerIcons.size > 0) {
-        setMarkerIcons(prev => new Map([...prev, ...newMarkerIcons]))
-      }
+    })
+    if (newMarkerIcons.size > 0) {
+      setMarkerIcons(prev => new Map([...prev, ...newMarkerIcons]))
     }
-    createMarkers()
   }, [availableSports])
 
   useEffect(() => {
@@ -397,9 +394,11 @@ export default function ActivitiesMapPage() {
           >
             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
-            <Marker position={[userLocation.lat, userLocation.lng]} icon={userIcon}>
-              <Popup><div className="text-sm font-semibold">📍 Your Location</div></Popup>
-            </Marker>
+            {userIcon && (
+              <Marker position={[userLocation.lat, userLocation.lng]} icon={userIcon}>
+                <Popup><div className="text-sm font-semibold">📍 Your Location</div></Popup>
+              </Marker>
+            )}
 
             <Circle
               center={[userLocation.lat, userLocation.lng]}
@@ -409,7 +408,7 @@ export default function ActivitiesMapPage() {
 
             {activities.map(activity => {
               const sportIcon = markerIcons.get(activity.sport.id)
-              return (
+              return sportIcon ? (
                 <Marker 
                   key={activity.id} 
                   position={[activity.latitude, activity.longitude]} 
@@ -440,7 +439,7 @@ export default function ActivitiesMapPage() {
                     </div>
                   </Popup>
                 </Marker>
-              )
+              ) : null
             })}
           </MapContainer>
 
