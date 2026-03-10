@@ -125,6 +125,7 @@ model UserSport {
 model Sport {
   id         Int             @id @default(autoincrement())
   name       String          @unique
+  emoji      String
   users      UserSport[] // sport může mít víc uživatelů
   activities SportActivity[]
   groups     Group[] // <-- add this line

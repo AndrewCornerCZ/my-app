@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 
-interface Sport { id: number; name: string }
+interface Sport { id: number; name: string, emoji: string }
 interface SportRank { id: number; name: string; description?: string }
 interface AddSportModalProps {
   userId: number
@@ -108,7 +108,7 @@ export default function AddSportModal({ userId, userSports }: AddSportModalProps
                   onChange={e => setSelectedSportId(e.target.value)}
                   className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white text-sm outline-none focus:border-teal-500/50 focus:ring-2 focus:ring-teal-500/20 transition-all duration-200"
                 >
-                  {sports.map(s => <option key={s.id} value={s.id} className="bg-gray-900">{s.name}</option>)}
+                  {sports.map(s => <option key={s.id} value={s.id} className="bg-gray-900">{s.emoji} {s.name}</option>)}
                 </select>
               </div>
 

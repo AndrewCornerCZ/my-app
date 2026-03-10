@@ -153,7 +153,7 @@ export default async function Profile({ params }: { params: Promise<{ username: 
                         className="px-3 py-1 rounded-full text-xs font-semibold text-white"
                         style={{ backgroundColor: (us.color || '#14b8a6') + '33', border: `1.5px solid ${us.color || '#14b8a6'}`, color: us.color || '#14b8a6' }}
                       >
-                        {us.sport.name}
+                        {us.sport.emoji} {us.sport.name}
                       </span>
                     ))}
                   </div>

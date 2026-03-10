@@ -18,7 +18,7 @@ export default async function GroupPage({ params }: { params: Promise<{ id: stri
           activity: {
             include: {
               user: { select: { id: true, username: true } },
-              sport: { select: { id: true, name: true } },
+              sport: { select: { id: true, name: true, emoji: true } },
             },
           },
         },

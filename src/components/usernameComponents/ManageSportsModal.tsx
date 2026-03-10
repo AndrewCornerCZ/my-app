@@ -12,7 +12,7 @@ interface SportRank {
 interface UserSport {
   userId: number
   sportId: number
-  sport: { name: string }
+  sport: { name: string, emoji: string }
   sportRankId: number
   startedAt: Date
   color?: string | null
@@ -20,15 +20,6 @@ interface UserSport {
 
 interface ManageSportsModalProps {
   userSports: UserSport[]
-}
-
-const SPORT_EMOJIS: Record<string, string> = {
-  running: '🏃', cycling: '🚴', swimming: '🏊', football: '⚽', basketball: '🏀',
-  tennis: '🎾', volleyball: '🏐', hiking: '🥾', yoga: '🧘', gym: '🏋️',
-  climbing: '🧗', skiing: '⛷️',
-}
-function getSportEmoji(name: string) {
-  return SPORT_EMOJIS[name?.toLowerCase()] ?? '🏅'
 }
 
 export default function ManageSportsModal({ userSports }: ManageSportsModalProps) {
@@ -149,7 +140,7 @@ export default function ManageSportsModal({ userSports }: ManageSportsModalProps
                   >
                     <div className="flex items-center gap-3">
                       <div className="w-8 h-8 rounded-full flex items-center justify-center text-base" style={{ backgroundColor: us.color || '#14b8a6' + '33', border: `1.5px solid ${us.color || '#14b8a6'}` }}>
-                        {getSportEmoji(us.sport.name)}
+                        {us.sport.emoji}
                       </div>
                       <span className="text-white text-sm font-medium group-hover:text-teal-300 transition-colors duration-200">{us.sport.name}</span>
                     </div>

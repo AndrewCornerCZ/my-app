@@ -13419,16 +13419,19 @@ export namespace Prisma {
   export type SportMinAggregateOutputType = {
     id: number | null
     name: string | null
+    emoji: string | null
   }
 
   export type SportMaxAggregateOutputType = {
     id: number | null
     name: string | null
+    emoji: string | null
   }
 
   export type SportCountAggregateOutputType = {
     id: number
     name: number
+    emoji: number
     _all: number
   }
 
@@ -13444,16 +13447,19 @@ export namespace Prisma {
   export type SportMinAggregateInputType = {
     id?: true
     name?: true
+    emoji?: true
   }
 
   export type SportMaxAggregateInputType = {
     id?: true
     name?: true
+    emoji?: true
   }
 
   export type SportCountAggregateInputType = {
     id?: true
     name?: true
+    emoji?: true
     _all?: true
   }
 
@@ -13546,6 +13552,7 @@ export namespace Prisma {
   export type SportGroupByOutputType = {
     id: number
     name: string
+    emoji: string
     _count: SportCountAggregateOutputType | null
     _avg: SportAvgAggregateOutputType | null
     _sum: SportSumAggregateOutputType | null
@@ -13570,6 +13577,7 @@ export namespace Prisma {
   export type SportSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    emoji?: boolean
     users?: boolean | Sport$usersArgs<ExtArgs>
     activities?: boolean | Sport$activitiesArgs<ExtArgs>
     groups?: boolean | Sport$groupsArgs<ExtArgs>
@@ -13579,19 +13587,22 @@ export namespace Prisma {
   export type SportSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    emoji?: boolean
   }, ExtArgs["result"]["sport"]>
 
   export type SportSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    emoji?: boolean
   }, ExtArgs["result"]["sport"]>
 
   export type SportSelectScalar = {
     id?: boolean
     name?: boolean
+    emoji?: boolean
   }
 
-  export type SportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name", ExtArgs["result"]["sport"]>
+  export type SportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "emoji", ExtArgs["result"]["sport"]>
   export type SportInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     users?: boolean | Sport$usersArgs<ExtArgs>
     activities?: boolean | Sport$activitiesArgs<ExtArgs>
@@ -13611,6 +13622,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       name: string
+      emoji: string
     }, ExtArgs["result"]["sport"]>
     composites: {}
   }
@@ -14039,6 +14051,7 @@ export namespace Prisma {
   interface SportFieldRefs {
     readonly id: FieldRef<"Sport", 'Int'>
     readonly name: FieldRef<"Sport", 'String'>
+    readonly emoji: FieldRef<"Sport", 'String'>
   }
     
 
@@ -27023,7 +27036,8 @@ export namespace Prisma {
 
   export const SportScalarFieldEnum: {
     id: 'id',
-    name: 'name'
+    name: 'name',
+    emoji: 'emoji'
   };
 
   export type SportScalarFieldEnum = (typeof SportScalarFieldEnum)[keyof typeof SportScalarFieldEnum]
@@ -27790,6 +27804,7 @@ export namespace Prisma {
     NOT?: SportWhereInput | SportWhereInput[]
     id?: IntFilter<"Sport"> | number
     name?: StringFilter<"Sport"> | string
+    emoji?: StringFilter<"Sport"> | string
     users?: UserSportListRelationFilter
     activities?: SportActivityListRelationFilter
     groups?: GroupListRelationFilter
@@ -27798,6 +27813,7 @@ export namespace Prisma {
   export type SportOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
+    emoji?: SortOrder
     users?: UserSportOrderByRelationAggregateInput
     activities?: SportActivityOrderByRelationAggregateInput
     groups?: GroupOrderByRelationAggregateInput
@@ -27809,6 +27825,7 @@ export namespace Prisma {
     AND?: SportWhereInput | SportWhereInput[]
     OR?: SportWhereInput[]
     NOT?: SportWhereInput | SportWhereInput[]
+    emoji?: StringFilter<"Sport"> | string
     users?: UserSportListRelationFilter
     activities?: SportActivityListRelationFilter
     groups?: GroupListRelationFilter
@@ -27817,6 +27834,7 @@ export namespace Prisma {
   export type SportOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
+    emoji?: SortOrder
     _count?: SportCountOrderByAggregateInput
     _avg?: SportAvgOrderByAggregateInput
     _max?: SportMaxOrderByAggregateInput
@@ -27830,6 +27848,7 @@ export namespace Prisma {
     NOT?: SportScalarWhereWithAggregatesInput | SportScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Sport"> | number
     name?: StringWithAggregatesFilter<"Sport"> | string
+    emoji?: StringWithAggregatesFilter<"Sport"> | string
   }
 
   export type SportRanksWhereInput = {
@@ -29002,6 +29021,7 @@ export namespace Prisma {
 
   export type SportCreateInput = {
     name: string
+    emoji: string
     users?: UserSportCreateNestedManyWithoutSportInput
     activities?: SportActivityCreateNestedManyWithoutSportInput
     groups?: GroupCreateNestedManyWithoutSportInput
@@ -29010,6 +29030,7 @@ export namespace Prisma {
   export type SportUncheckedCreateInput = {
     id?: number
     name: string
+    emoji: string
     users?: UserSportUncheckedCreateNestedManyWithoutSportInput
     activities?: SportActivityUncheckedCreateNestedManyWithoutSportInput
     groups?: GroupUncheckedCreateNestedManyWithoutSportInput
@@ -29017,6 +29038,7 @@ export namespace Prisma {
 
   export type SportUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
+    emoji?: StringFieldUpdateOperationsInput | string
     users?: UserSportUpdateManyWithoutSportNestedInput
     activities?: SportActivityUpdateManyWithoutSportNestedInput
     groups?: GroupUpdateManyWithoutSportNestedInput
@@ -29025,6 +29047,7 @@ export namespace Prisma {
   export type SportUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    emoji?: StringFieldUpdateOperationsInput | string
     users?: UserSportUncheckedUpdateManyWithoutSportNestedInput
     activities?: SportActivityUncheckedUpdateManyWithoutSportNestedInput
     groups?: GroupUncheckedUpdateManyWithoutSportNestedInput
@@ -29033,15 +29056,18 @@ export namespace Prisma {
   export type SportCreateManyInput = {
     id?: number
     name: string
+    emoji: string
   }
 
   export type SportUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
+    emoji?: StringFieldUpdateOperationsInput | string
   }
 
   export type SportUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    emoji?: StringFieldUpdateOperationsInput | string
   }
 
   export type SportRanksCreateInput = {
@@ -30275,6 +30301,7 @@ export namespace Prisma {
   export type SportCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    emoji?: SortOrder
   }
 
   export type SportAvgOrderByAggregateInput = {
@@ -30284,11 +30311,13 @@ export namespace Prisma {
   export type SportMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    emoji?: SortOrder
   }
 
   export type SportMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    emoji?: SortOrder
   }
 
   export type SportSumOrderByAggregateInput = {
@@ -34048,6 +34077,7 @@ export namespace Prisma {
 
   export type SportCreateWithoutUsersInput = {
     name: string
+    emoji: string
     activities?: SportActivityCreateNestedManyWithoutSportInput
     groups?: GroupCreateNestedManyWithoutSportInput
   }
@@ -34055,6 +34085,7 @@ export namespace Prisma {
   export type SportUncheckedCreateWithoutUsersInput = {
     id?: number
     name: string
+    emoji: string
     activities?: SportActivityUncheckedCreateNestedManyWithoutSportInput
     groups?: GroupUncheckedCreateNestedManyWithoutSportInput
   }
@@ -34147,6 +34178,7 @@ export namespace Prisma {
 
   export type SportUpdateWithoutUsersInput = {
     name?: StringFieldUpdateOperationsInput | string
+    emoji?: StringFieldUpdateOperationsInput | string
     activities?: SportActivityUpdateManyWithoutSportNestedInput
     groups?: GroupUpdateManyWithoutSportNestedInput
   }
@@ -34154,6 +34186,7 @@ export namespace Prisma {
   export type SportUncheckedUpdateWithoutUsersInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    emoji?: StringFieldUpdateOperationsInput | string
     activities?: SportActivityUncheckedUpdateManyWithoutSportNestedInput
     groups?: GroupUncheckedUpdateManyWithoutSportNestedInput
   }
@@ -34416,6 +34449,7 @@ export namespace Prisma {
 
   export type SportCreateWithoutActivitiesInput = {
     name: string
+    emoji: string
     users?: UserSportCreateNestedManyWithoutSportInput
     groups?: GroupCreateNestedManyWithoutSportInput
   }
@@ -34423,6 +34457,7 @@ export namespace Prisma {
   export type SportUncheckedCreateWithoutActivitiesInput = {
     id?: number
     name: string
+    emoji: string
     users?: UserSportUncheckedCreateNestedManyWithoutSportInput
     groups?: GroupUncheckedCreateNestedManyWithoutSportInput
   }
@@ -34564,6 +34599,7 @@ export namespace Prisma {
 
   export type SportUpdateWithoutActivitiesInput = {
     name?: StringFieldUpdateOperationsInput | string
+    emoji?: StringFieldUpdateOperationsInput | string
     users?: UserSportUpdateManyWithoutSportNestedInput
     groups?: GroupUpdateManyWithoutSportNestedInput
   }
@@ -34571,6 +34607,7 @@ export namespace Prisma {
   export type SportUncheckedUpdateWithoutActivitiesInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    emoji?: StringFieldUpdateOperationsInput | string
     users?: UserSportUncheckedUpdateManyWithoutSportNestedInput
     groups?: GroupUncheckedUpdateManyWithoutSportNestedInput
   }
@@ -34810,6 +34847,7 @@ export namespace Prisma {
 
   export type SportCreateWithoutGroupsInput = {
     name: string
+    emoji: string
     users?: UserSportCreateNestedManyWithoutSportInput
     activities?: SportActivityCreateNestedManyWithoutSportInput
   }
@@ -34817,6 +34855,7 @@ export namespace Prisma {
   export type SportUncheckedCreateWithoutGroupsInput = {
     id?: number
     name: string
+    emoji: string
     users?: UserSportUncheckedCreateNestedManyWithoutSportInput
     activities?: SportActivityUncheckedCreateNestedManyWithoutSportInput
   }
@@ -34952,6 +34991,7 @@ export namespace Prisma {
 
   export type SportUpdateWithoutGroupsInput = {
     name?: StringFieldUpdateOperationsInput | string
+    emoji?: StringFieldUpdateOperationsInput | string
     users?: UserSportUpdateManyWithoutSportNestedInput
     activities?: SportActivityUpdateManyWithoutSportNestedInput
   }
@@ -34959,6 +34999,7 @@ export namespace Prisma {
   export type SportUncheckedUpdateWithoutGroupsInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    emoji?: StringFieldUpdateOperationsInput | string
     users?: UserSportUncheckedUpdateManyWithoutSportNestedInput
     activities?: SportActivityUncheckedUpdateManyWithoutSportNestedInput
   }

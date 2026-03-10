@@ -17,7 +17,7 @@ type Participant = {
 }
 type Activity = {
   id: number
-  sport?: { name: string }
+  sport?: { name: string, emoji: string }
   user?: { username: string }
   date?: string
   starttime?: string
@@ -372,7 +372,7 @@ export default function GroupView({ group }: { group: GroupData }) {
                 Back to activities
               </button>
 
-              <SectionTitle>{selectedActivity.activity.sport?.name}</SectionTitle>
+              <SectionTitle>{selectedActivity.activity.sport?.emoji} {selectedActivity.activity.sport?.name}</SectionTitle>
               <h3 className="text-white font-bold text-lg mb-3">
                 by @{selectedActivity.activity.user?.username}
               </h3>
@@ -454,7 +454,7 @@ export default function GroupView({ group }: { group: GroupData }) {
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex-1 min-w-0">
                         <p className="text-white font-semibold text-sm group-hover/act:text-teal-300 transition-colors duration-200">
-                          {ga.activity.sport?.name ?? "Activity"}
+                          {ga.activity.sport?.emoji} {ga.activity.sport?.name ?? "Activity"}
                         </p>
                         <p className="text-gray-500 text-xs mt-0.5">by @{ga.activity.user?.username ?? "User"}</p>
                         <div className="flex items-center gap-2 mt-2 text-xs text-gray-500">

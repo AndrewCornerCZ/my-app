@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation"
 export default function CreateGroupForm({ onSuccess, onCancel }: { onSuccess?: () => void; onCancel?: () => void }) {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
-  const [sports, setSports] = useState<{ id: number; name: string }[]>([])
+  const [sports, setSports] = useState<{ id: number; name: string; emoji: string }[]>([])
 
   const [form, setForm] = useState({ name: "", description: "", sportId: "" })
 
@@ -85,7 +85,7 @@ export default function CreateGroupForm({ onSuccess, onCancel }: { onSuccess?: (
         >
           <option value="" className="bg-gray-900">Select a sport</option>
           {sports.map(s => (
-            <option key={s.id} value={s.id} className="bg-gray-900">{s.name}</option>
+            <option key={s.id} value={s.id} className="bg-gray-900">{s.emoji} {s.name}</option>
           ))}
         </select>
       </div>

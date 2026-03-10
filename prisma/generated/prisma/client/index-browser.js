@@ -188,7 +188,8 @@ exports.Prisma.UserSportScalarFieldEnum = {
 
 exports.Prisma.SportScalarFieldEnum = {
   id: 'id',
-  name: 'name'
+  name: 'name',
+  emoji: 'emoji'
 };
 
 exports.Prisma.SportRanksScalarFieldEnum = {

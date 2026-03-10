@@ -9,7 +9,7 @@ import Geolocation from './Geolocation'
 interface UserSport {
   userId: number
   sportId: number
-  sport: { name: string }
+  sport: { name: string, emoji: string }
 }
 
 interface AddActivityModalProps {
@@ -172,7 +172,7 @@ export default function AddActivityModal({ userSports }: AddActivityModalProps) 
                   className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white text-sm outline-none focus:border-teal-500/50 focus:ring-2 focus:ring-teal-500/20 transition-all duration-200"
                 >
                   {userSports.map(us => (
-                    <option key={us.sportId} value={us.sportId} className="bg-gray-900">{us.sport.name}</option>
+                    <option key={us.sportId} value={us.sportId} className="bg-gray-900">{us.sport.emoji} {us.sport.name}</option>
                   ))}
                 </select>
               </div>

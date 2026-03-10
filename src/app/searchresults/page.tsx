@@ -144,7 +144,7 @@ export default async function SearchResultPage({
         include: {
           owner: { select: { username: true } },
           members: { select: { userId: true } },
-          sport: { select: { name: true } },
+          sport: { select: { name: true, emoji: true } },
         },
         orderBy: { name: 'asc' },
       });
@@ -175,7 +175,7 @@ export default async function SearchResultPage({
                       </span>
                       {group.sport && (
                         <span className="text-xs px-2 py-0.5 rounded-full bg-teal-500/10 border border-teal-500/20 text-teal-400 flex-shrink-0">
-                          {group.sport.name}
+                          {group.sport.emoji} {group.sport.name}
                         </span>
                       )}
                     </div>

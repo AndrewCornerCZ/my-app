@@ -19,7 +19,7 @@ interface ActivityWithSport {
   description: string | null; sportId: number; userId: number
   latitude: number | null; longitude: number | null; publicity: string
   user: { id: number; username: string }
-  sport: { name: string }
+  sport: { name: string; emoji: string }
   participants?: { id: number; activityId: number; userId: number; role: string }[]
 }
 interface ActivityCalendarProps {
@@ -301,7 +301,7 @@ const checkCanJoin = async (activityId: number) => {
                       <div className="flex items-center gap-2.5">
                         <span className="w-2.5 h-2.5 rounded-full flex-shrink-0 mt-0.5" style={{ backgroundColor: sportInfo?.color || '#2dd4a0' }} />
                         <div>
-                          <p className="text-white font-semibold text-sm">{act.sport.name}</p>
+                          <p className="text-white font-semibold text-sm">{act.sport.emoji} {act.sport.name}</p>
                           <p className="text-teal-400 text-xs">@{act.user.username}</p>
                         </div>
                       </div>

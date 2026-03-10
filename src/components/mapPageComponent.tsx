@@ -15,7 +15,7 @@ interface ActivityMarker {
   id: number
   latitude: number
   longitude: number
-  sport: { id: number; name: string }
+  sport: { id: number; name: string, emoji: string }
   description: string
   starttime: string
   endtime: string
@@ -27,16 +27,7 @@ interface ActivityMarker {
 interface Sport {
   id: number
   name: string
-}
-
-const SPORT_EMOJIS: Record<string, string> = {
-  running: '🏃', cycling: '🚴', swimming: '🏊', football: '⚽', basketball: '🏀',
-  tennis: '🎾', volleyball: '🏐', hiking: '🥾', yoga: '🧘', gym: '🏋️',
-  climbing: '🧗', skiing: '⛷️', default: '🏅',
-}
-
-function getSportEmoji(name: string) {
-  return SPORT_EMOJIS[name.toLowerCase()] ?? SPORT_EMOJIS.default
+  emoji: string
 }
 
 function relativeDate(dateStr: string) {
@@ -51,12 +42,54 @@ function relativeDate(dateStr: string) {
   return date.toLocaleDateString([], { month: 'short', day: 'numeric' })
 }
 
+// Funkce na vytvoření emoji markeru
+const createEmojiMarker = (emoji: string) => {
+  return new Promise<Icon<IconOptions>>((resolve) => {
+    import('leaflet').then(L => {
+      const canvas = document.createElement('canvas')
+      canvas.width = 41
+      canvas.height = 41
+      const ctx = canvas.getContext('2d')
+      
+      if (ctx) {
+        // Bílý kruh na pozadí
+        ctx.fillStyle = '#ffffff'
+        ctx.beginPath()
+        ctx.arc(20.5, 15, 12, 0, Math.PI * 2)
+        ctx.fill()
+        
+        // Teal border
+        ctx.strokeStyle = '#14b8a6'
+        ctx.lineWidth = 2
+        ctx.beginPath()
+        ctx.arc(20.5, 15, 12, 0, Math.PI * 2)
+        ctx.stroke()
+        
+        // Emoji text
+        ctx.font = 'bold 20px Arial'
+        ctx.textAlign = 'center'
+        ctx.textBaseline = 'middle'
+        ctx.fillText(emoji, 20.5, 15)
+      }
+
+      const iconUrl = canvas.toDataURL('image/png')
+      const icon = new L.Icon({
+        iconUrl,
+        iconSize: [41, 41],
+        iconAnchor: [20.5, 41],
+        popupAnchor: [0, -41],
+      })
+      resolve(icon)
+    })
+  })
+}
+
 export default function ActivitiesMapPage() {
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null)
   const [activities, setActivities] = useState<ActivityMarker[]>([])
   const [allActivities, setAllActivities] = useState<ActivityMarker[]>([])
   const [userIcon, setUserIcon] = useState<Icon<IconOptions> | undefined>(undefined)
-  const [markerIcon, setMarkerIcon] = useState<Icon<IconOptions> | undefined>(undefined)
+  const [markerIcons, setMarkerIcons] = useState<Map<number, Icon<IconOptions>>>(new Map())
   const [loading, setLoading] = useState(true)
   const [radius, setRadius] = useState(10)
   const [selectedSports, setSelectedSports] = useState<number[]>([])
@@ -68,16 +101,29 @@ export default function ActivitiesMapPage() {
 
   useEffect(() => {
     import('leaflet').then(L => {
-      setMarkerIcon(new L.Icon({
-        iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-        iconSize: [25, 41], iconAnchor: [12, 41],
-      }))
       setUserIcon(new L.Icon({
         iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
         iconSize: [25, 41], iconAnchor: [12, 41],
       }))
     })
   }, [])
+
+  // Vytvořit markery pro všechny sporty
+  useEffect(() => {
+    const createMarkers = async () => {
+      const newMarkerIcons = new Map<number, Icon<IconOptions>>()
+      for (const sport of availableSports) {
+        if (!markerIcons.has(sport.id)) {
+          const icon = await createEmojiMarker(sport.emoji)
+          newMarkerIcons.set(sport.id, icon)
+        }
+      }
+      if (newMarkerIcons.size > 0) {
+        setMarkerIcons(prev => new Map([...prev, ...newMarkerIcons]))
+      }
+    }
+    createMarkers()
+  }, [availableSports])
 
   useEffect(() => {
     if (!navigator.geolocation) {
@@ -157,7 +203,7 @@ export default function ActivitiesMapPage() {
   }, [userLocation?.lat, userLocation?.lng])
 
   // Loading screen
-  if (!userLocation || !markerIcon || !userIcon) {
+  if (!userLocation || !userIcon) {
     return (
       <div className="w-full h-screen flex items-center justify-center bg-gray-950 relative overflow-hidden">
         <div className="pointer-events-none fixed -top-32 -left-32 w-96 h-96 rounded-full bg-teal-700 opacity-20 blur-3xl" />
@@ -268,7 +314,7 @@ export default function ActivitiesMapPage() {
                         ? 'bg-teal-500/20 border-teal-500/50 text-teal-300'
                         : 'bg-white/5 border-white/10 text-gray-400 hover:text-white hover:border-white/20'
                     }`}>
-                    {getSportEmoji(sport.name)} {sport.name}
+                    {sport.emoji} {sport.name}
                   </button>
                 ))}
                 {selectedSports.length > 0 && (
@@ -315,7 +361,7 @@ export default function ActivitiesMapPage() {
                     }`}
                   >
                     <div className="flex items-start gap-2.5">
-                      <span className="text-xl leading-none mt-0.5">{getSportEmoji(activity.sport.name)}</span>
+                      <span className="text-xl leading-none mt-0.5">{activity.sport.emoji}</span>
                       <div className="flex-1 min-w-0">
                         <p className="text-white font-semibold text-xs truncate">{activity.sport.name}</p>
                         <p className="text-teal-400 text-xs">@{activity.user.username}</p>
@@ -361,34 +407,41 @@ export default function ActivitiesMapPage() {
               pathOptions={{ color: '#2dd4a0', fillColor: '#2dd4a0', fillOpacity: 0.08, weight: 2 }}
             />
 
-            {activities.map(activity => (
-              <Marker key={activity.id} position={[activity.latitude, activity.longitude]} icon={markerIcon}>
-                <Popup>
-                  <div className="min-w-52 text-sm space-y-1.5">
-                    <div className="flex items-center gap-2">
-                      <span className="text-xl">{getSportEmoji(activity.sport.name)}</span>
-                      <div>
-                        <p className="font-bold text-gray-900">{activity.sport.name}</p>
-                        <a href={`/userprofile/${activity.user.username}`} className="text-teal-600 text-xs hover:underline">
-                          @{activity.user.username}
-                        </a>
+            {activities.map(activity => {
+              const sportIcon = markerIcons.get(activity.sport.id)
+              return (
+                <Marker 
+                  key={activity.id} 
+                  position={[activity.latitude, activity.longitude]} 
+                  icon={sportIcon}
+                >
+                  <Popup>
+                    <div className="min-w-52 text-sm space-y-1.5">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xl">{activity.sport.emoji}</span>
+                        <div>
+                          <p className="font-bold text-gray-900">{activity.sport.name}</p>
+                          <a href={`/userprofile/${activity.user.username}`} className="text-teal-600 text-xs hover:underline">
+                            @{activity.user.username}
+                          </a>
+                        </div>
                       </div>
+                      {activity.description && (
+                        <p className="text-gray-600 text-xs leading-relaxed">{activity.description}</p>
+                      )}
+                      <div className="flex items-center gap-1.5 text-xs text-gray-500 pt-1 border-t border-gray-100">
+                        <span>📅 {relativeDate(activity.date)}</span>
+                        <span>·</span>
+                        <span>⏰ {activity.starttime}–{activity.endtime}</span>
+                      </div>
+                      <span className="inline-block px-2 py-0.5 bg-teal-50 text-teal-700 border border-teal-200 rounded-full text-xs font-medium">
+                        {activity.publicity}
+                      </span>
                     </div>
-                    {activity.description && (
-                      <p className="text-gray-600 text-xs leading-relaxed">{activity.description}</p>
-                    )}
-                    <div className="flex items-center gap-1.5 text-xs text-gray-500 pt-1 border-t border-gray-100">
-                      <span>📅 {relativeDate(activity.date)}</span>
-                      <span>·</span>
-                      <span>⏰ {activity.starttime}–{activity.endtime}</span>
-                    </div>
-                    <span className="inline-block px-2 py-0.5 bg-teal-50 text-teal-700 border border-teal-200 rounded-full text-xs font-medium">
-                      {activity.publicity}
-                    </span>
-                  </div>
-                </Popup>
-              </Marker>
-            ))}
+                  </Popup>
+                </Marker>
+              )
+            })}
           </MapContainer>
 
           {/* Count badge */}
@@ -406,7 +459,7 @@ export default function ActivitiesMapPage() {
             <div className="absolute bottom-4 right-4 z-10 w-72 bg-gray-950/95 backdrop-blur-md border border-teal-500/30 text-white rounded-2xl shadow-2xl p-4">
               <div className="flex items-start justify-between gap-2 mb-2">
                 <div className="flex items-center gap-2">
-                  <span className="text-2xl">{getSportEmoji(selectedActivity.sport.name)}</span>
+                  <span className="text-2xl">{selectedActivity.sport.emoji}</span>
                   <div>
                     <p className="font-bold text-sm">{selectedActivity.sport.name}</p>
                     <a href={`/userprofile/${selectedActivity.user.username}`} className="text-teal-400 text-xs hover:text-teal-300">
