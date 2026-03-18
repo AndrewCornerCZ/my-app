@@ -1,15 +1,9 @@
 'use client'
 
-import { useEffect, useState, useMemo } from 'react'
-import dynamic from 'next/dynamic'
+import { useEffect, useState, useRef } from 'react'
 import 'leaflet/dist/leaflet.css'
-import type { Icon, IconOptions } from 'leaflet'
-
-const MapContainer = dynamic(() => import('react-leaflet').then(mod => mod.MapContainer), { ssr: false })
-const TileLayer = dynamic(() => import('react-leaflet').then(mod => mod.TileLayer), { ssr: false })
-const Marker = dynamic(() => import('react-leaflet').then(mod => mod.Marker), { ssr: false })
-const Popup = dynamic(() => import('react-leaflet').then(mod => mod.Popup), { ssr: false })
-const Circle = dynamic(() => import('react-leaflet').then(mod => mod.Circle), { ssr: false })
+import type { Icon } from 'leaflet'
+import L from 'leaflet'
 
 interface ActivityMarker {
   id: number
@@ -30,7 +24,6 @@ interface Sport {
   emoji: string
 }
 
-
 function relativeDate(dateStr: string) {
   const date = new Date(dateStr)
   const now = new Date()
@@ -43,12 +36,94 @@ function relativeDate(dateStr: string) {
   return date.toLocaleDateString([], { month: 'short', day: 'numeric' })
 }
 
+// Vytvoř custom emoji marker v barvě loga
+const createEmojiMarker = (emoji: string, color: string = '#17a697'): Icon => {
+  const canvas = document.createElement('canvas')
+  canvas.width = 50
+  canvas.height = 60
+  const ctx = canvas.getContext('2d')!
+
+  // Teal background (barva loga)
+  ctx.fillStyle = color
+  ctx.beginPath()
+  ctx.moveTo(25, 0)
+  ctx.quadraticCurveTo(50, 0, 50, 25)
+  ctx.quadraticCurveTo(50, 50, 25, 60)
+  ctx.quadraticCurveTo(0, 50, 0, 25)
+  ctx.quadraticCurveTo(0, 0, 25, 0)
+  ctx.fill()
+
+  // Bílý kruh na emoji
+  ctx.fillStyle = '#ffffff'
+  ctx.beginPath()
+  ctx.arc(25, 18, 14, 0, Math.PI * 2)
+  ctx.fill()
+
+  // Emoji text
+  ctx.font = 'bold 22px Arial'
+  ctx.textAlign = 'center'
+  ctx.textBaseline = 'middle'
+  ctx.fillText(emoji, 25, 18)
+
+  const iconUrl = canvas.toDataURL('image/png')
+  return new L.Icon({
+    iconUrl,
+    iconSize: [50, 60],
+    iconAnchor: [25, 60],
+    popupAnchor: [0, -60],
+  })
+}
+
+// User marker - červenější barva loga
+const createUserMarker = (): Icon => {
+  const canvas = document.createElement('canvas')
+  canvas.width = 50
+  canvas.height = 60
+  const ctx = canvas.getContext('2d')!
+
+  // Teal background (akcentuál)
+  ctx.fillStyle = '#117a73'
+  ctx.beginPath()
+  ctx.moveTo(25, 0)
+  ctx.quadraticCurveTo(50, 0, 50, 25)
+  ctx.quadraticCurveTo(50, 50, 25, 60)
+  ctx.quadraticCurveTo(0, 50, 0, 25)
+  ctx.quadraticCurveTo(0, 0, 25, 0)
+  ctx.fill()
+
+  // Bílý kruh
+  ctx.fillStyle = '#ffffff'
+  ctx.beginPath()
+  ctx.arc(25, 18, 14, 0, Math.PI * 2)
+  ctx.fill()
+
+  // Location emoji
+  ctx.font = 'bold 22px Arial'
+  ctx.textAlign = 'center'
+  ctx.textBaseline = 'middle'
+  ctx.fillText('📍', 25, 18)
+
+  const iconUrl = canvas.toDataURL('image/png')
+  return new L.Icon({
+    iconUrl,
+    iconSize: [50, 60],
+    iconAnchor: [25, 60],
+    popupAnchor: [0, -60],
+  })
+}
+
 export default function ActivitiesMapPage() {
+  const mapContainer = useRef<HTMLDivElement>(null)
+  const mapInstance = useRef<L.Map | null>(null)
+  const markersRef = useRef<Map<number, L.Marker>>(new Map())
+  const circleRef = useRef<L.Circle | null>(null)
+  const userMarkerRef = useRef<L.Marker | null>(null)
+  const markerIconsRef = useRef<Map<number, Icon>>(new Map())
+
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null)
   const [activities, setActivities] = useState<ActivityMarker[]>([])
   const [allActivities, setAllActivities] = useState<ActivityMarker[]>([])
-  const [userIcon, setUserIcon] = useState<Icon<IconOptions> | undefined>(undefined)
-  const [markerIcon, setMarkerIcon] = useState<Icon<IconOptions> | undefined>(undefined)
+  const [userIcon, setUserIcon] = useState<Icon | undefined>(undefined)
   const [loading, setLoading] = useState(true)
   const [radius, setRadius] = useState(10)
   const [selectedSports, setSelectedSports] = useState<number[]>([])
@@ -58,19 +133,117 @@ export default function ActivitiesMapPage() {
   const [selectedActivity, setSelectedActivity] = useState<ActivityMarker | null>(null)
   const [dateFilter] = useState<string | null>(() => new Date().toISOString().split('T')[0])
 
+  // Inicializuj user icon
   useEffect(() => {
-    import('leaflet').then(L => {
-      setMarkerIcon(new L.Icon({
-        iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-        iconSize: [25, 41], iconAnchor: [12, 41],
-      }))
-      setUserIcon(new L.Icon({
-        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
-        iconSize: [25, 41], iconAnchor: [12, 41],
-      }))
-    })
+    setUserIcon(createUserMarker())
   }, [])
 
+  // Inicializuj mapu - jen jednou
+  useEffect(() => {
+    if (!mapContainer.current || !userLocation || mapInstance.current) return
+
+    try {
+      mapInstance.current = L.map(mapContainer.current).setView(
+        [userLocation.lat, userLocation.lng],
+        13
+      )
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors',
+      }).addTo(mapInstance.current)
+    } catch (e) {
+      console.error('Map init error:', e)
+    }
+
+    return () => {
+      if (mapInstance.current) {
+        mapInstance.current.remove()
+        mapInstance.current = null
+      }
+    }
+  }, [userLocation])
+
+  // Aktualizuj user marker a circle
+  useEffect(() => {
+    if (!mapInstance.current || !userLocation || !userIcon) return
+
+    // Odstraň starý user marker
+    if (userMarkerRef.current) {
+      userMarkerRef.current.remove()
+    }
+
+    // Přidej nový user marker
+    userMarkerRef.current = L.marker([userLocation.lat, userLocation.lng], { icon: userIcon })
+      .bindPopup('<div class="text-sm font-semibold">📍 Your Location</div>')
+      .addTo(mapInstance.current)
+
+    // Odstraň starý circle
+    if (circleRef.current) {
+      circleRef.current.remove()
+    }
+
+    // Přidej nový circle - v barvě loga
+    circleRef.current = L.circle([userLocation.lat, userLocation.lng], {
+      radius: radius * 1000,
+      color: '#17a697',
+      fillColor: '#17a697',
+      fillOpacity: 0.08,
+      weight: 2,
+    }).addTo(mapInstance.current)
+
+    // Centruj mapu
+    mapInstance.current.setView([userLocation.lat, userLocation.lng], 13)
+  }, [userLocation, radius, userIcon])
+
+  // Aktualizuj activity markery
+  useEffect(() => {
+    if (!mapInstance.current) return
+
+    // Odstraň staré markery
+    markersRef.current.forEach(marker => marker.remove())
+    markersRef.current.clear()
+
+    // Přidej nové markery
+    activities.forEach(activity => {
+      // Vytvoř icon pro tento sport (cachuj ho)
+      let icon = markerIconsRef.current.get(activity.sport.id)
+      if (!icon) {
+        icon = createEmojiMarker(activity.sport.emoji, '#17a697')
+        markerIconsRef.current.set(activity.sport.id, icon)
+      }
+
+      const popupContent = `
+        <div class="min-w-52 text-sm space-y-1.5">
+          <div class="flex items-center gap-2">
+            <span class="text-xl">${activity.sport.emoji}</span>
+            <div>
+              <p class="font-bold text-gray-900">${activity.sport.name}</p>
+              <a href="/userprofile/${activity.user.username}" class="text-teal-600 text-xs hover:underline">
+                @${activity.user.username}
+              </a>
+            </div>
+          </div>
+          ${activity.description ? `<p class="text-gray-600 text-xs leading-relaxed">${activity.description}</p>` : ''}
+          <div class="flex items-center gap-1.5 text-xs text-gray-500 pt-1 border-t border-gray-100">
+            <span>📅 ${relativeDate(activity.date)}</span>
+            <span>·</span>
+            <span>⏰ ${activity.starttime}–${activity.endtime}</span>
+          </div>
+          <span class="inline-block px-2 py-0.5 bg-teal-50 text-teal-700 border border-teal-200 rounded-full text-xs font-medium">
+            ${activity.publicity}
+          </span>
+        </div>
+      `
+
+      const marker = L.marker([activity.latitude, activity.longitude], { icon })
+        .bindPopup(popupContent)
+        .addTo(mapInstance.current!)
+
+      markersRef.current.set(activity.id, marker)
+    })
+  }, [activities])
+
+  // GPS poloha
   useEffect(() => {
     if (!navigator.geolocation) {
       setUserLocation({ lat: 50.0755, lng: 14.4378 })
@@ -143,13 +316,8 @@ export default function ActivitiesMapPage() {
     applyFilters(allActivities, newSelected)
   }
 
-  const mapKey = useMemo(() => {
-    if (!userLocation) return 'map'
-    return `map-${userLocation.lat.toFixed(4)}-${userLocation.lng.toFixed(4)}`
-  }, [userLocation?.lat, userLocation?.lng])
-
   // Loading screen
-  if (!userLocation || !markerIcon || !userIcon) {
+  if (!userLocation || !userIcon) {
     return (
       <div className="w-full h-screen flex items-center justify-center bg-gray-950 relative overflow-hidden">
         <div className="pointer-events-none fixed -top-32 -left-32 w-96 h-96 rounded-full bg-teal-700 opacity-20 blur-3xl" />
@@ -335,53 +503,7 @@ export default function ActivitiesMapPage() {
 
         {/* Map */}
         <div className="flex-1 relative">
-          <MapContainer
-            key={mapKey}
-            center={[userLocation.lat, userLocation.lng]}
-            zoom={13}
-            style={{ height: '100%', width: '100%' }}
-          >
-            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-
-            <Marker position={[userLocation.lat, userLocation.lng]} icon={userIcon}>
-              <Popup><div className="text-sm font-semibold">📍 Your Location</div></Popup>
-            </Marker>
-
-            <Circle
-              center={[userLocation.lat, userLocation.lng]}
-              radius={radius * 1000}
-              pathOptions={{ color: '#2dd4a0', fillColor: '#2dd4a0', fillOpacity: 0.08, weight: 2 }}
-            />
-
-            {activities.map(activity => (
-              <Marker key={activity.id} position={[activity.latitude, activity.longitude]} icon={markerIcon}>
-                <Popup>
-                  <div className="min-w-52 text-sm space-y-1.5">
-                    <div className="flex items-center gap-2">
-                      <span className="text-xl">{activity.sport.emoji}</span>
-                      <div>
-                        <p className="font-bold text-gray-900">{activity.sport.name}</p>
-                        <a href={`/userprofile/${activity.user.username}`} className="text-teal-600 text-xs hover:underline">
-                          @{activity.user.username}
-                        </a>
-                      </div>
-                    </div>
-                    {activity.description && (
-                      <p className="text-gray-600 text-xs leading-relaxed">{activity.description}</p>
-                    )}
-                    <div className="flex items-center gap-1.5 text-xs text-gray-500 pt-1 border-t border-gray-100">
-                      <span>📅 {relativeDate(activity.date)}</span>
-                      <span>·</span>
-                      <span>⏰ {activity.starttime}–{activity.endtime}</span>
-                    </div>
-                    <span className="inline-block px-2 py-0.5 bg-teal-50 text-teal-700 border border-teal-200 rounded-full text-xs font-medium">
-                      {activity.publicity}
-                    </span>
-                  </div>
-                </Popup>
-              </Marker>
-            ))}
-          </MapContainer>
+          <div ref={mapContainer} style={{ height: '100%', width: '100%' }} />
 
           {/* Count badge */}
           <div className="absolute bottom-4 left-4 z-10 bg-gray-950/90 backdrop-blur-md border border-white/10 text-white px-4 py-2.5 rounded-2xl shadow-xl">

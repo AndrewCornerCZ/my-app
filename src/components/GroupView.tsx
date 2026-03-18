@@ -4,10 +4,10 @@ import React, { useState, useEffect } from "react"
 import { useSession } from "next-auth/react"
 import Link from "next/link"
 import dynamic from "next/dynamic"
-import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 
+const MapPicker = dynamic(() => import("@/components/MapPicker"), { ssr: false })
 const MapComponent = dynamic(() => import("@/components/MapComponent"), { ssr: false })
 
 type Participant = {
@@ -27,7 +27,7 @@ type Activity = {
   longitude?: number
 }
 type GroupActivity = { id: number; activity: Activity }
-type GroupMember = { id: number; user: { id: number | string; username: string } }
+type GroupMember = { id: number; user: { id: number | string; username: string; role?: string } }
 type GroupInvitation = { id: number; status: string; user?: { id: number | string; username?: string; email?: string } }
 type GroupData = {
   id: number | string
@@ -39,31 +39,6 @@ type GroupData = {
   members?: GroupMember[]
   activities?: GroupActivity[]
   invitations?: GroupInvitation[]
-}
-
-const markerIcon = typeof window !== 'undefined' ? new L.Icon({
-  iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-  iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
-  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-  iconSize: [25, 41], iconAnchor: [12, 41],
-}) : undefined
-
-function MapClickHandler({ onClick }: { onClick: (lat: number, lng: number) => void }) {
-  useMapEvents({ click(e) { onClick(e.latlng.lat, e.latlng.lng) } })
-  return null
-}
-
-function MapPicker({ lat, lng, onChange, zoom = 13 }: { lat?: number; lng?: number; onChange: (lat: number, lng: number) => void; zoom?: number }) {
-  const center: [number, number] = [lat ?? 50.08, lng ?? 14.44]
-  return (
-    <div className="h-48 w-full rounded-xl overflow-hidden border border-white/10">
-      <MapContainer center={center} zoom={zoom} style={{ height: '100%', width: '100%' }}>
-        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        <MapClickHandler onClick={onChange} />
-        {lat !== undefined && lng !== undefined && markerIcon && <Marker position={[lat, lng]} icon={markerIcon} />}
-      </MapContainer>
-    </div>
-  )
 }
 
 // Small reusable card wrapper
@@ -94,7 +69,11 @@ export default function GroupView({ group }: { group: GroupData }) {
   const [activityForm, setActivityForm] = useState({ sportId: "", date: "", starttime: "", endtime: "", description: "" })
 
   const isOwner = session?.user?.id && Number(session.user.id) === group.ownerId
+  const isAdmin = session?.user?.id && members.some((m: GroupMember) => 
+    Number(m.user.id) === Number(session.user.id) && m.user.role === "admin"
+  )
   const isMember = session?.user?.id && members.some((m: GroupMember) => Number(m.user.id) === Number(session.user.id))
+  const canManageRoles = isOwner || isAdmin
 
   useEffect(() => {
     async function loadSport() {
@@ -166,8 +145,33 @@ export default function GroupView({ group }: { group: GroupData }) {
     finally { setLoading(false) }
   }
 
+  async function updateMemberRole(userId: number, username: string, newRole: string) {
+    if (!canManageRoles) return
+    // Owner se nemůže demotovat/promote
+    if (Number(userId) === group.ownerId) {
+      alert("Cannot change the owner's role")
+      return
+    }
+    setLoading(true)
+    try {
+      const res = await fetch(`/api/groups/${group.id}/members/${userId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ role: newRole })
+      })
+      if (!res.ok) throw new Error("Failed")
+      await refresh()
+    } catch (err) { console.error(err); alert("Failed to update role") }
+    finally { setLoading(false) }
+  }
+
   async function removeMember(userId: number, username: string) {
-    if (!isOwner) return
+    if (!canManageRoles) return
+    // Owner se nemůže sám smazat
+    if (Number(userId) === group.ownerId) {
+      alert("Cannot remove the owner")
+      return
+    }
     if (!confirm(`Remove ${username} from group?`)) return
     setLoading(true)
     try {
@@ -265,6 +269,10 @@ export default function GroupView({ group }: { group: GroupData }) {
               <span className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-teal-500/15 border border-teal-500/30 text-teal-300 text-sm font-medium">
                 👑 Owner
               </span>
+            ) : isAdmin ? (
+              <span className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-purple-500/15 border border-purple-500/30 text-purple-300 text-sm font-medium">
+                🛡️ Admin
+              </span>
             ) : isMember ? (
               <button onClick={leaveGroup} disabled={loading}
                 className="px-3.5 py-2 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm font-medium hover:bg-red-500/20 disabled:opacity-50 transition-all duration-200">
@@ -300,30 +308,76 @@ export default function GroupView({ group }: { group: GroupData }) {
             <SectionTitle>Members ({members.length})</SectionTitle>
             <div className="space-y-2">
               {members.length === 0 && <p className="text-gray-600 text-sm">No members yet</p>}
-              {members.map((m) => (
-                <div key={m.id} className="flex items-center justify-between py-1.5">
-                  <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 bg-gradient-to-br from-teal-400 to-teal-700 rounded-full flex items-center justify-center flex-shrink-0">
-                      <span className="text-white text-xs font-bold">{m.user?.username?.[0]?.toUpperCase()}</span>
+              {members.map((m) => {
+                const isOwnerMember = Number(m.user.id) === group.ownerId
+                const role = m.user.role || "member"
+                const isCurrentUser = session?.user?.id && Number(m.user.id) === Number(session.user.id)
+                
+                return (
+                  <div key={m.id} className="flex items-center justify-between py-2 px-2 rounded-lg hover:bg-white/5 transition-colors">
+                    <div className="flex items-center gap-2 flex-1">
+                      <div className="w-7 h-7 bg-gradient-to-br from-teal-400 to-teal-700 rounded-full flex items-center justify-center flex-shrink-0">
+                        <a href={`/userprofile/${m.user.username}`} className="text-white text-xs font-bold">{m.user?.username?.[0]?.toUpperCase()}</a>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-1.5">
+                          <a href={`/userprofile/${m.user.username}`} className="text-white text-sm truncate">{m.user?.username}</a>
+                          {isCurrentUser && (
+                            <span className="text-xs text-gray-500">(you)</span>
+                          )}
+                        </div>
+                        <span className="text-xs text-gray-500 capitalize">{role}</span>
+                      </div>
                     </div>
-                    <span className="text-white text-sm">{m.user?.username}</span>
+                    
+                    <div className="flex items-center gap-1.5 ml-2">
+                      {/* Role badge */}
+                      {isOwnerMember ? (
+                        <span className="text-xs bg-teal-500/15 border border-teal-500/30 text-teal-300 px-2 py-0.5 rounded-lg whitespace-nowrap">Owner</span>
+                      ) : role === "admin" ? (
+                        <span className="text-xs bg-purple-500/15 border border-purple-500/30 text-purple-300 px-2 py-0.5 rounded-lg whitespace-nowrap">Admin</span>
+                      ) : null}
+
+                      {/* Manage button (owner/admin can manage others) */}
+                      {canManageRoles && !isOwnerMember && (
+                        <div className="relative group">
+                          <button className="text-xs text-gray-400 hover:text-teal-300 transition-colors px-2 py-0.5">
+                            ⚙️
+                          </button>
+                          <div className="absolute right-0 mt-1 w-32 bg-gray-900 border border-white/10 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none group-hover:pointer-events-auto z-10">
+                            {role === "member" ? (
+                              <button onClick={() => updateMemberRole(Number(m.user.id), m.user.username, "admin")}
+                                className="w-full text-left px-3 py-2 text-xs text-teal-300 hover:bg-teal-500/20 transition-colors">
+                                Make Admin
+                              </button>
+                            ) : (
+                              <button onClick={() => updateMemberRole(Number(m.user.id), m.user.username, "member")}
+                                className="w-full text-left px-3 py-2 text-xs text-purple-300 hover:bg-purple-500/20 transition-colors">
+                                Remove Admin
+                              </button>
+                            )}
+                            <button onClick={() => removeMember(Number(m.user.id), m.user.username)}
+                              className="w-full text-left px-3 py-2 text-xs text-red-400 hover:bg-red-500/20 transition-colors border-t border-white/10">
+                              Remove
+                            </button>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Simple remove for members own action */}
+                      {!canManageRoles && isCurrentUser && !isOwnerMember && (
+                        <button onClick={leaveGroup} disabled={loading}
+                          className="text-xs text-red-400 hover:text-red-300 transition-colors">Leave</button>
+                      )}
+                    </div>
                   </div>
-                  <div className="flex items-center gap-1.5">
-                    {Number(m.user.id) === group.ownerId && (
-                      <span className="text-xs bg-teal-500/15 border border-teal-500/30 text-teal-300 px-2 py-0.5 rounded-lg">Owner</span>
-                    )}
-                    {isOwner && Number(m.user.id) !== group.ownerId && (
-                      <button onClick={() => removeMember(Number(m.user.id), m.user.username)} disabled={loading}
-                        className="text-xs text-red-400 hover:text-red-300 transition-colors">Remove</button>
-                    )}
-                  </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
           </Card>
 
-          {/* Invitations (owner only) */}
-          {isOwner && (
+          {/* Invitations (owner/admin only) */}
+          {canManageRoles && (
             <Card>
               <SectionTitle>Invitations</SectionTitle>
               <div className="space-y-2">
@@ -332,24 +386,20 @@ export default function GroupView({ group }: { group: GroupData }) {
                 )}
                 {invitations.map((inv: GroupInvitation) => {
                   if (inv.status !== 'pending') return null
-                  const isForMe = Number(inv.user?.id) === Number(session?.user?.id)
-                  const canAct = isForMe || isOwner
                   return (
                     <div key={inv.id} className="bg-white/5 border border-white/10 rounded-xl p-3">
                       <p className="text-white text-sm font-medium mb-0.5">{inv.user?.username ?? inv.user?.email}</p>
                       <p className="text-xs text-gray-600 mb-2">Pending</p>
-                      {canAct && (
-                        <div className="flex gap-2">
-                          <button onClick={() => handleInvitationResponse(inv.id, 'accept')} disabled={loading}
-                            className="flex-1 py-1.5 rounded-lg bg-teal-500/20 border border-teal-500/30 text-teal-300 text-xs font-medium hover:bg-teal-500/30 transition-all duration-200">
-                            Accept
-                          </button>
-                          <button onClick={() => handleInvitationResponse(inv.id, 'reject')} disabled={loading}
-                            className="flex-1 py-1.5 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-medium hover:bg-red-500/20 transition-all duration-200">
-                            Reject
-                          </button>
-                        </div>
-                      )}
+                      <div className="flex gap-2">
+                        <button onClick={() => handleInvitationResponse(inv.id, 'accept')} disabled={loading}
+                          className="flex-1 py-1.5 rounded-lg bg-teal-500/20 border border-teal-500/30 text-teal-300 text-xs font-medium hover:bg-teal-500/30 transition-all duration-200">
+                          Accept
+                        </button>
+                        <button onClick={() => handleInvitationResponse(inv.id, 'reject')} disabled={loading}
+                          className="flex-1 py-1.5 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-medium hover:bg-red-500/20 transition-all duration-200">
+                          Reject
+                        </button>
+                      </div>
                     </div>
                   )
                 })}
@@ -388,7 +438,7 @@ export default function GroupView({ group }: { group: GroupData }) {
 
               {selectedActivity.activity.latitude && selectedActivity.activity.longitude && (
                 <div className="mb-4 h-56 rounded-xl overflow-hidden border border-white/10">
-                  <MapComponent latitude={selectedActivity.activity.latitude} longitude={selectedActivity.activity.longitude} zoom={14} />
+                  <MapComponent key={`${selectedActivity.activity.latitude}-${selectedActivity.activity.longitude}`} latitude={selectedActivity.activity.latitude} longitude={selectedActivity.activity.longitude} zoom={14} />
                 </div>
               )}
 
@@ -448,35 +498,38 @@ export default function GroupView({ group }: { group: GroupData }) {
               <SectionTitle>Activities ({activities.length})</SectionTitle>
               {activities.length === 0 && <p className="text-gray-600 text-sm">No activities yet</p>}
               <div className="space-y-3">
-                {activities.map((ga: GroupActivity) => (
-                  <button key={ga.id} onClick={() => setSelectedActivity(ga)}
-                    className="w-full text-left bg-white/5 border border-white/10 hover:border-teal-500/30 rounded-xl p-4 transition-all duration-200 group/act">
-                    <div className="flex items-start justify-between gap-2">
-                      <div className="flex-1 min-w-0">
-                        <p className="text-white font-semibold text-sm group-hover/act:text-teal-300 transition-colors duration-200">
-                          {ga.activity.sport?.emoji} {ga.activity.sport?.name ?? "Activity"}
-                        </p>
-                        <p className="text-gray-500 text-xs mt-0.5">by @{ga.activity.user?.username ?? "User"}</p>
-                        <div className="flex items-center gap-2 mt-2 text-xs text-gray-500">
-                          <span>📅 {ga.activity.date?.slice(0, 10)}</span>
-                          <span>⏰ {ga.activity.starttime}–{ga.activity.endtime}</span>
+                {activities.map((ga: GroupActivity) => {
+                  if (!ga?.activity) return null
+                  return (
+                    <button key={ga.id} onClick={() => setSelectedActivity(ga)}
+                      className="w-full text-left bg-white/5 border border-white/10 hover:border-teal-500/30 rounded-xl p-4 transition-all duration-200 group/act">
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="flex-1 min-w-0">
+                          <p className="text-white font-semibold text-sm group-hover/act:text-teal-300 transition-colors duration-200">
+                            {ga.activity.sport?.emoji} {ga.activity.sport?.name ?? "Activity"}
+                          </p>
+                          <p className="text-gray-500 text-xs mt-0.5">by @{ga.activity.user?.username ?? "User"}</p>
+                          <div className="flex items-center gap-2 mt-2 text-xs text-gray-500">
+                            <span>📅 {ga.activity.date?.slice(0, 10)}</span>
+                            <span>⏰ {ga.activity.starttime}–{ga.activity.endtime}</span>
+                          </div>
+                          {ga.activity.description && (
+                            <p className="text-gray-600 text-xs mt-1.5 line-clamp-1">{ga.activity.description}</p>
+                          )}
                         </div>
-                        {ga.activity.description && (
-                          <p className="text-gray-600 text-xs mt-1.5 line-clamp-1">{ga.activity.description}</p>
-                        )}
+                        <svg className="w-4 h-4 text-gray-600 group-hover/act:text-teal-400 transition-colors duration-200 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/>
+                        </svg>
                       </div>
-                      <svg className="w-4 h-4 text-gray-600 group-hover/act:text-teal-400 transition-colors duration-200 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/>
-                      </svg>
-                    </div>
-                  </button>
-                ))}
+                    </button>
+                  )
+                })}
               </div>
             </Card>
           )}
 
           {/* Create activity form */}
-          {!selectedActivity && (isOwner || isMember) && (
+          {!selectedActivity && (isOwner || isAdmin) && (
             <Card>
               <SectionTitle>Create Activity</SectionTitle>
               <form onSubmit={createActivity} className="space-y-3">
@@ -492,26 +545,10 @@ export default function GroupView({ group }: { group: GroupData }) {
                     className="px-3 py-2.5 bg-white/5 border border-white/10 rounded-xl text-white text-sm placeholder-gray-600 outline-none focus:border-teal-500/50 focus:ring-2 focus:ring-teal-500/20 transition-all duration-200" />
                 </div>
 
-                {/* Location picker */}
-                <div className="bg-white/5 border border-white/10 rounded-xl p-3">
-                  <div className="flex items-center justify-between mb-2">
-                    <p className="text-xs font-semibold uppercase tracking-widest text-gray-500">Location</p>
-                    <div className="flex gap-2">
-                      <button type="button" onClick={getCurrentLocation}
-                        className="text-xs px-2.5 py-1 rounded-lg bg-teal-500/15 border border-teal-500/30 text-teal-400 hover:bg-teal-500/25 transition-all duration-200">
-                        Use My Location
-                      </button>
-                      <button type="button" onClick={() => setMapLocation(null)}
-                        className="text-xs px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-gray-500 hover:text-white transition-all duration-200">
-                        Clear
-                      </button>
-                    </div>
-                  </div>
+                {/* Location picker - Dynamically loaded */}
+                {!selectedActivity && (
                   <MapPicker lat={mapLocation?.lat} lng={mapLocation?.lng} onChange={(lat, lng) => setMapLocation({ lat, lng })} zoom={13} />
-                  <p className="mt-2 text-xs text-gray-600">
-                    {mapLocation ? `${mapLocation.lat.toFixed(5)}, ${mapLocation.lng.toFixed(5)}` : 'Click on the map to set location'}
-                  </p>
-                </div>
+                )}
 
                 <textarea placeholder="Description (optional)" value={activityForm.description}
                   onChange={e => setActivityForm({ ...activityForm, description: e.target.value })}

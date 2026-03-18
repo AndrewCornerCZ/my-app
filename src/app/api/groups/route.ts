@@ -19,7 +19,10 @@ export async function POST(req: Request) {
     const group = await prisma.group.create({
       data: { name, description, ownerId: Number(session.user.id), sportId },
     })
-    return NextResponse.json(group, { status: 201 })
+    const groupMember = await prisma.groupMember.create({
+      data: { groupId: group.id, userId: Number(session.user.id) },
+    })
+    return NextResponse.json({ group, groupMember }, { status: 201 })
   } catch (e) {
     console.error(e)
     return NextResponse.json({ error: 'Failed to create group' }, { status: 500 })
