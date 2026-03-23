@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react"
 import { useSession } from "next-auth/react"
 import Link from "next/link"
 import dynamic from "next/dynamic"
-import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 
 const MapPicker = dynamic(() => import("@/components/MapPicker"), { ssr: false })
@@ -96,15 +95,6 @@ export default function GroupView({ group }: { group: GroupData }) {
       setActivities(json.activities || [])
       setInvitations(json.invitations || [])
     } catch (e) { console.error(e) }
-  }
-
-  function getCurrentLocation() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        ({ coords }) => setMapLocation({ lat: coords.latitude, lng: coords.longitude }),
-        () => alert("Could not get your location")
-      )
-    }
   }
 
   async function createActivity(e?: React.FormEvent) {
