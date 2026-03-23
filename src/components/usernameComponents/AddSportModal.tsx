@@ -98,7 +98,7 @@ export default function AddSportModal({ userId, userSports }: AddSportModalProps
         <div className="px-6 py-5">
           {sports.length === 0 ? (
             <div className="text-center py-8">
-              <p className="text-gray-500 text-sm">You've added all available sports!</p>
+              <p className="text-gray-500 text-sm">You&apos;ve added all available sports!</p>
             </div>
           ) : (
             <div className="space-y-4">
