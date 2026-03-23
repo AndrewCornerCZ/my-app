@@ -67,18 +67,19 @@ export default async function Profile({ params }: { params: Promise<{ username: 
 
       <Navbar />
 
-      <div className="relative z-10 container mx-auto px-4 pt-24 pb-16">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-
-          {/* ── LEFT: Profile + Posts ── */}
-          <div className="lg:col-span-2 space-y-5">
-
+      {/* Mobile Layout: column (profile -> calendar -> posts) */}
+      {/* Desktop Layout: 3 columns (profile+posts on left, calendar on right) */}
+      <div className="relative z-10 w-full px-4 lg:px-0">
+        <div className="w-full max-w-7xl mx-auto pt-6 lg:pt-24 pb-16">
+          
+          {/* Mobile: Profile Info */}
+          <div className="mb-6 lg:hidden">
             {/* Profile header */}
-            <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
-              <div className="flex items-start justify-between gap-4 mb-4">
+            <div className="bg-white/5 border border-white/10 rounded-3xl p-4 lg:p-6">
+              <div className="flex items-start justify-between gap-3 mb-4">
                 {/* Avatar + name */}
-                <div className="flex items-center gap-4">
-                  <div className="relative w-16 h-16 flex-shrink-0">
+                <div className="flex items-center gap-3">
+                  <div className="relative w-14 h-14 lg:w-16 lg:h-16 flex-shrink-0">
                     {user.image ? (
                       <Image
                         src={user.image}
@@ -87,8 +88,8 @@ export default async function Profile({ params }: { params: Promise<{ username: 
                         className="rounded-2xl object-cover"
                       />
                     ) : (
-                      <div className="w-16 h-16 bg-gradient-to-br from-teal-400 to-teal-700 rounded-2xl flex items-center justify-center shadow-lg shadow-teal-900/40">
-                        <span className="text-2xl text-white font-extrabold">
+                      <div className="w-full h-full bg-gradient-to-br from-teal-400 to-teal-700 rounded-2xl flex items-center justify-center shadow-lg shadow-teal-900/40">
+                        <span className="text-xl lg:text-2xl text-white font-extrabold">
                           {user.username.charAt(0).toUpperCase()}
                         </span>
                       </div>
@@ -99,14 +100,14 @@ export default async function Profile({ params }: { params: Promise<{ username: 
                       </div>
                     )}
                   </div>
-                  <div>
+                  <div className="flex-1">
                     <p className="text-xs font-semibold uppercase tracking-widest text-teal-500 mb-0.5">Profile</p>
-                    <h1 className="text-xl font-extrabold text-white tracking-tight">@{user.username}</h1>
+                    <h1 className="text-lg lg:text-xl font-extrabold text-white tracking-tight truncate">@{user.username}</h1>
                   </div>
                 </div>
 
-                {/* Action buttons */}
-                <div className="flex items-center gap-2 flex-wrap justify-end">
+                {/* Action buttons - stack on mobile */}
+                <div className="flex items-center gap-1.5 flex-wrap justify-end flex-shrink-0">
                   {isOwner ? (
                     <>
                       <SettingsButton />
@@ -122,20 +123,20 @@ export default async function Profile({ params }: { params: Promise<{ username: 
               {/* Bio + Stats */}
               <div className="space-y-3">
                 {user.bio && (
-                  <p className="text-gray-400 text-sm leading-relaxed">{user.bio}</p>
+                  <p className="text-gray-400 text-xs lg:text-sm leading-relaxed">{user.bio}</p>
                 )}
-                <div className="flex items-center gap-4 text-sm">
-                  <span>
+                <div className="flex items-center gap-2 lg:gap-4 text-xs lg:text-sm overflow-x-auto">
+                  <span className="flex-shrink-0">
                     <span className="text-teal-400 font-bold">{user.followers.length}</span>
                     <span className="text-gray-500 ml-1">Followers</span>
                   </span>
-                  <span className="text-gray-700">·</span>
-                  <span>
+                  <span className="text-gray-700 flex-shrink-0">·</span>
+                  <span className="flex-shrink-0">
                     <span className="text-teal-400 font-bold">{user.following.length}</span>
                     <span className="text-gray-500 ml-1">Following</span>
                   </span>
-                  <span className="text-gray-700">·</span>
-                  <span>
+                  <span className="text-gray-700 flex-shrink-0">·</span>
+                  <span className="flex-shrink-0">
                     <span className="text-teal-400 font-bold">{user.activities.length}</span>
                     <span className="text-gray-500 ml-1">Activities</span>
                   </span>
@@ -160,36 +161,152 @@ export default async function Profile({ params }: { params: Promise<{ username: 
                 </div>
               )}
             </div>
+          </div>
 
-            {/* Posts */}
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-widest text-teal-500 mb-3">Posts</p>
-              <PostProfile id={user.id} />
+          {/* Mobile: Calendar */}
+          <div className="mb-6 lg:hidden">
+            <div className="bg-white/5 border border-white/10 rounded-3xl p-4 lg:p-5">
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-widest text-teal-500 mb-0.5">Schedule</p>
+                  <h2 className="text-sm font-bold text-white">Activity Calendar</h2>
+                </div>
+                {isOwner && user.sports.length > 0 && (
+                  <AddActivityModal userSports={user.sports} />
+                )}
+              </div>
+              <ActivityCalendar
+                initialActivities={serializedActivities}
+                userSports={user.sports}
+                userId={user.id}
+              />
             </div>
           </div>
 
-          {/* ── RIGHT: Calendar ── */}
-          <div className="lg:col-span-1">
-            <div className="sticky top-6">
-              <div className="bg-white/5 border border-white/10 rounded-3xl p-5">
-                <div className="flex items-center justify-between mb-4">
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-widest text-teal-500 mb-0.5">Schedule</p>
-                    <h2 className="text-sm font-bold text-white">Activity Calendar</h2>
+          {/* Desktop + Mobile: Main Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
+
+            {/* ── LEFT: Profile + Posts (Desktop) ── */}
+            <div className="lg:col-span-2 space-y-5 order-2 lg:order-1">
+
+              {/* Profile header - Desktop Only */}
+              <div className="hidden lg:block bg-white/5 border border-white/10 rounded-3xl p-6">
+                <div className="flex items-start justify-between gap-4 mb-4">
+                  {/* Avatar + name */}
+                  <div className="flex items-center gap-4">
+                    <div className="relative w-16 h-16 flex-shrink-0">
+                      {user.image ? (
+                        <Image
+                          src={user.image}
+                          alt={`${user.username}'s profile`}
+                          fill
+                          className="rounded-2xl object-cover"
+                        />
+                      ) : (
+                        <div className="w-16 h-16 bg-gradient-to-br from-teal-400 to-teal-700 rounded-2xl flex items-center justify-center shadow-lg shadow-teal-900/40">
+                          <span className="text-2xl text-white font-extrabold">
+                            {user.username.charAt(0).toUpperCase()}
+                          </span>
+                        </div>
+                      )}
+                      {isOwner && (
+                        <div className="absolute -bottom-1 -right-1">
+                          <ProfileImageUploader userId={user.id} />
+                        </div>
+                      )}
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-widest text-teal-500 mb-0.5">Profile</p>
+                      <h1 className="text-xl font-extrabold text-white tracking-tight">@{user.username}</h1>
+                    </div>
                   </div>
-                  {isOwner && user.sports.length > 0 && (
-                    <AddActivityModal userSports={user.sports} />
-                  )}
+
+                  {/* Action buttons */}
+                  <div className="flex items-center gap-2 flex-wrap justify-end">
+                    {isOwner ? (
+                      <>
+                        <SettingsButton />
+                        <ManageSportsModal userSports={user.sports} />
+                        <AddSportModal userId={user.id} userSports={user.sports} />
+                      </>
+                    ) : (
+                      <FollowButton userId={user.id} initialFollowState={!!isFollowing} />
+                    )}
+                  </div>
                 </div>
-                <ActivityCalendar
-                  initialActivities={serializedActivities}
-                  userSports={user.sports}
-                  userId={user.id}
-                />
+
+                {/* Bio + Stats */}
+                <div className="space-y-3">
+                  {user.bio && (
+                    <p className="text-gray-400 text-sm leading-relaxed">{user.bio}</p>
+                  )}
+                  <div className="flex items-center gap-4 text-sm">
+                    <span>
+                      <span className="text-teal-400 font-bold">{user.followers.length}</span>
+                      <span className="text-gray-500 ml-1">Followers</span>
+                    </span>
+                    <span className="text-gray-700">·</span>
+                    <span>
+                      <span className="text-teal-400 font-bold">{user.following.length}</span>
+                      <span className="text-gray-500 ml-1">Following</span>
+                    </span>
+                    <span className="text-gray-700">·</span>
+                    <span>
+                      <span className="text-teal-400 font-bold">{user.activities.length}</span>
+                      <span className="text-gray-500 ml-1">Activities</span>
+                    </span>
+                  </div>
+                </div>
+
+                {/* Sports chips */}
+                {user.sports.length > 0 && (
+                  <div className="mt-4 pt-4 border-t border-white/10">
+                    <p className="text-xs font-semibold uppercase tracking-widest text-gray-600 mb-2.5">Sports</p>
+                    <div className="flex flex-wrap gap-2">
+                      {user.sports.map(us => (
+                        <span
+                          key={us.sportId}
+                          className="px-3 py-1 rounded-full text-xs font-semibold text-white"
+                          style={{ backgroundColor: (us.color || '#14b8a6') + '33', border: `1.5px solid ${us.color || '#14b8a6'}`, color: us.color || '#14b8a6' }}
+                        >
+                          {us.sport.emoji} {us.sport.name}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Posts */}
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-widest text-teal-500 mb-3">Posts</p>
+                <PostProfile id={user.id} />
               </div>
             </div>
-          </div>
 
+            {/* ── RIGHT: Calendar (Desktop Only) ── */}
+            <div className="hidden lg:block lg:col-span-1 order-3 lg:order-2">
+              <div className="sticky top-6">
+                <div className="bg-white/5 border border-white/10 rounded-3xl p-5">
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-widest text-teal-500 mb-0.5">Schedule</p>
+                      <h2 className="text-sm font-bold text-white">Activity Calendar</h2>
+                    </div>
+                    {isOwner && user.sports.length > 0 && (
+                      <AddActivityModal userSports={user.sports} />
+                    )}
+                  </div>
+                  <ActivityCalendar
+                    initialActivities={serializedActivities}
+                    userSports={user.sports}
+                    userId={user.id}
+                  />
+                </div>
+              </div>
+            </div>
+
+          </div>
         </div>
       </div>
     </div>

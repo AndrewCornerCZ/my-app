@@ -44,7 +44,7 @@ type GroupData = {
 // Small reusable card wrapper
 function Card({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
-    <div className={`bg-white/5 border border-white/10 rounded-2xl p-5 ${className}`}>
+    <div className={`bg-white/5 border border-white/10 rounded-2xl p-4 lg:p-5 ${className}`}>
       {children}
     </div>
   )
@@ -240,7 +240,7 @@ export default function GroupView({ group }: { group: GroupData }) {
   }, [selectedActivity, session?.user?.id])
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-6">
 
       {/* Back */}
       <Link href="/groups" className="inline-flex items-center gap-1.5 text-gray-500 hover:text-teal-400 text-sm transition-colors duration-200">
@@ -252,30 +252,30 @@ export default function GroupView({ group }: { group: GroupData }) {
 
       {/* Group header */}
       <Card>
-        <div className="flex items-start justify-between gap-4">
+        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
           <div className="flex-1 min-w-0">
             <p className="text-xs font-semibold uppercase tracking-widest text-teal-500 mb-1">{sport}</p>
-            <h1 className="text-2xl font-extrabold tracking-tight text-white mb-1">{group.name}</h1>
-            <p className="text-sm text-gray-500">
+            <h1 className="text-xl lg:text-2xl font-extrabold tracking-tight text-white mb-1">{group.name}</h1>
+            <p className="text-xs lg:text-sm text-gray-500">
               Owner: <span className="text-gray-300">@{group.owner?.username}</span>
             </p>
             {group.description && (
-              <p className="text-sm text-gray-400 mt-2">{group.description}</p>
+              <p className="text-xs lg:text-sm text-gray-400 mt-2">{group.description}</p>
             )}
           </div>
 
           <div className="flex-shrink-0">
             {isOwner ? (
-              <span className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-teal-500/15 border border-teal-500/30 text-teal-300 text-sm font-medium">
+              <span className="flex items-center gap-1.5 px-3 py-2 lg:px-3.5 lg:py-2 rounded-lg lg:rounded-xl bg-teal-500/15 border border-teal-500/30 text-teal-300 text-xs lg:text-sm font-medium whitespace-nowrap">
                 👑 Owner
               </span>
             ) : isAdmin ? (
-              <span className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-purple-500/15 border border-purple-500/30 text-purple-300 text-sm font-medium">
+              <span className="flex items-center gap-1.5 px-3 py-2 lg:px-3.5 lg:py-2 rounded-lg lg:rounded-xl bg-purple-500/15 border border-purple-500/30 text-purple-300 text-xs lg:text-sm font-medium whitespace-nowrap">
                 🛡️ Admin
               </span>
             ) : isMember ? (
               <button onClick={leaveGroup} disabled={loading}
-                className="px-3.5 py-2 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm font-medium hover:bg-red-500/20 disabled:opacity-50 transition-all duration-200">
+                className="px-3 py-2 lg:px-3.5 lg:py-2 rounded-lg lg:rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs lg:text-sm font-medium hover:bg-red-500/20 disabled:opacity-50 transition-all duration-200">
                 Leave
               </button>
             ) : (
@@ -290,7 +290,7 @@ export default function GroupView({ group }: { group: GroupData }) {
                 } catch { alert("Failed to send request") }
                 finally { setLoading(false) }
               }} disabled={loading}
-                className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-teal-400 to-teal-600 text-white text-sm font-semibold hover:brightness-110 disabled:opacity-50 transition-all duration-200">
+                className="px-3 py-2 lg:px-3.5 lg:py-2 rounded-lg lg:rounded-xl bg-gradient-to-r from-teal-400 to-teal-600 text-white text-xs lg:text-sm font-semibold hover:brightness-110 disabled:opacity-50 transition-all duration-200 whitespace-nowrap">
                 Request Join
               </button>
             )}
@@ -298,30 +298,32 @@ export default function GroupView({ group }: { group: GroupData }) {
         </div>
       </Card>
 
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-5">
+      {/* Mobile: Sidebar before content */}
+      {/* Desktop: Grid layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 lg:gap-5">
 
-        {/* Left sidebar */}
-        <div className="lg:col-span-1 space-y-4">
+        {/* Left sidebar - On mobile appears first due to HTML order */}
+        <div className="lg:col-span-1 space-y-4 order-2 lg:order-1">
 
           {/* Members */}
           <Card>
             <SectionTitle>Members ({members.length})</SectionTitle>
-            <div className="space-y-2">
-              {members.length === 0 && <p className="text-gray-600 text-sm">No members yet</p>}
+            <div className="space-y-2 max-h-96 overflow-y-auto">
+              {members.length === 0 && <p className="text-gray-600 text-xs lg:text-sm">No members yet</p>}
               {members.map((m) => {
                 const isOwnerMember = Number(m.user.id) === group.ownerId
                 const role = m.user.role || "member"
                 const isCurrentUser = session?.user?.id && Number(m.user.id) === Number(session.user.id)
                 
                 return (
-                  <div key={m.id} className="flex items-center justify-between py-2 px-2 rounded-lg hover:bg-white/5 transition-colors">
-                    <div className="flex items-center gap-2 flex-1">
-                      <div className="w-7 h-7 bg-gradient-to-br from-teal-400 to-teal-700 rounded-full flex items-center justify-center flex-shrink-0">
+                  <div key={m.id} className="flex items-center justify-between py-1.5 px-2 rounded-lg hover:bg-white/5 transition-colors">
+                    <div className="flex items-center gap-2 flex-1 min-w-0">
+                      <div className="w-6 h-6 lg:w-7 lg:h-7 bg-gradient-to-br from-teal-400 to-teal-700 rounded-full flex items-center justify-center flex-shrink-0">
                         <a href={`/userprofile/${m.user.username}`} className="text-white text-xs font-bold">{m.user?.username?.[0]?.toUpperCase()}</a>
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-1.5">
-                          <a href={`/userprofile/${m.user.username}`} className="text-white text-sm truncate">{m.user?.username}</a>
+                        <div className="flex items-center gap-1">
+                          <a href={`/userprofile/${m.user.username}`} className="text-white text-xs lg:text-sm truncate">{m.user?.username}</a>
                           {isCurrentUser && (
                             <span className="text-xs text-gray-500">(you)</span>
                           )}
@@ -330,18 +332,18 @@ export default function GroupView({ group }: { group: GroupData }) {
                       </div>
                     </div>
                     
-                    <div className="flex items-center gap-1.5 ml-2">
+                    <div className="flex items-center gap-1 ml-2 flex-shrink-0">
                       {/* Role badge */}
                       {isOwnerMember ? (
-                        <span className="text-xs bg-teal-500/15 border border-teal-500/30 text-teal-300 px-2 py-0.5 rounded-lg whitespace-nowrap">Owner</span>
+                        <span className="text-xs bg-teal-500/15 border border-teal-500/30 text-teal-300 px-1.5 py-0.5 rounded whitespace-nowrap hidden sm:inline-block">Owner</span>
                       ) : role === "admin" ? (
-                        <span className="text-xs bg-purple-500/15 border border-purple-500/30 text-purple-300 px-2 py-0.5 rounded-lg whitespace-nowrap">Admin</span>
+                        <span className="text-xs bg-purple-500/15 border border-purple-500/30 text-purple-300 px-1.5 py-0.5 rounded whitespace-nowrap hidden sm:inline-block">Admin</span>
                       ) : null}
 
                       {/* Manage button (owner/admin can manage others) */}
                       {canManageRoles && !isOwnerMember && (
                         <div className="relative group">
-                          <button className="text-xs text-gray-400 hover:text-teal-300 transition-colors px-2 py-0.5">
+                          <button className="text-xs text-gray-400 hover:text-teal-300 transition-colors px-1.5 py-0.5">
                             ⚙️
                           </button>
                           <div className="absolute right-0 mt-1 w-32 bg-gray-900 border border-white/10 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none group-hover:pointer-events-auto z-10">
@@ -380,23 +382,23 @@ export default function GroupView({ group }: { group: GroupData }) {
           {canManageRoles && (
             <Card>
               <SectionTitle>Invitations</SectionTitle>
-              <div className="space-y-2">
+              <div className="space-y-2 max-h-80 overflow-y-auto">
                 {invitations.filter(i => i.status === 'pending').length === 0 && (
-                  <p className="text-gray-600 text-sm">No pending invitations</p>
+                  <p className="text-gray-600 text-xs lg:text-sm">No pending invitations</p>
                 )}
                 {invitations.map((inv: GroupInvitation) => {
                   if (inv.status !== 'pending') return null
                   return (
-                    <div key={inv.id} className="bg-white/5 border border-white/10 rounded-xl p-3">
-                      <p className="text-white text-sm font-medium mb-0.5">{inv.user?.username ?? inv.user?.email}</p>
-                      <p className="text-xs text-gray-600 mb-2">Pending</p>
+                    <div key={inv.id} className="bg-white/5 border border-white/10 rounded-lg p-2 lg:p-3">
+                      <p className="text-white text-xs lg:text-sm font-medium mb-0.5">{inv.user?.username ?? inv.user?.email}</p>
+                      <p className="text-xs text-gray-600 mb-1.5">Pending</p>
                       <div className="flex gap-2">
                         <button onClick={() => handleInvitationResponse(inv.id, 'accept')} disabled={loading}
-                          className="flex-1 py-1.5 rounded-lg bg-teal-500/20 border border-teal-500/30 text-teal-300 text-xs font-medium hover:bg-teal-500/30 transition-all duration-200">
+                          className="flex-1 py-1 lg:py-1.5 rounded-lg bg-teal-500/20 border border-teal-500/30 text-teal-300 text-xs font-medium hover:bg-teal-500/30 transition-all duration-200">
                           Accept
                         </button>
                         <button onClick={() => handleInvitationResponse(inv.id, 'reject')} disabled={loading}
-                          className="flex-1 py-1.5 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-medium hover:bg-red-500/20 transition-all duration-200">
+                          className="flex-1 py-1 lg:py-1.5 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-medium hover:bg-red-500/20 transition-all duration-200">
                           Reject
                         </button>
                       </div>
@@ -409,7 +411,7 @@ export default function GroupView({ group }: { group: GroupData }) {
         </div>
 
         {/* Right content */}
-        <div className="lg:col-span-3 space-y-4">
+        <div className="lg:col-span-3 space-y-4 order-1 lg:order-2">
 
           {/* Activity detail */}
           {selectedActivity && (
@@ -423,46 +425,47 @@ export default function GroupView({ group }: { group: GroupData }) {
               </button>
 
               <SectionTitle>{selectedActivity.activity.sport?.emoji} {selectedActivity.activity.sport?.name}</SectionTitle>
-              <h3 className="text-white font-bold text-lg mb-3">
+              <h3 className="text-white font-bold text-base lg:text-lg mb-3">
                 by @{selectedActivity.activity.user?.username}
               </h3>
 
-              <div className="flex items-center gap-3 text-sm text-gray-400 mb-3">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 text-xs lg:text-sm text-gray-400 mb-3">
                 <span>📅 {selectedActivity.activity.date?.slice(0, 10)}</span>
+                <span className="hidden sm:inline">•</span>
                 <span>⏰ {selectedActivity.activity.starttime}–{selectedActivity.activity.endtime}</span>
               </div>
 
               {selectedActivity.activity.description && (
-                <p className="text-gray-400 text-sm mb-4">{selectedActivity.activity.description}</p>
+                <p className="text-gray-400 text-xs lg:text-sm mb-4">{selectedActivity.activity.description}</p>
               )}
 
               {selectedActivity.activity.latitude && selectedActivity.activity.longitude && (
-                <div className="mb-4 h-56 rounded-xl overflow-hidden border border-white/10">
+                <div className="mb-4 h-48 lg:h-56 rounded-xl overflow-hidden border border-white/10">
                   <MapComponent key={`${selectedActivity.activity.latitude}-${selectedActivity.activity.longitude}`} latitude={selectedActivity.activity.latitude} longitude={selectedActivity.activity.longitude} zoom={14} />
                 </div>
               )}
 
               {/* Participants */}
-              <div className="bg-white/5 border border-white/10 rounded-xl p-4 mb-4">
+              <div className="bg-white/5 border border-white/10 rounded-xl p-3 lg:p-4 mb-4">
                 <p className="text-xs font-semibold uppercase tracking-widest text-teal-500 mb-3">
                   Going ({participants.filter(p => p.attending).length})
                 </p>
                 {participants.filter(p => p.attending).length === 0 && (
-                  <p className="text-gray-600 text-sm">Nobody is going yet</p>
+                  <p className="text-gray-600 text-xs lg:text-sm">Nobody is going yet</p>
                 )}
-                <div className="space-y-2">
+                <div className="space-y-2 max-h-48 overflow-y-auto">
                   {participants.map((p: Participant) => {
                     if (!p.attending) return null
                     const isMe = session?.user?.id && Number(p.user?.id) === Number(session.user.id)
                     return (
                       <div key={p.id ?? p.user?.id} className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <div className="w-6 h-6 bg-gradient-to-br from-teal-400 to-teal-700 rounded-full flex items-center justify-center">
+                        <div className="flex items-center gap-2 min-w-0">
+                          <div className="w-5 h-5 lg:w-6 lg:h-6 bg-gradient-to-br from-teal-400 to-teal-700 rounded-full flex items-center justify-center flex-shrink-0">
                             <span className="text-white text-xs font-bold">{(p.user?.username ?? '?')[0]?.toUpperCase()}</span>
                           </div>
-                          <span className="text-white text-sm">{p.user?.username ?? p.user?.email}</span>
+                          <span className="text-white text-xs lg:text-sm truncate">{p.user?.username ?? p.user?.email}</span>
                         </div>
-                        {isMe && <span className="text-xs bg-teal-500/15 border border-teal-500/30 text-teal-300 px-2 py-0.5 rounded-lg">You</span>}
+                        {isMe && <span className="text-xs bg-teal-500/15 border border-teal-500/30 text-teal-300 px-2 py-0.5 rounded-lg whitespace-nowrap flex-shrink-0">You</span>}
                       </div>
                     )
                   })}
@@ -478,13 +481,13 @@ export default function GroupView({ group }: { group: GroupData }) {
               </div>
 
               {isMember && (
-                <div className="flex gap-3">
+                <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
                   <button onClick={() => respondToActivity(selectedActivity.activity.id, true)} disabled={loading}
-                    className="flex-1 py-2.5 rounded-xl bg-teal-500/15 border border-teal-500/30 text-teal-300 text-sm font-semibold hover:bg-teal-500/25 disabled:opacity-50 transition-all duration-200">
+                    className="flex-1 py-2 lg:py-2.5 rounded-lg lg:rounded-xl bg-teal-500/15 border border-teal-500/30 text-teal-300 text-xs lg:text-sm font-semibold hover:bg-teal-500/25 disabled:opacity-50 transition-all duration-200">
                     ✅ I&apos;m Going
                   </button>
                   <button onClick={() => respondToActivity(selectedActivity.activity.id, false)} disabled={loading}
-                    className="flex-1 py-2.5 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm font-semibold hover:bg-red-500/20 disabled:opacity-50 transition-all duration-200">
+                    className="flex-1 py-2 lg:py-2.5 rounded-lg lg:rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs lg:text-sm font-semibold hover:bg-red-500/20 disabled:opacity-50 transition-all duration-200">
                     ❌ Not Going
                   </button>
                 </div>
@@ -496,21 +499,22 @@ export default function GroupView({ group }: { group: GroupData }) {
           {!selectedActivity && (
             <Card>
               <SectionTitle>Activities ({activities.length})</SectionTitle>
-              {activities.length === 0 && <p className="text-gray-600 text-sm">No activities yet</p>}
-              <div className="space-y-3">
+              {activities.length === 0 && <p className="text-gray-600 text-xs lg:text-sm">No activities yet</p>}
+              <div className="space-y-2 lg:space-y-3 max-h-96 overflow-y-auto">
                 {activities.map((ga: GroupActivity) => {
                   if (!ga?.activity) return null
                   return (
                     <button key={ga.id} onClick={() => setSelectedActivity(ga)}
-                      className="w-full text-left bg-white/5 border border-white/10 hover:border-teal-500/30 rounded-xl p-4 transition-all duration-200 group/act">
+                      className="w-full text-left bg-white/5 border border-white/10 hover:border-teal-500/30 rounded-lg lg:rounded-xl p-3 lg:p-4 transition-all duration-200 group/act">
                       <div className="flex items-start justify-between gap-2">
                         <div className="flex-1 min-w-0">
-                          <p className="text-white font-semibold text-sm group-hover/act:text-teal-300 transition-colors duration-200">
+                          <p className="text-white font-semibold text-xs lg:text-sm group-hover/act:text-teal-300 transition-colors duration-200">
                             {ga.activity.sport?.emoji} {ga.activity.sport?.name ?? "Activity"}
                           </p>
                           <p className="text-gray-500 text-xs mt-0.5">by @{ga.activity.user?.username ?? "User"}</p>
-                          <div className="flex items-center gap-2 mt-2 text-xs text-gray-500">
+                          <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 mt-1.5 text-xs text-gray-500">
                             <span>📅 {ga.activity.date?.slice(0, 10)}</span>
+                            <span className="hidden sm:inline">•</span>
                             <span>⏰ {ga.activity.starttime}–{ga.activity.endtime}</span>
                           </div>
                           {ga.activity.description && (
@@ -532,17 +536,17 @@ export default function GroupView({ group }: { group: GroupData }) {
           {!selectedActivity && (isOwner || isAdmin) && (
             <Card>
               <SectionTitle>Create Activity</SectionTitle>
-              <form onSubmit={createActivity} className="space-y-3">
+              <form onSubmit={createActivity} className="space-y-2 lg:space-y-3">
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                   <input required type="date" value={activityForm.date}
                     onChange={e => setActivityForm({ ...activityForm, date: e.target.value })}
-                    className="px-3 py-2.5 bg-white/5 border border-white/10 rounded-xl text-white text-sm outline-none focus:border-teal-500/50 focus:ring-2 focus:ring-teal-500/20 transition-all duration-200" />
+                    className="px-3 py-2 lg:py-2.5 bg-white/5 border border-white/10 rounded-lg lg:rounded-xl text-white text-xs lg:text-sm outline-none focus:border-teal-500/50 focus:ring-2 focus:ring-teal-500/20 transition-all duration-200" />
                   <input required placeholder="Start (10:00)" value={activityForm.starttime}
                     onChange={e => setActivityForm({ ...activityForm, starttime: e.target.value })}
-                    className="px-3 py-2.5 bg-white/5 border border-white/10 rounded-xl text-white text-sm placeholder-gray-600 outline-none focus:border-teal-500/50 focus:ring-2 focus:ring-teal-500/20 transition-all duration-200" />
+                    className="px-3 py-2 lg:py-2.5 bg-white/5 border border-white/10 rounded-lg lg:rounded-xl text-white text-xs lg:text-sm placeholder-gray-600 outline-none focus:border-teal-500/50 focus:ring-2 focus:ring-teal-500/20 transition-all duration-200" />
                   <input required placeholder="End (11:00)" value={activityForm.endtime}
                     onChange={e => setActivityForm({ ...activityForm, endtime: e.target.value })}
-                    className="px-3 py-2.5 bg-white/5 border border-white/10 rounded-xl text-white text-sm placeholder-gray-600 outline-none focus:border-teal-500/50 focus:ring-2 focus:ring-teal-500/20 transition-all duration-200" />
+                    className="px-3 py-2 lg:py-2.5 bg-white/5 border border-white/10 rounded-lg lg:rounded-xl text-white text-xs lg:text-sm placeholder-gray-600 outline-none focus:border-teal-500/50 focus:ring-2 focus:ring-teal-500/20 transition-all duration-200" />
                 </div>
 
                 {/* Location picker - Dynamically loaded */}
@@ -552,12 +556,12 @@ export default function GroupView({ group }: { group: GroupData }) {
 
                 <textarea placeholder="Description (optional)" value={activityForm.description}
                   onChange={e => setActivityForm({ ...activityForm, description: e.target.value })}
-                  className="w-full px-3 py-2.5 bg-white/5 border border-white/10 rounded-xl text-white text-sm placeholder-gray-600 outline-none focus:border-teal-500/50 focus:ring-2 focus:ring-teal-500/20 transition-all duration-200 resize-none"
+                  className="w-full px-3 py-2 lg:py-2.5 bg-white/5 border border-white/10 rounded-lg lg:rounded-xl text-white text-xs lg:text-sm placeholder-gray-600 outline-none focus:border-teal-500/50 focus:ring-2 focus:ring-teal-500/20 transition-all duration-200 resize-none"
                   rows={2} />
 
-                <div className="flex justify-end">
+                <div className="flex justify-end pt-1">
                   <button type="submit" disabled={loading}
-                    className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-teal-400 to-teal-600 text-white text-sm font-semibold shadow-lg shadow-teal-900/40 hover:brightness-110 disabled:opacity-50 transition-all duration-200">
+                    className="px-4 lg:px-5 py-2 lg:py-2.5 rounded-lg lg:rounded-xl bg-gradient-to-r from-teal-400 to-teal-600 text-white text-xs lg:text-sm font-semibold shadow-lg shadow-teal-900/40 hover:brightness-110 disabled:opacity-50 transition-all duration-200">
                     {loading ? "Creating..." : "Create Activity"}
                   </button>
                 </div>

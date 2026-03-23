@@ -63,12 +63,14 @@ export default function AddSportModal({ userId, userSports }: AddSportModalProps
     return (
       <button
         onClick={() => setIsOpen(true)}
-        className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:border-white/20 text-sm font-medium transition-all duration-200"
+        className="p-2 lg:px-3 lg:py-2 rounded-lg lg:rounded-xl 
+                   bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:border-white/20 
+                   transition-all duration-200"
+        title="Add Sport"
       >
-        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+        <svg className="w-4 h-4 lg:w-5 lg:h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
         </svg>
-        Add Sport
       </button>
     )
   }
@@ -96,7 +98,7 @@ export default function AddSportModal({ userId, userSports }: AddSportModalProps
         <div className="px-6 py-5">
           {sports.length === 0 ? (
             <div className="text-center py-8">
-              <p className="text-gray-500 text-sm">You&apos;ve added all available sports!</p>
+              <p className="text-gray-500 text-sm">You've added all available sports!</p>
             </div>
           ) : (
             <div className="space-y-4">

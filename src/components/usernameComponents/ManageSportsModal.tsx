@@ -89,12 +89,15 @@ export default function ManageSportsModal({ userSports }: ManageSportsModalProps
     return (
       <button
         onClick={() => { setView('list'); setIsOpen(true) }}
-        className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:border-white/20 text-sm font-medium transition-all duration-200"
+        className="flex items-center justify-center gap-1 px-3 py-2 lg:px-3.5 lg:py-2 rounded-lg lg:rounded-xl 
+                   bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:border-white/20 
+                   text-xs lg:text-sm font-medium transition-all duration-200"
+        title="Manage Sports"
       >
-        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+        <svg className="w-4 h-4 lg:w-3.5 lg:h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125"/>
         </svg>
-        Manage Sports
+        <span className="hidden sm:inline">Manage</span>
       </button>
     )
   }

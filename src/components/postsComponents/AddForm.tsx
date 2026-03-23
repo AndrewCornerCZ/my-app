@@ -22,7 +22,7 @@ export default function AddForm() {
     fetchSession();
   }, []);
 
-  // Parse hashtags from input — split by space, filter empty
+  // Parse hashtags from input
   const parsedTags = hashtag
     .split(' ')
     .map(t => t.trim())
@@ -63,7 +63,7 @@ export default function AddForm() {
 
       <Navbar />
 
-      <div className="relative z-10 flex items-center justify-center px-4 pt-28 pb-16">
+      <div className="relative mt-1 z-10 flex items-center justify-center px-4 lg:px-0 pt-8 lg:pt-28 pb-16">
         <div className="w-full max-w-lg">
 
           {/* Back */}
@@ -89,7 +89,7 @@ export default function AddForm() {
           </div>
 
           {/* Card */}
-          <div className="bg-white/5 border border-white/10 rounded-3xl p-6 shadow-2xl backdrop-blur-md">
+          <div className="bg-white/5 border border-white/10 rounded-3xl p-5 lg:p-6 shadow-2xl backdrop-blur-md">
             <form onSubmit={handleSubmit} className="space-y-5">
 
               {/* Hashtag field */}
@@ -121,7 +121,6 @@ export default function AddForm() {
                   </svg>
                   <p className="text-xs text-gray-600 leading-relaxed">
                     Separate tags with a <kbd className="px-1 py-0.5 rounded bg-white/10 text-gray-400 text-xs font-mono">space</kbd>.
-                    For multi-word tags use <kbd className="px-1 py-0.5 rounded bg-white/10 text-gray-400 text-xs font-mono">_</kbd> e.g. <span className="text-teal-600">my_post</span>
                   </p>
                 </div>
 

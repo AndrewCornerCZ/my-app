@@ -1,17 +1,9 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import dynamic from 'next/dynamic'
-import 'leaflet/dist/leaflet.css'
+import { useState, useEffect, useMemo } from 'react'
 import { useSession } from 'next-auth/react'
 import ActivityParticipantsModal from './ActivityParticipantsModal'
-import type { Icon, IconOptions } from 'leaflet'
-import { useMemo } from 'react'
-
-const MapContainer = dynamic(() => import('react-leaflet').then(mod => mod.MapContainer), { ssr: false })
-const TileLayer = dynamic(() => import('react-leaflet').then(mod => mod.TileLayer), { ssr: false })
-const Marker = dynamic(() => import('react-leaflet').then(mod => mod.Marker), { ssr: false })
-const Popup = dynamic(() => import('react-leaflet').then(mod => mod.Popup), { ssr: false })
+import MapComponent from '..//MapComponent'
 
 interface UserSport { sportId: number; color?: string | null }
 interface ActivityWithSport {
@@ -51,7 +43,6 @@ export default function ActivityCalendar({ initialActivities, userSports, userId
   const [days, setDays] = useState<CalendarDay[]>([])
   const [selectedActivities, setSelectedActivities] = useState<ActivityWithSport[] | null>(null)
   const [selectedActivity, setSelectedActivity] = useState<ActivityWithSport | null>(null)
-  const [markerIcon, setMarkerIcon] = useState<Icon<IconOptions> | undefined>(undefined)
   const [canJoinMap, setCanJoinMap] = useState<Record<number, { allowed: boolean; reason?: string; checked: boolean }>>({})
   const [joiningMap, setJoiningMap] = useState<Record<number, boolean>>({})
   const [participantsModalOpen, setParticipantsModalOpen] = useState(false)
@@ -65,15 +56,6 @@ export default function ActivityCalendar({ initialActivities, userSports, userId
   }, [activities, participatingActivities])
 
   useEffect(() => { findParticipatingActivities() }, [])
-
-  useEffect(() => {
-    import('leaflet').then(L => {
-      setMarkerIcon(new L.Icon({
-        iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-        iconSize: [25, 41], iconAnchor: [12, 41],
-      }))
-    })
-  }, [])
 
   const findParticipatingActivities = async () => {
     try {
@@ -127,20 +109,20 @@ export default function ActivityCalendar({ initialActivities, userSports, userId
     setParticipantsModalOpen(false)
   }
 
-const checkCanJoin = async (activityId: number) => {
-  if (canJoinMap[activityId]?.checked) return
-  try {
-    const res = await fetch(`/api/activities/${activityId}/can-join`)
-    if (res.ok) {
-      setCanJoinMap(prev => ({ ...prev, [activityId]: { allowed: true, checked: true } }))
-    } else {
-      const json = await res.json().catch(() => ({}))
-      setCanJoinMap(prev => ({ ...prev, [activityId]: { allowed: false, reason: json?.message, checked: true } }))
+  const checkCanJoin = async (activityId: number) => {
+    if (canJoinMap[activityId]?.checked) return
+    try {
+      const res = await fetch(`/api/activities/${activityId}/can-join`)
+      if (res.ok) {
+        setCanJoinMap(prev => ({ ...prev, [activityId]: { allowed: true, checked: true } }))
+      } else {
+        const json = await res.json().catch(() => ({}))
+        setCanJoinMap(prev => ({ ...prev, [activityId]: { allowed: false, reason: json?.message, checked: true } }))
+      }
+    } catch {
+      setCanJoinMap(prev => ({ ...prev, [activityId]: { allowed: false, reason: 'Network error', checked: true } }))
     }
-  } catch {
-    setCanJoinMap(prev => ({ ...prev, [activityId]: { allowed: false, reason: 'Network error', checked: true } }))
   }
-}
 
   const handleJoin = async (activityId: number) => {
     setJoiningMap(prev => ({ ...prev, [activityId]: true }))
@@ -315,19 +297,13 @@ const checkCanJoin = async (activityId: number) => {
                     )}
 
                     {/* Map */}
-                    {act.latitude != null && act.longitude != null && markerIcon && (
+                    {act.latitude != null && act.longitude != null && (
                       <div className="mb-3 h-40 rounded-xl overflow-hidden border border-white/10">
-                        <MapContainer
-                          key={`map-${act.id}-${act.latitude}-${act.longitude}`}
-                          center={[Number(act.latitude), Number(act.longitude)]}
+                        <MapComponent
+                          latitude={Number(act.latitude)}
+                          longitude={Number(act.longitude)}
                           zoom={13}
-                          style={{ height: '100%', width: '100%' }}
-                        >
-                          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                          <Marker position={[Number(act.latitude), Number(act.longitude)]} icon={markerIcon}>
-                            <Popup>Activity Location</Popup>
-                          </Marker>
-                        </MapContainer>
+                        />
                       </div>
                     )}
 
