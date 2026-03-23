@@ -32,7 +32,7 @@ export default function MapPicker({ lat, lng, onChange, zoom = 13 }: { lat?: num
       }).addTo(mapInstance.current)
 
       // Kliknutí na mapu
-      mapInstance.current.on('click', (e: any) => {
+      mapInstance.current.on('click', (e: L.LeafletMouseEvent) => {
         onChange(e.latlng.lat, e.latlng.lng)
       })
 
@@ -78,23 +78,23 @@ export default function MapPicker({ lat, lng, onChange, zoom = 13 }: { lat?: num
   }
 
   return (
-    <div className="bg-white/5 border border-white/10 rounded-xl p-3">
-      <div className="flex items-center justify-between mb-2">
+    <div className="bg-white/5 border border-white/10 rounded-lg lg:rounded-xl p-2 lg:p-3">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2 lg:mb-3">
         <p className="text-xs font-semibold uppercase tracking-widest text-gray-500">Location</p>
         <div className="flex gap-2">
           <button type="button" onClick={getCurrentLocation}
-            className="text-xs px-2.5 py-1 rounded-lg bg-teal-500/15 border border-teal-500/30 text-teal-400 hover:bg-teal-500/25 transition-all duration-200">
+            className="text-xs px-2.5 py-1 lg:py-1.5 rounded-lg bg-teal-500/15 border border-teal-500/30 text-teal-400 hover:bg-teal-500/25 transition-all duration-200 whitespace-nowrap">
             Use My Location
           </button>
           <button type="button" onClick={() => onChange(50.08, 14.44)}
-            className="text-xs px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-gray-500 hover:text-white transition-all duration-200">
+            className="text-xs px-2.5 py-1 lg:py-1.5 rounded-lg bg-white/5 border border-white/10 text-gray-500 hover:text-white transition-all duration-200 whitespace-nowrap">
             Clear
           </button>
         </div>
       </div>
       <div 
         ref={mapContainer} 
-        className="h-48 w-full rounded-xl overflow-hidden border border-white/10"
+        className="h-40 lg:h-48 w-full rounded-lg lg:rounded-xl overflow-hidden border border-white/10"
       />
       <p className="mt-2 text-xs text-gray-600">
         {lat && lng ? `${lat.toFixed(5)}, ${lng.toFixed(5)}` : 'Click on the map to set location'}
