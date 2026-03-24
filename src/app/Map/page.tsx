@@ -1,3 +1,5 @@
+'use client'
+
 import ActivitiesMapPage from '@/components/mapPageComponent'
 import Navbar from '@/components/Navbar'
 
