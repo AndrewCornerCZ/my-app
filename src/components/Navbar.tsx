@@ -76,28 +76,15 @@ export default function Navbar() {
 
   useEffect(() => {
     getSession().then(setSession);
-    
-    // Check if mobile
+
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 1024);
     };
-    
+
     checkMobile();
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
-
-  useEffect(() => {
-    if (isMobile) {
-      document.body.style.paddingLeft = "0";
-    } else {
-      document.body.style.paddingLeft = `${SIDEBAR_WIDTH_PX}px`;
-    }
-    
-    return () => { 
-      document.body.style.paddingLeft = ""; 
-    };
-  }, [isMobile]);
 
   // Close menu when route changes
   useEffect(() => {
@@ -112,7 +99,7 @@ export default function Navbar() {
           <Link href="/" className="flex items-center justify-center">
             <img src="/assety/BEFIT_Logo.png" alt="BeFit" className="h-10 w-10 object-contain" />
           </Link>
-          
+
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="p-2 rounded-lg bg-white/5 border border-white/10 text-gray-400 hover:text-white transition-colors"
@@ -141,9 +128,10 @@ export default function Navbar() {
         className={`
           fixed top-0 left-0 z-40 h-full flex flex-col bg-gray-950 border-r border-white/10
           transition-all duration-300 ease-in-out
-          ${isMobile 
-            ? `w-64 ${isOpen ? "translate-x-0" : "-translate-x-full"} pt-16` 
-            : `w-60`
+          ${
+            isMobile
+              ? `w-64 ${isOpen ? "translate-x-0" : "-translate-x-full"} pt-16`
+              : `w-60`
           }
         `}
         style={!isMobile ? { width: SIDEBAR_WIDTH_PX } : undefined}
@@ -178,9 +166,11 @@ export default function Navbar() {
                     : "text-gray-500 hover:text-white hover:bg-white/5 border border-transparent"
                 }`}
               >
-                <span className={`flex-shrink-0 transition-colors duration-200 ${
-                  isActive ? (link.accent ? "text-white" : "text-teal-400") : "text-gray-600 group-hover:text-gray-300"
-                }`}>
+                <span
+                  className={`flex-shrink-0 transition-colors duration-200 ${
+                    isActive ? (link.accent ? "text-white" : "text-teal-400") : "text-gray-600 group-hover:text-gray-300"
+                  }`}
+                >
                   {link.icon}
                 </span>
                 <span>{link.text}</span>
@@ -222,8 +212,14 @@ export default function Navbar() {
                 </p>
                 <p className="text-gray-600 text-xs truncate">View profile</p>
               </div>
-              <svg className="w-3.5 h-3.5 text-gray-700 group-hover:text-teal-500 transition-colors duration-200 flex-shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/>
+              <svg
+                className="w-3.5 h-3.5 text-gray-700 group-hover:text-teal-500 transition-colors duration-200 flex-shrink-0"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
               </svg>
             </Link>
           ) : (
@@ -237,7 +233,7 @@ export default function Navbar() {
         </div>
       </aside>
 
-      {/* Mobile spacer */}
+      {/* Mobile spacer - Dodá padding-top aby content nebyl pod headerem */}
       {isMobile && <div className="h-16" />}
     </>
   );

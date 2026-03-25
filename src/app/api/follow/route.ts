@@ -63,7 +63,6 @@ export async function POST(req: Request) {
     return NextResponse.json({follow:true  });
   }
   else {
-    //pokud uživatel již dal like, tak se like odstraní
     await prisma.$transaction(async (tx) => {
       await tx.userFollow.deleteMany({
         where: {
@@ -74,9 +73,9 @@ export async function POST(req: Request) {
         }
       })
     });
-    await prisma.post.update({
+    await prisma.user.update({
       where: { id: authorId.id as number},
-      data: { likes: { decrement: 1 } }
+      data: { followingCount: { decrement: 1 } }
     });
     await prisma.user.update({
       where: { id: userId as number },

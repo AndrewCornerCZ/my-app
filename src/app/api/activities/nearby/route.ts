@@ -42,6 +42,7 @@ export async function GET(req: Request) {
       where: {
         latitude: { not: null },
         longitude: { not: null },
+        date: { gte: new Date() }, // Only future activities
       },
       include: {
         sport: {

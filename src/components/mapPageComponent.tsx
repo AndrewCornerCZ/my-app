@@ -345,7 +345,7 @@ export default function ActivitiesMapPage() {
     <div className="w-full h-screen flex flex-col bg-gray-950">
 
       {/* ── Header ── */}
-      <div className="relative z-20 flex flex-col sm:flex-row items-start sm:items-center justify-between px-4 lg:px-5 py-3 bg-gray-950/95 backdrop-blur-md border-b border-white/10 flex-shrink-0 gap-2 lg:gap-4">
+      <div className="relative z-50 flex flex-col sm:flex-row items-start sm:items-center justify-between px-4 lg:px-5 py-3 bg-gray-950/95 backdrop-blur-md border-b border-white/10 flex-shrink-0 gap-2 lg:gap-4">
         <div className="flex items-center gap-2 lg:gap-3">
           <div className="w-8 h-8 lg:w-9 lg:h-9 bg-gradient-to-br from-teal-400 to-teal-700 rounded-lg lg:rounded-xl flex items-center justify-center shadow shadow-teal-900/40">
             <svg className="w-3.5 h-3.5 lg:w-4 lg:h-4 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -359,51 +359,58 @@ export default function ActivitiesMapPage() {
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-1.5 lg:gap-2 w-full sm:w-auto">
-          <button
-            onClick={() => setShowSidebar(s => !s)}
-            className={`hidden lg:flex items-center gap-1.5 px-2.5 lg:px-3.5 py-1.5 lg:py-2 rounded-lg lg:rounded-xl border text-xs lg:text-sm font-medium transition-all duration-200 ${
-              showSidebar
-                ? 'bg-teal-500/20 border-teal-500/50 text-teal-300'
-                : 'bg-white/5 border-white/10 text-gray-400 hover:text-white hover:border-white/20'
-            }`}
-          >
-            <svg className="w-3 h-3 lg:w-3.5 lg:h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/>
-            </svg>
-            <span className="hidden sm:inline">List</span>
-          </button>
+        <div className="flex flex-col xs:flex-row items-center gap-1.5 lg:gap-2 w-full sm:w-auto">
+  
+  {/* List button - skrytý na mobilu, vidět na lg */}
+  <button
+    onClick={() => setShowSidebar(s => !s)}
+    className={`hidden lg:flex flex-1 xs:flex-initial items-center gap-1.5 px-2.5 lg:px-3.5 py-1.5 lg:py-2 rounded-lg lg:rounded-xl border text-xs lg:text-sm font-medium transition-all duration-200 ${
+      showSidebar
+        ? 'bg-teal-500/20 border-teal-500/50 text-teal-300'
+        : 'bg-white/5 border-white/10 text-gray-400 hover:text-white hover:border-white/20'
+    }`}
+    title="Toggle sidebar"
+  >
+    <svg className="w-3 h-3 lg:w-3.5 lg:h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/>
+    </svg>
+    <span className="hidden sm:inline">List</span>
+  </button>
 
-          <button
-            onClick={() => setShowFilters(!showFilters)}
-            className={`flex items-center gap-1 lg:gap-1.5 px-2.5 lg:px-3.5 py-1.5 lg:py-2 rounded-lg lg:rounded-xl border text-xs lg:text-sm font-medium transition-all duration-200 ${
-              showFilters
-                ? 'bg-teal-500/20 border-teal-500/50 text-teal-300'
-                : 'bg-white/5 border-white/10 text-gray-400 hover:text-white hover:border-teal-500/30'
-            }`}
-          >
-            <svg className="w-3 h-3 lg:w-3.5 lg:h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75"/>
-            </svg>
-            <span className="hidden sm:inline">Filters</span>
-            {selectedSports.length > 0 && (
-              <span className="w-4 h-4 rounded-full bg-teal-500 text-white text-xs flex items-center justify-center font-bold">
-                {selectedSports.length}
-              </span>
-            )}
-          </button>
+  {/* Filter button - vidět vždy */}
+  <button
+    onClick={() => setShowFilters(!showFilters)}
+    className={`flex-1 xs:flex-initial flex items-center justify-center gap-1 lg:gap-1.5 px-2.5 lg:px-3.5 py-1.5 lg:py-2 rounded-lg lg:rounded-xl border text-xs lg:text-sm font-medium transition-all duration-200 ${
+      showFilters
+        ? 'bg-teal-500/20 border-teal-500/50 text-teal-300'
+        : 'bg-white/5 border-white/10 text-gray-400 hover:text-white hover:border-teal-500/30'
+    }`}
+    title="Toggle filters"
+  >
+    <svg className="w-3 h-3 lg:w-3.5 lg:h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75"/>
+    </svg>
+    <span className="hidden sm:inline">Filters</span>
+    {selectedSports.length > 0 && (
+      <span className="w-4 h-4 rounded-full bg-teal-500 text-white text-xs flex items-center justify-center font-bold">
+        {selectedSports.length}
+      </span>
+    )}
+  </button>
 
-          <button
-            onClick={() => { if (userLocation) fetchActivitiesNearby(userLocation.lat, userLocation.lng, radius) }}
-            disabled={loading}
-            className="flex-1 sm:flex-initial flex items-center justify-center gap-1 lg:gap-1.5 px-2.5 lg:px-3.5 py-1.5 lg:py-2 rounded-lg lg:rounded-xl bg-gradient-to-r from-teal-400 to-teal-600 text-white text-xs lg:text-sm font-semibold shadow shadow-teal-900/40 hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
-          >
-            <svg className={`w-3 h-3 lg:w-3.5 lg:h-3.5 ${loading ? 'animate-spin' : ''}`} fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"/>
-            </svg>
-            <span className="hidden sm:inline">{loading ? 'Loading...' : 'Refresh'}</span>
-          </button>
-        </div>
+  {/* Refresh button - vidět vždy, full-width na mobilu */}
+  <button
+    onClick={() => { if (userLocation) fetchActivitiesNearby(userLocation.lat, userLocation.lng, radius) }}
+    disabled={loading}
+    className="flex-1 xs:flex-initial flex items-center justify-center gap-1 lg:gap-1.5 px-2.5 lg:px-3.5 py-1.5 lg:py-2 rounded-lg lg:rounded-xl bg-gradient-to-r from-teal-400 to-teal-600 text-white text-xs lg:text-sm font-semibold shadow shadow-teal-900/40 hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+    title="Refresh activities"
+  >
+    <svg className={`w-3 h-3 lg:w-3.5 lg:h-3.5 ${loading ? 'animate-spin' : ''}`} fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"/>
+    </svg>
+    <span className="hidden sm:inline">{loading ? 'Loading...' : 'Refresh'}</span>
+  </button>
+</div>  
       </div>
 
       {/* ── Filters Panel ── */}

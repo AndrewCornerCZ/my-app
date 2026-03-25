@@ -2,12 +2,53 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Zbytek CSS */
+/* Base HTML setup */
 html {
   background-color: black;
   color: white;
+  scroll-behavior: smooth;
 }
 
 body {
   transition: all 0.3s ease-in-out;
+  @apply bg-gray-950 text-white;
+}
+
+/* Remove default scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Sidebar responsive spacing */
+@media (min-width: 1024px) {
+  /* Na desktopu - main element dostane margin-left */
+  main {
+    @apply lg:ml-60;
+  }
+}
+
+@media (max-width: 1023px) {
+  /* Na mobilu - žádný margin */
+  main {
+    @apply ml-0;
+  }
+}
+
+/* Prevent layout shift */
+html {
+  overflow-y: scroll;
 }
