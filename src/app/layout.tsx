@@ -14,21 +14,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
+      <body className="bg-gray-950 text-white">
         <Providers>
-          <div className="flex min-h-screen">
-            {/* Sidebar - Navbar */}
-            <aside className="fixed inset-y-0 left-0 z-40">
-              <nav className="h-full">
-                {/* Navbar komponenta bude zde */}
-              </nav>
-            </aside>
-
-            {/* Main content */}
-            <main className="flex-1 w-full lg:ml-60">
-              {children}
-            </main>
-          </div>
+          {children}
         </Providers>
       </body>
     </html>

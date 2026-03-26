@@ -5,6 +5,7 @@ import { useSession, signOut } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { Eye, EyeOff } from 'lucide-react'
 import Navbar from '@/components/Navbar'
+import AddLogoutButton from '@/components/usernameComponents/AddLogoutButton'
 
 interface FormData {
   username: string
@@ -244,6 +245,7 @@ export default function SettingsPage() {
                 ) : 'Save Changes'}
               </button>
             </form>
+            <AddLogoutButton />
           </div>
         </div>
       </div>
