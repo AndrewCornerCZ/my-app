@@ -44,7 +44,6 @@ export async function POST(req: Request, context: { params: Promise<{ id: string
       const existingInvite = await prisma.groupInvitation.findFirst({
         where: { groupId, userId: targetUserId },
       })
-      console.log(existingInvite);
       if (existingInvite) return NextResponse.json({ error: 'Invitation already pending' }, { status: 400 })
 
       const invite = await prisma.groupInvitation.create({

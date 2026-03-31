@@ -23,7 +23,7 @@ export async function GET(req: Request, context: { params: Promise<{ id: string 
     const invitations = await prisma.groupInvitation.findMany({
         where: { groupId: groupId},
     })
-    console.log(members, activities, invitations);
+
     return NextResponse.json({ members, activities, invitations}, { status: 200 })
   } catch (error) {
     console.error(error)

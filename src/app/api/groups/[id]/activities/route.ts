@@ -17,7 +17,6 @@ export async function POST(req: Request, context: { params: Promise<{ id: string
   if (!sportId || !date || !starttime || !endtime) {
     return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
   }
-    console.log(groupId, sportId, date, starttime, endtime, description, latitude, longitude);
   try {
     // Použijem transaction s tx (můžeme použít tx pro obě operace tak, aby byly atomické)
     const result = await prisma.$transaction(async (tx) => {

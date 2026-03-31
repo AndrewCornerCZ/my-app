@@ -1,36 +1,131 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🏋️ BeFit
+
+A social fitness platform where users can connect, share activities, join groups, and discover sport events nearby.
+
+Built with **Next.js 15**, **Prisma**, **NextAuth**, and **Leaflet**.
+
+---
+
+## Features
+
+**Social**
+- User profiles with bio, avatar, and sport badges
+- Follow system with mutual-follow friends
+- Posts with hashtags, likes, and comments
+- Personalized feed based on interests and follows
+- Direct messaging (real-time via WebSockets)
+
+**Activities**
+- Log personal sport activities with time, location, and privacy settings
+- Activity calendar with monthly stats and Bronze/Silver/Gold badges
+- Public activity map showing nearby events with sport filters
+- Join public or friends-only activities
+
+**Groups**
+- Create and manage sport groups
+- Invite members or request to join
+- Schedule group activities with attendance tracking
+- Admin/member role management
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 15 (App Router) |
+| Auth | NextAuth.js (credentials) |
+| Database ORM | Prisma |
+| Styling | Tailwind CSS |
+| Maps | Leaflet |
+| Image Storage | Cloudinary |
+| Real-time | Socket.IO |
+| Password Hashing | Argon2 |
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 15+
+- PostgreSQL database
+- Cloudinary account (for profile images)
+
+### Installation
+
+```bash
+git clone <repo-url>
+cd befit
+npm install
+```
+
+### Environment Variables
+
+Create a `.env` file in the root:
+
+```env
+DATABASE_URL="postgresql://user:password@localhost:5432/befit"
+NEXTAUTH_SECRET="your-secret-key"
+NEXTAUTH_URL="http://localhost:3000"
+
+CLOUDINARY_CLOUD_NAME="your-cloud-name"
+CLOUDINARY_API_KEY="your-api-key"
+CLOUDINARY_API_SECRET="your-api-secret"
+
+NEXT_PUBLIC_WS_URL="http://localhost:3001"
+```
+
+### Database Setup
+
+```bash
+npx prisma migrate dev
+npx prisma generate
+```
+
+### Run Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Project Structure
 
-## Learn More
+```
+src/
+├── app/
+│   ├── api/           # API routes (auth, posts, activities, groups, chat...)
+│   ├── userprofile/   # User profile pages
+│   ├── groups/        # Group pages
+│   ├── Map/           # Activity map page
+│   └── ...
+├── components/
+│   ├── postsComponents/     # Feed, post cards, comments
+│   ├── usernameComponents/  # Profile, calendar, modals
+│   ├── Navbar.tsx
+│   ├── ChatClient.tsx
+│   ├── GroupView.tsx
+│   └── mapPageComponent.tsx
+└── lib/
+    ├── db.ts          # Prisma client
+    └── cloudinary.ts
+```
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Key Pages
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Route | Description |
+|---|---|
+| `/` | Main feed |
+| `/userprofile/[username]` | User profile with calendar |
+| `/Map` | Nearby activities map |
+| `/groups` | Group discovery and management |
+| `/friends` | Mutual follows + direct chat |
+| `/search` | Search users, hashtags, groups |
+| `/AddPost` | Create a new post |
+| `/settings` | Account settings |

@@ -18,7 +18,6 @@ interface FormData {
 interface PasswordInputProps {
   id: 'currentPassword' | 'newPassword' | 'confirmPassword'
   label: string
-  field: 'current' | 'new' | 'confirm'
   value: string
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   showPassword: boolean
@@ -28,7 +27,6 @@ interface PasswordInputProps {
 const PasswordInput = ({
   id,
   label,
-  field,
   value,
   onChange,
   showPassword,
@@ -204,7 +202,6 @@ export default function SettingsPage() {
                 <PasswordInput 
                   id="currentPassword" 
                   label="Current Password" 
-                  field="current"
                   value={formData.currentPassword}
                   onChange={handleChange}
                   showPassword={showPasswords.current}
@@ -229,7 +226,6 @@ export default function SettingsPage() {
                     <PasswordInput 
                       id="newPassword" 
                       label="New Password" 
-                      field="new"
                       value={formData.newPassword}
                       onChange={handleChange}
                       showPassword={showPasswords.new}
@@ -238,7 +234,6 @@ export default function SettingsPage() {
                     <PasswordInput 
                       id="confirmPassword" 
                       label="Confirm New Password" 
-                      field="confirm"
                       value={formData.confirmPassword}
                       onChange={handleChange}
                       showPassword={showPasswords.confirm}

@@ -4,6 +4,7 @@ import AddCommentButton from './AddCommentButton';
 import LikeButton from './LikeButton';
 import { getServerSession } from 'next-auth/next';
 import { options } from '../../app/api/auth/[...nextauth]/options';
+import Image from 'next/image';
 
 interface GeneratePostProps {
   searchpostId: number;
@@ -41,10 +42,21 @@ export default async function GeneratePost({ searchpostId }: GeneratePostProps) 
 
       {/* Author row */}
       <div className="flex items-center gap-3 mb-4">
-        <div className="w-10 h-10 bg-gradient-to-br from-teal-400 to-teal-700 rounded-full flex items-center justify-center ring-2 ring-white/10 shadow shadow-teal-900/40 flex-shrink-0">
-          <span className="text-white font-bold text-sm">
-            {user?.username?.[0]?.toUpperCase() ?? '?'}
-          </span>
+        <div className="relative w-10 h-10 flex-shrink-0">
+          {user?.image ? (
+            <Image
+              src={user.image}
+              alt={user?.username || 'User'}
+              fill
+              className="rounded-full object-cover ring-2 ring-white/10 shadow shadow-teal-900/40"
+            />
+          ) : (
+            <div className="w-full h-full bg-gradient-to-br from-teal-400 to-teal-700 rounded-full flex items-center justify-center ring-2 ring-white/10 shadow shadow-teal-900/40">
+              <span className="text-white font-bold text-sm">
+                {user?.username?.[0]?.toUpperCase() ?? '?'}
+              </span>
+            </div>
+          )}
         </div>
         <div className="flex flex-col">
           <a

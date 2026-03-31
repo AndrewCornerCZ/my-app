@@ -3,6 +3,7 @@ import { prisma } from '@/lib/db';
 import GeneratePost from "@/components/postsComponents/GeneratePost";
 import Navbar from "@/components/Navbar";
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default async function SearchResultPage({
   searchParams,
@@ -83,10 +84,21 @@ export default async function SearchResultPage({
                   href={`/userprofile/${user.username}`}
                   className="flex items-center gap-4 bg-white/5 border border-white/10 hover:border-teal-500/40 hover:bg-white/8 rounded-2xl px-5 py-4 transition-all duration-200 group shadow-sm"
                 >
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-teal-400 to-teal-700 flex items-center justify-center flex-shrink-0 shadow shadow-teal-900/40">
-                    <span className="text-white font-bold text-sm uppercase">
-                      {user.username?.charAt(0) ?? '?'}
-                    </span>
+                  <div className="relative w-10 h-10 flex-shrink-0">
+                    {user.image ? (
+                      <Image
+                        src={user.image}
+                        alt={user.username}
+                        fill
+                        className="rounded-full object-cover ring-2 ring-white/10 shadow shadow-teal-900/40"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-teal-400 to-teal-700 rounded-full flex items-center justify-center ring-2 ring-white/10 shadow shadow-teal-900/40">
+                        <span className="text-white font-bold text-sm uppercase">
+                          {user.username?.charAt(0) ?? '?'}
+                        </span>
+                      </div>
+                    )}
                   </div>
                   <div className="flex flex-col">
                     <span className="text-white font-semibold text-sm group-hover:text-teal-300 transition-colors duration-200">
@@ -142,7 +154,7 @@ export default async function SearchResultPage({
           isPublic: true
         },
         include: {
-          owner: { select: { username: true } },
+          owner: { select: { username: true, image: true } },
           members: { select: { userId: true } },
           sport: { select: { name: true, emoji: true } },
         },
@@ -180,7 +192,23 @@ export default async function SearchResultPage({
                       )}
                     </div>
                     <div className="flex items-center gap-3 text-xs text-gray-600">
-                      <span>by @{group.owner.username}</span>
+                      <div className="flex items-center gap-1">
+                        {group.owner.image ? (
+                          <div className="relative w-4 h-4 flex-shrink-0">
+                            <Image
+                              src={group.owner.image}
+                              alt={group.owner.username}
+                              fill
+                              className="rounded-full object-cover"
+                            />
+                          </div>
+                        ) : (
+                          <div className="w-4 h-4 bg-teal-500/30 rounded-full flex items-center justify-center text-xs">
+                            {group.owner.username?.charAt(0).toUpperCase()}
+                          </div>
+                        )}
+                        <span>by @{group.owner.username}</span>
+                      </div>
                       <span>·</span>
                       <span>{group.members.length} {group.members.length === 1 ? 'member' : 'members'}</span>
                     </div>

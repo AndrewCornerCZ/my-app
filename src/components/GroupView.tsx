@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react"
 import { useSession } from "next-auth/react"
 import Link from "next/link"
 import dynamic from "next/dynamic"
+import Image from 'next/image'
 import 'leaflet/dist/leaflet.css'
 
 const MapPicker = dynamic(() => import("@/components/MapPicker"), { ssr: false })
@@ -12,7 +13,7 @@ const MapComponent = dynamic(() => import("@/components/MapComponent"), { ssr: f
 type Participant = {
   id?: number
   attending?: boolean
-  user?: { id?: number | string; username?: string; email?: string }
+  user?: {image: string, id?: number | string; username?: string; email?: string }
 }
 type Activity = {
   id: number
@@ -26,8 +27,8 @@ type Activity = {
   longitude?: number
 }
 type GroupActivity = { id: number; activity: Activity }
-type GroupMember = { id: number; user: { id: number | string; username: string; role?: string } }
-type GroupInvitation = { id: number; status: string; user?: { id: number | string; username?: string; email?: string } }
+type GroupMember = { id: number; user: { id: number | string; username: string; role?: string; image: string } }
+type GroupInvitation = { id: number; status: string; user?: { id: number | string; username?: string; email?: string, image: string } }
 type GroupData = {
   id: number | string
   name: string
@@ -94,9 +95,9 @@ export default function GroupView({ group }: { group: GroupData }) {
       setMembers(json.members || [])
       setActivities(json.activities || [])
       setInvitations(json.invitations || [])
+
     } catch (e) { console.error(e) }
   }
-
   async function createActivity(e?: React.FormEvent) {
     e?.preventDefault()
     if (!isMember && !isOwner) return alert("Only members can create activities")
@@ -190,7 +191,6 @@ export default function GroupView({ group }: { group: GroupData }) {
       return await res.json() || []
     } catch (err) { console.error(err); return [] }
   }
-
   async function respondToActivity(activityId: number, attending: boolean) {
     if (!session?.user?.id) return alert("Sign in first")
     setLoading(true)
@@ -228,7 +228,6 @@ export default function GroupView({ group }: { group: GroupData }) {
     load()
     return () => { mounted = false }
   }, [selectedActivity, session?.user?.id])
-
   return (
     <div className="space-y-4 lg:space-y-6">
 
@@ -308,9 +307,22 @@ export default function GroupView({ group }: { group: GroupData }) {
                 return (
                   <div key={m.id} className="flex items-center justify-between py-1.5 px-2 rounded-lg hover:bg-white/5 transition-colors">
                     <div className="flex items-center gap-2 flex-1 min-w-0">
-                      <div className="w-6 h-6 lg:w-7 lg:h-7 bg-gradient-to-br from-teal-400 to-teal-700 rounded-full flex items-center justify-center flex-shrink-0">
-                        <a href={`/userprofile/${m.user.username}`} className="text-white text-xs font-bold">{m.user?.username?.[0]?.toUpperCase()}</a>
+                      {/* Avatar with image support */}
+                      <div className="relative w-6 h-6 lg:w-7 lg:h-7 flex-shrink-0">
+                        {m.user.image ? (
+                          <Image
+                            src={m.user.image}
+                            alt={m.user.username}
+                            fill
+                            className="rounded-full object-cover"
+                          />
+                        ) : (
+                          <div className="w-full h-full bg-gradient-to-br from-teal-400 to-teal-700 rounded-full flex items-center justify-center">
+                            <span className="text-white text-xs font-bold">{m.user?.username?.[0]?.toUpperCase()}</span>
+                          </div>
+                        )}
                       </div>
+                      
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-1">
                           <a href={`/userprofile/${m.user.username}`} className="text-white text-xs lg:text-sm truncate">{m.user?.username}</a>
@@ -450,8 +462,11 @@ export default function GroupView({ group }: { group: GroupData }) {
                     return (
                       <div key={p.id ?? p.user?.id} className="flex items-center justify-between">
                         <div className="flex items-center gap-2 min-w-0">
-                          <div className="w-5 h-5 lg:w-6 lg:h-6 bg-gradient-to-br from-teal-400 to-teal-700 rounded-full flex items-center justify-center flex-shrink-0">
-                            <span className="text-white text-xs font-bold">{(p.user?.username ?? '?')[0]?.toUpperCase()}</span>
+                          <div className="relative w-5 h-5 lg:w-6 lg:h-6 flex-shrink-0">
+                            {/* Note: participants might not have image data, adjust as needed */}
+                            <div className="w-full h-full bg-gradient-to-br from-teal-400 to-teal-700 rounded-full flex items-center justify-center">
+                              <span className="text-white text-xs font-bold">{(p.user?.username ?? '?')[0]?.toUpperCase()}</span>
+                            </div>
                           </div>
                           <span className="text-white text-xs lg:text-sm truncate">{p.user?.username ?? p.user?.email}</span>
                         </div>
@@ -486,7 +501,7 @@ export default function GroupView({ group }: { group: GroupData }) {
           )}
 
           {/* Activities list */}
-          {!selectedActivity && (
+          {!selectedActivity && isMember && (
             <Card>
               <SectionTitle>Activities ({activities.length})</SectionTitle>
               {activities.length === 0 && <p className="text-gray-600 text-xs lg:text-sm">No activities yet</p>}
@@ -520,7 +535,7 @@ export default function GroupView({ group }: { group: GroupData }) {
                 })}
               </div>
             </Card>
-          )}
+           )}
 
           {/* Create activity form */}
           {!selectedActivity && (isOwner || isAdmin) && (

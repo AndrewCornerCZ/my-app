@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db";
 import StartChatButton from "@/components/StartChatButton";
+import Image from 'next/image';
 
 export default async function Friends() {
   const session = await getServerSession(options);
@@ -91,10 +92,21 @@ export default async function Friends() {
               <div className="flex items-center gap-4 bg-white/5 border border-white/10 hover:border-teal-500/30 rounded-2xl px-4 py-3.5 transition-all duration-200 group">
 
                 {/* Avatar */}
-                <div className="w-11 h-11 bg-gradient-to-br from-teal-400 to-teal-700 rounded-full flex items-center justify-center ring-2 ring-white/10 shadow shadow-teal-900/40 flex-shrink-0">
-                  <span className="text-white font-bold text-sm">
-                    {user.username.charAt(0).toUpperCase()}
-                  </span>
+                <div className="relative w-11 h-11 flex-shrink-0">
+                  {user.image ? (
+                    <Image
+                      src={user.image}
+                      alt={user.username}
+                      fill
+                      className="rounded-full object-cover ring-2 ring-white/10 shadow shadow-teal-900/40"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-teal-400 to-teal-700 rounded-full flex items-center justify-center ring-2 ring-white/10 shadow shadow-teal-900/40">
+                      <span className="text-white font-bold text-sm">
+                        {user.username.charAt(0).toUpperCase()}
+                      </span>
+                    </div>
+                  )}
                 </div>
 
                 {/* Name */}
