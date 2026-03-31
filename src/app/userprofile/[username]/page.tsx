@@ -123,7 +123,7 @@ export default async function Profile({ params }: { params: Promise<{ username: 
               {/* Bio + Stats */}
               <div className="space-y-3">
                 {user.bio && (
-                  <p className="text-gray-400 text-xs lg:text-sm leading-relaxed">{user.bio}</p>
+                  <p className="text-gray-400 text-xs lg:text-sm leading-relaxed whitespace-pre-wrap">{user.bio}</p>
                 )}
                 <div className="flex items-center gap-2 lg:gap-4 text-xs lg:text-sm overflow-x-auto">
                   <span className="flex-shrink-0">
@@ -238,7 +238,7 @@ export default async function Profile({ params }: { params: Promise<{ username: 
                 {/* Bio + Stats */}
                 <div className="space-y-3">
                   {user.bio && (
-                    <p className="text-gray-400 text-sm leading-relaxed">{user.bio}</p>
+                    <p className="text-gray-400 text-sm leading-relaxed whitespace-pre-wrap">{user.bio}</p>
                   )}
                   <div className="flex items-center gap-4 text-sm">
                     <span>

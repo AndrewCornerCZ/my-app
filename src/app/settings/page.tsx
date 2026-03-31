@@ -15,6 +15,49 @@ interface FormData {
   bio: string
 }
 
+interface PasswordInputProps {
+  id: 'currentPassword' | 'newPassword' | 'confirmPassword'
+  label: string
+  field: 'current' | 'new' | 'confirm'
+  value: string
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  showPassword: boolean
+  onToggleVisibility: () => void
+}
+
+const PasswordInput = ({
+  id,
+  label,
+  field,
+  value,
+  onChange,
+  showPassword,
+  onToggleVisibility,
+}: PasswordInputProps) => (
+  <div>
+    <label className="block text-xs font-semibold uppercase tracking-widest text-gray-500 mb-2">
+      {label}
+    </label>
+    <div className="relative">
+      <input
+        type={showPassword ? 'text' : 'password'}
+        id={id}
+        name={id}
+        value={value}
+        onChange={onChange}
+        className="w-full px-4 py-3 pr-11 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-600 text-sm outline-none focus:border-teal-500/50 focus:ring-2 focus:ring-teal-500/20 transition-all duration-200"
+      />
+      <button
+        type="button"
+        onClick={onToggleVisibility}
+        className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-600 hover:text-teal-400 transition-colors duration-200"
+      >
+        {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+      </button>
+    </div>
+  </div>
+)
+
 export default function SettingsPage() {
   const { data: session, status } = useSession()
   const router = useRouter()
@@ -90,35 +133,6 @@ export default function SettingsPage() {
     }
   }
 
-  const PasswordInput = ({
-    id, label, field
-  }: {
-    id: 'currentPassword' | 'newPassword' | 'confirmPassword'
-    label: string
-    field: 'current' | 'new' | 'confirm'
-  }) => (
-    <div>
-      <label className="block text-xs font-semibold uppercase tracking-widest text-gray-500 mb-2">{label}</label>
-      <div className="relative">
-        <input
-          type={showPasswords[field] ? 'text' : 'password'}
-          id={id}
-          name={id}
-          value={formData[id]}
-          onChange={handleChange}
-          className="w-full px-4 py-3 pr-11 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-600 text-sm outline-none focus:border-teal-500/50 focus:ring-2 focus:ring-teal-500/20 transition-all duration-200"
-        />
-        <button
-          type="button"
-          onClick={() => togglePasswordVisibility(field)}
-          className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-600 hover:text-teal-400 transition-colors duration-200"
-        >
-          {showPasswords[field] ? <EyeOff size={16} /> : <Eye size={16} />}
-        </button>
-      </div>
-    </div>
-  )
-
   return (
     <>
       <Navbar />
@@ -187,7 +201,15 @@ export default function SettingsPage() {
               <div className="bg-white/5 border border-white/10 rounded-3xl p-6 space-y-4">
                 <p className="text-xs font-semibold uppercase tracking-widest text-teal-500">Security</p>
 
-                <PasswordInput id="currentPassword" label="Current Password" field="current" />
+                <PasswordInput 
+                  id="currentPassword" 
+                  label="Current Password" 
+                  field="current"
+                  value={formData.currentPassword}
+                  onChange={handleChange}
+                  showPassword={showPasswords.current}
+                  onToggleVisibility={() => togglePasswordVisibility('current')}
+                />
 
                 {/* Toggle change password */}
                 <button
@@ -204,8 +226,24 @@ export default function SettingsPage() {
 
                 {showPasswordSection && (
                   <div className="space-y-4 pt-2 border-t border-white/10">
-                    <PasswordInput id="newPassword" label="New Password" field="new" />
-                    <PasswordInput id="confirmPassword" label="Confirm New Password" field="confirm" />
+                    <PasswordInput 
+                      id="newPassword" 
+                      label="New Password" 
+                      field="new"
+                      value={formData.newPassword}
+                      onChange={handleChange}
+                      showPassword={showPasswords.new}
+                      onToggleVisibility={() => togglePasswordVisibility('new')}
+                    />
+                    <PasswordInput 
+                      id="confirmPassword" 
+                      label="Confirm New Password" 
+                      field="confirm"
+                      value={formData.confirmPassword}
+                      onChange={handleChange}
+                      showPassword={showPasswords.confirm}
+                      onToggleVisibility={() => togglePasswordVisibility('confirm')}
+                    />
                   </div>
                 )}
               </div>
